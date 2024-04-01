@@ -35,6 +35,7 @@
 		0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838B2BBA97110048CC2D /* ReportViewController.swift */; };
 		0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838D2BBA97290048CC2D /* TalkViewController.swift */; };
 		012383902BBAA2C70048CC2D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838F2BBAA2C70048CC2D /* Fonts.swift */; };
+		012383932BBADDFF0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 012383922BBADDFF0048CC2D /* Tabman */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				012383052BB40C290048CC2D /* SnapKit in Frameworks */,
+				012383932BBADDFF0048CC2D /* Tabman in Frameworks */,
 				0123830A2BB40C9A0048CC2D /* Then in Frameworks */,
 				012383072BB40C290048CC2D /* SnapKit-Dynamic in Frameworks */,
 			);
@@ -390,6 +392,7 @@
 				012383042BB40C290048CC2D /* SnapKit */,
 				012383062BB40C290048CC2D /* SnapKit-Dynamic */,
 				012383092BB40C9A0048CC2D /* Then */,
+				012383922BBADDFF0048CC2D /* Tabman */,
 			);
 			productName = HOMEAT;
 			productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
@@ -422,6 +425,7 @@
 			packageReferences = (
 				012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */,
+				012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
 			projectDirPath = "";
@@ -702,6 +706,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/uias/Tabman.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -719,6 +731,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */;
 			productName = Then;
+		};
+		012383922BBADDFF0048CC2D /* Tabman */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
+			productName = Tabman;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
