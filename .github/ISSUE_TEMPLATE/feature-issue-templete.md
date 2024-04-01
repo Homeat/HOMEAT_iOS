@@ -1,5 +1,5 @@
 ---
-name: Feature request
+name: Feature Issue Templete
 about: "\b기능 추가 이슈 템플릿"
 title: ''
 labels: ''
