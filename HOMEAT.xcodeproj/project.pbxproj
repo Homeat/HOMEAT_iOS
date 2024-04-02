@@ -36,6 +36,8 @@
 		0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838D2BBA97290048CC2D /* TalkViewController.swift */; };
 		012383902BBAA2C70048CC2D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838F2BBAA2C70048CC2D /* Fonts.swift */; };
 		012383932BBADDFF0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 012383922BBADDFF0048CC2D /* Tabman */; };
+		582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68552BBC4EDA00839B16 /* DGCharts */; };
+		582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68572BBC4EDA00839B16 /* DGChartsDynamic */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,7 +77,9 @@
 			files = (
 				012383052BB40C290048CC2D /* SnapKit in Frameworks */,
 				012383932BBADDFF0048CC2D /* Tabman in Frameworks */,
+				582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */,
 				0123830A2BB40C9A0048CC2D /* Then in Frameworks */,
+				582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */,
 				012383072BB40C290048CC2D /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -393,6 +397,8 @@
 				012383062BB40C290048CC2D /* SnapKit-Dynamic */,
 				012383092BB40C9A0048CC2D /* Then */,
 				012383922BBADDFF0048CC2D /* Tabman */,
+				582B68552BBC4EDA00839B16 /* DGCharts */,
+				582B68572BBC4EDA00839B16 /* DGChartsDynamic */,
 			);
 			productName = HOMEAT;
 			productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
@@ -426,6 +432,7 @@
 				012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */,
 				012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
+				582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
 			projectDirPath = "";
@@ -714,6 +721,14 @@
 				minimumVersion = 3.0.2;
 			};
 		};
+		582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -736,6 +751,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
+		};
+		582B68552BBC4EDA00839B16 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		582B68572BBC4EDA00839B16 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
