@@ -60,6 +60,10 @@ enum StringLiterals {
             static let add = "지출 추가"
             static let check = "지출 확인"
         }
+        enum HomeView {
+            static let goal = "목표 70,000원"
+            static let left = "43,800원"
+        }
     }
     
     enum Meeting {
