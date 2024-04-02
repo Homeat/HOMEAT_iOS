@@ -39,6 +39,10 @@
 		012383952BBBDF160048CC2D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383942BBBDF160048CC2D /* UIView+.swift */; };
 		012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383962BBBEBB40048CC2D /* InstagramAccountView.swift */; };
 		0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */; };
+		582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68552BBC4EDA00839B16 /* DGCharts */; };
+		582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68572BBC4EDA00839B16 /* DGChartsDynamic */; };
+		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
+		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +76,8 @@
 		012383942BBBDF160048CC2D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		012383962BBBEBB40048CC2D /* InstagramAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAccountView.swift; sourceTree = "<group>"; };
 		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
+		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
+		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +87,9 @@
 			files = (
 				012383052BB40C290048CC2D /* SnapKit in Frameworks */,
 				012383932BBADDFF0048CC2D /* Tabman in Frameworks */,
+				582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */,
 				0123830A2BB40C9A0048CC2D /* Then in Frameworks */,
+				582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */,
 				012383072BB40C290048CC2D /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -332,6 +340,8 @@
 			isa = PBXGroup;
 			children = (
 				0123838B2BBA97110048CC2D /* ReportViewController.swift */,
+				582B68592BBC62F600839B16 /* AnalysisViewController.swift */,
+				582B685B2BBC631C00839B16 /* WeekLookViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -410,6 +420,8 @@
 				012383062BB40C290048CC2D /* SnapKit-Dynamic */,
 				012383092BB40C9A0048CC2D /* Then */,
 				012383922BBADDFF0048CC2D /* Tabman */,
+				582B68552BBC4EDA00839B16 /* DGCharts */,
+				582B68572BBC4EDA00839B16 /* DGChartsDynamic */,
 			);
 			productName = HOMEAT;
 			productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
@@ -443,6 +455,7 @@
 				012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
 				012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */,
 				012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
+				582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
 			projectDirPath = "";
@@ -488,6 +501,7 @@
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
+				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
@@ -496,6 +510,7 @@
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
+				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -734,6 +749,14 @@
 				minimumVersion = 3.0.2;
 			};
 		};
+		582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -756,6 +779,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
+		};
+		582B68552BBC4EDA00839B16 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		582B68572BBC4EDA00839B16 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
