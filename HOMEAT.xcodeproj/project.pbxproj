@@ -38,6 +38,7 @@
 		012383932BBADDFF0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 012383922BBADDFF0048CC2D /* Tabman */; };
 		012383952BBBDF160048CC2D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383942BBBDF160048CC2D /* UIView+.swift */; };
 		012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383962BBBEBB40048CC2D /* InstagramAccountView.swift */; };
+		0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		0123838F2BBAA2C70048CC2D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		012383942BBBDF160048CC2D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		012383962BBBEBB40048CC2D /* InstagramAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAccountView.swift; sourceTree = "<group>"; };
+		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 		0123837D2BBA955F0048CC2D /* MyPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				012383982BBC55910048CC2D /* Cell */,
 				012383882BBA96100048CC2D /* Model */,
 				012383872BBA960C0048CC2D /* View */,
 				012383862BBA96050048CC2D /* Controller */,
@@ -376,6 +379,14 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		012383982BBC55910048CC2D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -476,6 +487,7 @@
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
+				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
