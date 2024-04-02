@@ -1,12 +1,18 @@
 {
-
-  "originHash" : "4e7ccd4e907ca331cab8459050fa67f15154a46bb0ca452eb64b2b1a6d984400",
-
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "f455c2975872ccd2d9c81594c658af65716e9b9a",
+        "version" : "5.9.1"
+      }
+    },
     {
       "identity" : "charts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ChartsOrg/Charts.git",
+      "location" : "https://github.com/danielgindi/Charts.git",
       "state" : {
         "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
         "version" : "5.1.0"
@@ -49,5 +55,5 @@
       }
     }
   ],
-  "version" : 3
+  "version" : 2
 }

@@ -14,9 +14,6 @@
 		012382F12BB3F96E0048CC2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 012382EF2BB3F96E0048CC2D /* LaunchScreen.storyboard */; };
 		012382F92BB401730048CC2D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382F82BB401730048CC2D /* HomeView.swift */; };
 		012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383012BB40BC80048CC2D /* BaseViewController.swift */; };
-		012383052BB40C290048CC2D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 012383042BB40C290048CC2D /* SnapKit */; };
-		012383072BB40C290048CC2D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383062BB40C290048CC2D /* SnapKit-Dynamic */; };
-		0123830A2BB40C9A0048CC2D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 012383092BB40C9A0048CC2D /* Then */; };
 		0123830C2BB40F070048CC2D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123830B2BB40F070048CC2D /* BaseView.swift */; };
 		0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123833C2BB7EBD00048CC2D /* UIColor+.swift */; };
 		0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */; };
@@ -35,14 +32,19 @@
 		0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838B2BBA97110048CC2D /* ReportViewController.swift */; };
 		0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838D2BBA97290048CC2D /* TalkViewController.swift */; };
 		012383902BBAA2C70048CC2D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838F2BBAA2C70048CC2D /* Fonts.swift */; };
-		012383932BBADDFF0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 012383922BBADDFF0048CC2D /* Tabman */; };
-		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
-		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		012383952BBBDF160048CC2D /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383942BBBDF160048CC2D /* UIView+.swift */; };
 		012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383962BBBEBB40048CC2D /* InstagramAccountView.swift */; };
 		0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */; };
-		582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68552BBC4EDA00839B16 /* DGCharts */; };
-		582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 582B68572BBC4EDA00839B16 /* DGChartsDynamic */; };
+		0123839E2BBC762F0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 0123839D2BBC762F0048CC2D /* Tabman */; };
+		012383A12BBC76570048CC2D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A02BBC76570048CC2D /* Then */; };
+		012383A42BBC766C0048CC2D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A32BBC766C0048CC2D /* SnapKit */; };
+		012383A62BBC766C0048CC2D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A52BBC766C0048CC2D /* SnapKit-Dynamic */; };
+		012383A92BBC76930048CC2D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A82BBC76930048CC2D /* DGCharts */; };
+		012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AA2BBC76930048CC2D /* DGChartsDynamic */; };
+		012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AD2BBC76D40048CC2D /* Alamofire */; };
+		012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AF2BBC76D40048CC2D /* AlamofireDynamic */; };
+		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
+		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 /* End PBXBuildFile section */
@@ -75,11 +77,11 @@
 		0123838B2BBA97110048CC2D /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		0123838D2BBA97290048CC2D /* TalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewController.swift; sourceTree = "<group>"; };
 		0123838F2BBAA2C70048CC2D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
-		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
-		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		012383942BBBDF160048CC2D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		012383962BBBEBB40048CC2D /* InstagramAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAccountView.swift; sourceTree = "<group>"; };
 		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
+		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
+		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,12 +91,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				012383052BB40C290048CC2D /* SnapKit in Frameworks */,
-				012383932BBADDFF0048CC2D /* Tabman in Frameworks */,
-				582B68562BBC4EDA00839B16 /* DGCharts in Frameworks */,
-				0123830A2BB40C9A0048CC2D /* Then in Frameworks */,
-				582B68582BBC4EDA00839B16 /* DGChartsDynamic in Frameworks */,
-				012383072BB40C290048CC2D /* SnapKit-Dynamic in Frameworks */,
+				012383A42BBC766C0048CC2D /* SnapKit in Frameworks */,
+				012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */,
+				0123839E2BBC762F0048CC2D /* Tabman in Frameworks */,
+				012383A92BBC76930048CC2D /* DGCharts in Frameworks */,
+				012383A12BBC76570048CC2D /* Then in Frameworks */,
+				012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */,
+				012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */,
+				012383A62BBC766C0048CC2D /* SnapKit-Dynamic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,8 +349,8 @@
 		012383822BBA95E30048CC2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0123838B2BBA97110048CC2D /* ReportViewController.swift */,
 				582B68592BBC62F600839B16 /* AnalysisViewController.swift */,
+				0123838B2BBA97110048CC2D /* ReportViewController.swift */,
 				582B685B2BBC631C00839B16 /* WeekLookViewController.swift */,
 			);
 			path = Controller;
@@ -422,12 +426,14 @@
 			);
 			name = HOMEAT;
 			packageProductDependencies = (
-				012383042BB40C290048CC2D /* SnapKit */,
-				012383062BB40C290048CC2D /* SnapKit-Dynamic */,
-				012383092BB40C9A0048CC2D /* Then */,
-				012383922BBADDFF0048CC2D /* Tabman */,
-				582B68552BBC4EDA00839B16 /* DGCharts */,
-				582B68572BBC4EDA00839B16 /* DGChartsDynamic */,
+				0123839D2BBC762F0048CC2D /* Tabman */,
+				012383A02BBC76570048CC2D /* Then */,
+				012383A32BBC766C0048CC2D /* SnapKit */,
+				012383A52BBC766C0048CC2D /* SnapKit-Dynamic */,
+				012383A82BBC76930048CC2D /* DGCharts */,
+				012383AA2BBC76930048CC2D /* DGChartsDynamic */,
+				012383AD2BBC76D40048CC2D /* Alamofire */,
+				012383AF2BBC76D40048CC2D /* AlamofireDynamic */,
 			);
 			productName = HOMEAT;
 			productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
@@ -458,10 +464,11 @@
 			);
 			mainGroup = 012382D82BB3F96D0048CC2D;
 			packageReferences = (
-				012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
-				012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */,
-				012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
-				582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */,
+				0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
+				0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */,
+				012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
+				012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */,
+				012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
 			projectDirPath = "";
@@ -733,23 +740,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
-		012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/devxoul/Then";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
-		012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */ = {
+		0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
 			requirement = {
@@ -757,46 +748,80 @@
 				minimumVersion = 3.0.2;
 			};
 		};
-		582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */ = {
+		0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ChartsOrg/Charts.git";
+			repositoryURL = "https://github.com/devxoul/Then";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.1.0;
 			};
 		};
+		012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		012383042BB40C290048CC2D /* SnapKit */ = {
+		0123839D2BBC762F0048CC2D /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		012383062BB40C290048CC2D /* SnapKit-Dynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 012383032BB40C290048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = "SnapKit-Dynamic";
-		};
-		012383092BB40C9A0048CC2D /* Then */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 012383082BB40C9A0048CC2D /* XCRemoteSwiftPackageReference "Then" */;
-			productName = Then;
-		};
-		012383922BBADDFF0048CC2D /* Tabman */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 012383912BBADDFF0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
+			package = 0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
 			productName = Tabman;
 		};
-		582B68552BBC4EDA00839B16 /* DGCharts */ = {
+		012383A02BBC76570048CC2D /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
+		012383A32BBC766C0048CC2D /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		012383A52BBC766C0048CC2D /* SnapKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = "SnapKit-Dynamic";
+		};
+		012383A82BBC76930048CC2D /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
 		};
-		582B68572BBC4EDA00839B16 /* DGChartsDynamic */ = {
+		012383AA2BBC76930048CC2D /* DGChartsDynamic */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 582B68542BBC4EDA00839B16 /* XCRemoteSwiftPackageReference "Charts" */;
+			package = 012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGChartsDynamic;
+		};
+		012383AD2BBC76D40048CC2D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		012383AF2BBC76D40048CC2D /* AlamofireDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = AlamofireDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -12,6 +12,7 @@ import Tabman
 import Pageboy
 
 class ReportViewController: TabmanViewController {
+    
     private var viewcontrollers : Array<UIViewController> = [] //뷰 컨트롤러의 뷰를 넣을 배열
     private let containerView = UIView()
     private let tabBar = TMBar.ButtonBar()
@@ -25,6 +26,7 @@ class ReportViewController: TabmanViewController {
         setConfigure()
         setupUI()
     }
+    
     private func setConfigure() {
         tabBar.do {
             $0.backgroundView.style = .clear
@@ -41,17 +43,20 @@ class ReportViewController: TabmanViewController {
             $0.backgroundColor = .clear
         }
     }
+    
     // MARK: - UI Setup
     private func setupUI() {
         self.navigationController?.navigationBar.titleTextAttributes =  [NSAttributedString.Key.foregroundColor: UIColor.white]
         view.backgroundColor = UIColor(r: 30, g: 32, b: 33)
     }
+    
     private func setViewControllers() {
         let analysisViewController = AnalysisViewController()
         let weeklookViewController = WeekLookViewController()
         
         viewcontrollers.append(contentsOf: [analysisViewController, weeklookViewController])
     }
+    
     private func setConstraints() {
         tabBar.dataSource = self
         dataSource = self
@@ -63,11 +68,13 @@ class ReportViewController: TabmanViewController {
         }
     }
 }
+
     // MARK: - Extension
 extension ReportViewController: PageboyViewControllerDataSource, TMBarDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
         return viewcontrollers.count
     }
+    
     func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
         return viewcontrollers[index]
     }
@@ -75,6 +82,7 @@ extension ReportViewController: PageboyViewControllerDataSource, TMBarDataSource
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
         return nil
     }
+    
     func barItem(for bar: TMBar, at index: Int) -> TMBarItemable {
         let title = index == 0 ? "소비분석" : "주별조회"
         return TMBarItem(title: title)
