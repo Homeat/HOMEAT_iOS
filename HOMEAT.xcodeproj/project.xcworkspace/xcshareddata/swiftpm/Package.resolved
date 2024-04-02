@@ -1,6 +1,17 @@
 {
-  "originHash" : "28e7c25f2fd7cc8a6a175e31a3e42cb513851a90d1f07577b40703631740c2bb",
+
+  "originHash" : "4e7ccd4e907ca331cab8459050fa67f15154a46bb0ca452eb64b2b1a6d984400",
+
   "pins" : [
+    {
+      "identity" : "charts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ChartsOrg/Charts.git",
+      "state" : {
+        "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
+        "version" : "5.1.0"
+      }
+    },
     {
       "identity" : "pageboy",
       "kind" : "remoteSourceControl",
