@@ -36,6 +36,9 @@
 		0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838D2BBA97290048CC2D /* TalkViewController.swift */; };
 		012383902BBAA2C70048CC2D /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123838F2BBAA2C70048CC2D /* Fonts.swift */; };
 		012383932BBADDFF0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 012383922BBADDFF0048CC2D /* Tabman */; };
+		2D7905C12BBC19A6009E2744 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7905C02BBC19A6009E2744 /* UIView+.swift */; };
+		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
+		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +69,9 @@
 		0123838B2BBA97110048CC2D /* ReportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		0123838D2BBA97290048CC2D /* TalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkViewController.swift; sourceTree = "<group>"; };
 		0123838F2BBAA2C70048CC2D /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		2D7905C02BBC19A6009E2744 /* UIView+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
+		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +140,8 @@
 			isa = PBXGroup;
 			children = (
 				012382E82BB3F96D0048CC2D /* HomeViewController.swift */,
+				2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */,
+				2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -157,6 +165,7 @@
 				0123833C2BB7EBD00048CC2D /* UIColor+.swift */,
 				012383422BB7F93F0048CC2D /* CALayer+.swift */,
 				0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */,
+				2D7905C02BBC19A6009E2744 /* UIView+.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -469,8 +478,11 @@
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
+				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
+				2D7905C12BBC19A6009E2744 /* UIView+.swift in Sources */,
+				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
