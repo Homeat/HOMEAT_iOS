@@ -18,7 +18,7 @@ class MyPageTableViewCell: UITableViewCell {
     
     let arrowButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.right"), for: .normal)
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.tintColor = .white
         return button
     }()
