@@ -64,6 +64,13 @@ enum StringLiterals {
             static let goal = "목표 70,000원"
             static let left = "43,800원"
         }
+        enum Alert {
+            static let Title = "목표를 변경하시겠어요?"
+            static let Message = "변경하신 목표는 다음주부터 적용됩니다."
+            static let Yes = "예"
+            static let No = "아니오"
+            static let textField = "목표를 입력해주세요"
+        }
     }
     
     enum Meeting {

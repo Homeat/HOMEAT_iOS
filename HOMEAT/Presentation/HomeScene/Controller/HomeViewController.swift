@@ -9,8 +9,8 @@ import UIKit
 import SnapKit
 import Then
 
-
-class HomeViewController: BaseViewController {
+class HomeViewController: BaseViewController, HomeViewDelegate {
+    
     //MARK: - component
     private let HomeatLogo = UIImageView()
     private let welcomeLabel = UILabel()
@@ -18,12 +18,14 @@ class HomeViewController: BaseViewController {
     private let payAddButton = UIButton()
     private let payCheckButton = UIButton()
     private let mainView = HomeView()
+    private let editAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setAddTarget()
-        
+        //delegate 설정
+        mainView.delegate = self
     }
     
     // MARK: - UI Setup
@@ -50,7 +52,7 @@ class HomeViewController: BaseViewController {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyBold18
             $0.setImage(UIImage(named: "plusIcon"), for: .normal)
-            $0.setTitle("지출 추가", for: .normal)
+            $0.setTitle(StringLiterals.Home.mainButton.add, for: .normal)
             $0.setTitleColor(.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
@@ -61,11 +63,23 @@ class HomeViewController: BaseViewController {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyBold18
             $0.setImage(UIImage(named: "checkIcon"), for: .normal)
-            $0.setTitle("지출 확인", for: .normal)
+            $0.setTitle(StringLiterals.Home.mainButton.check, for: .normal)
             $0.setTitleColor(.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
             $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        }
+        
+        editAlert.do {
+            let confirm = UIAlertAction(title: StringLiterals.Home.Alert.Yes, style: .default)
+            let cancle = UIAlertAction(title: StringLiterals.Home.Alert.No, style: .destructive, handler: nil)
+            $0.title = StringLiterals.Home.Alert.Title
+            $0.message = StringLiterals.Home.Alert.Message
+            $0.addTextField() { TextField in
+                TextField.placeholder = StringLiterals.Home.Alert.textField
+            }
+            editAlert.addAction(confirm)
+            editAlert.addAction(cancle)
         }
     }
     
@@ -117,6 +131,10 @@ class HomeViewController: BaseViewController {
         }
     }
     
+    func editButtonTapped() {
+        present(editAlert, animated: true)
+    }
+    
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
@@ -125,6 +143,7 @@ class HomeViewController: BaseViewController {
     
     @objc func isPayCheckButtonTapped(_ sender: Any) {
         let nextVC = PayCheckViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        present(editAlert, animated: true)
+        /*self.navigationController?.pushViewController(nextVC, animated: true)*/
     }
 }

@@ -11,7 +11,6 @@ import SnapKit
 import Then
 import DGCharts
 
-
 class HomeView: BaseView {
     //MARK: - component
     private let leftHole = UIImageView()
@@ -21,7 +20,8 @@ class HomeView: BaseView {
     private let leftMoneyLabel = UILabel()
     private let pieChart = PieChartView()
     private let editButton = UIButton()
-    
+
+    weak var delegate: HomeViewDelegate?
     //MARK: - Function
     override func setConfigure() {
         super.setConfigure()
@@ -114,6 +114,7 @@ class HomeView: BaseView {
         
         editButton.do {
             $0.setImage(UIImage(named: "pencilIcon"), for: .normal)
+            $0.addTarget(self, action: #selector(isEditButtonTapped), for: .touchUpInside)
         }
         
     }
@@ -140,4 +141,11 @@ class HomeView: BaseView {
         pieChart.data = data
         pieChart.legend.enabled = false
     }
+    @objc func isEditButtonTapped(_ sender: Any) {
+        self.delegate?.editButtonTapped()
+    }
+}
+//MARK: - Protocol
+protocol HomeViewDelegate: AnyObject {
+    func editButtonTapped()
 }
