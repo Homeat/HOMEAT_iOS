@@ -23,6 +23,7 @@ private let incomeMoneyButton = UIButton()
 private let weakView = WeakView()
 
 class AnalysisViewController: BaseViewController {
+    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
