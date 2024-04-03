@@ -12,7 +12,6 @@ import Then
 class PayAddViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
     }
     
