@@ -158,8 +158,10 @@ extension MyPageViewController: UITableViewDataSource, UITableViewDelegate {
             cell.titleLabel.text = "비밀번호 변경"
         case 1:
             cell.titleLabel.text = "로그아웃"
+            cell.arrowButton.isHidden = true
         case 2:
             cell.titleLabel.text = "탈퇴하기"
+            cell.arrowButton.isHidden = true
         default:
             break
         }
