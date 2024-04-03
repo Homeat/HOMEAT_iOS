@@ -11,7 +11,7 @@ import Then
 
 class HomeViewController: BaseViewController, HomeViewDelegate {
     
-    //MARK: - Component
+    //MARK: - Property
     private let HomeatLogo = UIImageView()
     private let welcomeLabel = UILabel()
     private let savingLabel = UILabel()

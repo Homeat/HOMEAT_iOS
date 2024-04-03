@@ -11,7 +11,7 @@ import Then
 
 class EditDoneViewController : BaseViewController {
     
-    //MARK: - Component
+    //MARK: - Property
     private let titleLabel = UILabel()
     private let messageLabel = UILabel()
     private let backButton = UIButton()
