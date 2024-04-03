@@ -11,7 +11,7 @@ import Then
 
 class HomeViewController: BaseViewController, HomeViewDelegate {
     
-    //MARK: - component
+    //MARK: - Component
     private let HomeatLogo = UIImageView()
     private let welcomeLabel = UILabel()
     private let savingLabel = UILabel()
@@ -52,7 +52,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyBold18
             $0.setImage(UIImage(named: "plusIcon"), for: .normal)
-            $0.setTitle(StringLiterals.Home.mainButton.add, for: .normal)
+            $0.setTitle(StringLiterals.Home.main.mainButton.add, for: .normal)
             $0.setTitleColor(.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
@@ -63,7 +63,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyBold18
             $0.setImage(UIImage(named: "checkIcon"), for: .normal)
-            $0.setTitle(StringLiterals.Home.mainButton.check, for: .normal)
+            $0.setTitle(StringLiterals.Home.main.mainButton.check, for: .normal)
             $0.setTitleColor(.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
@@ -71,15 +71,58 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         }
         
         editAlert.do {
-            let confirm = UIAlertAction(title: StringLiterals.Home.Alert.Yes, style: .default)
-            let cancle = UIAlertAction(title: StringLiterals.Home.Alert.No, style: .destructive, handler: nil)
-            $0.title = StringLiterals.Home.Alert.Title
-            $0.message = StringLiterals.Home.Alert.Message
+            let confirm = UIAlertAction(title: StringLiterals.Home.main.Alert.yes, style: .default){ action in
+                self.navigationController?.pushViewController(EditDoneViewController(), animated: true)
+            }
+            let cancle = UIAlertAction(title: StringLiterals.Home.main.Alert.no, style: .destructive, handler: nil)
+            $0.title = StringLiterals.Home.main.Alert.title
+            $0.message = StringLiterals.Home.main.Alert.message
             $0.addTextField() { TextField in
-                TextField.placeholder = StringLiterals.Home.Alert.textField
+                TextField.placeholder = StringLiterals.Home.main.Alert.textField
             }
             editAlert.addAction(confirm)
             editAlert.addAction(cancle)
+        }
+    }
+    
+    //MARK: - setConstraints
+    override func setConstraints() {
+        view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
+        
+        HomeatLogo.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(72)
+            $0.leading.equalToSuperview().offset(20)
+            
+        }
+        welcomeLabel.snp.makeConstraints {
+            $0.top.equalTo(HomeatLogo.snp.bottom).offset(27.7)
+            $0.leading.equalTo(HomeatLogo)
+        }
+        
+        savingLabel.snp.makeConstraints {
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(HomeatLogo)
+        }
+        
+        mainView.snp.makeConstraints {
+            $0.top.equalTo(savingLabel.snp.bottom).offset(20)
+            $0.leading.equalTo(HomeatLogo)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(353)
+        }
+        
+        payAddButton.snp.makeConstraints {
+            $0.top.equalTo(mainView.snp.bottom).offset(37)
+            $0.leading.equalTo(HomeatLogo)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(49)
+        }
+        
+        payCheckButton.snp.makeConstraints {
+            $0.top.equalTo(payAddButton.snp.bottom).offset(18)
+            $0.leading.equalTo(HomeatLogo)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(49)
         }
     }
     
@@ -90,60 +133,19 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         payCheckButton.addTarget(self, action: #selector(isPayCheckButtonTapped), for: .touchUpInside)
     }
     
-    //MARK: - setConstraints
-    override func setConstraints() {
-        view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
-        
-        HomeatLogo.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(72)
-            $0.leading.equalToSuperview().offset(20)
-            
-        }
-        welcomeLabel.snp.makeConstraints{
-            $0.top.equalTo(HomeatLogo.snp.bottom).offset(27.7)
-            $0.leading.equalTo(HomeatLogo)
-        }
-        
-        savingLabel.snp.makeConstraints{
-            $0.top.equalTo(welcomeLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(HomeatLogo)
-        }
-        
-        mainView.snp.makeConstraints{
-            $0.top.equalTo(savingLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(HomeatLogo)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(353)
-        }
-        
-        payAddButton.snp.makeConstraints{
-            $0.top.equalTo(mainView.snp.bottom).offset(37)
-            $0.leading.equalTo(HomeatLogo)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(49)
-        }
-        
-        payCheckButton.snp.makeConstraints{
-            $0.top.equalTo(payAddButton.snp.bottom).offset(18)
-            $0.leading.equalTo(HomeatLogo)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(49)
-        }
-    }
-    
-    func editButtonTapped() {
-        present(editAlert, animated: true)
-    }
-    
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
+        self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
     @objc func isPayCheckButtonTapped(_ sender: Any) {
         let nextVC = PayCheckViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    func editButtonTapped() {
         present(editAlert, animated: true)
-        /*self.navigationController?.pushViewController(nextVC, animated: true)*/
     }
 }
