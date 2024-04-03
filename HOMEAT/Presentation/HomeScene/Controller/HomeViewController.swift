@@ -18,14 +18,13 @@ class HomeViewController: BaseViewController {
     private let payAddButton = UIButton()
     private let payCheckButton = UIButton()
     private let mainView = HomeView()
-    
+    //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         setAddTarget()
         
     }
-    
     
     // MARK: - UI Setup
     private func setupUI() {
@@ -68,17 +67,16 @@ class HomeViewController: BaseViewController {
             $0.clipsToBounds = true
             $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
         }
-
-
-
     }
     
+    //MARK: - setButtonAction
     private func setAddTarget() {
         payAddButton.addTarget(self, action: #selector(isPayAddButtonTapped), for: .touchUpInside)
         
         payCheckButton.addTarget(self, action: #selector(isPayCheckButtonTapped), for: .touchUpInside)
     }
     
+    //MARK: - setConstraints
     override func setConstraints() {
         view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
         
@@ -117,11 +115,9 @@ class HomeViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(49)
         }
-        
     }
     
     //MARK: - @objc Func
-    
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
@@ -131,5 +127,4 @@ class HomeViewController: BaseViewController {
         let nextVC = PayCheckViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
-
 }
