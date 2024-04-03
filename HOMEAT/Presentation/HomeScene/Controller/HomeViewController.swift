@@ -22,14 +22,13 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         setAddTarget()
         //delegate 설정
         mainView.delegate = self
     }
     
-    // MARK: - UI Setup
-    private func setupUI() {
+    // MARK: - setConfigure
+    override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
         
         HomeatLogo.do {
@@ -84,7 +83,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             editAlert.addAction(cancle)
         }
     }
-    
+
     //MARK: - setConstraints
     override func setConstraints() {
         view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)

@@ -20,7 +20,6 @@ class EditDoneViewController : BaseViewController {
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         setAddTarget()
     }
 
@@ -31,8 +30,8 @@ class EditDoneViewController : BaseViewController {
         tabBarController?.tabBar.isTranslucent = true
     }
     
-    // MARK: - UI Setup
-    private func setupUI() {
+    // MARK: - setConfigure
+    override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
         self.navigationItem.hidesBackButton = true
         
