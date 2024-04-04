@@ -98,13 +98,14 @@ final class MonthView: BaseView {
     }
     
     override func setting() {
-        setupPieChart(remainingPercent: 3)
+        setupPieChart(jipbapRatio: 40,outRatio: 60)
+        setupBarChart(jipbapPrice: 5, outPrice: 10)
     }
     
-    func setupPieChart(remainingPercent : Int) {
+    func setupPieChart(jipbapRatio : Double, outRatio: Double) {
         var entries = [ChartDataEntry]()
-        entries.append(PieChartDataEntry(value: Double(remainingPercent)))
-        entries.append(PieChartDataEntry(value: Double(100-remainingPercent)))
+        entries.append(PieChartDataEntry(value: jipbapRatio))
+        entries.append(PieChartDataEntry(value: outRatio))
         let dataSet = PieChartDataSet(entries: entries)
         if let customGreenColor = UIColor(named: "turquoiseGreen"),
            let otherColor = UIColor(named: "turquoisePurple") {
@@ -117,14 +118,62 @@ final class MonthView: BaseView {
         dataSet.selectionShift = 0
         let data = PieChartData(dataSet: dataSet)
         // 중앙 hole 생성
-        pieChart.holeRadiusPercent = 0.8
+        pieChart.holeRadiusPercent = 0.6
         // hole 색상 투명하게 설정
         pieChart.holeColor = .clear
         //범례, 숫자 같은 부가요소 제거
-        dataSet.drawValuesEnabled = false
+        dataSet.valueTextColor = .black // 레이블 텍스트 색상 설정
+        dataSet.valueFont = UIFont.systemFont(ofSize: 11.0) // 레이블 텍스트 폰트 설정
+        dataSet.valueLineColor = .black // 레이블 텍스트의 라인 색상 설정
+        dataSet.valueLinePart1OffsetPercentage = 0.8
+        dataSet.drawValuesEnabled = true
         dataSet.drawIconsEnabled = false
         pieChart.data = data
         pieChart.legend.enabled = false
+    }
+    func setupBarChart(jipbapPrice: Int, outPrice: Int) {
+        var names = ["집밥", "배달/외식"]
+        
+        var barEntries = [BarChartDataEntry]()
+        
+        barEntries.append(BarChartDataEntry(x: 0, y: Double(jipbapPrice), icon: UIImage(named: "homefoodLogo")))
+        barEntries.append(BarChartDataEntry(x: 1, y: Double(outPrice), icon: UIImage(named: "deliveryLogo")))
+        let barDataSet = BarChartDataSet(entries: barEntries)
+        if let customGreenColor = UIColor(named: "turquoiseGreen"),
+           let otherColor = UIColor(named: "turquoisePurple") {
+            let nsCustomGreenColor = NSUIColor(cgColor: customGreenColor.cgColor)
+            let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
+            barDataSet.colors = [nsCustomGreenColor, nsOtherColor]
+        }
+        barChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 12) // 레이블 폰트 크기를 축소
+        barChartView.drawGridBackgroundEnabled = false
+        let barData = BarChartData(dataSet: barDataSet)
+        barChartView.xAxis.labelCount = names.count // 레이블 갯수 설정
+        barChartView.xAxis.spaceMin = 0.5 // 최소 간격 설정
+        barChartView.xAxis.spaceMax = 0.5 // 최대 간격 설정
+        
+        // 바 차트 아래에 레이블 추가
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: names)
+        barChartView.xAxis.labelPosition = .bottom
+        barChartView.xAxis.labelTextColor = .white
+        let xAxis = barChartView.xAxis
+        xAxis.drawGridLinesEnabled = false
+        xAxis.drawLabelsEnabled = true // 레이블 표시를 가능하게 설정
+        xAxis.drawAxisLineEnabled = false
+        
+        barChartView.leftAxis.drawLabelsEnabled = false // leftYAxis 레이블 숨김
+        barChartView.leftAxis.enabled = false
+        barChartView.rightAxis.enabled = false // rightYAxis 숨김
+        
+        barChartView.leftAxis.gridColor = UIColor.clear
+        barChartView.rightAxis.gridColor = UIColor.clear
+        
+        barDataSet.drawValuesEnabled = false
+        barDataSet.drawIconsEnabled = true // 아이콘 표시 활성화
+        barData.barWidth = 0.55 // 막대의 너비를 0.5로 설정하여 줄임
+        barChartView.data = barData
+        barChartView.notifyDataSetChanged()
+        barChartView.legend.enabled = false
     }
     //MARK: - @objc Func
     @objc func monthBackTapped() {
