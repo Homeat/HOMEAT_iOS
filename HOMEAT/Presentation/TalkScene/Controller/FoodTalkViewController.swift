@@ -24,6 +24,7 @@ class FoodTalkViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
+        setAddTarget()
     }
     
     //MARK: - SetUI
@@ -41,15 +42,21 @@ class FoodTalkViewController: BaseViewController {
             $0.delegate = self
         }
         
+        //asset이 없어서 기본 이미지로 구현.
         listButton.do {
             $0.setTitle("최신순", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            $0.semanticContentAttribute = .forceRightToLeft
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
     
     override func setConstraints() {
         
-        view.addSubview(searchBar)
+        view.addSubviews(searchBar, listButton)
         
         searchBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -57,6 +64,30 @@ class FoodTalkViewController: BaseViewController {
             $0.width.equalTo(351)
             $0.height.equalTo(35)
         }
+        
+        listButton.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(16)
+            $0.leading.equalTo(searchBar.snp.leading)
+        }
+    }
+    
+    private func setAddTarget() {
+        listButton.addTarget(self, action: #selector(isListButtonTapped), for: .touchUpInside)
+        
+    }
+    
+    //MARK: - @objc func
+    @objc func isListButtonTapped(_ sender: Any) {
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+        actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("최신순", for: .normal)}))
+        actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("공감순", for: .normal)}))
+        actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("조회순", for: .normal)}))
+        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("오래된 순", for: .normal)}))
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        self.present(actionSheet, animated: true, completion: nil)
     }
 }
 
