@@ -37,12 +37,12 @@ class MyPageTableViewCell: UITableViewCell {
         addSubviews(titleLabel,arrowButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
         }
         
         arrowButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-20)
+            make.trailing.equalToSuperview().offset(-10)
             make.centerY.equalToSuperview()
         }
     }

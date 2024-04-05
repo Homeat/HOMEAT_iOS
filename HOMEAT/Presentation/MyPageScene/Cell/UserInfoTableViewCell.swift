@@ -38,7 +38,7 @@ class UserInfoTableViewCell: UITableViewCell {
         addSubviews(titleLabel,arrowButton)
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalToSuperview()
+            make.leading.equalToSuperview().offset(5)
             make.centerY.equalToSuperview()
         }
         
