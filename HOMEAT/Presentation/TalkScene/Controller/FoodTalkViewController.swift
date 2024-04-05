@@ -16,7 +16,11 @@ class FoodTalkViewController: BaseViewController {
     private let listButton = UIButton()
     private let scrollView = UIScrollView()
     //버튼이 여러개 존재하는데 재사용 파일을 만들어야 하나?
-    private let hashtagButton = UIButton()
+    private let mainButton = UIButton()
+    private let weekButton = UIButton()
+    private let breakfastButton = UIButton()
+    private let lunchButton = UIButton()
+    private let dinnerButton = UIButton()
     //private let collectionView = UICollectionView()
     private let writeButton = UIButton()
     
@@ -47,16 +51,65 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitle("최신순", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
             $0.titleLabel?.font = .captionMedium13
-            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
             $0.semanticContentAttribute = .forceRightToLeft
-            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        
+        scrollView.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.showsHorizontalScrollIndicator = false
+        }
+        
+        mainButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setTitle("#전체글", for: .normal)
+            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
+            $0.makeCornerRound(radius: 17.5)
+        }
+        
+        weekButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setTitle("#주간_BEST", for: .normal)
+            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
+            $0.makeCornerRound(radius: 17.5)
+        }
+        
+        breakfastButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setTitle("#아침", for: .normal)
+            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
+            $0.makeCornerRound(radius: 17.5)
+        }
+        
+        lunchButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setTitle("#점심", for: .normal)
+            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
+            $0.makeCornerRound(radius: 17.5)
+        }
+        
+        dinnerButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.setTitle("#저녁", for: .normal)
+            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.titleLabel?.font = .captionMedium13
+            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
+            $0.makeCornerRound(radius: 17.5)
         }
     }
     
     override func setConstraints() {
         
-        view.addSubviews(searchBar, listButton)
+        view.addSubviews(searchBar, listButton, scrollView, mainButton, weekButton,
+                         breakfastButton, lunchButton, dinnerButton)
         
         searchBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -69,11 +122,57 @@ class FoodTalkViewController: BaseViewController {
             $0.top.equalTo(searchBar.snp.bottom).offset(16)
             $0.leading.equalTo(searchBar.snp.leading)
         }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(listButton.snp.bottom).offset(11)
+            $0.leading.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(31)
+        }
+        
+        mainButton.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(scrollView.snp.bottom)
+            $0.leading.equalTo(scrollView.snp.leading)
+            $0.width.equalTo(68)
+        }
+        
+        weekButton.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(scrollView.snp.bottom)
+            $0.leading.equalTo(mainButton.snp.trailing).offset(8)
+            $0.width.equalTo(95)
+        }
+        
+        breakfastButton.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(scrollView.snp.bottom)
+            $0.leading.equalTo(weekButton.snp.trailing).offset(8)
+            $0.width.equalTo(56)
+        }
+        
+        lunchButton.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(scrollView.snp.bottom)
+            $0.leading.equalTo(breakfastButton.snp.trailing).offset(8)
+            $0.width.equalTo(56)
+        }
+        
+        dinnerButton.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.top)
+            $0.bottom.equalTo(scrollView.snp.bottom)
+            $0.leading.equalTo(lunchButton.snp.trailing).offset(8)
+            $0.width.equalTo(56)
+        }
     }
     
     private func setAddTarget() {
         listButton.addTarget(self, action: #selector(isListButtonTapped), for: .touchUpInside)
-        
+        mainButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        weekButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        breakfastButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        lunchButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        dinnerButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc func
@@ -88,6 +187,13 @@ class FoodTalkViewController: BaseViewController {
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    @objc func isHashTagButtonTapped(_ sender: Any) {
+        var button = UIButton()
+        button = sender as! UIButton
+        button.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+        button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
     }
 }
 
