@@ -12,16 +12,22 @@ import SnapKit
 
 class UserInfoViewController: BaseViewController {
     
+    // MARK: DummyData
+    private let userDummyData = ["예진", "yejin_woo","yejin_woo@naver.com", "100,000원" ]
+    
     // MARK: Property
     private let profileImageView = UIView()
     private let userInfoTableView = UITableView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation()
+    }
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigation()
         setTapBarHidden()
         setupTableView()
     }
@@ -60,7 +66,7 @@ class UserInfoViewController: BaseViewController {
     
     private func setNavigation() {
         self.navigationController?.navigationBar.isHidden = false
-        self.navigationItem.title = "회원 정보"
+        self.navigationItem.title = "회원 정보 수정"
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
@@ -100,21 +106,34 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
         case 0:
             cell.titleLabel.text = "닉네임"
+            cell.descriptionLabel.text = userDummyData[0]
+            cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+            
         case 1:
             cell.titleLabel.text = "아이디"
             cell.arrowButton.isHidden = true
+            cell.descriptionLabel.text = userDummyData[1]
         case 2:
             cell.titleLabel.text = "이메일 주소"
             cell.arrowButton.isHidden = true
+            cell.descriptionLabel.text = userDummyData[2]
         case 3:
             cell.titleLabel.text = "한 달 수입"
+            cell.descriptionLabel.text = userDummyData[3]
+            cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         default:
             break
         }
+        cell.bringSubviewToFront(cell.arrowButton)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    
+    @objc func buttonClicked(sender: UIButton) {
+        let userInfoModifyViewController = UserInfoModifyViewController()
+        self.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
     }
 }
