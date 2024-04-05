@@ -24,6 +24,13 @@ class UserInfoTableViewCell: UITableViewCell {
         return button
     }()
     
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .bodyMedium15
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -35,10 +42,15 @@ class UserInfoTableViewCell: UITableViewCell {
     
     private func setupUI() {
         backgroundColor = UIColor(r: 30, g: 32, b: 33)
-        addSubviews(titleLabel,arrowButton)
+        addSubviews(titleLabel, arrowButton, descriptionLabel)
         
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(5)
+            make.centerY.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(120)
             make.centerY.equalToSuperview()
         }
         
@@ -47,4 +59,5 @@ class UserInfoTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
     }
+    
 }
