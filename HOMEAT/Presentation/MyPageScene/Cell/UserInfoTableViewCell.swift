@@ -1,14 +1,15 @@
 //
-//  MyPageTableViewCell.swift
+//  UserInfoTableViewCell.swift
 //  HOMEAT
 //
 //  Created by 강석호 on 4/3/24.
 //
 
+import Foundation
 import UIKit
 import SnapKit
 
-class MyPageTableViewCell: UITableViewCell {
+class UserInfoTableViewCell: UITableViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -23,6 +24,13 @@ class MyPageTableViewCell: UITableViewCell {
         return button
     }()
     
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = .bodyMedium15
+        return label
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -34,10 +42,15 @@ class MyPageTableViewCell: UITableViewCell {
     
     private func setupUI() {
         backgroundColor = UIColor(r: 30, g: 32, b: 33)
-        addSubviews(titleLabel,arrowButton)
+        addSubviews(titleLabel, arrowButton, descriptionLabel)
         
         titleLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(5)
+            make.centerY.equalToSuperview()
+        }
+        
+        descriptionLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().offset(120)
             make.centerY.equalToSuperview()
         }
         
@@ -46,4 +59,5 @@ class MyPageTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
         }
     }
+    
 }
