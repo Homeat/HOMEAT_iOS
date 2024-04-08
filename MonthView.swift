@@ -9,16 +9,19 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import Charts
 import DGCharts
 
 final class MonthView: BaseView {
     //MARK: - Property
+    private var currentDate = Date()
     private let monthBackButton = UIButton()
     private let monthNextButton = UIButton()
     private let yearMonthLabel = UILabel()
     private let monthContentLabel = UILabel()
     private let pieChart = PieChartView()
     private let barChartView = BarChartView()
+    internal let barCornerRadius = CGFloat(5.0)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -52,6 +55,7 @@ final class MonthView: BaseView {
             $0.textAlignment = .center
             $0.font = .bodyBold18
         }
+        
     }
     
     override func setConstraints() {
@@ -87,24 +91,29 @@ final class MonthView: BaseView {
             $0.height.equalTo(145.5)
             $0.width.equalTo(147.6)
         }
-        
-        barChartView.snp.makeConstraints {
-            $0.top.equalTo(monthContentLabel.snp.bottom).offset(10)
-            $0.leading.equalTo(pieChart.snp.trailing).offset(20)
-            $0.trailing.equalToSuperview().inset(45.7)
-            $0.bottom.equalToSuperview().inset(30)
-        }
-        
     }
     
     override func setting() {
-        setupPieChart(remainingPercent: 3)
+        setupPieChart(jipbapRatio: 40,outRatio: 60)
+        setupBarChart(jipbapPrice: 4.3, outPrice: 5.7)
+        setStyledMonthContentLabel()
     }
     
-    func setupPieChart(remainingPercent : Int) {
+    func setStyledMonthContentLabel() {
+        let fullText = "저번달 보다 \(8)% 절약하고 있어요" // 전체 텍스트
+        let attributedString = NSMutableAttributedString(string: fullText)
+    
+        if let range = fullText.range(of: "8%") {
+            let nsRange = NSRange(range, in: fullText)
+            attributedString.addAttribute(.foregroundColor, value: UIColor.init(named: "turquoiseGreen"), range: nsRange)
+        }
+        monthContentLabel.attributedText = attributedString
+    }
+    
+    func setupPieChart(jipbapRatio : Double, outRatio: Double) {
         var entries = [ChartDataEntry]()
-        entries.append(PieChartDataEntry(value: Double(remainingPercent)))
-        entries.append(PieChartDataEntry(value: Double(100-remainingPercent)))
+        entries.append(PieChartDataEntry(value: jipbapRatio))
+        entries.append(PieChartDataEntry(value: outRatio))
         let dataSet = PieChartDataSet(entries: entries)
         if let customGreenColor = UIColor(named: "turquoiseGreen"),
            let otherColor = UIColor(named: "turquoisePurple") {
@@ -113,24 +122,95 @@ final class MonthView: BaseView {
             let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
             dataSet.colors = [nsCustomGreenColor, nsOtherColor]
         }
-        //piechart edge 삭제
         dataSet.selectionShift = 0
         let data = PieChartData(dataSet: dataSet)
-        // 중앙 hole 생성
-        pieChart.holeRadiusPercent = 0.8
-        // hole 색상 투명하게 설정
+        pieChart.holeRadiusPercent = 0.6
         pieChart.holeColor = .clear
-        //범례, 숫자 같은 부가요소 제거
-        dataSet.drawValuesEnabled = false
+        dataSet.valueTextColor = .black
+        dataSet.valueFont = UIFont.systemFont(ofSize: 11.0)
+        dataSet.valueLineColor = .black
+        dataSet.valueLinePart1OffsetPercentage = 0.8
+        dataSet.drawValuesEnabled = true
         dataSet.drawIconsEnabled = false
         pieChart.data = data
         pieChart.legend.enabled = false
+        
     }
+    
+    func setupBarChart(jipbapPrice: Double, outPrice: Double) {
+        let names = ["집밥", "배달/외식"]
+        
+        let barChartHeight = 120
+        // 각 막대의 비율을 계산합니다.
+        let jipbapBarHeight = CGFloat(jipbapPrice / (jipbapPrice + outPrice) * Double(barChartHeight))
+        let outBarHeight = CGFloat(outPrice / (jipbapPrice + outPrice) * Double(barChartHeight))
+        print("집밥 높이:\(jipbapBarHeight)")
+        print("배달 높이:\(outBarHeight)")
+        
+        var barEntries = [BarChartDataEntry]()
+        barEntries.append(BarChartDataEntry(x: 0, y: Double(jipbapBarHeight), icon: UIImage(named: "homefoodLogo")))
+        barEntries.append(BarChartDataEntry(x: 1, y: Double(outBarHeight), icon: UIImage(named: "deliveryLogo")))
+        barEntries.append(BarChartDataEntry(x: 1, y: 0, icon: nil))
+        
+        let barDataSet = BarChartDataSet(entries: barEntries)
+        if let customGreenColor = UIColor(named: "turquoiseGreen"),
+           let otherColor = UIColor(named: "turquoisePurple") {
+            let nsCustomGreenColor = NSUIColor(cgColor: customGreenColor.cgColor)
+            let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
+            barDataSet.colors = [nsCustomGreenColor, nsOtherColor]
+        }
+        
+        barChartView.xAxis.labelFont = UIFont.systemFont(ofSize: 12)
+        barChartView.drawGridBackgroundEnabled = false
+        let barData = BarChartData(dataSet: barDataSet)
+        barChartView.xAxis.labelCount = names.count
+        barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: names)
+        barChartView.xAxis.labelPosition = .bottom
+        barChartView.xAxis.labelTextColor = .white
+        let xAxis = barChartView.xAxis
+        xAxis.drawGridLinesEnabled = false
+        xAxis.drawLabelsEnabled = true
+        xAxis.drawAxisLineEnabled = false
+        
+        barChartView.leftAxis.drawLabelsEnabled = false
+        barChartView.leftAxis.enabled = false
+        barChartView.rightAxis.enabled = false
+        barChartView.layer.cornerRadius = 10
+        barChartView.layer.masksToBounds = true
+        barChartView.leftAxis.gridColor = UIColor.clear
+        barChartView.rightAxis.gridColor = UIColor.clear
+        
+        barDataSet.drawValuesEnabled = false
+        barDataSet.drawIconsEnabled = true
+        barData.barWidth = 0.55
+        barChartView.data = barData
+        barChartView.notifyDataSetChanged()
+        barChartView.legend.enabled = false
+        barChartView.snp.makeConstraints {
+            $0.top.equalTo(monthContentLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(pieChart.snp.trailing).offset(20)
+            $0.trailing.equalToSuperview().inset(45.7)
+            $0.bottom.equalToSuperview().inset(30)
+        }
+        print(barChartHeight)
+    }
+
+    func updateYearMonthLabel() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월"
+        let formattedDate = formatter.string(from: currentDate)
+        yearMonthLabel.text = formattedDate
+    }
+    
     //MARK: - @objc Func
     @objc func monthBackTapped() {
-        
+        currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? Date()
+        updateYearMonthLabel()
     }
+    
     @objc func monthNextTapped() {
-        
+        currentDate = Calendar.current.date(byAdding: .month, value: +1, to: currentDate) ?? Date()
+        updateYearMonthLabel()
     }
+    
 }
