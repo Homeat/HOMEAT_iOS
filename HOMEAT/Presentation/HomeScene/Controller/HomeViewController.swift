@@ -28,13 +28,6 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         mainView.delegate = self
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //탭바제거
-        self.tabBarController?.tabBar.isHidden = false
-        tabBarController?.tabBar.isTranslucent = false
-    }
-    
     // MARK: - setConfigure
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -144,7 +137,6 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
-        self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

@@ -11,7 +11,6 @@ import Then
 
 class PayAddViewController : BaseViewController {
     
-    var config = UIButton.Configuration.plain()
     //MARK: - Property
     private let cameraButton = UIButton()
     private let priceTextField = UITextField()
@@ -32,6 +31,11 @@ class PayAddViewController : BaseViewController {
         setAddTarget()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setTapBarHidden()
+    }
+
     // MARK: - setConfigure
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -45,6 +49,7 @@ class PayAddViewController : BaseViewController {
         cameraButton.do {
             var attributedTitle = AttributedString("영수증 사진 촬영")
             attributedTitle.font = .bodyBold18
+            var config = UIButton.Configuration.plain()
             config.attributedTitle = attributedTitle
             let pointSize = CGFloat(30)
             let imageConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
@@ -162,11 +167,13 @@ class PayAddViewController : BaseViewController {
     }
     
     func setNavigationBar() {
+    private func setNavigationBar() {
         self.navigationItem.title = "지출 추가"
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
         let saveButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(save(_:)))
+        let saveButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped(_:)))
         saveButtonItem.tintColor = .white
         self.navigationItem.setRightBarButton(saveButtonItem, animated: false)
         self.navigationController?.navigationBar.topItem?.title = ""
@@ -177,8 +184,13 @@ class PayAddViewController : BaseViewController {
         cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
     }
     
+    private func setTapBarHidden() {
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
     //MARK: - @objc Func
     @objc func save(_ sender: UIBarButtonItem) {
+    @objc func saveButtonTapped(_ sender: UIBarButtonItem) {
         present(saveAlert, animated: true)
     }
     
