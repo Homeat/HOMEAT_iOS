@@ -20,14 +20,16 @@ class PayAddViewController : BaseViewController {
     private let shopTagButton = TagButton()
     private let eatoutTagButton = TagButton()
     private let deliveryTagButton = TagButton()
+    private let saveAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
     
     let tagStackView = UIStackView()
     
+    //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
     }
-    //MARK: - Function
+    
     // MARK: - setConfigure
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -95,6 +97,12 @@ class PayAddViewController : BaseViewController {
         
         deliveryTagButton.do {
             $0.configuration?.title = "#배달비"
+        saveAlert.do {
+            let confirm = UIAlertAction(title: "금액 추가하기", style: .default)
+            let cancle = UIAlertAction(title: "다시 찍기", style: .destructive, handler: nil)
+            $0.message = "23,800원이 맞나요?"
+            $0.addAction(confirm)
+            $0.addAction(cancle)
         }
     }
     
@@ -153,6 +161,6 @@ class PayAddViewController : BaseViewController {
     
     //MARK: - @objc Func
     @objc func save(_ sender: UIBarButtonItem) {
-        
+        present(saveAlert, animated: true)
     }
 }
