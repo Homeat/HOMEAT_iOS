@@ -8,21 +8,19 @@
 import UIKit
 import Then
 import SnapKit
-import Charts
-
-//MARK: - Property
-private let scrollView = UIScrollView()
-private let contentView = UIView()
-private let deliveryImage = UIImageView()
-private let mealImage = UIImageView()
-private let deliveryLabel = UILabel()
-private let mealLabel = UILabel()
-private let monthView = MonthView()
-private let ageButton = UIButton()
-private let incomeMoneyButton = UIButton()
-private let weakView = WeakView()
 
 class AnalysisViewController: BaseViewController {
+    //MARK: - Property
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    private let deliveryImage = UIImageView()
+    private let mealImage = UIImageView()
+    private let deliveryLabel = UILabel()
+    private let mealLabel = UILabel()
+    private let monthView = MonthView()
+    private let ageButton = UIButton()
+    private let incomeMoneyButton = UIButton()
+    private let weakView = WeakView()
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -120,7 +118,7 @@ class AnalysisViewController: BaseViewController {
             $0.width.equalTo(15)
             $0.top.equalTo(deliveryLabel.snp.top)
             $0.bottom.equalTo(deliveryLabel.snp.bottom)
-            $0.leading.equalToSuperview().inset(302)
+            $0.trailing.equalTo(deliveryLabel.snp.leading).offset(-10)
         }
         
         deliveryLabel.snp.makeConstraints {
