@@ -21,6 +21,7 @@ class PayAddViewController : BaseViewController {
     private let eatoutTagButton = TagButton()
     private let deliveryTagButton = TagButton()
     private let saveAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    private let cameraActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     let tagStackView = UIStackView()
     
@@ -28,6 +29,7 @@ class PayAddViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
+        setAddTarget()
     }
     
     // MARK: - setConfigure
@@ -104,6 +106,18 @@ class PayAddViewController : BaseViewController {
             $0.addAction(confirm)
             $0.addAction(cancle)
         }
+        
+        cameraActionSheet.do {
+            let takeAction = UIAlertAction(title: "사진 촬영", style: .default, handler: nil)
+            let selectAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default, handler: nil)
+            let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+            takeAction.setValue(UIColor.white, forKey: "titleTextColor")
+            selectAction.setValue(UIColor.white, forKey: "titleTextColor")
+            cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
+            $0.addAction(takeAction)
+            $0.addAction(selectAction)
+            $0.addAction(cancelAction)
+        }
     }
     
     //MARK: - setConstraints
@@ -159,8 +173,16 @@ class PayAddViewController : BaseViewController {
         self.navigationController?.navigationBar.tintColor = .white
     }
     
+    private func setAddTarget() {
+        cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
+    }
+    
     //MARK: - @objc Func
     @objc func save(_ sender: UIBarButtonItem) {
         present(saveAlert, animated: true)
+    }
+    
+    @objc func cameraButtonTapped(_ sender: Any) {
+        present(cameraActionSheet, animated: true)
     }
 }
