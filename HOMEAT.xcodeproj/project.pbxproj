@@ -43,6 +43,7 @@
 		012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AA2BBC76930048CC2D /* DGChartsDynamic */; };
 		012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AD2BBC76D40048CC2D /* Alamofire */; };
 		012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AF2BBC76D40048CC2D /* AlamofireDynamic */; };
+		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
@@ -81,6 +82,7 @@
 		012383942BBBDF160048CC2D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		012383962BBBEBB40048CC2D /* InstagramAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAccountView.swift; sourceTree = "<group>"; };
 		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
+		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				012382FA2BB401840048CC2D /* HomeScene */,
+				2D1C01C22BBF087000235836 /* Components */,
 				0123837D2BBA955F0048CC2D /* MyPageScene */,
 				012383382BB7E95B0048CC2D /* OnboardingScene */,
 				0123837F2BBA95A60048CC2D /* ReportScene */,
@@ -412,6 +415,14 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		2D1C01C22BBF087000235836 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2D1C01C32BBF088800235836 /* TagButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -522,6 +533,7 @@
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
+				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,

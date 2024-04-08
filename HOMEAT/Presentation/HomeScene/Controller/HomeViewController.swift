@@ -19,12 +19,20 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     private let payCheckButton = UIButton()
     private let mainView = HomeView()
     private let editAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setAddTarget()
         //delegate 설정
         mainView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //탭바제거
+        self.tabBarController?.tabBar.isHidden = false
+        tabBarController?.tabBar.isTranslucent = false
     }
     
     // MARK: - setConfigure
@@ -93,6 +101,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             $0.leading.equalToSuperview().offset(20)
             
         }
+        
         welcomeLabel.snp.makeConstraints {
             $0.top.equalTo(HomeatLogo.snp.bottom).offset(27.7)
             $0.leading.equalTo(HomeatLogo)
