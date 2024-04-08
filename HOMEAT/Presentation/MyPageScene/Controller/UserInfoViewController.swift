@@ -22,6 +22,7 @@ class UserInfoViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigation()
+        setTapBarHidden()
     }
     
     // MARK: Life Cycle
@@ -30,6 +31,10 @@ class UserInfoViewController: BaseViewController {
         
         setTapBarHidden()
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func setConfigure() {
@@ -77,7 +82,7 @@ class UserInfoViewController: BaseViewController {
     }
     
     private func setTapBarHidden() {
-        self.hidesBottomBarWhenPushed = true
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     private func setupTableView() {

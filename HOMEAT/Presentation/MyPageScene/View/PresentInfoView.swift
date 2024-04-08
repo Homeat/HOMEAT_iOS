@@ -30,8 +30,8 @@ final class PresentInfoView: BaseView {
             $0.font = .bodyMedium16
             $0.textColor = .white
         }
-        
     }
+    
     override func setConstraints() {
         
         addSubviews(backgroundView, infoLabel)
