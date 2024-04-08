@@ -64,11 +64,11 @@ final class WeakView: BaseView {
             $0.font = .bodyBold18
             $0.numberOfLines = 0
             let attributedString3 = NSMutableAttributedString(string: jipbapContentsLabel.text ?? "")
-            let range3 = (jipbapContentsLabel.text as NSString?)?.range(of: "집밥")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen"), range: range3 ?? NSRange())
+            let jipbapRange = (jipbapContentsLabel.text as NSString?)?.range(of: "집밥")
+            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapRange ?? NSRange())
             
-            let range4 = (jipbapContentsLabel.text as NSString?)?.range(of: "50,000원을 덜")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen"), range: range4 ?? NSRange())
+            let jipbapPriceRange = (jipbapContentsLabel.text as NSString?)?.range(of: "50,000원을 덜")
+            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapPriceRange ?? NSRange())
             jipbapContentsLabel.attributedText = attributedString3
         }
         
@@ -80,11 +80,11 @@ final class WeakView: BaseView {
             $0.numberOfLines = 0
             // "외식과 배달"을 purple로 변경
             let attributedString3 = NSMutableAttributedString(string: deliveryContentsLabel.text ?? "")
-            let range3 = (deliveryContentsLabel.text as NSString?)?.range(of: "외식과 배달")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple"), range: range3 ?? NSRange())
+            let deliveryRange = (deliveryContentsLabel.text as NSString?)?.range(of: "외식과 배달")
+            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryRange ?? NSRange())
             
-            let range4 = (deliveryContentsLabel.text as NSString?)?.range(of: "120,000원을 더")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple"), range: range4 ?? NSRange())
+            let deliveryPriceRange = (deliveryContentsLabel.text as NSString?)?.range(of: "120,000원을 더")
+            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryPriceRange ?? NSRange())
             deliveryContentsLabel.attributedText = attributedString3
         }
         
@@ -172,7 +172,7 @@ final class WeakView: BaseView {
     
     func setupMealWeekBarChart(jipbapAverage: Int,weekJipbapPrice: Int) {
         let nameWithSuffix = "예진 님" // 닉네임 뒤에 "님"을 붙임
-        var names = ["집밥 평균", nameWithSuffix]
+        let names = ["집밥 평균", nameWithSuffix]
         var barEntries = [BarChartDataEntry]()
         barEntries.append(BarChartDataEntry(x: 0, y: Double(jipbapAverage)))
         barEntries.append(BarChartDataEntry(x: 1, y: Double(weekJipbapPrice)))
@@ -214,7 +214,7 @@ final class WeakView: BaseView {
     
     func setupDeliveryWeekBarChart(outAverage: Int,weekOutPrice: Int) {
         let nameWithSuffix = "예진 님"
-        var names = ["외식/배달 평균", nameWithSuffix]
+        let names = ["외식/배달 평균", nameWithSuffix]
         var barEntries = [BarChartDataEntry]()
         barEntries.append(BarChartDataEntry(x: 0, y: Double(35)))
         barEntries.append(BarChartDataEntry(x: 1, y: Double(75)))
