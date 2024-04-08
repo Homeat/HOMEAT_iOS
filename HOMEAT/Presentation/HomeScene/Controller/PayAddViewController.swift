@@ -95,15 +95,23 @@ class PayAddViewController : BaseViewController {
         }
         
         shopTagButton.do {
-            $0.configuration?.title = "#장보기"
+            var attributedTitle = AttributedString("#장보기")
+            attributedTitle.font = .bodyMedium15
+            $0.configuration?.attributedTitle = attributedTitle
         }
         
         eatoutTagButton.do {
-            $0.configuration?.title = "#외식비"
+            var attributedTitle = AttributedString("#외식비")
+            attributedTitle.font = .bodyMedium15
+            $0.configuration?.attributedTitle = attributedTitle
         }
         
         deliveryTagButton.do {
-            $0.configuration?.title = "#배달비"
+            var attributedTitle = AttributedString("#배달비")
+            attributedTitle.font = .bodyMedium15
+            $0.configuration?.attributedTitle = attributedTitle
+        }
+        
         saveAlert.do {
             let confirm = UIAlertAction(title: "금액 추가하기", style: .default)
             let cancle = UIAlertAction(title: "다시 찍기", style: .destructive, handler: nil)
@@ -166,13 +174,11 @@ class PayAddViewController : BaseViewController {
         }
     }
     
-    func setNavigationBar() {
     private func setNavigationBar() {
         self.navigationItem.title = "지출 추가"
         self.navigationController?.navigationBar.titleTextAttributes = [
             NSAttributedString.Key.foregroundColor: UIColor.white
         ]
-        let saveButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(save(_:)))
         let saveButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped(_:)))
         saveButtonItem.tintColor = .white
         self.navigationItem.setRightBarButton(saveButtonItem, animated: false)
@@ -189,7 +195,6 @@ class PayAddViewController : BaseViewController {
     }
     
     //MARK: - @objc Func
-    @objc func save(_ sender: UIBarButtonItem) {
     @objc func saveButtonTapped(_ sender: UIBarButtonItem) {
         present(saveAlert, animated: true)
     }
