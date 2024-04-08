@@ -11,7 +11,6 @@ import Then
 
 class MyPageViewController: BaseViewController {
     
-    
     // MARK: DummyData
     private let nicknameDummyLabel = UILabel()
     
@@ -24,13 +23,13 @@ class MyPageViewController: BaseViewController {
     private let infoModifyButton = UIButton()
     private let mypageTableView = UITableView()
     
-    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setNavigation()
         setupTableView()
+        setTarget()
     }
     
     // MARK: UI
@@ -128,7 +127,8 @@ class MyPageViewController: BaseViewController {
         
         mypageTableView.snp.makeConstraints {
             $0.top.equalTo(infoModifyButton.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(180)
         }
     }
@@ -137,10 +137,23 @@ class MyPageViewController: BaseViewController {
         mypageTableView.delegate = self
         mypageTableView.dataSource = self
         mypageTableView.register(MyPageTableViewCell.self, forCellReuseIdentifier: "MyPageTableViewCell")
+        
+        mypageTableView.separatorStyle = .singleLine
+        mypageTableView.separatorColor = UIColor.white
+        mypageTableView.separatorInset = .zero
     }
     
     private func setNavigation() {
         self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func setTarget() {
+        infoModifyButton.addTarget(self, action: #selector(infoModifyButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func infoModifyButtonTapped() {
+        let userInfoViewController = UserInfoViewController()
+        self.navigationController?.pushViewController(userInfoViewController, animated: true)
     }
 }
 
@@ -158,8 +171,10 @@ extension MyPageViewController: UITableViewDataSource, UITableViewDelegate {
             cell.titleLabel.text = "비밀번호 변경"
         case 1:
             cell.titleLabel.text = "로그아웃"
+            cell.arrowButton.isHidden = true
         case 2:
             cell.titleLabel.text = "탈퇴하기"
+            cell.arrowButton.isHidden = true
         default:
             break
         }
