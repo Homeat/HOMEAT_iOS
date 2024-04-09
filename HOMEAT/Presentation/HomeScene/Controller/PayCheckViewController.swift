@@ -21,10 +21,16 @@ class PayCheckViewController : BaseViewController {
     private let checkDetailButton = UIButton()
     
     //MARK: - Function
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         setAddTarget()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setNavigationBar()
     }
     
     //MARK: - setConfigure
