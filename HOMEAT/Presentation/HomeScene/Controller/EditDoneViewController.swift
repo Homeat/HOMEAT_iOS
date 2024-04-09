@@ -25,9 +25,8 @@ class EditDoneViewController : BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //탭바제거
-        self.tabBarController?.tabBar.isHidden = true
-        tabBarController?.tabBar.isTranslucent = true
+        setTapBarHidden()
+        
     }
     
     // MARK: - setConfigure
@@ -89,6 +88,10 @@ class EditDoneViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(57)
         }
+    }
+    
+    private func setTapBarHidden() {
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     //MARK: - setButtonAction

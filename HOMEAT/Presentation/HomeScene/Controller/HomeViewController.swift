@@ -19,6 +19,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     private let payCheckButton = UIButton()
     private let mainView = HomeView()
     private let editAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
+    
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +94,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             $0.leading.equalToSuperview().offset(20)
             
         }
+        
         welcomeLabel.snp.makeConstraints {
             $0.top.equalTo(HomeatLogo.snp.bottom).offset(27.7)
             $0.leading.equalTo(HomeatLogo)
@@ -135,7 +137,6 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
-        self.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
