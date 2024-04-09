@@ -55,7 +55,7 @@ class PayCheckView: BaseView {
         }
         
         eatoutLineView.do {
-            $0.backgroundColor = UIColor(r: 157, g: 110, b: 255)
+            $0.backgroundColor = UIColor(named: "turquoisePurple")
             $0.layer.cornerRadius = 3
             $0.clipsToBounds = true
         }
@@ -85,19 +85,19 @@ class PayCheckView: BaseView {
         }
         
         homefoodSpentLabel.do {
-            $0.text = "23,800원"
+            $0.text = "23,800 원"
             $0.font = .bodyMedium15
             $0.textColor = UIColor(named: "turquoiseGreen")
         }
         
         eatoutSpentLabel.do {
-            $0.text = "79,800원"
+            $0.text = "79,800 원"
             $0.font = .bodyMedium15
-            $0.textColor = UIColor(r: 157, g: 110, b: 255)
+            $0.textColor = UIColor(named: "turquoisePurple")
         }
         
         leftMoneyAmountLabel.do {
-            $0.text = "350,000원"
+            $0.text = "350,000 원"
             $0.font = .bodyMedium15
             $0.textColor = .white
         }

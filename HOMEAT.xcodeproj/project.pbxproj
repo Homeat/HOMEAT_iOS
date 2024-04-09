@@ -53,6 +53,9 @@
 		2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
 		2DE901A62BC596FD00EF892C /* CalenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE901A52BC596FD00EF892C /* CalenderView.swift */; };
 		2DE901A82BC5993B00EF892C /* PayCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE901A72BC5993B00EF892C /* PayCheckView.swift */; };
+		2DE901B22BC5BC2200EF892C /* PayCheckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE901B12BC5BC2200EF892C /* PayCheckDetailViewController.swift */; };
+		2DE901B42BC5BC8300EF892C /* HomefoodCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE901B32BC5BC8300EF892C /* HomefoodCheckView.swift */; };
+		2DE901B62BC5BC9200EF892C /* EatoutCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DE901B52BC5BC9200EF892C /* EatoutCheckView.swift */; };
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
@@ -100,6 +103,9 @@
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
 		2DE901A52BC596FD00EF892C /* CalenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalenderView.swift; sourceTree = "<group>"; };
 		2DE901A72BC5993B00EF892C /* PayCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckView.swift; sourceTree = "<group>"; };
+		2DE901B12BC5BC2200EF892C /* PayCheckDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckDetailViewController.swift; sourceTree = "<group>"; };
+		2DE901B32BC5BC8300EF892C /* HomefoodCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomefoodCheckView.swift; sourceTree = "<group>"; };
+		2DE901B52BC5BC9200EF892C /* EatoutCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatoutCheckView.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = SOURCE_ROOT; };
@@ -171,6 +177,8 @@
 				012382F82BB401730048CC2D /* HomeView.swift */,
 				2DE901A52BC596FD00EF892C /* CalenderView.swift */,
 				2DE901A72BC5993B00EF892C /* PayCheckView.swift */,
+				2DE901B32BC5BC8300EF892C /* HomefoodCheckView.swift */,
+				2DE901B52BC5BC9200EF892C /* EatoutCheckView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -182,6 +190,7 @@
 				2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */,
 				2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */,
 				2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */,
+				2DE901B12BC5BC2200EF892C /* PayCheckDetailViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -548,7 +557,9 @@
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
+				2DE901B62BC5BC9200EF892C /* EatoutCheckView.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
+				2DE901B42BC5BC8300EF892C /* HomefoodCheckView.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				2DE901A62BC596FD00EF892C /* CalenderView.swift in Sources */,
@@ -562,6 +573,7 @@
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
+				2DE901B22BC5BC2200EF892C /* PayCheckDetailViewController.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,

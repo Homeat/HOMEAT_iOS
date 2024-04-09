@@ -18,11 +18,13 @@ class PayCheckViewController : BaseViewController {
     private let homefoodTitleLabel = UILabel()
     private let calenderView = CalenderView()
     private let payCheckView = PayCheckView()
+    private let checkDetailButton = UIButton()
     
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
+        setAddTarget()
     }
     
     //MARK: - setConfigure
@@ -56,11 +58,16 @@ class PayCheckViewController : BaseViewController {
             $0.clipsToBounds = true
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
         }
+        
+        checkDetailButton.do {
+            $0.setTitle("세부 확인", for: .normal)
+            $0.titleLabel?.font = .bodyBold15
+        }
     }
     
     //MARK: - setConstraints
     override func setConstraints() {
-        view.addSubviews(eatoutIcon, homefoodIcon, eatoutTitleLabel, homefoodTitleLabel, calenderView, payCheckView)
+        view.addSubviews(eatoutIcon, homefoodIcon, eatoutTitleLabel, homefoodTitleLabel, calenderView, payCheckView, checkDetailButton)
         
         eatoutIcon.snp.makeConstraints {
             $0.top.equalToSuperview().offset(116)
@@ -98,6 +105,13 @@ class PayCheckViewController : BaseViewController {
             $0.bottom.equalToSuperview().offset(-200)
         }
         
+        checkDetailButton.snp.makeConstraints {
+            $0.top.equalTo(payCheckView)
+            $0.trailing.equalTo(payCheckView)
+            $0.height.equalTo(30)
+            $0.width.equalTo(60)
+        }
+        
     }
     
     private func setNavigationBar() {
@@ -107,6 +121,15 @@ class PayCheckViewController : BaseViewController {
         ]
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
+    }
+    
+    private func setAddTarget() {
+        checkDetailButton.addTarget(self, action: #selector(checkDetailButtonTapped), for: .touchUpInside)
+    }
+    
+    //MARK: - @objc Func
+    @objc func checkDetailButtonTapped(_ sender: UIButton) {
+        self.navigationController?.pushViewController(PayCheckDetailViewController(), animated: true)
     }
 
 }

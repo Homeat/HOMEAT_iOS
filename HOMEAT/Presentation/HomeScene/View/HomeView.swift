@@ -25,15 +25,15 @@ class HomeView: BaseView {
     weak var delegate: HomeViewDelegate?
     
     //MARK: - Function
-    override func setConfigure() {
-        super.setConfigure()
-        setStyle()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         setupPieChart(remainingPercent: 3)
         setAddTarget()
     }
     
-    //MARK: - setStyle
-    private func setStyle() {
+    //MARK: - setConfigure
+    override func setConfigure() {
         let circleSize: CGFloat = 16
         self.backgroundColor = UIColor(named: "coolGray4")
         self.layer.cornerRadius = 13.2
