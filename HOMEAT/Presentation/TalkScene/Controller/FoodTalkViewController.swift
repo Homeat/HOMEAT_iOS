@@ -12,6 +12,7 @@ import Then
 class FoodTalkViewController: BaseViewController {
     
     //MARK: - Property
+    
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
     private let scrollView = UIScrollView()
@@ -21,14 +22,17 @@ class FoodTalkViewController: BaseViewController {
     private let breakfastButton = UIButton()
     private let lunchButton = UIButton()
     private let dinnerButton = UIButton()
-    //private let collectionView = UICollectionView()
-    private let writeButton = UIButton()
+    private let foodCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private let writeButton = UIButton(type: .custom)
+    
+    let interval = UIEdgeInsets(top: 19, left: 20, bottom: 10, right: 20)
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setSearchBar()
         setAddTarget()
+        setUpCollectionView()
     }
     
     //MARK: - SetUI
@@ -51,7 +55,7 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitle("최신순", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
             $0.titleLabel?.font = .captionMedium13
-            $0.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+            $0.setImage(UIImage(named: "dropdown"), for: .normal)
             $0.semanticContentAttribute = .forceRightToLeft
         }
         
@@ -104,12 +108,21 @@ class FoodTalkViewController: BaseViewController {
             $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
             $0.makeCornerRound(radius: 17.5)
         }
+        
+        foodCollectionView.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.showsVerticalScrollIndicator = false
+        }
+        
+        writeButton.do {
+            $0.setImage(UIImage(named: "icon"), for: .normal)
+        }
     }
     
     override func setConstraints() {
         
         view.addSubviews(searchBar, listButton, scrollView, mainButton, weekButton,
-                         breakfastButton, lunchButton, dinnerButton)
+                         breakfastButton, lunchButton, dinnerButton, foodCollectionView, writeButton)
         
         searchBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -164,6 +177,20 @@ class FoodTalkViewController: BaseViewController {
             $0.leading.equalTo(lunchButton.snp.trailing).offset(8)
             $0.width.equalTo(56)
         }
+        
+        foodCollectionView.snp.makeConstraints {
+            $0.top.equalTo(scrollView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        writeButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(100)
+            $0.height.equalTo(51)
+            $0.width.equalTo(51)
+        }
     }
     
     private func setAddTarget() {
@@ -173,6 +200,15 @@ class FoodTalkViewController: BaseViewController {
         breakfastButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         lunchButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         dinnerButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setUpCollectionView() {
+        foodCollectionView.dataSource = self
+        foodCollectionView.delegate = self
+        foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
+        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        flowLayout.itemSize = CGSize(width: 161, height: 161)
+        foodCollectionView.collectionViewLayout = flowLayout
     }
     
     //MARK: - @objc func
@@ -202,26 +238,17 @@ extension FoodTalkViewController: UISearchBarDelegate {
     
     func setSearchBar(){
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
-            //searchBar 백그라운드 컬러
             textfield.backgroundColor = UIColor(named: "coolGray4")
-            //플레이스홀더 글씨 색 정하기
             textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor(r: 216, g: 216, b: 216)])
-            //searchBar 텍스트입력시 색 정하기
             textfield.textColor = UIColor(r: 216, g: 216, b: 216)
-            //왼쪽 아이콘 이미지넣기
             if let leftView = textfield.leftView as? UIImageView {
                 leftView.image = leftView.image?.withRenderingMode(.alwaysTemplate)
-                //이미지 틴트컬러 정하기
                 leftView.tintColor = UIColor(r: 216, g: 216, b: 216)
             }
         }
         
-        // UISearchBarDelegate 메서드 구현.
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            
-            // 검색 버튼을 눌렀을 때 호출되는 메서드.
             if let searchText = searchBar.text {
-                // 검색어를 사용하여 검색을 수행.
                 performSearch(with: searchText)
             }
             searchBar.resignFirstResponder() // 키보드 숨기기
@@ -229,7 +256,50 @@ extension FoodTalkViewController: UISearchBarDelegate {
         
         func performSearch(with searchText: String) {
             // 검색 로직 구현하는 부분. 네트워크.
-            print("검색어: \(searchText)")
         }
     }
+}
+
+extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FoodTalkCollectionViewCell", for: indexPath) as? FoodTalkCollectionViewCell else {
+                return UICollectionViewCell()
+        }
+        
+        cell.backgroundColor = UIColor(r: 42, g: 42, b: 44)
+        cell.foodName.text = "샐러드"
+        
+    
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 셀을 선택하면 게시글 뷰로 넘어감.
+    
+    }
+}
+
+extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+            return interval
+        }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 16
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 30
+    }
+    
 }
