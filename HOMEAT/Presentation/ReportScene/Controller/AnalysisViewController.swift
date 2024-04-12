@@ -25,7 +25,6 @@ class AnalysisViewController: BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setConfigure()
     }
     
     override func setConfigure() {
