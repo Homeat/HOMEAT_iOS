@@ -22,7 +22,7 @@ class WeekLookViewController: BaseViewController {
         collectionView.alwaysBounceVertical = true
         collectionView.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.id)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = UIColor(r: 54, g: 56, b: 57)
+        collectionView.backgroundColor = UIColor.init(named: "turquoiseDarkGray")
         collectionView.isScrollEnabled = false
         collectionView.layer.cornerRadius = 35
         collectionView.layer.maskedCorners = CACornerMask(arrayLiteral: .layerMinXMinYCorner, .layerMaxXMinYCorner)
