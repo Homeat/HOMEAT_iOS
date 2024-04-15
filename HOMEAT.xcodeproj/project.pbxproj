@@ -51,6 +51,9 @@
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
+		2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */; };
+		2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */; };
+		2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */; };
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
@@ -99,6 +102,9 @@
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
+		2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkCollectionViewCell.swift; sourceTree = "<group>"; };
+		2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkViewController.swift; sourceTree = "<group>"; };
+		2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
@@ -339,6 +345,7 @@
 		0123837E2BBA95900048CC2D /* TalkScene */ = {
 			isa = PBXGroup;
 			children = (
+				2DD9DECF2BCD96A8004664B6 /* cell */,
 				012383852BBA95F70048CC2D /* Model */,
 				012383842BBA95F20048CC2D /* View */,
 				012383832BBA95EC0048CC2D /* Controller */,
@@ -370,6 +377,8 @@
 		012383832BBA95EC0048CC2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
+				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
 			);
 			path = Controller;
@@ -430,6 +439,14 @@
 				2D1C01C32BBF088800235836 /* TagButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		2DD9DECF2BCD96A8004664B6 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
+			);
+			path = cell;
 			sourceTree = "<group>";
 		};
 		582DB2332BC6531600600EA7 /* View */ = {
@@ -556,6 +573,7 @@
 			files = (
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
+				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
@@ -567,6 +585,7 @@
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
+				2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
@@ -574,6 +593,7 @@
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
+				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
