@@ -7,12 +7,13 @@
 
 import Foundation
 import UIKit
-import Charts
 import Tabman
 import Pageboy
+import Then
+import SnapKit
 
 class ReportViewController: TabmanViewController {
-    
+    //MARK: - Property
     private var viewcontrollers : Array<UIViewController> = [] //뷰 컨트롤러의 뷰를 넣을 배열
     private let containerView = UIView()
     private let tabBar = TMBar.ButtonBar()
