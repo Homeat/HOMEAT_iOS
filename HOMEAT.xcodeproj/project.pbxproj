@@ -55,6 +55,9 @@
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
 		589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
+		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
+		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
+		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,8 +101,11 @@
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
-		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthView.swift; sourceTree = SOURCE_ROOT; };
-		589145182BBDA9CC00CF9A05 /* WeakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeakView.swift; sourceTree = SOURCE_ROOT; };
+		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
+		589145182BBDA9CC00CF9A05 /* WeakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeakView.swift; path = HOMEAT/Presentation/ReportScene/View/WeakView.swift; sourceTree = SOURCE_ROOT; };
+		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
+		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
+		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,32 +349,17 @@
 		0123837F2BBA95A60048CC2D /* ReportScene */ = {
 			isa = PBXGroup;
 			children = (
-				012383802BBA95D80048CC2D /* Model */,
-				012383812BBA95DE0048CC2D /* View */,
+				58FE4CDF2BC83AA20059D174 /* Model */,
+				582DB2332BC6531600600EA7 /* View */,
 				012383822BBA95E30048CC2D /* Controller */,
 			);
 			path = ReportScene;
 			sourceTree = "<group>";
 		};
-		012383802BBA95D80048CC2D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		012383812BBA95DE0048CC2D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				589145162BBDA99800CF9A05 /* MonthView.swift */,
-				589145182BBDA9CC00CF9A05 /* WeakView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		012383822BBA95E30048CC2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58FE4CD82BC801700059D174 /* Cell */,
 				582B68592BBC62F600839B16 /* AnalysisViewController.swift */,
 				0123838B2BBA97110048CC2D /* ReportViewController.swift */,
 				582B685B2BBC631C00839B16 /* WeekLookViewController.swift */,
@@ -439,6 +430,32 @@
 				2D1C01C32BBF088800235836 /* TagButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		582DB2332BC6531600600EA7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				58FE4CDC2BC802460059D174 /* WeekCellView.swift */,
+				589145182BBDA9CC00CF9A05 /* WeakView.swift */,
+				589145162BBDA99800CF9A05 /* MonthView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		58FE4CD82BC801700059D174 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		58FE4CDF2BC83AA20059D174 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				58FE4CE02BC84B560059D174 /* WeekCellModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -545,8 +562,10 @@
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
+				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
+				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
@@ -559,6 +578,7 @@
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
+				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
