@@ -43,9 +43,6 @@
 		012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AA2BBC76930048CC2D /* DGChartsDynamic */; };
 		012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AD2BBC76D40048CC2D /* Alamofire */; };
 		012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AF2BBC76D40048CC2D /* AlamofireDynamic */; };
-		0309DD362BBDBD6F00D6133A /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD352BBDBD6F00D6133A /* FoodTalkViewController.swift */; };
-		0309DD382BBDBD8400D6133A /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD372BBDBD8400D6133A /* InfoTalkViewController.swift */; };
-		0309DD3B2BC1A92B00D6133A /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD3A2BC1A92B00D6133A /* FoodTalkCollectionViewCell.swift */; };
 		012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B12BBD32100048CC2D /* UserInfoViewController.swift */; };
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
@@ -94,9 +91,6 @@
 		012383942BBBDF160048CC2D /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		012383962BBBEBB40048CC2D /* InstagramAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramAccountView.swift; sourceTree = "<group>"; };
 		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
-		0309DD352BBDBD6F00D6133A /* FoodTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkViewController.swift; sourceTree = "<group>"; };
-		0309DD372BBDBD8400D6133A /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
-		0309DD3A2BC1A92B00D6133A /* FoodTalkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkCollectionViewCell.swift; sourceTree = "<group>"; };
 		012383B12BBD32100048CC2D /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
@@ -345,7 +339,6 @@
 		0123837E2BBA95900048CC2D /* TalkScene */ = {
 			isa = PBXGroup;
 			children = (
-				0309DD392BC1A90700D6133A /* Cell */,
 				012383852BBA95F70048CC2D /* Model */,
 				012383842BBA95F20048CC2D /* View */,
 				012383832BBA95EC0048CC2D /* Controller */,
@@ -378,8 +371,6 @@
 			isa = PBXGroup;
 			children = (
 				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
-				0309DD352BBDBD6F00D6133A /* FoodTalkViewController.swift */,
-				0309DD372BBDBD8400D6133A /* InfoTalkViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -433,10 +424,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		0309DD392BC1A90700D6133A /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				0309DD3A2BC1A92B00D6133A /* FoodTalkCollectionViewCell.swift */,
 		2D1C01C22BBF087000235836 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -591,14 +578,11 @@
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
-				0309DD382BBDBD8400D6133A /* InfoTalkViewController.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
-				0309DD3B2BC1A92B00D6133A /* FoodTalkCollectionViewCell.swift in Sources */,
-				0309DD362BBDBD6F00D6133A /* FoodTalkViewController.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
