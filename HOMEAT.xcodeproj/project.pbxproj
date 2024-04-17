@@ -51,6 +51,8 @@
 		01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530F12BC7E8F1008C368E /* TargetType.swift */; };
 		01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530F32BC7E956008C368E /* HTTPHeaderField.swift */; };
 		01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530F52BC7E9AC008C368E /* APIEventLogger.swift */; };
+		01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */; };
+		01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FF2BCFDFC9008C368E /* WelcomeView.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -106,6 +108,8 @@
 		01D530F12BC7E8F1008C368E /* TargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetType.swift; sourceTree = "<group>"; };
 		01D530F32BC7E956008C368E /* HTTPHeaderField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPHeaderField.swift; sourceTree = "<group>"; };
 		01D530F52BC7E9AC008C368E /* APIEventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventLogger.swift; sourceTree = "<group>"; };
+		01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
+		01D530FF2BCFDFC9008C368E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -287,8 +291,8 @@
 			isa = PBXGroup;
 			children = (
 				012383392BB7EA9F0048CC2D /* Model */,
-				0123833A2BB7EAA90048CC2D /* View */,
-				0123833B2BB7EAB00048CC2D /* Controller */,
+				01D530FE2BCFDFBA008C368E /* View */,
+				01D530F92BCFB79F008C368E /* Controller */,
 			);
 			path = OnboardingScene;
 			sourceTree = "<group>";
@@ -298,20 +302,6 @@
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		0123833A2BB7EAA90048CC2D /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		0123833B2BB7EAB00048CC2D /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		012383402BB7F8E90048CC2D /* Global */ = {
@@ -451,6 +441,22 @@
 				01D530F52BC7E9AC008C368E /* APIEventLogger.swift */,
 			);
 			path = Base;
+			sourceTree = "<group>";
+		};
+		01D530F92BCFB79F008C368E /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		01D530FE2BCFDFBA008C368E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				01D530FF2BCFDFC9008C368E /* WelcomeView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -619,8 +625,10 @@
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
+				01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
+				01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
