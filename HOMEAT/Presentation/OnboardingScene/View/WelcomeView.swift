@@ -75,7 +75,7 @@ final class WelcomeView: BaseView {
         
         welcomeLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(homeatTextLogo.snp.bottom).offset(15)
+            $0.top.equalTo(logoStackView.snp.bottom).offset(5)
         }
         
     }
