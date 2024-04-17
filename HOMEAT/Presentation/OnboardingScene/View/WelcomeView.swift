@@ -51,8 +51,8 @@ final class WelcomeView: BaseView {
         
         logoStackView.do {
             $0.axis = .horizontal
-            $0.spacing = 5 // Adjust spacing between logo and preposition
-            $0.alignment = .center // Align items vertically in the center
+            $0.spacing = 5
+            $0.alignment = .center
         }
         
         logoStackView.addArrangedSubview(homeatTextLogo)
