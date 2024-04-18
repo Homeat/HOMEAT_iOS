@@ -35,7 +35,6 @@ jobs:
         shell: python
         run: |
           import os
-          value = None
           for label in ${{ toJson(github.event.issue.labels.*.name) }}:
             if ':' in label:
               branch_type = label.split(':')[-1].strip()
