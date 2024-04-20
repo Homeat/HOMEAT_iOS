@@ -20,7 +20,7 @@ class CalenderView: BaseView {
     private let nextButton = UIButton()
     private let dateLabel = UILabel()
     private let weekStackView = UIStackView()
-    
+    private let dayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
     
     //MARK: - Function
     override init(frame: CGRect) {
@@ -69,12 +69,21 @@ class CalenderView: BaseView {
             $0.alignment = .fill
             $0.distribution = .fillEqually
         }
+        
+        dayCollectionView.do {
+            $0.backgroundColor = UIColor(named: "coolGray4")
+            $0.frame = .zero
+            $0.collectionViewLayout = UICollectionViewFlowLayout()
+            $0.dataSource = self
+            $0.delegate = self
+            $0.register(CalenderCollectionViewCell.self, forCellWithReuseIdentifier: CalenderCollectionViewCell.identifier)
+        }
     }
     
     //MARK: - setConstraints
     override func setConstraints() {
         super.setConstraints()
-        self.addSubviews(leftHole, rightHole, previousButton, nextButton, dateLabel, weekStackView)
+        self.addSubviews(leftHole, rightHole, previousButton, nextButton, dateLabel, weekStackView, dayCollectionView)
         
         leftHole.snp.makeConstraints {
             $0.top.equalTo(self).offset(10)
@@ -109,6 +118,14 @@ class CalenderView: BaseView {
             $0.top.equalTo(dateLabel.snp.bottom).offset(20)
             $0.centerX.equalToSuperview()
         }
+        
+        dayCollectionView.snp.makeConstraints {
+            $0.top.equalTo(weekStackView.snp.bottom).offset(13)
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
+        }
+        
     }
     
     private func configureWeekLabel() {
@@ -123,4 +140,29 @@ class CalenderView: BaseView {
             self.weekStackView.addArrangedSubview(label)
         }
     }
+}
+
+extension CalenderView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 28
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalenderCollectionViewCell.identifier, for: indexPath) as? CalenderCollectionViewCell else {return UICollectionViewCell()}
+        
+        return cell
+    }
+    
+    //cell 높이, 넓이 설정
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let width = (self.dayCollectionView.frame.width - 30) / 7
+        let width = self.weekStackView.frame.width/7
+        return CGSize(width: width, height: width * 0.8)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+    
+    
 }
