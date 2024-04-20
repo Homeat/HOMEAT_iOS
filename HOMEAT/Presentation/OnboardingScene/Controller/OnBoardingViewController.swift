@@ -20,10 +20,15 @@ class OnBoardingViewController : BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+        
+        setTarget()
     }
     
     override func setConfigure() {
+        view.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+        }
+        
         introTitleLabel.do {
             $0.text = "1인 가구를 위한 식비 첼린지 커뮤니티"
             $0.font = .bodyMedium18
@@ -79,9 +84,24 @@ class OnBoardingViewController : BaseViewController {
             $0.bottom.equalToSuperview().offset(-76)
             $0.height.equalTo(57)
         }
-
-        
-        
+    }
+    
+    private func setTarget() {
+        signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+        signinButton.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
+    }
+    
+    //MARK: - @objc Func
+    @objc private func signupButtonTapped(_ sender: Any) {
+        let nextVC = LoginViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc private func signinButtonTapped() {
+        let tabBarVC = HOMEATTabBarController()
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.changeRootViewController(to: tabBarVC)
+        }
     }
     
 }
