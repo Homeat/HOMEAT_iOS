@@ -53,6 +53,7 @@
 		01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530F52BC7E9AC008C368E /* APIEventLogger.swift */; };
 		01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */; };
 		01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FF2BCFDFC9008C368E /* WelcomeView.swift */; };
+		01D531022BD14D89008C368E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531012BD14D89008C368E /* LoginViewController.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -110,6 +111,7 @@
 		01D530F52BC7E9AC008C368E /* APIEventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEventLogger.swift; sourceTree = "<group>"; };
 		01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		01D530FF2BCFDFC9008C368E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		01D531012BD14D89008C368E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -447,6 +449,7 @@
 			isa = PBXGroup;
 			children = (
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
+				01D531012BD14D89008C368E /* LoginViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
