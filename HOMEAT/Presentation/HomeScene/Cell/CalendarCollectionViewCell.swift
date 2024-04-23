@@ -14,12 +14,26 @@ class CalendarCollectionViewCell: UICollectionViewCell {
 //    var outPercentage: CGFloat = 0.0 // 외식/배달 퍼센테이지
     lazy var dayLabel = UILabel()
     
+    override var isSelected: Bool {
+        didSet {
+            if isSelected {
+                backgroundColor = .white
+                dayLabel.textColor = .black
+                
+            }
+            else {
+                backgroundColor = UIColor(named: "coolGray4")
+                dayLabel.textColor = .white
+            }
+        }
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setConfigure()
         setConstraints()
     }
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setConfigure()
@@ -29,7 +43,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     private func setConfigure() {
         self.do {
             $0.backgroundColor = UIColor(named: "coolGray4")
-            $0.layer.cornerRadius = 5
+            $0.layer.cornerRadius = 15
             $0.clipsToBounds = true
         }
         
@@ -48,6 +62,12 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             $0.centerX.equalToSuperview()
         }
     }
+    
+//    private func setTextColor() {
+//        if isSelected {
+//            dayLabel.text
+//        }
+//    }
     
     func update(day: String) {
         dayLabel.text = day
