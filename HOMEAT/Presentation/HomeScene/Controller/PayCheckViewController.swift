@@ -16,7 +16,7 @@ class PayCheckViewController : BaseViewController {
     private let homefoodIcon = UIImageView()
     private let eatoutTitleLabel = UILabel()
     private let homefoodTitleLabel = UILabel()
-    private let calenderView = CalenderView()
+    private let calendarView = CalendarView()
     private let payCheckView = PayCheckView()
     private let checkDetailButton = UIButton()
     
@@ -73,7 +73,7 @@ class PayCheckViewController : BaseViewController {
     
     //MARK: - setConstraints
     override func setConstraints() {
-        view.addSubviews(eatoutIcon, homefoodIcon, eatoutTitleLabel, homefoodTitleLabel, calenderView, payCheckView, checkDetailButton)
+        view.addSubviews(eatoutIcon, homefoodIcon, eatoutTitleLabel, homefoodTitleLabel, calendarView, payCheckView, checkDetailButton)
         
         eatoutIcon.snp.makeConstraints {
             $0.top.equalToSuperview().offset(116)
@@ -97,7 +97,7 @@ class PayCheckViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-21)
         }
         
-        calenderView.snp.makeConstraints {
+        calendarView.snp.makeConstraints {
             $0.top.equalTo(homefoodIcon.snp.bottom).offset(17)
             $0.leading.equalToSuperview().offset(19)
             $0.trailing.equalToSuperview().offset(-18)
@@ -105,9 +105,9 @@ class PayCheckViewController : BaseViewController {
         }
         
         payCheckView.snp.makeConstraints {
-            $0.top.equalTo(calenderView.snp.bottom).offset(33)
-            $0.leading.equalTo(calenderView)
-            $0.trailing.equalTo(calenderView)
+            $0.top.equalTo(calendarView.snp.bottom).offset(33)
+            $0.leading.equalTo(calendarView)
+            $0.trailing.equalTo(calendarView)
             $0.bottom.equalToSuperview().offset(-200)
         }
         

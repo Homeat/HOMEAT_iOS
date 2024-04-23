@@ -1,5 +1,5 @@
 //
-//  CalenderView.swift
+//  CalendarView.swift
 //  HOMEAT
 //
 //  Created by 강삼고 on 4/10/24.
@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class CalenderView: BaseView {
+class CalendarView: BaseView {
     
     //MARK: - component
     private let leftHole = UIImageView()
@@ -21,6 +21,8 @@ class CalenderView: BaseView {
     private let dateLabel = UILabel()
     private let weekStackView = UIStackView()
     private let dayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    //캘린더 관련 컴포넌트
+    private let calendar = Calendar.current
     
     //MARK: - Function
     override init(frame: CGRect) {
@@ -76,7 +78,7 @@ class CalenderView: BaseView {
             $0.collectionViewLayout = UICollectionViewFlowLayout()
             $0.dataSource = self
             $0.delegate = self
-            $0.register(CalenderCollectionViewCell.self, forCellWithReuseIdentifier: CalenderCollectionViewCell.identifier)
+            $0.register(CalendarCollectionViewCell.self, forCellWithReuseIdentifier: CalendarCollectionViewCell.identifier)
         }
     }
     
@@ -142,13 +144,13 @@ class CalenderView: BaseView {
     }
 }
 
-extension CalenderView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 28
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalenderCollectionViewCell.identifier, for: indexPath) as? CalenderCollectionViewCell else {return UICollectionViewCell()}
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {return UICollectionViewCell()}
         
         return cell
     }

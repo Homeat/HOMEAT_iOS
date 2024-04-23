@@ -1,5 +1,5 @@
 //
-//  CalenderCollectionViewCell.swift
+//  CalendarCollectionViewCell.swift
 //  HOMEAT
 //
 //  Created by 강삼고 on 4/18/24.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class CalenderCollectionViewCell: UICollectionViewCell {
+class CalendarCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "CalenderCollectionViewCell"
+    static let identifier = "CalendarCollectionViewCell"
 //    var jipbapPercentage: CGFloat = 0.0 // 집밥 퍼센테이지
 //    var outPercentage: CGFloat = 0.0 // 외식/배달 퍼센테이지
     lazy var dayLabel = UILabel()
@@ -41,7 +41,7 @@ class CalenderCollectionViewCell: UICollectionViewCell {
         dayLabel.do {
             $0.textColor = UIColor.white
             $0.font = .bodyBold15
-            $0.text = "17"
+            $0.text = "0"
         }
         
 
