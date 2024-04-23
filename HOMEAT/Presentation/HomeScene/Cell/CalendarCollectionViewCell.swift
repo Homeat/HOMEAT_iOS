@@ -26,16 +26,11 @@ class CalendarCollectionViewCell: UICollectionViewCell {
         setConstraints()
     }
     
-//    override func prepareForReuse() {
-//        self.dayLabel.text = nil
-//    }
-//    func update(day: String) {
-//        self.dayLabel.text = day
-//    }
-    
     private func setConfigure() {
         self.do {
             $0.backgroundColor = UIColor(named: "coolGray4")
+            $0.layer.cornerRadius = 5
+            $0.clipsToBounds = true
         }
         
         dayLabel.do {
@@ -43,29 +38,18 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             $0.font = .bodyBold15
             $0.text = "0"
         }
-        
-
-        // contentView에 원형의 코너 라디우스 적용
-//        self.applyCornerRadius()
     }
     
     private func setConstraints() {
         self.addSubview(dayLabel)
         
         dayLabel.snp.makeConstraints{
-            $0.top.equalToSuperview().offset(10)
+            $0.centerY.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
-        
     }
     
-//    func applyCornerRadius() {
-//        self.contentView.layer.cornerRadius = self.bounds.width / 2
-//        self.contentView.clipsToBounds = true
-//    }
-//    
-//    func removeCornerRadius() {
-//        self.contentView.layer.cornerRadius = 0
-//        self.contentView.clipsToBounds = false
-//    }
+    func update(day: String) {
+        dayLabel.text = day
+    }
 }

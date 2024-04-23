@@ -21,13 +21,18 @@ class CalendarView: BaseView {
     private let dateLabel = UILabel()
     private let weekStackView = UIStackView()
     private let dayCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-    //캘린더 관련 컴포넌트
+    //calendar 관련 컴포넌트
     private let calendar = Calendar.current
+    private let dateFormatter = DateFormatter()
+    private var calendarDate = Date()
+    private var days = [String]()
     
     //MARK: - Function
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureWeekLabel()
+        configureCalender()
+        setAddTarget()
     }
     //MARK: - setConfigure
     override func setConfigure() {
@@ -118,17 +123,35 @@ class CalendarView: BaseView {
         
         weekStackView.snp.makeConstraints {
             $0.top.equalTo(dateLabel.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
         }
         
         dayCollectionView.snp.makeConstraints {
             $0.top.equalTo(weekStackView.snp.bottom).offset(13)
-            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(5)
+            $0.trailing.equalToSuperview().offset(-5)
             $0.bottom.equalToSuperview()
-            $0.width.equalToSuperview()
         }
-        
     }
+    
+    private func setAddTarget() {
+        previousButton.addTarget(self, action: #selector(isPreviousButtonTapped), for: .touchUpInside)
+        
+        nextButton.addTarget(self, action: #selector(isNextButtonTapped), for: .touchUpInside)
+    }
+    
+    //MARK: - @objc Func
+    @objc func isPreviousButtonTapped(_ sender: Any) {
+        minusMonth()
+    }
+    
+    @objc func isNextButtonTapped(_ sender: Any) {
+        plusMonth()
+    }
+}
+
+extension CalendarView {
     
     private func configureWeekLabel() {
         let dayOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"]
@@ -142,28 +165,85 @@ class CalendarView: BaseView {
             self.weekStackView.addArrangedSubview(label)
         }
     }
+    
+    private func configureCalender() {
+        let components = calendar.dateComponents([.year, .month], from: Date())
+        calendarDate = calendar.date(from: components) ?? Date()
+        dateFormatter.dateFormat = "yyyy년 MM월"
+        updateCalendar()
+        
+    }
+    //시작 요일 반환
+    private func startDayOfTheWeek() -> Int {
+        return calendar.component(.weekday, from: calendarDate) - 1
+    }
+    
+    private func endDate() -> Int {
+        return calendar.range(of: .day, in: .month, for: calendarDate)?.count ?? Int()
+    }
+    
+    private func updateCalendar() {
+        updateTitle()
+        updateDays()
+    }
+    
+    private func updateTitle() {
+        let date = dateFormatter.string(from: calendarDate)
+        dateLabel.text = date
+    }
+    
+    private func updateDays() {
+        days.removeAll()
+        let startDayOfTheWeek = startDayOfTheWeek()
+        let totalDays = startDayOfTheWeek + endDate()
+        
+        for day in Int()..<totalDays {
+            if day < startDayOfTheWeek {
+                days.append(String())
+                continue
+            }
+            days.append("\(day - startDayOfTheWeek + 1)")
+        }
+        
+        dayCollectionView.reloadData()
+    }
+    
+    private func minusMonth() {
+        calendarDate = calendar.date(byAdding: DateComponents(month: -1), to: calendarDate) ?? Date()
+        updateCalendar()
+    }
+    
+    private func plusMonth() {
+        calendarDate = calendar.date(byAdding: DateComponents(month: 1), to: calendarDate) ?? Date()
+        updateCalendar()
+    }
+    
 }
 
 extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 28
+        return days.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {return UICollectionViewCell()}
+        cell.update(day: days[indexPath.item])
         
         return cell
     }
     
     //cell 높이, 넓이 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = (self.dayCollectionView.frame.width - 30) / 7
-        let width = self.weekStackView.frame.width/7
+        let width = (dayCollectionView.frame.width-10) / 7
         return CGSize(width: width, height: width * 0.8)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return .zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 2
     }
     
     
