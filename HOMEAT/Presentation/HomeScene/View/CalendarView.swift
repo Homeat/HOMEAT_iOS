@@ -173,7 +173,7 @@ extension CalendarView {
         updateCalendar()
         
     }
-    //시작 요일 반환
+
     private func startDayOfTheWeek() -> Int {
         return calendar.component(.weekday, from: calendarDate) - 1
     }
@@ -232,7 +232,6 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
         return cell
     }
     
-    //cell 높이, 넓이 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (dayCollectionView.frame.width-10) / 7
         return CGSize(width: width, height: width * 0.8)

@@ -25,7 +25,6 @@ class HomeView: BaseView {
     weak var delegate: HomeViewDelegate?
     
     //MARK: - Function
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupPieChart(remainingPercent: 3)
@@ -72,7 +71,6 @@ class HomeView: BaseView {
         editButton.do {
             $0.setImage(UIImage(named: "pencilIcon"), for: .normal)
         }
-        
     }
     
     //MARK: - setConstraints
@@ -136,14 +134,10 @@ class HomeView: BaseView {
                 let otherColor = UIColor.black
                 dataSet.colors = [customGreenColor, otherColor]
         }
-        //piechart edge 삭제
         dataSet.selectionShift = 0
         let data = PieChartData(dataSet: dataSet)
-        // 중앙 hole 생성
         pieChart.holeRadiusPercent = 0.8
-        // hole 색상 투명하게 설정
         pieChart.holeColor = .clear
-        //범례, 숫자 같은 부가요소 제거
         dataSet.drawValuesEnabled = false
         dataSet.drawIconsEnabled = false
         pieChart.data = data
@@ -155,6 +149,7 @@ class HomeView: BaseView {
         self.delegate?.editButtonTapped()
     }
 }
+
 //MARK: - Protocol
 protocol HomeViewDelegate: AnyObject {
     func editButtonTapped()

@@ -10,8 +10,6 @@ import UIKit
 class CalendarCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "CalendarCollectionViewCell"
-//    var jipbapPercentage: CGFloat = 0.0 // 집밥 퍼센테이지
-//    var outPercentage: CGFloat = 0.0 // 외식/배달 퍼센테이지
     lazy var dayLabel = UILabel()
     
     override var isSelected: Bool {
@@ -62,12 +60,6 @@ class CalendarCollectionViewCell: UICollectionViewCell {
             $0.centerX.equalToSuperview()
         }
     }
-    
-//    private func setTextColor() {
-//        if isSelected {
-//            dayLabel.text
-//        }
-//    }
     
     func update(day: String) {
         dayLabel.text = day
