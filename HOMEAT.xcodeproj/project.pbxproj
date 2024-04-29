@@ -54,6 +54,7 @@
 		01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */; };
 		01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FF2BCFDFC9008C368E /* WelcomeView.swift */; };
 		01D531022BD14D89008C368E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531012BD14D89008C368E /* LoginViewController.swift */; };
+		01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5310A2BDF78C4008C368E /* BaseResponse.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -112,6 +113,7 @@
 		01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		01D530FF2BCFDFC9008C368E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		01D531012BD14D89008C368E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		01D5310A2BDF78C4008C368E /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 				01D530F12BC7E8F1008C368E /* TargetType.swift */,
 				01D530F32BC7E956008C368E /* HTTPHeaderField.swift */,
 				01D530F52BC7E9AC008C368E /* APIEventLogger.swift */,
+				01D5310A2BDF78C4008C368E /* BaseResponse.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -609,6 +612,7 @@
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
+				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
