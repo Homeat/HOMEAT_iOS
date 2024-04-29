@@ -18,6 +18,7 @@ final class LoginViewController : BaseViewController {
     private let passwordLabel = UILabel()
     private let passwordTextField = UITextField()
     private let loginButton = UIButton()
+    private let kakaoButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,11 +75,18 @@ final class LoginViewController : BaseViewController {
             $0.leftView = leftPaddingView
             $0.leftViewMode = .always
         }
+        
+        kakaoButton.do {
+            $0.backgroundColor = UIColor(r: 254, g: 229, b: 0)
+            $0.setImage(UIImage(named: "kakaoLogo"), for: .normal)
+            $0.layer.cornerRadius = 27
+            $0.clipsToBounds = true
+        }
     }
     
     override func setConstraints() {
         
-        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField)
+        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, kakaoButton)
         
         homeatTextLogo.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -107,6 +115,13 @@ final class LoginViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(passwordLabel.snp.bottom).offset(12)
             $0.height.equalTo(57)
+        }
+        
+        kakaoButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(52)
+            $0.height.equalTo(57)
+            $0.width.equalTo(57)
         }
         
     }
