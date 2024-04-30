@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 import Then
 import SnapKit
+import KakaoSDKUser
+import KakaoSDKAuth
+import KakaoSDKCommon
 
 final class LoginViewController : BaseViewController {
     
@@ -22,6 +25,8 @@ final class LoginViewController : BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setTarget()
     }
     
     // MARK: UI
@@ -126,4 +131,129 @@ final class LoginViewController : BaseViewController {
         
     }
     
+    private func setTarget() {
+        kakaoButton.addTarget(self, action: #selector(loginKakao), for: .touchUpInside)
+    }
+    
+    @objc private func loginKakao(_ sender: Any) {
+        print("loginKakao() called.")
+        
+        // ✅ 카카오톡 설치 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.")
+                    
+                    // ✅ 회원가입 성공 시 oauthToken 저장가능하다
+                    // _ = oauthToken
+                    print("*************")
+                    print(oauthToken!)
+                    print("*************")
+                    // ✅ 사용자정보를 성공적으로 가져오면 화면전환 한다.
+//                    self.getUserInfo()
+                    print("-----------------")
+//                    self.isToken()
+                }
+            }
+        }
+        else {
+            print("카카오톡 미설치")
+        }
+    }
+}
+
+extension LoginViewController {
+    
+    private func getUserInfo() {
+        
+        // ✅ 사용자 정보 가져오기
+        UserApi.shared.me() {(user, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("me() success.")
+                
+                // ✅ 닉네임, 이메일 정보
+                let nickname = user?.kakaoAccount?.profile?.nickname
+                
+                print(nickname!)
+                
+            }
+        }
+    }
+    
+    private func getAccessTokenInfo() {
+        
+        UserApi.shared.accessTokenInfo {(accessTokenInfo, error) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                print("accessTokenInfo() success.")
+                
+                //do something
+                _ = accessTokenInfo
+                print(accessTokenInfo!)
+            }
+        }
+    }
+    
+    private func isToken() {
+        if (AuthApi.hasToken()) {
+            UserApi.shared.accessTokenInfo { (_, error) in
+                if let error = error {
+                    if let sdkError = error as? SdkError, sdkError.isInvalidTokenError() == true  {
+                        //로그인 필요
+                        print("로그인 필요")
+                    }
+                    else {
+                        //기타 에러
+                        print("기타 에러")
+                    }
+                }
+                else {
+                    //토큰 유효성 체크 성공(필요 시 토큰 갱신됨)
+                    print("토큰 유효성 체크 성공")
+                }
+            }
+        }
+        else {
+            //로그인 필요
+            print("로그인 필요!")
+        }
+    }
+    
+    // MARK: 서버에 카카오톡 토큰 전달
+    /*
+    private func pushTokenFromKakaoLogin(_ info: TokenInfo, completion: @escaping (String?, String?, String?, Error?)->()) {
+        var request = URLRequest(url: URL(string: self.urlCollections["pushKakaoToken"]!)!)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONEncoder().encode(info)
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+                completion(nil, nil, nil, error)
+            } else if let data = data {
+                let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary
+                // 제이슨 파싱해서 유저정보(닉네임, 이메일 가져오기)
+                if let jsonObjData = jsonData?["data"] as? NSDictionary {
+                    if let jsonKeyDataNickname = jsonObjData["nickname"] as? String,
+                       let jsonKeyDataEmail = jsonObjData["email"] as? String,
+                       let jsonKeyDataProvider = jsonObjData["provider"] as? String {
+                        //print("good good \(jsonKeyDataEmail) \(jsonKeyDataNickname)")
+                        completion(jsonKeyDataEmail, jsonKeyDataNickname, jsonKeyDataProvider, nil)
+                    }
+                }
+                if let response = response {
+                    print("Push Kakao token and returned response is: \(response)")
+                }
+            }
+        }.resume()
+    }
+    */
 }
