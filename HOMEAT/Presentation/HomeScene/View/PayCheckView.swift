@@ -163,11 +163,6 @@ class PayCheckView: BaseView {
         }
         
         homefoodSpentLabel.snp.makeConstraints {
-            $0.centerY.equalTo(homefoodTitleLabel)
-            $0.trailing.equalToSuperview()
-        }
-        
-        homefoodSpentLabel.snp.makeConstraints {
             $0.centerY.equalTo(homefoodTitleLabel).offset(-4)
             $0.trailing.equalToSuperview()
         }
