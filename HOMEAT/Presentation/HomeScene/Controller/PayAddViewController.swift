@@ -49,21 +49,20 @@ class PayAddViewController: BaseViewController {
         
         cameraButton.do {
             var attributedTitle = AttributedString("영수증 사진 촬영")
-            attributedTitle.font = .bodyBold18
             var config = UIButton.Configuration.plain()
-            config.attributedTitle = attributedTitle
             let pointSize = CGFloat(30)
             let imageConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
+            attributedTitle.font = .bodyBold18
+            config.attributedTitle = attributedTitle
             config.image = UIImage(named: "cameraIcon")
             config.preferredSymbolConfigurationForImage = imageConfig
             config.imagePlacement = .top
             config.background.backgroundColor = UIColor(r: 42, g: 42, b: 44)
             config.baseForegroundColor = .white
-            config.cornerStyle = .small
-            // 이미지와 텍스트 간격 조절
             config.imagePadding = 19.7
             $0.configuration = config
-
+            $0.clipsToBounds = true
+            $0.layer.cornerRadius = 14
         }
         
         priceTextField.do {
@@ -123,9 +122,11 @@ class PayAddViewController: BaseViewController {
         
         cameraActionSheet.do {
             let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { action in
-                self.present(self.imagePicker, animated: true, completion: nil)
+                self.openCamera()
             }
-            let selectAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default, handler: nil)
+            let selectAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default) { action in
+                self.openPhotoLibrary()
+            }
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             takeAction.setValue(UIColor.white, forKey: "titleTextColor")
             selectAction.setValue(UIColor.white, forKey: "titleTextColor")
@@ -140,7 +141,9 @@ class PayAddViewController: BaseViewController {
             $0.allowsEditing = true
             $0.cameraDevice = .rear
             $0.delegate = self
+            $0.cameraCaptureMode = .photo
         }
+        
     }
     
     //MARK: - setConstraints
@@ -159,7 +162,7 @@ class PayAddViewController: BaseViewController {
         }
         
         priceTextField.snp.makeConstraints {
-            $0.top.equalTo(cameraButton.snp.bottom).offset(21)
+            $0.top.equalTo(cameraButton.snp.bottom).offset(29)
             $0.leading.equalToSuperview().offset(105)
             $0.trailing.equalToSuperview().offset(-104)
             $0.height.equalTo(43)
@@ -182,6 +185,7 @@ class PayAddViewController: BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(50)
         }
+        
     }
     
     private func setNavigationBar() {
@@ -204,6 +208,16 @@ class PayAddViewController: BaseViewController {
         self.tabBarController?.tabBar.isHidden = true
     }
     
+    private func openCamera() {
+        imagePicker.sourceType = .camera
+        present(imagePicker, animated: true)
+    }
+    
+    private func openPhotoLibrary() {
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true)
+    }
+    
     //MARK: - @objc Func
     @objc func saveButtonTapped(_ sender: UIBarButtonItem) {
         present(saveAlert, animated: true)
@@ -214,17 +228,29 @@ class PayAddViewController: BaseViewController {
     }
 }
 
+//MARK: - Extension
 extension PayAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-            cameraButton.setImage(image, for: .normal)
+            let resizeImage = image.resizeImage(toFit: cameraButton)
+            cameraButton.setImage(resizeImage, for: .normal)
+            cameraButton.setTitle("", for: .normal)
         }
         picker.dismiss(animated: true)
-        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
+    }
+}
+
+extension UIImage {
+    func resizeImage(toFit button: UIButton) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: button.frame.size)
+        let resizedImage = renderer.image { _ in
+            draw(in: CGRect(origin: .zero, size: button.frame.size))
+        }
+        return resizedImage
     }
 }
