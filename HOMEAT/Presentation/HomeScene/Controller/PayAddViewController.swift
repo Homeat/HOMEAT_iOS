@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-class PayAddViewController : BaseViewController {
+class PayAddViewController: BaseViewController {
     
     //MARK: - Property
     private let cameraButton = UIButton()
@@ -23,6 +23,7 @@ class PayAddViewController : BaseViewController {
     private let cameraActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
     private let tagStackView = UIStackView()
+    private let imagePicker = UIImagePickerController()
     
     //MARK: - Function
     override func viewDidLoad() {
@@ -88,7 +89,7 @@ class PayAddViewController : BaseViewController {
         }
         
         tagStackView.do {
-            $0.spacing = 20
+            $0.spacing = 18
             $0.axis = .horizontal
             $0.alignment = .fill
             $0.distribution = .fillEqually
@@ -121,7 +122,9 @@ class PayAddViewController : BaseViewController {
         }
         
         cameraActionSheet.do {
-            let takeAction = UIAlertAction(title: "사진 촬영", style: .default, handler: nil)
+            let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { [self] action in
+                present(imagePicker, animated: true, completion: nil)
+            }
             let selectAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default, handler: nil)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
             takeAction.setValue(UIColor.white, forKey: "titleTextColor")
@@ -130,6 +133,13 @@ class PayAddViewController : BaseViewController {
             $0.addAction(takeAction)
             $0.addAction(selectAction)
             $0.addAction(cancelAction)
+        }
+        
+        imagePicker.do {
+            $0.sourceType = .camera
+            $0.allowsEditing = true
+            $0.cameraDevice = .rear
+            $0.delegate = self
         }
     }
     
@@ -201,5 +211,17 @@ class PayAddViewController : BaseViewController {
     
     @objc func cameraButtonTapped(_ sender: Any) {
         present(cameraActionSheet, animated: true)
+    }
+}
+
+extension PayAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true)
+        
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }
