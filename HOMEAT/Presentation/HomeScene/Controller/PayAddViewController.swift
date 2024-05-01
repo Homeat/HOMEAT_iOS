@@ -122,8 +122,8 @@ class PayAddViewController: BaseViewController {
         }
         
         cameraActionSheet.do {
-            let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { [self] action in
-                present(imagePicker, animated: true, completion: nil)
+            let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { action in
+                self.present(self.imagePicker, animated: true, completion: nil)
             }
             let selectAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default, handler: nil)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -217,6 +217,9 @@ class PayAddViewController: BaseViewController {
 extension PayAddViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
+            cameraButton.setImage(image, for: .normal)
+        }
         picker.dismiss(animated: true)
         
     }
