@@ -22,7 +22,7 @@ class PayAddViewController : BaseViewController {
     private let saveAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
     private let cameraActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
-    let tagStackView = UIStackView()
+    private let tagStackView = UIStackView()
     
     //MARK: - Function
     override func viewDidLoad() {
