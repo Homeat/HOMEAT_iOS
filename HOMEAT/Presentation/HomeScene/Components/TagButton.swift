@@ -49,7 +49,6 @@ extension TagButton {
     private func setConstraints() {
         self.snp.makeConstraints {
             $0.height.equalTo(40)
-            $0.width.equalTo(94)
         }
     }
     
