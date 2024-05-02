@@ -209,6 +209,7 @@ final class WeakView: BaseView {
         jipbapWeekBarChartView.data = barData
         jipbapWeekBarChartView.notifyDataSetChanged()
         jipbapWeekBarChartView.legend.enabled = false
+        jipbapWeekBarChartView.isUserInteractionEnabled = false
         
     }
     
@@ -252,6 +253,7 @@ final class WeakView: BaseView {
         deliveryWeekBarChartView.data = barData
         deliveryWeekBarChartView.notifyDataSetChanged()
         deliveryWeekBarChartView.legend.enabled = false
+        deliveryWeekBarChartView.isUserInteractionEnabled = false
     }
     //MARK: - @objc Func
     @objc func weekBackTapped() {
