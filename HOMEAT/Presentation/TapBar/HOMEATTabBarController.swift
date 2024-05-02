@@ -34,6 +34,7 @@ class HOMEATTabBarController: UITabBarController {
     }
     
     private func setupTabBarAppearance() {
+        tabBar.isTranslucent = false
         setTabBarColors(
             backgroundColor: UIColor(r: 54, g: 56, b: 57),
             tintColor: UIColor(r: 7, g: 231, b: 149),
