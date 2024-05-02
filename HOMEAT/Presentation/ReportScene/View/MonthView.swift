@@ -43,7 +43,7 @@ final class MonthView: BaseView {
         }
         
         yearMonthLabel.do {
-            $0.text = "2024년 4월"
+            $0.text = "2024년 04월"
             $0.textColor = .white
             $0.textAlignment = .center
             $0.font = .bodyMedium18
@@ -192,6 +192,7 @@ final class MonthView: BaseView {
             $0.trailing.equalToSuperview().inset(45.7)
             $0.bottom.equalToSuperview().inset(30)
         }
+        barChartView.isUserInteractionEnabled = false
         print(barChartHeight)
     }
 
