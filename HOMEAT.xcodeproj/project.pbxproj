@@ -7,10 +7,12 @@
     objects = {
 
 /* Begin PBXBuildFile section */
-        012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E42BB3F96D0048CC2D /* AppDelegate.swift */; };
-        012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E62BB3F96D0048CC2D /* SceneDelegate.swift */; };
-        012382EE2BB3F96E0048CC2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012382ED2BB3F96E0048CC2D /* Assets.xcassets */; };
+				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E42BB3F96D0048CC2D /* AppDelegate.swift */; };
+				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E62BB3F96D0048CC2D /* SceneDelegate.swift */; };
+				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E82BB3F96D0048CC2D /* HomeViewController.swift */; };
+				012382EE2BB3F96E0048CC2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 012382ED2BB3F96E0048CC2D /* Assets.xcassets */; };
         012382F12BB3F96E0048CC2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 012382EF2BB3F96E0048CC2D /* LaunchScreen.storyboard */; };
+        012382F92BB401730048CC2D /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382F82BB401730048CC2D /* HomeView.swift */; };
         012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383012BB40BC80048CC2D /* BaseViewController.swift */; };
         0123830C2BB40F070048CC2D /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123830B2BB40F070048CC2D /* BaseView.swift */; };
         0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0123833C2BB7EBD00048CC2D /* UIColor+.swift */; };
@@ -36,11 +38,8 @@
         0123839E2BBC762F0048CC2D /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 0123839D2BBC762F0048CC2D /* Tabman */; };
         012383A12BBC76570048CC2D /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A02BBC76570048CC2D /* Then */; };
         012383A42BBC766C0048CC2D /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A32BBC766C0048CC2D /* SnapKit */; };
-        012383A62BBC766C0048CC2D /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A52BBC766C0048CC2D /* SnapKit-Dynamic */; };
         012383A92BBC76930048CC2D /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = 012383A82BBC76930048CC2D /* DGCharts */; };
-        012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AA2BBC76930048CC2D /* DGChartsDynamic */; };
         012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AD2BBC76D40048CC2D /* Alamofire */; };
-        012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AF2BBC76D40048CC2D /* AlamofireDynamic */; };
         012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B12BBD32100048CC2D /* UserInfoViewController.swift */; };
         012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
         01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
@@ -52,37 +51,68 @@
         01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */; };
         01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530FF2BCFDFC9008C368E /* WelcomeView.swift */; };
         01D531022BD14D89008C368E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531012BD14D89008C368E /* LoginViewController.swift */; };
+        01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5310A2BDF78C4008C368E /* BaseResponse.swift */; };
+        01D5310E2BDF851F008C368E /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5310D2BDF851F008C368E /* KakaoSDK */; };
+        01D531102BDF851F008C368E /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5310F2BDF851F008C368E /* KakaoSDKAuth */; };
+        01D531122BDF851F008C368E /* KakaoSDKCert in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531112BDF851F008C368E /* KakaoSDKCert */; };
+        01D531142BDF851F008C368E /* KakaoSDKCertCore in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531132BDF851F008C368E /* KakaoSDKCertCore */; };
+        01D531162BDF851F008C368E /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531152BDF851F008C368E /* KakaoSDKCommon */; };
+        01D531182BDF851F008C368E /* KakaoSDKFriend in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531172BDF851F008C368E /* KakaoSDKFriend */; };
+        01D5311A2BDF851F008C368E /* KakaoSDKFriendCore in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531192BDF851F008C368E /* KakaoSDKFriendCore */; };
+        01D5311C2BDF851F008C368E /* KakaoSDKNavi in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5311B2BDF851F008C368E /* KakaoSDKNavi */; };
+        01D5311E2BDF851F008C368E /* KakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5311D2BDF851F008C368E /* KakaoSDKShare */; };
+        01D531202BDF851F008C368E /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5311F2BDF851F008C368E /* KakaoSDKTalk */; };
+        01D531222BDF851F008C368E /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531212BDF851F008C368E /* KakaoSDKTemplate */; };
+        01D531242BDF851F008C368E /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 01D531232BDF851F008C368E /* KakaoSDKUser */; };
+        01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531272BDFBC5B008C368E /* KeychainHandler.swift */; };
+        01D5312B2BDFBCBA008C368E /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 01D5312A2BDFBCBA008C368E /* SwiftKeychainWrapper */; };
+        01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */; };
+        01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531322BDFC647008C368E /* KakaoLoginResponseDTO.swift */; };
+        01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531362BDFC6A8008C368E /* OnboardingTarget.swift */; };
+        01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531382BDFCC27008C368E /* OnboardingService.swift */; };
+        01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5313A2BDFCCBB008C368E /* UserInfoResponseDTO.swift */; };
+        01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5313C2BDFCD3C008C368E /* APIRequestLoader.swift */; };
+        01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5313E2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift */; };
+        01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531402BDFCDFE008C368E /* NetworkService.swift */; };
+        01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */; };
         2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
-        2D7F103C2BDA7D7400C16D0E /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F103A2BDA7D7400C16D0E /* CalendarCollectionViewCell.swift */; };
-        2D7F10432BDA7D8F00C16D0E /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F103D2BDA7D8F00C16D0E /* CalendarView.swift */; };
-        2D7F10442BDA7D8F00C16D0E /* EatoutCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F103E2BDA7D8F00C16D0E /* EatoutCheckView.swift */; };
-        2D7F10452BDA7D8F00C16D0E /* HomefoodCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F103F2BDA7D8F00C16D0E /* HomefoodCheckView.swift */; };
-        2D7F10462BDA7D8F00C16D0E /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F10402BDA7D8F00C16D0E /* HomeView.swift */; };
-        2D7F10472BDA7D8F00C16D0E /* PayCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F10412BDA7D8F00C16D0E /* PayCheckView.swift */; };
-        2D7F104E2BDA7DB000C16D0E /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F10482BDA7DB000C16D0E /* EditDoneViewController.swift */; };
-        2D7F104F2BDA7DB000C16D0E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F10492BDA7DB000C16D0E /* HomeViewController.swift */; };
-        2D7F10502BDA7DB000C16D0E /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F104A2BDA7DB000C16D0E /* PayAddViewController.swift */; };
-        2D7F10512BDA7DB000C16D0E /* PayCheckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F104B2BDA7DB000C16D0E /* PayCheckDetailViewController.swift */; };
-        2D7F10522BDA7DB000C16D0E /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7F104C2BDA7DB000C16D0E /* PayCheckViewController.swift */; };
-        2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */; };
-        2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */; };
-        2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */; };
-        582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
-        582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
-        589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
-        589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
-        58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
-        58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
-        58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
+        2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
+		    2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
+		    2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
+		    2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */; };
+		    2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */; };
+		    2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */; };
+		    582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
+		    582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
+				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
+				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
+				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
+				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
+				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		01D531262BDF8B40008C368E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
         012382E12BB3F96D0048CC2D /* HOMEAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HOMEAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
         012382E42BB3F96D0048CC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
         012382E62BB3F96D0048CC2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+        012382E82BB3F96D0048CC2D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
         012382ED2BB3F96E0048CC2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
         012382F02BB3F96E0048CC2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
         012382F22BB3F96E0048CC2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+        012382F82BB401730048CC2D /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
         012383012BB40BC80048CC2D /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
         0123830B2BB40F070048CC2D /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
         0123833C2BB7EBD00048CC2D /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
@@ -116,18 +146,21 @@
         01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
         01D530FF2BCFDFC9008C368E /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
         01D531012BD14D89008C368E /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+        01D5310A2BDF78C4008C368E /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+        01D531272BDFBC5B008C368E /* KeychainHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHandler.swift; sourceTree = "<group>"; };
+        01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequestBodyDTO.swift; sourceTree = "<group>"; };
+        01D531322BDFC647008C368E /* KakaoLoginResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginResponseDTO.swift; sourceTree = "<group>"; };
+        01D531362BDFC6A8008C368E /* OnboardingTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTarget.swift; sourceTree = "<group>"; };
+        01D531382BDFCC27008C368E /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
+        01D5313A2BDFCCBB008C368E /* UserInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoResponseDTO.swift; sourceTree = "<group>"; };
+        01D5313C2BDFCD3C008C368E /* APIRequestLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequestLoader.swift; sourceTree = "<group>"; };
+        01D5313E2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOMEATRequestInterceptor.swift; sourceTree = "<group>"; };
+        01D531402BDFCDFE008C368E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+        01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshResponseDTO.swift; sourceTree = "<group>"; };
         2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
-        2D7F103A2BDA7D7400C16D0E /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
-        2D7F103D2BDA7D8F00C16D0E /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
-        2D7F103E2BDA7D8F00C16D0E /* EatoutCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EatoutCheckView.swift; sourceTree = "<group>"; };
-        2D7F103F2BDA7D8F00C16D0E /* HomefoodCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomefoodCheckView.swift; sourceTree = "<group>"; };
-        2D7F10402BDA7D8F00C16D0E /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-        2D7F10412BDA7D8F00C16D0E /* PayCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayCheckView.swift; sourceTree = "<group>"; };
-        2D7F10482BDA7DB000C16D0E /* EditDoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
-        2D7F10492BDA7DB000C16D0E /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-        2D7F104A2BDA7DB000C16D0E /* PayAddViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
-        2D7F104B2BDA7DB000C16D0E /* PayCheckDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayCheckDetailViewController.swift; sourceTree = "<group>"; };
-        2D7F104C2BDA7DB000C16D0E /* PayCheckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
+        2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
+        2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
+        2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
         2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkCollectionViewCell.swift; sourceTree = "<group>"; };
         2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkViewController.swift; sourceTree = "<group>"; };
         2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
@@ -138,466 +171,535 @@
         58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
         58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
         58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
-/* End PBXFileReference section */
+    /* End PBXFileReference section */
 
-/* Begin PBXFrameworksBuildPhase section */
+    /* Begin PBXFrameworksBuildPhase section */
         012382DE2BB3F96D0048CC2D /* Frameworks */ = {
-            isa = PBXFrameworksBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-                012383A42BBC766C0048CC2D /* SnapKit in Frameworks */,
-                012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */,
-                0123839E2BBC762F0048CC2D /* Tabman in Frameworks */,
-                012383A92BBC76930048CC2D /* DGCharts in Frameworks */,
-                012383A12BBC76570048CC2D /* Then in Frameworks */,
-                012383B02BBC76D40048CC2D /* AlamofireDynamic in Frameworks */,
-                012383AB2BBC76930048CC2D /* DGChartsDynamic in Frameworks */,
-                012383A62BBC766C0048CC2D /* SnapKit-Dynamic in Frameworks */,
-            );
-            runOnlyForDeploymentPostprocessing = 0;
+          isa = PBXFrameworksBuildPhase;
+          buildActionMask = 2147483647;
+          files = (
+            01D531162BDF851F008C368E /* KakaoSDKCommon in Frameworks */,
+            01D531182BDF851F008C368E /* KakaoSDKFriend in Frameworks */,
+            012383A42BBC766C0048CC2D /* SnapKit in Frameworks */,
+            01D531202BDF851F008C368E /* KakaoSDKTalk in Frameworks */,
+            01D5311C2BDF851F008C368E /* KakaoSDKNavi in Frameworks */,
+            012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */,
+            01D5311E2BDF851F008C368E /* KakaoSDKShare in Frameworks */,
+            01D531122BDF851F008C368E /* KakaoSDKCert in Frameworks */,
+            01D5312B2BDFBCBA008C368E /* SwiftKeychainWrapper in Frameworks */,
+            01D531242BDF851F008C368E /* KakaoSDKUser in Frameworks */,
+            0123839E2BBC762F0048CC2D /* Tabman in Frameworks */,
+            012383A92BBC76930048CC2D /* DGCharts in Frameworks */,
+            012383A12BBC76570048CC2D /* Then in Frameworks */,
+            01D5311A2BDF851F008C368E /* KakaoSDKFriendCore in Frameworks */,
+            01D531222BDF851F008C368E /* KakaoSDKTemplate in Frameworks */,
+            01D531142BDF851F008C368E /* KakaoSDKCertCore in Frameworks */,
+            01D5310E2BDF851F008C368E /* KakaoSDK in Frameworks */,
+            01D531102BDF851F008C368E /* KakaoSDKAuth in Frameworks */,
+          );
+          runOnlyForDeploymentPostprocessing = 0;
         };
-/* End PBXFrameworksBuildPhase section */
+    /* End PBXFrameworksBuildPhase section */
 
-/* Begin PBXGroup section */
+    /* Begin PBXGroup section */
         012382D82BB3F96D0048CC2D = {
-            isa = PBXGroup;
-            children = (
-                012382E32BB3F96D0048CC2D /* HOMEAT */,
-                012382E22BB3F96D0048CC2D /* Products */,
-            );
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012382E32BB3F96D0048CC2D /* HOMEAT */,
+            012382E22BB3F96D0048CC2D /* Products */,
+          );
+          sourceTree = "<group>";
         };
         012382E22BB3F96D0048CC2D /* Products */ = {
-            isa = PBXGroup;
-            children = (
-                012382E12BB3F96D0048CC2D /* HOMEAT.app */,
-            );
-            name = Products;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012382E12BB3F96D0048CC2D /* HOMEAT.app */,
+          );
+          name = Products;
+          sourceTree = "<group>";
         };
         012382E32BB3F96D0048CC2D /* HOMEAT */ = {
-            isa = PBXGroup;
-            children = (
-                012383372BB7E88D0048CC2D /* Application */,
-                012383402BB7F8E90048CC2D /* Global */,
-                012383412BB7F8FF0048CC2D /* Network */,
-                012382FD2BB401E20048CC2D /* Presentation */,
-                012382EF2BB3F96E0048CC2D /* LaunchScreen.storyboard */,
-                012382F22BB3F96E0048CC2D /* Info.plist */,
-            );
-            path = HOMEAT;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383372BB7E88D0048CC2D /* Application */,
+            012383402BB7F8E90048CC2D /* Global */,
+            012383412BB7F8FF0048CC2D /* Network */,
+            012382FD2BB401E20048CC2D /* Presentation */,
+            012382EF2BB3F96E0048CC2D /* LaunchScreen.storyboard */,
+            012382F22BB3F96E0048CC2D /* Info.plist */,
+          );
+          path = HOMEAT;
+          sourceTree = "<group>";
         };
         012382FA2BB401840048CC2D /* HomeScene */ = {
-            isa = PBXGroup;
-            children = (
-                2D7F103B2BDA7D7400C16D0E /* Cell */,
-                012383172BB69C600048CC2D /* Model */,
-                2D7F10422BDA7D8F00C16D0E /* View */,
-                2D7F104D2BDA7DB000C16D0E /* Controller */,
-                2D1C01C22BBF087000235836 /* Components */,
-            );
-            path = HomeScene;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383172BB69C600048CC2D /* Model */,
+            012382FB2BB401940048CC2D /* View */,
+            012382FC2BB401C40048CC2D /* Controller */,
+            2D1C01C22BBF087000235836 /* Components */,
+          );
+          path = HomeScene;
+          sourceTree = "<group>";
+        };
+        012382FB2BB401940048CC2D /* View */ = {
+          isa = PBXGroup;
+          children = (
+            012382F82BB401730048CC2D /* HomeView.swift */,
+          );
+          path = View;
+          sourceTree = "<group>";
+        };
+        012382FC2BB401C40048CC2D /* Controller */ = {
+          isa = PBXGroup;
+          children = (
+            012382E82BB3F96D0048CC2D /* HomeViewController.swift */,
+            2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */,
+            2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */,
+            2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */,
+          );
+          path = Controller;
+          sourceTree = "<group>";
         };
         012382FD2BB401E20048CC2D /* Presentation */ = {
-            isa = PBXGroup;
-            children = (
-                012382FA2BB401840048CC2D /* HomeScene */,
-                0123837D2BBA955F0048CC2D /* MyPageScene */,
-                012383382BB7E95B0048CC2D /* OnboardingScene */,
-                0123837F2BBA95A60048CC2D /* ReportScene */,
-                0123837E2BBA95900048CC2D /* TalkScene */,
-                0123837A2BBA94880048CC2D /* TapBar */,
-            );
-            path = Presentation;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012382FA2BB401840048CC2D /* HomeScene */,
+            0123837D2BBA955F0048CC2D /* MyPageScene */,
+            012383382BB7E95B0048CC2D /* OnboardingScene */,
+            0123837F2BBA95A60048CC2D /* ReportScene */,
+            0123837E2BBA95900048CC2D /* TalkScene */,
+            0123837A2BBA94880048CC2D /* TapBar */,
+          );
+          path = Presentation;
+          sourceTree = "<group>";
         };
         012382FF2BB404D50048CC2D /* Extention */ = {
-            isa = PBXGroup;
-            children = (
-                0123833C2BB7EBD00048CC2D /* UIColor+.swift */,
-                012383422BB7F93F0048CC2D /* CALayer+.swift */,
-                0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */,
-                012383942BBBDF160048CC2D /* UIView+.swift */,
-            );
-            path = Extention;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            0123833C2BB7EBD00048CC2D /* UIColor+.swift */,
+            012383422BB7F93F0048CC2D /* CALayer+.swift */,
+            0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */,
+            012383942BBBDF160048CC2D /* UIView+.swift */,
+          );
+          path = Extention;
+          sourceTree = "<group>";
         };
         012383002BB40BB60048CC2D /* Base */ = {
-            isa = PBXGroup;
-            children = (
-                012383012BB40BC80048CC2D /* BaseViewController.swift */,
-                0123830B2BB40F070048CC2D /* BaseView.swift */,
-            );
-            path = Base;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383012BB40BC80048CC2D /* BaseViewController.swift */,
+            0123830B2BB40F070048CC2D /* BaseView.swift */,
+          );
+          path = Base;
+          sourceTree = "<group>";
         };
         0123830D2BB43FCC0048CC2D /* Component */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Component;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = Component;
+          sourceTree = "<group>";
         };
         012383152BB69BB50048CC2D /* Resource */ = {
-            isa = PBXGroup;
-            children = (
-                012382ED2BB3F96E0048CC2D /* Assets.xcassets */,
-                012383002BB40BB60048CC2D /* Base */,
-                012383162BB69BC10048CC2D /* Font */,
-                0123838F2BBAA2C70048CC2D /* Fonts.swift */,
-            );
-            path = Resource;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012382ED2BB3F96E0048CC2D /* Assets.xcassets */,
+            012383002BB40BB60048CC2D /* Base */,
+            012383162BB69BC10048CC2D /* Font */,
+            0123838F2BBAA2C70048CC2D /* Fonts.swift */,
+          );
+          path = Resource;
+          sourceTree = "<group>";
         };
         012383162BB69BC10048CC2D /* Font */ = {
-            isa = PBXGroup;
-            children = (
-                012383502BB8077A0048CC2D /* NotoSansKR-Black.ttf */,
-                012383492BB8077A0048CC2D /* NotoSansKR-Bold.ttf */,
-                0123834F2BB8077A0048CC2D /* NotoSansKR-ExtraBold.ttf */,
-                0123834E2BB8077A0048CC2D /* NotoSansKR-ExtraLight.ttf */,
-                012383482BB8077A0048CC2D /* NotoSansKR-Light.ttf */,
-                0123834C2BB8077A0048CC2D /* NotoSansKR-Medium.ttf */,
-                0123834D2BB8077A0048CC2D /* NotoSansKR-Regular.ttf */,
-                0123834B2BB8077A0048CC2D /* NotoSansKR-SemiBold.ttf */,
-                0123834A2BB8077A0048CC2D /* NotoSansKR-Thin.ttf */,
-            );
-            path = Font;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383502BB8077A0048CC2D /* NotoSansKR-Black.ttf */,
+            012383492BB8077A0048CC2D /* NotoSansKR-Bold.ttf */,
+            0123834F2BB8077A0048CC2D /* NotoSansKR-ExtraBold.ttf */,
+            0123834E2BB8077A0048CC2D /* NotoSansKR-ExtraLight.ttf */,
+            012383482BB8077A0048CC2D /* NotoSansKR-Light.ttf */,
+            0123834C2BB8077A0048CC2D /* NotoSansKR-Medium.ttf */,
+            0123834D2BB8077A0048CC2D /* NotoSansKR-Regular.ttf */,
+            0123834B2BB8077A0048CC2D /* NotoSansKR-SemiBold.ttf */,
+            0123834A2BB8077A0048CC2D /* NotoSansKR-Thin.ttf */,
+          );
+          path = Font;
+          sourceTree = "<group>";
         };
         012383172BB69C600048CC2D /* Model */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Model;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = Model;
+          sourceTree = "<group>";
         };
         012383372BB7E88D0048CC2D /* Application */ = {
-            isa = PBXGroup;
-            children = (
-                012382E42BB3F96D0048CC2D /* AppDelegate.swift */,
-                012382E62BB3F96D0048CC2D /* SceneDelegate.swift */,
-            );
-            path = Application;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012382E42BB3F96D0048CC2D /* AppDelegate.swift */,
+            012382E62BB3F96D0048CC2D /* SceneDelegate.swift */,
+          );
+          path = Application;
+          sourceTree = "<group>";
         };
         012383382BB7E95B0048CC2D /* OnboardingScene */ = {
-            isa = PBXGroup;
-            children = (
-                012383392BB7EA9F0048CC2D /* Model */,
-                01D530FE2BCFDFBA008C368E /* View */,
-                01D530F92BCFB79F008C368E /* Controller */,
-            );
-            path = OnboardingScene;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383392BB7EA9F0048CC2D /* Model */,
+            01D530FE2BCFDFBA008C368E /* View */,
+            01D530F92BCFB79F008C368E /* Controller */,
+          );
+          path = OnboardingScene;
+          sourceTree = "<group>";
         };
         012383392BB7EA9F0048CC2D /* Model */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Model;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = Model;
+          sourceTree = "<group>";
         };
         012383402BB7F8E90048CC2D /* Global */ = {
-            isa = PBXGroup;
-            children = (
-                0123830D2BB43FCC0048CC2D /* Component */,
-                012382FF2BB404D50048CC2D /* Extention */,
-                012383152BB69BB50048CC2D /* Resource */,
-            );
-            path = Global;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            0123830D2BB43FCC0048CC2D /* Component */,
+            012382FF2BB404D50048CC2D /* Extention */,
+            012383152BB69BB50048CC2D /* Resource */,
+          );
+          path = Global;
+          sourceTree = "<group>";
         };
         012383412BB7F8FF0048CC2D /* Network */ = {
-            isa = PBXGroup;
-            children = (
-                01D530E12BC7BC57008C368E /* Base */,
-            );
-            path = Network;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            01D530E12BC7BC57008C368E /* Base */,
+            01D5312C2BDFC576008C368E /* Onboarding */,
+          );
+          path = Network;
+          sourceTree = "<group>";
         };
         0123837A2BBA94880048CC2D /* TapBar */ = {
-            isa = PBXGroup;
-            children = (
-                0123837B2BBA94DC0048CC2D /* HOMEATTabBarController.swift */,
-            );
-            path = TapBar;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            0123837B2BBA94DC0048CC2D /* HOMEATTabBarController.swift */,
+          );
+          path = TapBar;
+          sourceTree = "<group>";
         };
         0123837D2BBA955F0048CC2D /* MyPageScene */ = {
-            isa = PBXGroup;
-            children = (
-                012383982BBC55910048CC2D /* Cell */,
-                012383882BBA96100048CC2D /* Model */,
-                012383872BBA960C0048CC2D /* View */,
-                012383862BBA96050048CC2D /* Controller */,
-            );
-            path = MyPageScene;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383982BBC55910048CC2D /* Cell */,
+            012383882BBA96100048CC2D /* Model */,
+            012383872BBA960C0048CC2D /* View */,
+            012383862BBA96050048CC2D /* Controller */,
+          );
+          path = MyPageScene;
+          sourceTree = "<group>";
         };
         0123837E2BBA95900048CC2D /* TalkScene */ = {
-            isa = PBXGroup;
-            children = (
-                2DD9DECF2BCD96A8004664B6 /* cell */,
-                012383852BBA95F70048CC2D /* Model */,
-                012383842BBA95F20048CC2D /* View */,
-                012383832BBA95EC0048CC2D /* Controller */,
-            );
-            path = TalkScene;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            2DD9DECF2BCD96A8004664B6 /* cell */,
+            012383852BBA95F70048CC2D /* Model */,
+            012383842BBA95F20048CC2D /* View */,
+            012383832BBA95EC0048CC2D /* Controller */,
+          );
+          path = TalkScene;
+          sourceTree = "<group>";
         };
         0123837F2BBA95A60048CC2D /* ReportScene */ = {
-            isa = PBXGroup;
-            children = (
-                58FE4CDF2BC83AA20059D174 /* Model */,
-                582DB2332BC6531600600EA7 /* View */,
-                012383822BBA95E30048CC2D /* Controller */,
-            );
-            path = ReportScene;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            58FE4CDF2BC83AA20059D174 /* Model */,
+            582DB2332BC6531600600EA7 /* View */,
+            012383822BBA95E30048CC2D /* Controller */,
+          );
+          path = ReportScene;
+          sourceTree = "<group>";
         };
         012383822BBA95E30048CC2D /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                58FE4CD82BC801700059D174 /* Cell */,
-                582B68592BBC62F600839B16 /* AnalysisViewController.swift */,
-                0123838B2BBA97110048CC2D /* ReportViewController.swift */,
-                582B685B2BBC631C00839B16 /* WeekLookViewController.swift */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            58FE4CD82BC801700059D174 /* Cell */,
+            582B68592BBC62F600839B16 /* AnalysisViewController.swift */,
+            0123838B2BBA97110048CC2D /* ReportViewController.swift */,
+            582B685B2BBC631C00839B16 /* WeekLookViewController.swift */,
+          );
+          path = Controller;
+          sourceTree = "<group>";
         };
         012383832BBA95EC0048CC2D /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
-                2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
-                0123838D2BBA97290048CC2D /* TalkViewController.swift */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
+            2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
+            0123838D2BBA97290048CC2D /* TalkViewController.swift */,
+          );
+          path = Controller;
+          sourceTree = "<group>";
         };
         012383842BBA95F20048CC2D /* View */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = View;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = View;
+          sourceTree = "<group>";
         };
         012383852BBA95F70048CC2D /* Model */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Model;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = Model;
+          sourceTree = "<group>";
         };
         012383862BBA96050048CC2D /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                012383892BBA96ED0048CC2D /* MyPageViewController.swift */,
-                012383B12BBD32100048CC2D /* UserInfoViewController.swift */,
-                01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383892BBA96ED0048CC2D /* MyPageViewController.swift */,
+            012383B12BBD32100048CC2D /* UserInfoViewController.swift */,
+            01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */,
+          );
+          path = Controller;
+          sourceTree = "<group>";
         };
         012383872BBA960C0048CC2D /* View */ = {
-            isa = PBXGroup;
-            children = (
-                012383962BBBEBB40048CC2D /* InstagramAccountView.swift */,
-                01D530DE2BC291D7008C368E /* PresentInfoView.swift */,
-            );
-            path = View;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383962BBBEBB40048CC2D /* InstagramAccountView.swift */,
+            01D530DE2BC291D7008C368E /* PresentInfoView.swift */,
+          );
+          path = View;
+          sourceTree = "<group>";
         };
         012383882BBA96100048CC2D /* Model */ = {
-            isa = PBXGroup;
-            children = (
-            );
-            path = Model;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+          );
+          path = Model;
+          sourceTree = "<group>";
         };
         012383982BBC55910048CC2D /* Cell */ = {
-            isa = PBXGroup;
-            children = (
-                012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */,
-                012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */,
-            );
-            path = Cell;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */,
+            012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */,
+          );
+          path = Cell;
+          sourceTree = "<group>";
         };
         01D530E12BC7BC57008C368E /* Base */ = {
-            isa = PBXGroup;
-            children = (
-                01D530EF2BC7C4F9008C368E /* NetworkResult.swift */,
-                01D530F12BC7E8F1008C368E /* TargetType.swift */,
-                01D530F32BC7E956008C368E /* HTTPHeaderField.swift */,
-                01D530F52BC7E9AC008C368E /* APIEventLogger.swift */,
-            );
-            path = Base;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            01D530EF2BC7C4F9008C368E /* NetworkResult.swift */,
+            01D530F12BC7E8F1008C368E /* TargetType.swift */,
+            01D530F32BC7E956008C368E /* HTTPHeaderField.swift */,
+            01D530F52BC7E9AC008C368E /* APIEventLogger.swift */,
+            01D5310A2BDF78C4008C368E /* BaseResponse.swift */,
+            01D531272BDFBC5B008C368E /* KeychainHandler.swift */,
+            01D5313C2BDFCD3C008C368E /* APIRequestLoader.swift */,
+            01D5313E2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift */,
+            01D531402BDFCDFE008C368E /* NetworkService.swift */,
+          );
+          path = Base;
+          sourceTree = "<group>";
         };
         01D530F92BCFB79F008C368E /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
-                01D531012BD14D89008C368E /* LoginViewController.swift */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
+            01D531012BD14D89008C368E /* LoginViewController.swift */,
+          );
+          path = Controller;
+          sourceTree = "<group>";
         };
         01D530FE2BCFDFBA008C368E /* View */ = {
-            isa = PBXGroup;
-            children = (
-                01D530FF2BCFDFC9008C368E /* WelcomeView.swift */,
-            );
-            path = View;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            01D530FF2BCFDFC9008C368E /* WelcomeView.swift */,
+          );
+          path = View;
+          sourceTree = "<group>";
+        };
+        01D5312C2BDFC576008C368E /* Onboarding */ = {
+          isa = PBXGroup;
+          children = (
+            01D5312D2BDFC58D008C368E /* DTO */,
+            01D5312E2BDFC593008C368E /* Router */,
+            01D5312F2BDFC5A2008C368E /* Service */,
+          );
+          path = Onboarding;
+          sourceTree = "<group>";
+        };
+        01D5312D2BDFC58D008C368E /* DTO */ = {
+          isa = PBXGroup;
+          children = (
+            01D531352BDFC674008C368E /* Response */,
+            01D531342BDFC66B008C368E /* Request */,
+          );
+          path = DTO;
+          sourceTree = "<group>";
+        };
+        01D5312E2BDFC593008C368E /* Router */ = {
+          isa = PBXGroup;
+          children = (
+            01D531362BDFC6A8008C368E /* OnboardingTarget.swift */,
+          );
+          path = Router;
+          sourceTree = "<group>";
+        };
+        01D5312F2BDFC5A2008C368E /* Service */ = {
+          isa = PBXGroup;
+          children = (
+            01D531382BDFCC27008C368E /* OnboardingService.swift */,
+          );
+          path = Service;
+          sourceTree = "<group>";
+        };
+        01D531342BDFC66B008C368E /* Request */ = {
+          isa = PBXGroup;
+          children = (
+            01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */,
+          );
+          path = Request;
+          sourceTree = "<group>";
+        };
+        01D531352BDFC674008C368E /* Response */ = {
+          isa = PBXGroup;
+          children = (
+            01D531322BDFC647008C368E /* KakaoLoginResponseDTO.swift */,
+            01D5313A2BDFCCBB008C368E /* UserInfoResponseDTO.swift */,
+            01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */,
+          );
+          path = Response;
+          sourceTree = "<group>";
         };
         2D1C01C22BBF087000235836 /* Components */ = {
-            isa = PBXGroup;
-            children = (
-                2D1C01C32BBF088800235836 /* TagButton.swift */,
-            );
-            path = Components;
-            sourceTree = "<group>";
-        };
-        2D7F103B2BDA7D7400C16D0E /* Cell */ = {
-            isa = PBXGroup;
-            children = (
-                2D7F103A2BDA7D7400C16D0E /* CalendarCollectionViewCell.swift */,
-            );
-            path = Cell;
-            sourceTree = "<group>";
-        };
-        2D7F10422BDA7D8F00C16D0E /* View */ = {
-            isa = PBXGroup;
-            children = (
-                2D7F103D2BDA7D8F00C16D0E /* CalendarView.swift */,
-                2D7F103E2BDA7D8F00C16D0E /* EatoutCheckView.swift */,
-                2D7F103F2BDA7D8F00C16D0E /* HomefoodCheckView.swift */,
-                2D7F10402BDA7D8F00C16D0E /* HomeView.swift */,
-                2D7F10412BDA7D8F00C16D0E /* PayCheckView.swift */,
-            );
-            path = View;
-            sourceTree = "<group>";
-        };
-        2D7F104D2BDA7DB000C16D0E /* Controller */ = {
-            isa = PBXGroup;
-            children = (
-                2D7F10482BDA7DB000C16D0E /* EditDoneViewController.swift */,
-                2D7F10492BDA7DB000C16D0E /* HomeViewController.swift */,
-                2D7F104A2BDA7DB000C16D0E /* PayAddViewController.swift */,
-                2D7F104B2BDA7DB000C16D0E /* PayCheckDetailViewController.swift */,
-                2D7F104C2BDA7DB000C16D0E /* PayCheckViewController.swift */,
-            );
-            path = Controller;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            2D1C01C32BBF088800235836 /* TagButton.swift */,
+          );
+          path = Components;
+          sourceTree = "<group>";
         };
         2DD9DECF2BCD96A8004664B6 /* cell */ = {
-            isa = PBXGroup;
-            children = (
-                2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
-            );
-            path = cell;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
+          );
+          path = cell;
+          sourceTree = "<group>";
         };
         582DB2332BC6531600600EA7 /* View */ = {
-            isa = PBXGroup;
-            children = (
-                58FE4CDC2BC802460059D174 /* WeekCellView.swift */,
-                589145182BBDA9CC00CF9A05 /* WeakView.swift */,
-                589145162BBDA99800CF9A05 /* MonthView.swift */,
-            );
-            path = View;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            58FE4CDC2BC802460059D174 /* WeekCellView.swift */,
+            589145182BBDA9CC00CF9A05 /* WeakView.swift */,
+            589145162BBDA99800CF9A05 /* MonthView.swift */,
+          );
+          path = View;
+          sourceTree = "<group>";
         };
         58FE4CD82BC801700059D174 /* Cell */ = {
-            isa = PBXGroup;
-            children = (
-                58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */,
-            );
-            path = Cell;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */,
+          );
+          path = Cell;
+          sourceTree = "<group>";
         };
         58FE4CDF2BC83AA20059D174 /* Model */ = {
-            isa = PBXGroup;
-            children = (
-                58FE4CE02BC84B560059D174 /* WeekCellModel.swift */,
-            );
-            path = Model;
-            sourceTree = "<group>";
+          isa = PBXGroup;
+          children = (
+            58FE4CE02BC84B560059D174 /* WeekCellModel.swift */,
+          );
+          path = Model;
+          sourceTree = "<group>";
         };
-/* End PBXGroup section */
+    /* End PBXGroup section */
 
-/* Begin PBXNativeTarget section */
+    /* Begin PBXNativeTarget section */
         012382E02BB3F96D0048CC2D /* HOMEAT */ = {
-            isa = PBXNativeTarget;
-            buildConfigurationList = 012382F52BB3F96E0048CC2D /* Build configuration list for PBXNativeTarget "HOMEAT" */;
-            buildPhases = (
-                012382DD2BB3F96D0048CC2D /* Sources */,
-                012382DE2BB3F96D0048CC2D /* Frameworks */,
-                012382DF2BB3F96D0048CC2D /* Resources */,
-            );
-            buildRules = (
-            );
-            dependencies = (
-            );
-            name = HOMEAT;
-            packageProductDependencies = (
-                0123839D2BBC762F0048CC2D /* Tabman */,
-                012383A02BBC76570048CC2D /* Then */,
-                012383A32BBC766C0048CC2D /* SnapKit */,
-                012383A52BBC766C0048CC2D /* SnapKit-Dynamic */,
-                012383A82BBC76930048CC2D /* DGCharts */,
-                012383AA2BBC76930048CC2D /* DGChartsDynamic */,
-                012383AD2BBC76D40048CC2D /* Alamofire */,
-                012383AF2BBC76D40048CC2D /* AlamofireDynamic */,
-            );
-            productName = HOMEAT;
-            productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
-            productType = "com.apple.product-type.application";
+          isa = PBXNativeTarget;
+          buildConfigurationList = 012382F52BB3F96E0048CC2D /* Build configuration list for PBXNativeTarget "HOMEAT" */;
+          buildPhases = (
+            012382DD2BB3F96D0048CC2D /* Sources */,
+            012382DE2BB3F96D0048CC2D /* Frameworks */,
+            012382DF2BB3F96D0048CC2D /* Resources */,
+            01D531262BDF8B40008C368E /* Embed Frameworks */,
+          );
+          buildRules = (
+          );
+          dependencies = (
+          );
+          name = HOMEAT;
+          packageProductDependencies = (
+            0123839D2BBC762F0048CC2D /* Tabman */,
+            012383A02BBC76570048CC2D /* Then */,
+            012383A32BBC766C0048CC2D /* SnapKit */,
+            012383A82BBC76930048CC2D /* DGCharts */,
+            012383AD2BBC76D40048CC2D /* Alamofire */,
+            01D5310D2BDF851F008C368E /* KakaoSDK */,
+            01D5310F2BDF851F008C368E /* KakaoSDKAuth */,
+            01D531112BDF851F008C368E /* KakaoSDKCert */,
+            01D531132BDF851F008C368E /* KakaoSDKCertCore */,
+            01D531152BDF851F008C368E /* KakaoSDKCommon */,
+            01D531172BDF851F008C368E /* KakaoSDKFriend */,
+            01D531192BDF851F008C368E /* KakaoSDKFriendCore */,
+            01D5311B2BDF851F008C368E /* KakaoSDKNavi */,
+            01D5311D2BDF851F008C368E /* KakaoSDKShare */,
+            01D5311F2BDF851F008C368E /* KakaoSDKTalk */,
+            01D531212BDF851F008C368E /* KakaoSDKTemplate */,
+            01D531232BDF851F008C368E /* KakaoSDKUser */,
+            01D5312A2BDFBCBA008C368E /* SwiftKeychainWrapper */,
+          );
+          productName = HOMEAT;
+          productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
+          productType = "com.apple.product-type.application";
         };
-/* End PBXNativeTarget section */
+    /* End PBXNativeTarget section */
 
-/* Begin PBXProject section */
+    /* Begin PBXProject section */
         012382D92BB3F96D0048CC2D /* Project object */ = {
-            isa = PBXProject;
-            attributes = {
-                BuildIndependentTargetsInParallel = 1;
-                LastSwiftUpdateCheck = 1510;
-                LastUpgradeCheck = 1510;
-                TargetAttributes = {
-                    012382E02BB3F96D0048CC2D = {
-                        CreatedOnToolsVersion = 15.1;
-                    };
-                };
+          isa = PBXProject;
+          attributes = {
+            BuildIndependentTargetsInParallel = 1;
+            LastSwiftUpdateCheck = 1510;
+            LastUpgradeCheck = 1510;
+            TargetAttributes = {
+              012382E02BB3F96D0048CC2D = {
+                CreatedOnToolsVersion = 15.1;
+              };
             };
-            buildConfigurationList = 012382DC2BB3F96D0048CC2D /* Build configuration list for PBXProject "HOMEAT" */;
-            compatibilityVersion = "Xcode 14.0";
-            developmentRegion = en;
-            hasScannedForEncodings = 0;
-            knownRegions = (
-                en,
-                Base,
-            );
-            mainGroup = 012382D82BB3F96D0048CC2D;
-            packageReferences = (
-                0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
-                0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */,
-                012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
-                012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */,
-                012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */,
-            );
-            productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
-            projectDirPath = "";
-            projectRoot = "";
-            targets = (
-                012382E02BB3F96D0048CC2D /* HOMEAT */,
-            );
+          };
+          buildConfigurationList = 012382DC2BB3F96D0048CC2D /* Build configuration list for PBXProject "HOMEAT" */;
+          compatibilityVersion = "Xcode 14.0";
+          developmentRegion = en;
+          hasScannedForEncodings = 0;
+          knownRegions = (
+            en,
+            Base,
+          );
+          mainGroup = 012382D82BB3F96D0048CC2D;
+          packageReferences = (
+            0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */,
+            0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */,
+            012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */,
+            012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */,
+            012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */,
+            01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+            01D531292BDFBCBA008C368E /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+          );
+          productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
+          projectDirPath = "";
+          projectRoot = "";
+          targets = (
+            012382E02BB3F96D0048CC2D /* HOMEAT */,
+          );
         };
+
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -623,60 +725,66 @@
 
 /* Begin PBXSourcesBuildPhase section */
         012382DD2BB3F96D0048CC2D /* Sources */ = {
-            isa = PBXSourcesBuildPhase;
-            buildActionMask = 2147483647;
-            files = (
-                01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
-                01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
-                012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
-                2D7F10452BDA7D8F00C16D0E /* HomefoodCheckView.swift in Sources */,
-                2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
-                2D7F104F2BDA7DB000C16D0E /* HomeViewController.swift in Sources */,
-                012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
-                0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
-                012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
-                2D7F10472BDA7D8F00C16D0E /* PayCheckView.swift in Sources */,
-                012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
-                2D7F10502BDA7DB000C16D0E /* PayAddViewController.swift in Sources */,
-                01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
-                012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
-                58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
-                2D7F10512BDA7DB000C16D0E /* PayCheckDetailViewController.swift in Sources */,
-                0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
-                2D7F103C2BDA7D7400C16D0E /* CalendarCollectionViewCell.swift in Sources */,
-                01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
-                012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
-                58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
-                0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
-                2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
-                2D7F10462BDA7D8F00C16D0E /* HomeView.swift in Sources */,
-                0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
-                2D7F104E2BDA7DB000C16D0E /* EditDoneViewController.swift in Sources */,
-                582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
-                0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
-                2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
-                589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
-                2D7F10522BDA7DB000C16D0E /* PayCheckViewController.swift in Sources */,
-                2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
-                012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
-                01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
-                01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
-                012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
-                0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
-                01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
-                58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
-                01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
-                012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
-                0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
-                0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
-                2D7F10442BDA7D8F00C16D0E /* EatoutCheckView.swift in Sources */,
-                01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
-                589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
-                2D7F10432BDA7D8F00C16D0E /* CalendarView.swift in Sources */,
-                582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
-            );
-            runOnlyForDeploymentPostprocessing = 0;
+          isa = PBXSourcesBuildPhase;
+          buildActionMask = 2147483647;
+          files = (
+            01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
+            01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
+            01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
+            012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
+            2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
+            2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
+            012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
+            01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
+            0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
+            012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
+            012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
+            01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
+            01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
+            012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
+            012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
+            58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
+            0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
+            01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
+            012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
+            58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
+            0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
+            2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
+            2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
+            2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
+            0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
+            582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
+            0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
+            01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
+            2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
+            01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
+            589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
+            2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
+            012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
+            01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
+            01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
+            012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
+            0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
+            01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
+            01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */,
+            58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
+            012382F92BB401730048CC2D /* HomeView.swift in Sources */,
+            01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
+            01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
+            012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
+            0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
+            0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
+            01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
+            589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
+            01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
+            01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,
+            582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
+            01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
+            01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
+          );
+          runOnlyForDeploymentPostprocessing = 0;
         };
+
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -889,87 +997,153 @@
 
 /* Begin XCRemoteSwiftPackageReference section */
         0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/uias/Tabman.git";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 3.0.2;
-            };
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/uias/Tabman.git";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 3.0.2;
+          };
         };
         0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/devxoul/Then";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 3.0.0;
-            };
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/devxoul/Then";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 3.0.0;
+          };
         };
         012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/SnapKit/SnapKit";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 5.7.1;
-            };
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/SnapKit/SnapKit";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 5.7.1;
+          };
         };
         012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/danielgindi/Charts.git";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 5.1.0;
-            };
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/danielgindi/Charts.git";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 5.1.0;
+          };
         };
         012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-            isa = XCRemoteSwiftPackageReference;
-            repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-            requirement = {
-                kind = upToNextMajorVersion;
-                minimumVersion = 5.9.1;
-            };
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 5.9.1;
+          };
         };
-/* End XCRemoteSwiftPackageReference section */
+        01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/kakao/kakao-ios-sdk.git";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 2.22.1;
+          };
+        };
+        01D531292BDFBCBA008C368E /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+          isa = XCRemoteSwiftPackageReference;
+          repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+          requirement = {
+            kind = upToNextMajorVersion;
+            minimumVersion = 4.0.1;
+          };
+        };
+    /* End XCRemoteSwiftPackageReference section */
 
-/* Begin XCSwiftPackageProductDependency section */
+    /* Begin XCSwiftPackageProductDependency section */
         0123839D2BBC762F0048CC2D /* Tabman */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
-            productName = Tabman;
+          isa = XCSwiftPackageProductDependency;
+          package = 0123839C2BBC762F0048CC2D /* XCRemoteSwiftPackageReference "Tabman" */;
+          productName = Tabman;
         };
         012383A02BBC76570048CC2D /* Then */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */;
-            productName = Then;
+          isa = XCSwiftPackageProductDependency;
+          package = 0123839F2BBC76570048CC2D /* XCRemoteSwiftPackageReference "Then" */;
+          productName = Then;
         };
         012383A32BBC766C0048CC2D /* SnapKit */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
-            productName = SnapKit;
-        };
-        012383A52BBC766C0048CC2D /* SnapKit-Dynamic */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
-            productName = "SnapKit-Dynamic";
+          isa = XCSwiftPackageProductDependency;
+          package = 012383A22BBC766C0048CC2D /* XCRemoteSwiftPackageReference "SnapKit" */;
+          productName = SnapKit;
         };
         012383A82BBC76930048CC2D /* DGCharts */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */;
-            productName = DGCharts;
-        };
-        012383AA2BBC76930048CC2D /* DGChartsDynamic */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */;
-            productName = DGChartsDynamic;
+          isa = XCSwiftPackageProductDependency;
+          package = 012383A72BBC76930048CC2D /* XCRemoteSwiftPackageReference "Charts" */;
+          productName = DGCharts;
         };
         012383AD2BBC76D40048CC2D /* Alamofire */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */;
-            productName = Alamofire;
+          isa = XCSwiftPackageProductDependency;
+          package = 012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */;
+          productName = Alamofire;
         };
-        012383AF2BBC76D40048CC2D /* AlamofireDynamic */ = {
-            isa = XCSwiftPackageProductDependency;
-            package = 012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */;
-            productName = AlamofireDynamic;
+        01D5310D2BDF851F008C368E /* KakaoSDK */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDK;
+        };
+        01D5310F2BDF851F008C368E /* KakaoSDKAuth */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKAuth;
+        };
+        01D531112BDF851F008C368E /* KakaoSDKCert */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKCert;
+        };
+        01D531132BDF851F008C368E /* KakaoSDKCertCore */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKCertCore;
+        };
+        01D531152BDF851F008C368E /* KakaoSDKCommon */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKCommon;
+        };
+        01D531172BDF851F008C368E /* KakaoSDKFriend */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKFriend;
+        };
+        01D531192BDF851F008C368E /* KakaoSDKFriendCore */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKFriendCore;
+        };
+        01D5311B2BDF851F008C368E /* KakaoSDKNavi */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKNavi;
+        };
+        01D5311D2BDF851F008C368E /* KakaoSDKShare */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKShare;
+        };
+        01D5311F2BDF851F008C368E /* KakaoSDKTalk */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKTalk;
+        };
+        01D531212BDF851F008C368E /* KakaoSDKTemplate */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKTemplate;
+        };
+        01D531232BDF851F008C368E /* KakaoSDKUser */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+          productName = KakaoSDKUser;
+        };
+        01D5312A2BDFBCBA008C368E /* SwiftKeychainWrapper */ = {
+          isa = XCSwiftPackageProductDependency;
+          package = 01D531292BDFBCBA008C368E /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+          productName = SwiftKeychainWrapper;
         };
 /* End XCSwiftPackageProductDependency section */
     };

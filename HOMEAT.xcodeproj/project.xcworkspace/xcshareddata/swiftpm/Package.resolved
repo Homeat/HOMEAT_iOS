@@ -1,4 +1,5 @@
 {
+  "originHash" : "157b689edad5c48150cecab1270452cdf6cf5472d298578d09a1ac1595401743",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -16,6 +17,15 @@
       "state" : {
         "revision" : "dd9c72e3d7e751e769971092a6bd72d39198ae63",
         "version" : "5.1.0"
+      }
+    },
+    {
+      "identity" : "kakao-ios-sdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kakao/kakao-ios-sdk.git",
+      "state" : {
+        "revision" : "ab226a7a3625d64e73a52aa3800595dab810156b",
+        "version" : "2.22.1"
       }
     },
     {
@@ -37,6 +47,15 @@
       }
     },
     {
+      "identity" : "swiftkeychainwrapper",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jrendel/SwiftKeychainWrapper",
+      "state" : {
+        "revision" : "185a3165346a03767101c4f62e9a545a0fe0530f",
+        "version" : "4.0.1"
+      }
+    },
+    {
       "identity" : "tabman",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/uias/Tabman.git",
@@ -55,5 +74,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
