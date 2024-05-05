@@ -9,7 +9,7 @@ import UIKit
 import Then
 import SnapKit
 
-class AnalysisViewController: BaseViewController {
+class AnalysisViewController: BaseViewController,MonthViewDelegate {
     //MARK: - Property
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -21,7 +21,6 @@ class AnalysisViewController: BaseViewController {
     private let ageButton = UIButton()
     private let incomeMoneyButton = UIButton()
     private let weakView = WeakView()
-    
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,5 +166,29 @@ class AnalysisViewController: BaseViewController {
             $0.height.equalTo(570)
             
         }
+    }
+    
+    // MARK: - MonthViewDelegate
+    func didSelectYearMonth(year: Int, month: Int) {
+        monthChart(year: year, month: month)
+    }
+    // MARK: Server Function
+    private func monthChart(year: Int, month: Int) {
+        let bodyDTO = AnalysisMonthRequestDTO(inputYear: "\(year)", inputMonth: "\(month)")
+        NetworkService.shared.analysisService.analysisMonth(bodyDTO: bodyDTO) { [weak self] response in
+            switch response {
+            case .success(let data):
+                guard let analysisData = data.data else { return }
+                self?.handleAnalysisData(analysisData)
+            default :
+                print("데이터 존재 안함 ")
+            }
+        }
+    }
+    
+    private func handleAnalysisData(_ data: AnalysisMonthResponseDTO) {
+        monthView.setupPieChart(jipbapRatio: data.jipbapRatio,outRatio:data.outRatio)
+        monthView.setupBarChart(jipbapPrice: Double(data.jipbapMonthPrice), outPrice: Double(data.jipbapMonthOutPrice))
+        monthView.setStyledMonthContentLabel(savePercent: Double(data.savePercent) ?? 0)
     }
 }
