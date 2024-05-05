@@ -27,6 +27,7 @@ final class WeakView: BaseView {
         super.init(frame: frame)
     }
     
+    // MARK: - UI
     override func setConfigure() {
         weekBackButton.do {
             $0.setImage(UIImage(named: "calendarBack"), for: .normal)
@@ -43,7 +44,6 @@ final class WeakView: BaseView {
         }
         
         weakMonthLabel.do {
-            $0.text = "2024년 4월 첫째 주"
             $0.textColor = .white
             $0.textAlignment = .center
             $0.font = .bodyMedium18
@@ -89,6 +89,7 @@ final class WeakView: BaseView {
         }
         
     }
+    
     override func setConstraints() {
         addSubviews(weekBackButton,weakMonthLabel,weekNextButton,genderLabel,jipbapContentsLabel,deliveryContentsLabel,jipbapWeekBarChartView,deliveryWeekBarChartView)
         
@@ -136,18 +137,18 @@ final class WeakView: BaseView {
             $0.height.equalTo(125)
             $0.leading.trailing.equalToSuperview().inset(100)
         }
-        
     }
     
     override func setting() {
+        updateWeekMonthLabel()
         setupMealWeekBarChart(jipbapAverage: 40, weekJipbapPrice: 50)
-        setupDeliveryWeekBarChart(outAverage: 40,weekOutPrice: 50)
+        setupDeliveryWeekBarChart(outAverage: 40, weekOutPrice: 50)
     }
     
+    // MARK: - Function
     func updateWeekMonthLabel() {
-        let calendar = Calendar.current
-        let weekOfMonth = calendar.component(.weekOfMonth, from: currentDate)
-        var weekLabel = ""
+        let (year, month, weekOfMonth) = getCurrentYearMonthWeek()
+        var weekLabel : String
         
         switch weekOfMonth {
         case 1:
@@ -163,11 +164,17 @@ final class WeakView: BaseView {
         default:
             weekLabel = ""
         }
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy년 MM월"
-        let formattedDate = formatter.string(from: currentDate)
-        weakMonthLabel.text = "\(formattedDate) \(weekLabel)"
+        weakMonthLabel.text = "\(year)년 \(month)월 \(weekLabel)"
+        print(weakMonthLabel)
+    }
+    
+    func getCurrentYearMonthWeek() -> (year: Int, month: Int, weekOfMonth: Int) {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
+        let weekOfMonth = calendar.component(.weekOfMonth, from: currentDate)
+        return (year, month, weekOfMonth)
     }
     
     func setupMealWeekBarChart(jipbapAverage: Int,weekJipbapPrice: Int) {
@@ -255,7 +262,7 @@ final class WeakView: BaseView {
         deliveryWeekBarChartView.legend.enabled = false
         deliveryWeekBarChartView.isUserInteractionEnabled = false
     }
-    //MARK: - @objc Func
+    //MARK: - Action
     @objc func weekBackTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
         updateWeekMonthLabel()
