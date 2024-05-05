@@ -14,5 +14,5 @@ final class NetworkService {
     private init() {}
     
     let onboardingService: OnboardingServiceProtocol = OnboardingService(apiLogger: APIEventLogger())
-    
+    let analysisService: AnalysisServiceProtocol = AnalysisService(apiLogger: APIEventLogger())
 }
