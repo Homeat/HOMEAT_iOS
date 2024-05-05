@@ -83,6 +83,7 @@
 		01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */; };
 		0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */; };
 		0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD402BE7729E00D6133A /* DeclareViewController.swift */; };
+		0309DD432BE7849E00D6133A /* DeclareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD422BE7849E00D6133A /* DeclareView.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -173,6 +174,7 @@
 		01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshResponseDTO.swift; sourceTree = "<group>"; };
 		0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPostViewController.swift; sourceTree = "<group>"; };
 		0309DD402BE7729E00D6133A /* DeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareViewController.swift; sourceTree = "<group>"; };
+		0309DD422BE7849E00D6133A /* DeclareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeclareView.swift; path = HOMEAT/Presentation/TalkScene/Controller/DeclareView.swift; sourceTree = SOURCE_ROOT; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 		012383842BBA95F20048CC2D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD422BE7849E00D6133A /* DeclareView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -782,6 +785,7 @@
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
+				0309DD432BE7849E00D6133A /* DeclareView.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,

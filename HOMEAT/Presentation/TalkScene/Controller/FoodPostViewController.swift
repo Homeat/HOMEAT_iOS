@@ -24,7 +24,7 @@ class FoodPostViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-        
+        setAddTarget()
     }
     
     //MARK: - SetUI
@@ -64,6 +64,7 @@ class FoodPostViewController: BaseViewController {
     }
     
     override func setConstraints() {
+        
         view.addSubviews(profileIcon, userName, dateLabel, declareButton)
         
         profileIcon.snp.makeConstraints {
