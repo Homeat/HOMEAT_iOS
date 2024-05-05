@@ -81,6 +81,8 @@
 		01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D5313E2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift */; };
 		01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531402BDFCDFE008C368E /* NetworkService.swift */; };
 		01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */; };
+		0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */; };
+		0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD402BE7729E00D6133A /* DeclareViewController.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -169,6 +171,8 @@
 		01D5313E2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOMEATRequestInterceptor.swift; sourceTree = "<group>"; };
 		01D531402BDFCDFE008C368E /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshResponseDTO.swift; sourceTree = "<group>"; };
+		0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPostViewController.swift; sourceTree = "<group>"; };
+		0309DD402BE7729E00D6133A /* DeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareViewController.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -461,8 +465,10 @@
 			isa = PBXGroup;
 			children = (
 				2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
+				0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */,
 				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
+				0309DD402BE7729E00D6133A /* DeclareViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -772,11 +778,13 @@
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
+				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
+				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
 				2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,

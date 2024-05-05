@@ -283,7 +283,8 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 셀을 선택하면 게시글 뷰로 넘어감.
+        let nextVC = FoodPostViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     
     }
 }
