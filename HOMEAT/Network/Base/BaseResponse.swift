@@ -10,5 +10,6 @@ import Foundation
 struct BaseResponse<T: Decodable>: Decodable {
     let code: Int
     let message: String
+    let isSuccess: Bool
     let data: T?
 }
