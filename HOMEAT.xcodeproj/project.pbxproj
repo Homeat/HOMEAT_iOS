@@ -13,6 +13,8 @@
 		011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFD92BE3ABC4000556D0 /* EatoutCheckView.swift */; };
 		011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFDC2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift */; };
 		011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFDE2BE3ACA7000556D0 /* PayCheckDetailViewController.swift */; };
+		011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */; };
+		011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */; };
 		012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E42BB3F96D0048CC2D /* AppDelegate.swift */; };
 		012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E62BB3F96D0048CC2D /* SceneDelegate.swift */; };
 		012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E82BB3F96D0048CC2D /* HomeViewController.swift */; };
@@ -117,6 +119,8 @@
 		011DAFD92BE3ABC4000556D0 /* EatoutCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatoutCheckView.swift; sourceTree = "<group>"; };
 		011DAFDC2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		011DAFDE2BE3ACA7000556D0 /* PayCheckDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckDetailViewController.swift; sourceTree = "<group>"; };
+		011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginResponseDTO.swift; sourceTree = "<group>"; };
+		011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginRequestBodyDTO.swift; sourceTree = "<group>"; };
 		012382E12BB3F96D0048CC2D /* HOMEAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HOMEAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		012382E42BB3F96D0048CC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		012382E62BB3F96D0048CC2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -588,6 +592,7 @@
 			isa = PBXGroup;
 			children = (
 				01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */,
+				011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -598,6 +603,7 @@
 				01D531322BDFC647008C368E /* KakaoLoginResponseDTO.swift */,
 				01D5313A2BDFCCBB008C368E /* UserInfoResponseDTO.swift */,
 				01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */,
+				011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -755,6 +761,7 @@
 			files = (
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
+				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
@@ -770,6 +777,7 @@
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
+				011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
