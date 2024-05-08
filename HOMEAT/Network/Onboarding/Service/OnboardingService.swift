@@ -8,15 +8,16 @@
 import Foundation
 
 protocol OnboardingServiceProtocol {
-    func login(bodyDTO: KakaoLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<KakaoLoginResponseDTO>>) -> Void)
+    func kakaoLogin(bodyDTO: KakaoLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<KakaoLoginResponseDTO>>) -> Void)
     func userInfo(completion: @escaping (NetworkResult<BaseResponse<UserInfoResponseDTO>>) -> Void)
     func postRefreshToken(completion: @escaping (NetworkResult<BaseResponse<TokenRefreshResponseDTO>>) -> Void)
+    func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void)
 }
 
 final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingServiceProtocol {
     
-    func login(bodyDTO: KakaoLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<KakaoLoginResponseDTO>>) -> Void) {
-        fetchData(target: .login(bodyDTO),
+    func kakaoLogin(bodyDTO: KakaoLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<KakaoLoginResponseDTO>>) -> Void) {
+        fetchData(target: .kakaoLogin(bodyDTO),
                   responseData: BaseResponse<KakaoLoginResponseDTO>.self, completion: completion)
     }
     
@@ -27,5 +28,10 @@ final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingSer
     
     func postRefreshToken(completion: @escaping (NetworkResult<BaseResponse<TokenRefreshResponseDTO>>) -> Void) {
         fetchData(target: .postRefreshToken, responseData: BaseResponse<TokenRefreshResponseDTO>.self, completion: completion)
+    }
+    
+    func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void) {
+        fetchData(target: .emailLogin(bodyDTO),
+                  responseData: BaseResponse<EmailLoginResponseDTO>.self, completion: completion)
     }
 }
