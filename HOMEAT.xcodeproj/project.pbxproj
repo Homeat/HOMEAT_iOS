@@ -377,18 +377,10 @@
 		012383382BB7E95B0048CC2D /* OnboardingScene */ = {
 			isa = PBXGroup;
 			children = (
-				012383392BB7EA9F0048CC2D /* Model */,
 				01D530FE2BCFDFBA008C368E /* View */,
 				01D530F92BCFB79F008C368E /* Controller */,
 			);
 			path = OnboardingScene;
-			sourceTree = "<group>";
-		};
-		012383392BB7EA9F0048CC2D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		012383402BB7F8E90048CC2D /* Global */ = {
