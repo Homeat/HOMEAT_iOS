@@ -31,7 +31,11 @@ final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingSer
     }
     
     func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void) {
-        fetchData(target: .emailLogin(bodyDTO),
-                  responseData: BaseResponse<EmailLoginResponseDTO>.self, completion: completion)
+        fetchDataWithHeader(target: .emailLogin(bodyDTO),
+                            responseData: BaseResponse<EmailLoginResponseDTO>.self, completion: { (result, headers) in
+            // 여기에서 필요한 작업을 수행하고 최종 결과를 `completion`으로 넘깁니다.
+            completion(result)
+            print(headers)
+        })
     }
 }
