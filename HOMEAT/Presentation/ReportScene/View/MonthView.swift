@@ -112,7 +112,7 @@ final class MonthView: BaseView {
         if savePercent >= 0 {
             text = String(format: "저번달 보다 %.0f%% 절약했어요", savePercent)
         } else {
-            text = String(format: "저번달 보다 %.0f%%  추가지출 했어요", abs(savePercent))
+            text = String(format: "저번달 보다 %.0f%% 추가지출 했어요", abs(savePercent))
         }
         let attributedString = NSMutableAttributedString(string: text)
         
@@ -220,6 +220,7 @@ final class MonthView: BaseView {
         let calendar = Calendar.current
         let year = calendar.component(.year, from: currentDate)
         let month = calendar.component(.month, from: currentDate)
+        yearMonthLabel.text = "\(year)년 \(month)월"
         return (year, month)
     }
     
