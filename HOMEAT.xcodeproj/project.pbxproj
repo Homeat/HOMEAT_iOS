@@ -84,6 +84,9 @@
 		0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */; };
 		0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD402BE7729E00D6133A /* DeclareViewController.swift */; };
 		0309DD432BE7849E00D6133A /* DeclareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD422BE7849E00D6133A /* DeclareView.swift */; };
+		0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */; };
+		0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD462BE8B4EA00D6133A /* PostContentView.swift */; };
+		0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD482BED294A00D6133A /* ReplyReactionView.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -175,6 +178,9 @@
 		0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPostViewController.swift; sourceTree = "<group>"; };
 		0309DD402BE7729E00D6133A /* DeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareViewController.swift; sourceTree = "<group>"; };
 		0309DD422BE7849E00D6133A /* DeclareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeclareView.swift; path = HOMEAT/Presentation/TalkScene/Controller/DeclareView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkReplyCell.swift; sourceTree = "<group>"; };
+		0309DD462BE8B4EA00D6133A /* PostContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostContentView.swift; path = HOMEAT/Presentation/TalkScene/cell/PostContentView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD482BED294A00D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyReactionView.swift; path = HOMEAT/Presentation/TalkScene/cell/ReplyReactionView.swift; sourceTree = SOURCE_ROOT; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -468,8 +474,8 @@
 			children = (
 				2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
 				0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */,
-				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
+				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0309DD402BE7729E00D6133A /* DeclareViewController.swift */,
 			);
 			path = Controller;
@@ -479,6 +485,8 @@
 			isa = PBXGroup;
 			children = (
 				0309DD422BE7849E00D6133A /* DeclareView.swift */,
+				0309DD462BE8B4EA00D6133A /* PostContentView.swift */,
+				0309DD482BED294A00D6133A /* ReplyReactionView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -623,6 +631,7 @@
 			isa = PBXGroup;
 			children = (
 				2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
+				0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -774,6 +783,7 @@
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
+				0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
@@ -789,6 +799,7 @@
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
+				0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
 				2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
@@ -800,6 +811,7 @@
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
+				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,

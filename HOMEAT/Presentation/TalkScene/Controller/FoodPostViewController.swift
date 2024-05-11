@@ -9,88 +9,53 @@ import UIKit
 import Then
 import SnapKit
 
-class FoodPostViewController: BaseViewController {
-    
+class FoodPostViewController: BaseViewController, HeaderViewDelegate {
+
     //MARK: - Property
-    private let profileIcon = UIImageView()
-    private let userName = UILabel()
-    private let dateLabel = UILabel()
-    private let declareButton = UIButton()
-    private let hashtagButton = UIButton()
-    private let titleLabel = UILabel()
-    private let contentLabel = UILabel()
+    private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
+    private let postContent = PostContentView()
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-        setAddTarget()
+        setTableView()
+        postContent.delegate = self
     }
     
     //MARK: - SetUI
     override func setConfigure() {
+        
         view.do {
-            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
         
-        profileIcon.do {
-            $0.backgroundColor = UIColor(named: "turquoiseGreen")
-            $0.image = UIImage(named: "profileIcon")
-            $0.layer.cornerRadius = 20
-            $0.layer.borderWidth = 1.3
-            $0.layer.borderColor = UIColor.white.cgColor
-            $0.contentMode = .scaleAspectFit
+        tableView.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
-        
-        userName.do {
-            $0.text = "사용자이름"
-            $0.font = .bodyMedium15
-            $0.textColor = .white
-        }
-        
-        dateLabel.do {
-            $0.text = "mm월 dd일 12:00"
-            $0.font = .captionMedium10
-            $0.textColor = .warmgray8
-        }
-        
-        declareButton.do {
-            $0.setTitle("신고하기", for: .normal)
-            $0.setTitleColor(UIColor(named: "warmgray8"), for: .normal)
-            $0.titleLabel?.font = .captionMedium10
-        }
-        
-        
     }
     
     override func setConstraints() {
+        view.addSubviews(tableView)
         
-        view.addSubviews(profileIcon, userName, dateLabel, declareButton)
-        
-        profileIcon.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(115)
-            $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(37.8)
-            $0.height.equalTo(37.8)
+        tableView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         }
         
-        userName.snp.makeConstraints {
-            $0.top.equalTo(profileIcon.snp.top)
-            $0.leading.equalTo(profileIcon.snp.trailing).offset(11.2)
-            $0.height.equalTo(22)
-        }
-        
-        dateLabel.snp.makeConstraints {
-            $0.leading.equalTo(userName.snp.leading)
-            $0.bottom.equalTo(profileIcon.snp.bottom)
-            $0.height.equalTo(14)
-        }
-        
-        declareButton.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.top)
-            $0.bottom.equalTo(dateLabel.snp.bottom)
-            $0.trailing.equalToSuperview().inset(20)
-        }
+    }
+    
+    private func setTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
+        tableView.register(FoodTalkReplyCell.self, forCellReuseIdentifier: "FoodTalkReplyCell")
+        tableView.register(PostContentView.self, forHeaderFooterViewReuseIdentifier: "PostContentView")
+        tableView.separatorStyle = .none
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
     }
     
     private func setNavigationBar() {
@@ -100,15 +65,40 @@ class FoodPostViewController: BaseViewController {
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
     }
     
-    //MARK: - SetButtonAction
-    private func setAddTarget() {
-        declareButton.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
+    //MARK: - Method
+    func headerViewButtonTapped() {
+        let nextVC = DeclareViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
-    
-    //MARK: - @objc
-    @objc func declareButtonTapped() {
-        let delcareVC = DeclareViewController()
-        navigationController?.pushViewController(delcareVC, animated: true)
-    }
-    
 }
+    
+    
+
+//MARK: - Extension
+extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodTalkReplyCell") as! FoodTalkReplyCell
+        cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 95
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PostContentView") as! PostContentView
+        
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 520
+    }
+}
+
+
