@@ -12,7 +12,12 @@ import Then
 import Charts
 import DGCharts
 
+protocol MonthViewDelegate: AnyObject {
+    func didSelectYearMonth(year: Int, month: Int)
+}
+
 final class MonthView: BaseView {
+    weak var delegate: MonthViewDelegate?
     //MARK: - Property
     private var currentDate = Date()
     private let monthBackButton = UIButton()
@@ -27,6 +32,7 @@ final class MonthView: BaseView {
         super.init(frame: frame)
     }
     
+    // MARK: - UI
     override func setConfigure() {
         monthBackButton.do {
             $0.setImage(UIImage(named: "calendarBack"), for: .normal)
@@ -43,7 +49,6 @@ final class MonthView: BaseView {
         }
         
         yearMonthLabel.do {
-            $0.text = "2024년 04월"
             $0.textColor = .white
             $0.textAlignment = .center
             $0.font = .bodyMedium18
@@ -94,19 +99,26 @@ final class MonthView: BaseView {
     }
     
     override func setting() {
-        setupPieChart(jipbapRatio: 40,outRatio: 60)
-        setupBarChart(jipbapPrice: 4.3, outPrice: 5.7)
-        setStyledMonthContentLabel()
+        let (year, month) = getCurrentYearMonth()
+        yearMonthLabel.text = "\(year)년 \(month)월"
+//        setupPieChart(jipbapRatio: 40,outRatio: 60)
+//        setupBarChart(jipbapPrice: 4.3, outPrice: 5.7)
+//        setStyledMonthContentLabel(savePercent: <#T##String#>)
     }
     
-    func setStyledMonthContentLabel() {
-        let fullText = "저번달 보다 \(8)% 절약하고 있어요" // 전체 텍스트
-        let attributedString = NSMutableAttributedString(string: fullText)
-    
-        if let range = fullText.range(of: "8%") {
-            let nsRange = NSRange(range, in: fullText)
-            attributedString.addAttribute(.foregroundColor, value: UIColor.init(named: "turquoiseGreen"), range: nsRange)
+    // MARK: - Function
+    func setStyledMonthContentLabel(savePercent: Double) {
+        var text = ""
+        if savePercent >= 0 {
+            text = String(format: "저번달 보다 %.0f%% 절약했어요", savePercent)
+        } else {
+            text = String(format: "저번달 보다 %.0f%% 추가지출 했어요", abs(savePercent))
         }
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // 텍스트에서 %.0f%%를 찾아서 색상을 변경
+        let range = (text as NSString).range(of: String(format: "%.0f%%", abs(savePercent)))
+        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "green"), range: range)
         monthContentLabel.attributedText = attributedString
     }
     
@@ -195,7 +207,7 @@ final class MonthView: BaseView {
         barChartView.isUserInteractionEnabled = false
         print(barChartHeight)
     }
-
+    
     func updateYearMonthLabel() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 MM월"
@@ -203,15 +215,28 @@ final class MonthView: BaseView {
         yearMonthLabel.text = formattedDate
     }
     
-    //MARK: - @objc Func
+    func getCurrentYearMonth() -> (year: Int, month: Int) {
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
+        yearMonthLabel.text = "\(year)년 \(month)월"
+        return (year, month)
+    }
+    
+    //MARK: - Action
     @objc func monthBackTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? Date()
         updateYearMonthLabel()
+        let (year, month) = getCurrentYearMonth()
+        delegate?.didSelectYearMonth(year: year, month: month)
     }
     
     @objc func monthNextTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: +1, to: currentDate) ?? Date()
         updateYearMonthLabel()
+        let (year, month) = getCurrentYearMonth()
+        delegate?.didSelectYearMonth(year: year, month: month)
     }
     
 }
