@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnalysisWeekRequestDTO: Codable {
+struct AnalysisWeekBodyRequestDTO: Codable {
     let inputYear : String
     let inputMonth : String
     let inputDay : String

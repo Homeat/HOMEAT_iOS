@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct AnalysisMonthRequestDTO: Codable {
+struct AnalysisMonthRequestBodyDTO: Codable {
     let inputYear : String
     let inputMonth : String
 }

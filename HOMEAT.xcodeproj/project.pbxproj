@@ -94,8 +94,8 @@
 		589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
 		589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */; };
 		589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCEF2BE4A67000BA332F /* AnalysisService.swift */; };
-		589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestDTO.swift */; };
-		589CDD502BE75A1200BA332F /* AnalysisWeekRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestDTO.swift */; };
+		589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */; };
+		589CDD502BE75A1200BA332F /* AnalysisWeekBodyRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD4F2BE75A1200BA332F /* AnalysisWeekBodyRequestDTO.swift */; };
 		589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */; };
 		589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
@@ -188,8 +188,8 @@
 		589145182BBDA9CC00CF9A05 /* WeakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeakView.swift; path = HOMEAT/Presentation/ReportScene/View/WeakView.swift; sourceTree = SOURCE_ROOT; };
 		589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisTarget.swift; sourceTree = "<group>"; };
 		589CDCEF2BE4A67000BA332F /* AnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisService.swift; sourceTree = "<group>"; };
-		589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthRequestDTO.swift; sourceTree = "<group>"; };
-		589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWeekRequestDTO.swift; sourceTree = "<group>"; };
+		589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthRequestBodyDTO.swift; sourceTree = "<group>"; };
+		589CDD4F2BE75A1200BA332F /* AnalysisWeekBodyRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWeekBodyRequestDTO.swift; sourceTree = "<group>"; };
 		589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthResponseDTO.swift; sourceTree = "<group>"; };
 		589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWeekResponseDTO.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -412,6 +412,7 @@
 		012383412BB7F8FF0048CC2D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				58D1381B2BEF51E90048C228 /* WeekLook */,
 				01D530E12BC7BC57008C368E /* Base */,
 				01D5312C2BDFC576008C368E /* Onboarding */,
 				589CDCE32BE4A3AD00BA332F /* Analysis */,
@@ -688,10 +689,57 @@
 		589CDCE82BE4A47800BA332F /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestDTO.swift */,
-				589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestDTO.swift */,
+				589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */,
+				589CDD4F2BE75A1200BA332F /* AnalysisWeekBodyRequestDTO.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		58D1381B2BEF51E90048C228 /* WeekLook */ = {
+			isa = PBXGroup;
+			children = (
+				58D1381E2BEF52070048C228 /* DTO */,
+				58D1381D2BEF51FD0048C228 /* Router */,
+				58D1381C2BEF51F60048C228 /* Service */,
+			);
+			path = WeekLook;
+			sourceTree = "<group>";
+		};
+		58D1381C2BEF51F60048C228 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		58D1381D2BEF51FD0048C228 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		58D1381E2BEF52070048C228 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				58D138202BEF52280048C228 /* Response */,
+				58D1381F2BEF521F0048C228 /* Request */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		58D1381F2BEF521F0048C228 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		58D138202BEF52280048C228 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		58FE4CD82BC801700059D174 /* Cell */ = {
@@ -829,7 +877,7 @@
 				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
-				589CDD502BE75A1200BA332F /* AnalysisWeekRequestDTO.swift in Sources */,
+				589CDD502BE75A1200BA332F /* AnalysisWeekBodyRequestDTO.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
@@ -838,7 +886,7 @@
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
-				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestDTO.swift in Sources */,
+				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
