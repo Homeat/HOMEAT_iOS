@@ -10,8 +10,8 @@ import Alamofire
 
 
 enum AnalysisTarget {
-    case Month(_ bodyDTO: AnalysisMonthRequestDTO)
-    case Week(_ bodyDTO: AnalysisWeekRequestDTO)
+    case Month(_ bodyDTO: AnalysisMonthRequestBodyDTO)
+    case Week(_ bodyDTO: AnalysisWeekRequestBodyDTO)
 }
 
 extension AnalysisTarget: TargetType {

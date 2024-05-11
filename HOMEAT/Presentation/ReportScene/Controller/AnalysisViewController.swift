@@ -176,7 +176,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDeleg
     
     // MARK: Month Server Function
     private func monthChart(year: Int, month: Int) {
-        let bodyDTO = AnalysisMonthRequestDTO(inputYear: "\(year)", inputMonth: "\(month)")
+        let bodyDTO = AnalysisMonthRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)")
         NetworkService.shared.analysisService.analysisMonth(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
@@ -194,7 +194,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDeleg
     }
     // MARK: Week Server Function
     private func weekChart(year: Int, month: Int,day: Int) {
-        let bodyDTO = AnalysisWeekRequestDTO(inputYear: "\(year)", inputMonth: "\(month)", inputDay: "\(day)")
+        let bodyDTO = AnalysisWeekRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)", inputDay: "\(day)")
         NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
