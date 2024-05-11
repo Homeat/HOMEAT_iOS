@@ -55,6 +55,45 @@ class APIRequestLoader<T: TargetType> {
         }
     }
     
+    func fetchDataWithHeader<M: Decodable>(
+        target: T,
+        responseData: M.Type,
+        completion: @escaping (NetworkResult<M>, [AnyHashable : Any]) -> Void
+    ) {
+        var dataRequest = session.request(target)
+        
+        if target.authorization == .authorization {
+            dataRequest = interceptorSession.request(target).validate()
+        }
+        
+        dataRequest.responseData { response in
+            switch response.result {
+            case .success:
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let value = response.value else { return }
+                guard let networkHeader = response.response?.allHeaderFields else { return }
+                
+                // 필요한 헤더만 추출
+                var filteredHeaders: [AnyHashable: Any] = [:]
+                if let authorization = networkHeader["Authorization"] {
+                    filteredHeaders["Authorization"] = authorization
+                }
+                if let setCookie = networkHeader["Set-Cookie"] {
+                    filteredHeaders["Set-Cookie"] = setCookie
+                }
+
+                let networkRequest = self.judgeStatus(by: statusCode, value, type: M.self)
+                completion(networkRequest, filteredHeaders)
+            case .failure:
+                guard let statusCode = response.response?.statusCode else { return }
+                guard let data = response.data else { return }
+                
+                let networkRequest = self.judgeStatus(by: statusCode, data, type: M.self)
+                completion(networkRequest, [:])
+            }
+        }
+    }
+    
     private func judgeStatus<M: Decodable>(by statusCode: Int, _ data: Data, type: M.Type) -> NetworkResult<M> {
         switch statusCode {
         case 200...299: return isValidData(data: data, type: M.self)
