@@ -26,7 +26,7 @@ class SetBirthViewController: ProgressViewController {
         updateProgressBar(progress: 2/5)
         setTitleLabel(title: "생년월일을\n입력해주세요.")
         setSubTitleLabel(subtitle: "생년월일")
-        setNextVC(nextVC: SetBirthViewController())
+        setNextVC(nextVC: SetGenderViewController())
         setupKeyboardDismissal()
     }
     
@@ -168,6 +168,7 @@ extension SetBirthViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
+//MARK: - Extension
 extension SetBirthViewController {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 2
