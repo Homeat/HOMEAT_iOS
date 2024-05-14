@@ -17,7 +17,7 @@ final class ReplyReactionView: UIStackView {
         button.setTitle("9", for: .normal)
         button.titleLabel?.font = .captionMedium10
         button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-        button.setImage(UIImage(named: "isHeartSelected"), for: .normal)
+        button.setImage(UIImage(named: "isSmallHeartSelected"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
         return button

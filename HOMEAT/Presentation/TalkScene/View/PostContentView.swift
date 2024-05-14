@@ -11,12 +11,14 @@ import SnapKit
 import Then
 
 protocol HeaderViewDelegate: AnyObject {
-    func headerViewButtonTapped()
+    func recipeViewButtonTapped()
+    func declareViewButtonTapped()
 }
 
 class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     
     weak var delegate: HeaderViewDelegate?
+    
     //MARK: - Property
     private let profileIcon = UIImageView()
     private let userName = UILabel()
@@ -190,7 +192,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     }
         
     private func setAddTarget() {
-        declareButton.addTarget(self, action: #selector(recipeButtonTapped), for: .touchUpInside)
+        declareButton.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
         recipeViewButton.addTarget(self, action: #selector(recipeButtonTapped), for: .touchUpInside)
     }
     
@@ -205,6 +207,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
                 scrollView.addSubview(imageView)
                 scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
             }
+            
         }
         
         private func setPageControl() {
@@ -222,7 +225,11 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
 
     //MARK: - @objc
+    @objc func declareButtonTapped() {
+        delegate?.declareViewButtonTapped()
+    }
+    
     @objc func recipeButtonTapped() {
-        delegate?.headerViewButtonTapped()
+        delegate?.recipeViewButtonTapped()
     }
 }

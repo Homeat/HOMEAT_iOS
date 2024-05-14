@@ -9,18 +9,32 @@ import UIKit
 import Then
 import SnapKit
 
-class FoodPostViewController: BaseViewController, HeaderViewDelegate {
-
+class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
+    
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = PostContentView()
+    private let replyTextView = ReplyTextView()
+    var commentViewBottomConstraint: NSLayoutConstraint?
+    
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         setTableView()
-        postContent.delegate = self
+        setTabbar()
+        setupKeyboardEvent()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isHidden = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     //MARK: - SetUI
@@ -36,8 +50,10 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate {
     }
     
     override func setConstraints() {
-        view.addSubviews(tableView)
         
+        commentViewBottomConstraint = replyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        view.addSubviews(tableView, replyTextView)
+
         tableView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -45,6 +61,12 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate {
             $0.bottom.equalToSuperview()
         }
         
+        replyTextView.snp.makeConstraints {
+            $0.bottom.equalTo(view.snp.bottom)
+            $0.leading.equalTo(view.snp.leading)
+            $0.trailing.equalTo(view.snp.trailing)
+            $0.height.equalTo(91)
+        }
     }
     
     private func setTableView() {
@@ -63,17 +85,61 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate {
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
+        let navigationBarAppearance = UINavigationBarAppearance()
+        navigationBarAppearance.backgroundColor = UIColor(named: "homeBackgroundColor")
+        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+        navigationController!.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+    }
+    
+    private func setTabbar() {
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
+    }
+    
+    func setupKeyboardEvent() {
+        replyTextView.replyTextField.delegate = self
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - Method
-    func headerViewButtonTapped() {
+    func recipeViewButtonTapped() {
+        let nextVC = RecipeViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    func declareViewButtonTapped() {
         let nextVC = DeclareViewController()
         navigationController?.pushViewController(nextVC, animated: true)
     }
-}
     
-    
+    //MARK: - @objc
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            // 텍스트 뷰가 키보드와 함께 올라가도록 위치 조정
+            self.replyTextView.frame.origin.y -= keyboardHeight
+        }
+    }
 
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            let keyboardHeight = keyboardFrame.height
+            // 텍스트 뷰가 키보드가 사라질 때는 다시 이전 위치로 이동하지 않도록 조정
+            self.replyTextView.frame.origin.y += keyboardHeight
+        }
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+    
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,7 +158,7 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PostContentView") as! PostContentView
-        
+        view.delegate = self
         return view
     }
     

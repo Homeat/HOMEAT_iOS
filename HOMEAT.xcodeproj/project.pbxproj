@@ -87,6 +87,8 @@
 		0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */; };
 		0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD462BE8B4EA00D6133A /* PostContentView.swift */; };
 		0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD482BED294A00D6133A /* ReplyReactionView.swift */; };
+		0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */; };
+		0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -177,10 +179,12 @@
 		01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshResponseDTO.swift; sourceTree = "<group>"; };
 		0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPostViewController.swift; sourceTree = "<group>"; };
 		0309DD402BE7729E00D6133A /* DeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareViewController.swift; sourceTree = "<group>"; };
-		0309DD422BE7849E00D6133A /* DeclareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeclareView.swift; path = HOMEAT/Presentation/TalkScene/Controller/DeclareView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD422BE7849E00D6133A /* DeclareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DeclareView.swift; path = HOMEAT/Presentation/TalkScene/View/DeclareView.swift; sourceTree = SOURCE_ROOT; };
 		0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkReplyCell.swift; sourceTree = "<group>"; };
-		0309DD462BE8B4EA00D6133A /* PostContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostContentView.swift; path = HOMEAT/Presentation/TalkScene/cell/PostContentView.swift; sourceTree = SOURCE_ROOT; };
-		0309DD482BED294A00D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyReactionView.swift; path = HOMEAT/Presentation/TalkScene/cell/ReplyReactionView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD462BE8B4EA00D6133A /* PostContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostContentView.swift; path = HOMEAT/Presentation/TalkScene/View/PostContentView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD482BED294A00D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyReactionView.swift; path = HOMEAT/Presentation/TalkScene/View/ReplyReactionView.swift; sourceTree = SOURCE_ROOT; };
+		0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
+		0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -440,9 +444,8 @@
 		0123837E2BBA95900048CC2D /* TalkScene */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD4A2BEF582800D6133A /* View */,
 				2DD9DECF2BCD96A8004664B6 /* cell */,
-				012383852BBA95F70048CC2D /* Model */,
-				012383842BBA95F20048CC2D /* View */,
 				012383832BBA95EC0048CC2D /* Controller */,
 			);
 			path = TalkScene;
@@ -477,25 +480,9 @@
 				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
 				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0309DD402BE7729E00D6133A /* DeclareViewController.swift */,
+				0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */,
 			);
 			path = Controller;
-			sourceTree = "<group>";
-		};
-		012383842BBA95F20048CC2D /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0309DD422BE7849E00D6133A /* DeclareView.swift */,
-				0309DD462BE8B4EA00D6133A /* PostContentView.swift */,
-				0309DD482BED294A00D6133A /* ReplyReactionView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		012383852BBA95F70048CC2D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		012383862BBA96050048CC2D /* Controller */ = {
@@ -617,6 +604,17 @@
 				01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */,
 			);
 			path = Response;
+			sourceTree = "<group>";
+		};
+		0309DD4A2BEF582800D6133A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD422BE7849E00D6133A /* DeclareView.swift */,
+				0309DD462BE8B4EA00D6133A /* PostContentView.swift */,
+				0309DD482BED294A00D6133A /* ReplyReactionView.swift */,
+				0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -782,6 +780,7 @@
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
+				0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
@@ -809,6 +808,7 @@
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
+				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
