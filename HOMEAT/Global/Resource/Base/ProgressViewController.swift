@@ -13,7 +13,7 @@ class ProgressViewController: UIViewController {
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
     private let detailLabel = UILabel()
-    private let continueButton = ContinueButton()
+    let continueButton = ContinueButton()
     var inputTextField = UITextField()
     var nextVC = UIViewController()
     var progressBar = UIProgressView()

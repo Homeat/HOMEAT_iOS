@@ -93,7 +93,7 @@ class OnBoardingViewController : BaseViewController {
     
     //MARK: - @objc Func
     @objc private func signupButtonTapped(_ sender: Any) {
-        let nextVC = LoginViewController()
+        let nextVC = SetNicknameViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

@@ -12,13 +12,12 @@ import SnapKit
 
 class SetNicknameViewController: ProgressViewController {
     
-    private let nameLabel = UILabel()
     private let nameTextField = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateProgressBar(progress: 1/5)
-        setTitleLabel(title: "생년월일을\n입력해주세요.")
+        setTitleLabel(title: "사용할 닉네임을\n입력해주세요!")
         setSubTitleLabel(subtitle: "닉네임")
         setTextField(textField: nameTextField)
         setNextVC(nextVC: SetBirthViewController())

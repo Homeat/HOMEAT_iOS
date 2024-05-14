@@ -53,8 +53,4 @@ extension ContinueButton {
             $0.height.equalTo(57)
         }
     }
-    
-//    private func setAddTaget() {
-//        self.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-//    }
 }
