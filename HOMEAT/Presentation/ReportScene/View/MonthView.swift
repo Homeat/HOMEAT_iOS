@@ -99,11 +99,12 @@ final class MonthView: BaseView {
     }
     
     override func setting() {
-        let currentDate = Date()
-        let (year, month) = getCurrentYearMonth(for: currentDate)
+        let (year, month) = getCurrentYearMonth()
         yearMonthLabel.text = "\(year)년 \(month)월"
+//        setupPieChart(jipbapRatio: 40,outRatio: 60)
+//        setupBarChart(jipbapPrice: 4.3, outPrice: 5.7)
+//        setStyledMonthContentLabel(savePercent: <#T##String#>)
     }
-
     
     // MARK: - Function
     func setStyledMonthContentLabel(savePercent: Double) {
@@ -207,33 +208,35 @@ final class MonthView: BaseView {
         print(barChartHeight)
     }
     
-    func updateYearMonthLabel(for date: Date) {
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        yearMonthLabel.text = "\(year)년 \(month)월"
+    func updateYearMonthLabel() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy년 MM월"
+        let formattedDate = formatter.string(from: currentDate)
+        yearMonthLabel.text = formattedDate
     }
     
-    func getCurrentYearMonth(for date: Date) -> (year: Int, month: Int) {
+    func getCurrentYearMonth() -> (year: Int, month: Int) {
+        let currentDate = Date()
         let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        
+        let year = calendar.component(.year, from: currentDate)
+        let month = calendar.component(.month, from: currentDate)
+        yearMonthLabel.text = "\(year)년 \(month)월"
         return (year, month)
     }
     
     //MARK: - Action
     @objc func monthBackTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? Date()
-        updateYearMonthLabel(for: currentDate)
-        let (year, month) = getCurrentYearMonth(for: currentDate)
+        updateYearMonthLabel()
+        let (year, month) = getCurrentYearMonth()
         delegate?.didSelectYearMonth(year: year, month: month)
     }
     
     @objc func monthNextTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: +1, to: currentDate) ?? Date()
-        updateYearMonthLabel(for: currentDate)
-        let (year, month) = getCurrentYearMonth(for: currentDate)
+        updateYearMonthLabel()
+        let (year, month) = getCurrentYearMonth()
         delegate?.didSelectYearMonth(year: year, month: month)
     }
+    
 }
