@@ -13,6 +13,8 @@
 		011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFD92BE3ABC4000556D0 /* EatoutCheckView.swift */; };
 		011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFDC2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift */; };
 		011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFDE2BE3ACA7000556D0 /* PayCheckDetailViewController.swift */; };
+		011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */; };
+		011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */; };
 		012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E42BB3F96D0048CC2D /* AppDelegate.swift */; };
 		012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E62BB3F96D0048CC2D /* SceneDelegate.swift */; };
 		012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012382E82BB3F96D0048CC2D /* HomeViewController.swift */; };
@@ -100,6 +102,16 @@
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
 		589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
+		589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */; };
+		589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCEF2BE4A67000BA332F /* AnalysisService.swift */; };
+		589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */; };
+		589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift */; };
+		589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */; };
+		589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */; };
+		58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D138242BEF58B90048C228 /* WeekLookRequestBodyDTO.swift */; };
+		58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D138262BEF58CE0048C228 /* WeekLookResponseDTO.swift */; };
+		58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D138282BEF5BFC0048C228 /* WeekLookTarget.swift */; };
+		58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58D1382A2BEF5C0C0048C228 /* WeekLookService.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -125,6 +137,8 @@
 		011DAFD92BE3ABC4000556D0 /* EatoutCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EatoutCheckView.swift; sourceTree = "<group>"; };
 		011DAFDC2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		011DAFDE2BE3ACA7000556D0 /* PayCheckDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckDetailViewController.swift; sourceTree = "<group>"; };
+		011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginResponseDTO.swift; sourceTree = "<group>"; };
+		011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginRequestBodyDTO.swift; sourceTree = "<group>"; };
 		012382E12BB3F96D0048CC2D /* HOMEAT.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HOMEAT.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		012382E42BB3F96D0048CC2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		012382E62BB3F96D0048CC2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +210,16 @@
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
 		589145182BBDA9CC00CF9A05 /* WeakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeakView.swift; path = HOMEAT/Presentation/ReportScene/View/WeakView.swift; sourceTree = SOURCE_ROOT; };
+		589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisTarget.swift; sourceTree = "<group>"; };
+		589CDCEF2BE4A67000BA332F /* AnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisService.swift; sourceTree = "<group>"; };
+		589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthRequestBodyDTO.swift; sourceTree = "<group>"; };
+		589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWeekRequestBodyDTO.swift; sourceTree = "<group>"; };
+		589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthResponseDTO.swift; sourceTree = "<group>"; };
+		589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisWeekResponseDTO.swift; sourceTree = "<group>"; };
+		58D138242BEF58B90048C228 /* WeekLookRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58D138262BEF58CE0048C228 /* WeekLookResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookResponseDTO.swift; sourceTree = "<group>"; };
+		58D138282BEF5BFC0048C228 /* WeekLookTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookTarget.swift; sourceTree = "<group>"; };
+		58D1382A2BEF5C0C0048C228 /* WeekLookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookService.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -389,18 +413,10 @@
 		012383382BB7E95B0048CC2D /* OnboardingScene */ = {
 			isa = PBXGroup;
 			children = (
-				012383392BB7EA9F0048CC2D /* Model */,
 				01D530FE2BCFDFBA008C368E /* View */,
 				01D530F92BCFB79F008C368E /* Controller */,
 			);
 			path = OnboardingScene;
-			sourceTree = "<group>";
-		};
-		012383392BB7EA9F0048CC2D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		012383402BB7F8E90048CC2D /* Global */ = {
@@ -416,8 +432,10 @@
 		012383412BB7F8FF0048CC2D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				58D1381B2BEF51E90048C228 /* WeekLook */,
 				01D530E12BC7BC57008C368E /* Base */,
 				01D5312C2BDFC576008C368E /* Onboarding */,
+				589CDCE32BE4A3AD00BA332F /* Analysis */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -592,6 +610,7 @@
 			isa = PBXGroup;
 			children = (
 				01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */,
+				011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -602,6 +621,7 @@
 				01D531322BDFC647008C368E /* KakaoLoginResponseDTO.swift */,
 				01D5313A2BDFCCBB008C368E /* UserInfoResponseDTO.swift */,
 				01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */,
+				011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -642,6 +662,110 @@
 				589145162BBDA99800CF9A05 /* MonthView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		589CDCE32BE4A3AD00BA332F /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				589CDCE62BE4A3EC00BA332F /* Service */,
+				589CDCE52BE4A3D900BA332F /* Router */,
+				589CDCE42BE4A3D400BA332F /* DTO */,
+			);
+			path = Analysis;
+			sourceTree = "<group>";
+		};
+		589CDCE42BE4A3D400BA332F /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				589CDCE82BE4A47800BA332F /* Request */,
+				589CDCE72BE4A47200BA332F /* Response */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		589CDCE52BE4A3D900BA332F /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		589CDCE62BE4A3EC00BA332F /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				589CDCEF2BE4A67000BA332F /* AnalysisService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		589CDCE72BE4A47200BA332F /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */,
+				589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		589CDCE82BE4A47800BA332F /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */,
+				589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		58D1381B2BEF51E90048C228 /* WeekLook */ = {
+			isa = PBXGroup;
+			children = (
+				58D1381E2BEF52070048C228 /* DTO */,
+				58D1381D2BEF51FD0048C228 /* Router */,
+				58D1381C2BEF51F60048C228 /* Service */,
+			);
+			path = WeekLook;
+			sourceTree = "<group>";
+		};
+		58D1381C2BEF51F60048C228 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				58D1382A2BEF5C0C0048C228 /* WeekLookService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		58D1381D2BEF51FD0048C228 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				58D138282BEF5BFC0048C228 /* WeekLookTarget.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		58D1381E2BEF52070048C228 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				58D138202BEF52280048C228 /* Response */,
+				58D1381F2BEF521F0048C228 /* Request */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		58D1381F2BEF521F0048C228 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				58D138242BEF58B90048C228 /* WeekLookRequestBodyDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		58D138202BEF52280048C228 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				58D138262BEF58CE0048C228 /* WeekLookResponseDTO.swift */,
+			);
+			path = Response;
 			sourceTree = "<group>";
 		};
 		58FE4CD82BC801700059D174 /* Cell */ = {
@@ -771,6 +895,8 @@
 			files = (
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
+				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
+				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
@@ -778,16 +904,22 @@
 				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
+				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
+				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */,
+				58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
+				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
+				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
+				011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
@@ -796,6 +928,7 @@
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DD432BE7849E00D6133A /* DeclareView.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
+				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
 				0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */,
@@ -831,10 +964,13 @@
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
+				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
 				01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
+				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
+				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
 				01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

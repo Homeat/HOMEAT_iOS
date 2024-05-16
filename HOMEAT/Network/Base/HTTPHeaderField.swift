@@ -35,4 +35,5 @@ enum Authorization {
     case unauthorization
     case socialAuthorization
     case reAuthorization
+    case emailAuthorization
 }

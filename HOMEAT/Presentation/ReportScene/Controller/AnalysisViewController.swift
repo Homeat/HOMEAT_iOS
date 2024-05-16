@@ -9,7 +9,8 @@ import UIKit
 import Then
 import SnapKit
 
-class AnalysisViewController: BaseViewController {
+class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDelegate {
+    
     //MARK: - Property
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -20,8 +21,7 @@ class AnalysisViewController: BaseViewController {
     private let monthView = MonthView()
     private let ageButton = UIButton()
     private let incomeMoneyButton = UIButton()
-    private let weakView = WeakView()
-    
+    private let weekView = WeakView()
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ class AnalysisViewController: BaseViewController {
         }
         
         ageButton.do {
-            $0.setTitle("20대 초반", for: .normal)
+            $0.setTitle("20대", for: .normal)
             $0.layer.cornerRadius = 16
             $0.clipsToBounds = true
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
@@ -90,7 +90,7 @@ class AnalysisViewController: BaseViewController {
             $0.titleLabel?.font = .captionMedium13
         }
         
-        weakView.do {
+        weekView.do {
             $0.layer.cornerRadius = 14
             $0.layer.masksToBounds = true
             $0.backgroundColor = UIColor(named: "turquoiseGray")
@@ -100,7 +100,7 @@ class AnalysisViewController: BaseViewController {
     override func setConstraints() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(deliveryImage,deliveryLabel,mealImage,mealLabel,monthView,ageButton,incomeMoneyButton,weakView)
+        contentView.addSubviews(deliveryImage,deliveryLabel,mealImage,mealLabel,monthView,ageButton,incomeMoneyButton,weekView)
         
         scrollView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
@@ -161,11 +161,69 @@ class AnalysisViewController: BaseViewController {
             $0.height.equalTo(31.1)
         }
         
-        weakView.snp.makeConstraints {
+        weekView.snp.makeConstraints {
             $0.top.equalTo(ageButton.snp.bottom).offset(18.9)
             $0.leading.trailing.equalToSuperview().inset(19)
             $0.height.equalTo(570)
             
         }
+    }
+    
+    // MARK: - MonthViewDelegate
+    func didSelectYearMonth(year: Int, month: Int) {
+        monthChart(year: year, month: month)
+    }
+    
+    // MARK: Month Server Function
+    private func monthChart(year: Int, month: Int) {
+        let bodyDTO = AnalysisMonthRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)")
+        NetworkService.shared.analysisService.analysisMonth(bodyDTO: bodyDTO) { [weak self] response in
+            switch response {
+            case .success(let data):
+                guard let analysisData = data.data else { return }
+                self?.handleAnalysisData(analysisData)
+            default :
+                print("데이터 존재 안함 ")
+            }
+        }
+    }
+    
+    // MARK: - WeekViewDelegate
+    func didSelectYearMonthDay(year: Int, month: Int, day: Int) {
+        weekChart(year: year, month: month, day: day)
+    }
+    // MARK: Week Server Function
+    private func weekChart(year: Int, month: Int,day: Int) {
+        let bodyDTO = AnalysisWeekRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)", inputDay: "\(day)")
+        NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
+            switch response {
+            case .success(let data):
+                guard let analysisData = data.data else { return }
+                self?.handleWeekAnalysisData(analysisData)
+                self?.updateUserInfo(analysisData)
+            default:
+                print("데이터 존재 안함")
+            }
+        }
+    }
+    
+    // MARK: - Function
+    private func updateUserInfo(_ data: AnalysisWeekResponseDTO) {
+        ageButton.titleLabel?.text = data.ageRange
+        incomeMoneyButton.titleLabel?.text = data.income
+    }
+    
+    private func handleAnalysisData(_ data: AnalysisMonthResponseDTO) {
+        monthView.setupPieChart(jipbapRatio: data.jipbapRatio,outRatio:data.outRatio)
+        monthView.setupBarChart(jipbapPrice: Double(data.jipbapMonthPrice), outPrice: Double(data.jipbapMonthOutPrice))
+        monthView.setStyledMonthContentLabel(savePercent: Double(data.savePercent) ?? 0)
+    }
+    
+    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
+        weekView.updateGenderLabel(gender: data.gender)
+        weekView.updateGipbapContentsLabel(jibapSave: data.jipbapSave)
+        weekView.updateDeliveryContentsLabel(outSave: data.outSave)
+        weekView.setupMealWeekBarChart(jipbapAverage: data.jipbapAverage, weekJipbapPrice: data.weekJipbapPrice)
+        weekView.setupDeliveryWeekBarChart(outAverage: data.outAverage, weekOutPrice: data.weekOutPrice)
     }
 }
