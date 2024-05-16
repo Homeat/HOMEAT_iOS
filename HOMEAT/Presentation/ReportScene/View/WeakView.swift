@@ -145,7 +145,7 @@ final class WeakView: BaseView {
     }
     
     override func setting() {
-        updateWeekMonthLabel()
+        updateWeekMonthLabel(for: currentDate)
         setupMealWeekBarChart(jipbapAverage: 40, weekJipbapPrice: 50)
         setupDeliveryWeekBarChart(outAverage: 40, weekOutPrice: 50)
     }
@@ -189,8 +189,8 @@ final class WeakView: BaseView {
         deliveryContentsLabel.attributedText = attributedString3
     }
     
-    func updateWeekMonthLabel() {
-        let (year, month, weekOfMonth) = getCurrentYearMonthWeek()
+    func updateWeekMonthLabel(for date: Date) {
+        let (year, month, weekOfMonth) = getCurrentYearMonthWeek(for: date)
         var weekLabel : String
         
         switch weekOfMonth {
@@ -211,12 +211,11 @@ final class WeakView: BaseView {
         print(weakMonthLabel)
     }
     
-    func getCurrentYearMonthWeek() -> (year: Int, month: Int, weekOfMonth: Int) {
-        let currentDate = Date()
+    func getCurrentYearMonthWeek(for date: Date) -> (year: Int, month: Int, weekOfMonth: Int) {
         let calendar = Calendar.current
-        let year = calendar.component(.year, from: currentDate)
-        let month = calendar.component(.month, from: currentDate)
-        let weekOfMonth = calendar.component(.weekOfMonth, from: currentDate)
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let weekOfMonth = calendar.component(.weekOfMonth, from: date)
         return (year, month, weekOfMonth)
     }
     
@@ -316,15 +315,15 @@ final class WeakView: BaseView {
     //MARK: - Action
     @objc func weekBackTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
-        updateWeekMonthLabel()
-        let (year, month, date) = getCurrentYearMonthWeek()
+        updateWeekMonthLabel(for: currentDate)
+        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
         delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
     }
     
     @objc func weekNextTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
-        updateWeekMonthLabel()
-        let (year, month, date) = getCurrentYearMonthWeek()
+        updateWeekMonthLabel(for: currentDate)
+        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
         delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
     }
     
