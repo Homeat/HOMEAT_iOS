@@ -30,11 +30,13 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
+        self.hidesBottomBarWhenPushed = true
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        self.hidesBottomBarWhenPushed = false
     }
     
     //MARK: - SetUI
@@ -81,14 +83,11 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     private func setNavigationBar() {
-        navigationItem.title = "집밥토크"
+        self.navigationItem.title = "집밥토크"
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
-        let navigationBarAppearance = UINavigationBarAppearance()
-        navigationBarAppearance.backgroundColor = UIColor(named: "homeBackgroundColor")
-        navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-        navigationController!.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+        navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
     
     private func setTabbar() {

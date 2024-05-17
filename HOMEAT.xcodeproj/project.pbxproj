@@ -91,6 +91,8 @@
 		0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD482BED294A00D6133A /* ReplyReactionView.swift */; };
 		0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */; };
 		0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */; };
+		0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4F2BF5F07100D6133A /* IngredientView.swift */; };
+		0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD512BF7263200D6133A /* RecipeStepCell.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -199,6 +201,8 @@
 		0309DD482BED294A00D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyReactionView.swift; path = HOMEAT/Presentation/TalkScene/View/ReplyReactionView.swift; sourceTree = SOURCE_ROOT; };
 		0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
 		0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
+		0309DD4F2BF5F07100D6133A /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
+		0309DD512BF7263200D6133A /* RecipeStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStepCell.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -633,6 +637,7 @@
 				0309DD462BE8B4EA00D6133A /* PostContentView.swift */,
 				0309DD482BED294A00D6133A /* ReplyReactionView.swift */,
 				0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */,
+				0309DD4F2BF5F07100D6133A /* IngredientView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -650,6 +655,7 @@
 			children = (
 				2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
 				0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */,
+				0309DD512BF7263200D6133A /* RecipeStepCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -896,6 +902,7 @@
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
+				0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */,
 				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
@@ -905,6 +912,7 @@
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
+				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
