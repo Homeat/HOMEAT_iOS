@@ -32,7 +32,6 @@ class FoodTalkReplyCell: UITableViewCell {
     
     //MARK: - SetUI
     private func setUI() {
-        self.selectionStyle = .none
     
         replyProfile.do {
             $0.image = UIImage(named: "profileIcon")
