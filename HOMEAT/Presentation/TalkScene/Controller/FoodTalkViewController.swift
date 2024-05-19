@@ -35,6 +35,10 @@ class FoodTalkViewController: BaseViewController {
         setUpCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isTranslucent = false
+    }
+    
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
