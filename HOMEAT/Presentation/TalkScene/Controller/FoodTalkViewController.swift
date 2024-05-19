@@ -204,6 +204,7 @@ class FoodTalkViewController: BaseViewController {
         breakfastButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         lunchButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         dinnerButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        writeButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
     
     private func setUpCollectionView() {
@@ -234,6 +235,11 @@ class FoodTalkViewController: BaseViewController {
         button = sender as! UIButton
         button.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
+    }
+    
+    @objc func isWriteButtonTapped(_ sender: Any) {
+        let nextVC = RecipeWriteViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
