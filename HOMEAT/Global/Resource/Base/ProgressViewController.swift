@@ -14,7 +14,6 @@ class ProgressViewController: UIViewController {
     private let subtitleLabel = UILabel()
     private let detailLabel = UILabel()
     let continueButton = ContinueButton()
-    var inputTextField = UITextField()
     var nextVC = UIViewController()
     var progressBar = UIProgressView()
     
@@ -36,32 +35,6 @@ class ProgressViewController: UIViewController {
         }
     }
     
-    func setConstraints() {
-        view.addSubviews(progressBar, titleLabel, subtitleLabel, continueButton)
-        
-        progressBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-        }
-        
-        titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(178)
-            $0.leading.equalToSuperview().offset(20)
-        }
-        
-        subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(79)
-            $0.leading.equalTo(titleLabel)
-        }
-        
-        continueButton.snp.makeConstraints {
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(355)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-        }
-    }
-    
     func setConfigure() {
         view.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -76,8 +49,45 @@ class ProgressViewController: UIViewController {
         
         subtitleLabel.do {
             $0.text = " "
+            $0.font = .bodyMedium18
+            $0.textColor = UIColor(r: 216, g: 216, b: 216)
+        }
+        
+        detailLabel.do {
+            $0.text = " "
             $0.textColor = UIColor(named: "turquoiseGreen")
             $0.font = .bodyMedium18
+        }
+    }
+    
+    func setConstraints() {
+        view.addSubviews(progressBar, titleLabel, subtitleLabel, detailLabel, continueButton)
+        
+        progressBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+        }
+        
+        titleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(178)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        subtitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.leading.equalTo(titleLabel)
+        }
+        
+        detailLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(79)
+            $0.leading.equalTo(titleLabel)
+        }
+        
+        continueButton.snp.makeConstraints {
+            $0.top.equalTo(detailLabel.snp.bottom).offset(355)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
         }
     }
     
@@ -93,8 +103,8 @@ class ProgressViewController: UIViewController {
         subtitleLabel.text = subtitle
     }
     
-    func setTextField(textField: UITextField) {
-        inputTextField = textField
+    func setDetailLabel(detail: String) {
+        detailLabel.text = detail
     }
     
     func setNextVC(nextVC: UIViewController) {
@@ -125,7 +135,7 @@ class ProgressViewController: UIViewController {
 //MARK: - Extension
 extension ProgressViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let text = (inputTextField.text! as NSString).replacingCharacters(in: range, with: string)
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
         if text.isEmpty == true {
             continueButton.isEnabled = false
         } else {
