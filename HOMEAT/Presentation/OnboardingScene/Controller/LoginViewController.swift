@@ -18,6 +18,7 @@ final class LoginViewController : BaseViewController {
     private let passwordLabel = UILabel()
     private let passwordTextField = UITextField()
     private let loginButton = UIButton()
+    private let signinButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,11 +88,18 @@ final class LoginViewController : BaseViewController {
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
         }
+        
+        signinButton.do {
+            $0.backgroundColor = .clear
+            $0.titleLabel?.font = .captionMedium13
+            $0.setTitle("회원가입", for: .normal)
+            $0.setTitleColor(.white, for: .normal)
+        }
     }
     
     override func setConstraints() {
         
-        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton)
+        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton, signinButton)
         
         homeatTextLogo.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -127,6 +135,13 @@ final class LoginViewController : BaseViewController {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalTo(passwordTextField.snp.bottom).offset(72)
             $0.height.equalTo(57)
+        }
+        
+        signinButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(10)
+            $0.height.equalTo(30)
+            $0.width.equalTo(70)
         }
         
     }
