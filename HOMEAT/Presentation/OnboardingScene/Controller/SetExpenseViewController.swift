@@ -63,3 +63,19 @@ class SetExpenseViewController: ProgressViewController {
         }
     }
 }
+
+extension SetExpenseViewController {
+    override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
+        if let char = string.cString(using: String.Encoding.utf8) {
+            let isBackSpace = strcmp(char, "\\b")
+            if (isBackSpace == -92) {
+                return true
+            }
+        }
+        if textField.text?.isEmpty ?? true && string == "0" { return false }
+        guard textField.text!.count < 9 else { return false }
+        guard Int(string) != nil || string == "" else { return false }
+        return true
+    }
+}
