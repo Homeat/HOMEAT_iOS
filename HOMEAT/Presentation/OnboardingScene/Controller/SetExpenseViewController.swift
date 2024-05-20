@@ -17,11 +17,10 @@ class SetExpenseViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 1/5)
+        updateProgressBar(progress: 6/6)
         setTitleLabel(title: "한 주 목표 식비는\n얼마인가요?")
         setSubTitleLabel(subtitle: "외식, 배달비 모두 포함이에요!")
         setDetailLabel(detail: "한 주 목표 식비")
-        setNextVC(nextVC: SetBirthViewController())
     }
     
     override func setConfigure() {
