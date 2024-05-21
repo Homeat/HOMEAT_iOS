@@ -35,6 +35,9 @@ class FoodTalkViewController: BaseViewController {
         setUpCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isTranslucent = false
+    }
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -179,9 +182,8 @@ class FoodTalkViewController: BaseViewController {
         }
         
         foodCollectionView.snp.makeConstraints {
-            $0.top.equalTo(scrollView.snp.bottom)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.top.equalTo(scrollView.snp.bottom).offset(22)
+            $0.leading.trailing.equalToSuperview().inset(25)
             $0.bottom.equalToSuperview()
         }
         
@@ -267,7 +269,7 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 9
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -290,17 +292,17 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
 }
 
 extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return interval
-        }
-    
+  
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 30
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let spacing: CGFloat = 20
+            let width = (collectionView.bounds.width - 8 - 8 - spacing) / 2 // 총 가로길이 - leading - trailing - 간격
+            let height = (collectionView.bounds.height - spacing * 2) / 3 // 총 세로길이 - top - bottom - 간격
+            return CGSize(width: width, height: height)
     }
     
 }
+
