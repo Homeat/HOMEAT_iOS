@@ -55,7 +55,7 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
             guard let self else {return}
             switch result {
             case .success(let data):
-                if data.code == 200 {
+                if data.code == "COMMON_200" {
                     /// 토큰 재발급에 성공하여 다시 저장.
                     guard let data = data.data else { return }
                     print("리프레쉬 토큰을 사용하여 토큰을 재발행하여 저장했습니다. ✅")
@@ -63,7 +63,7 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
                     KeychainHandler.shared.accessToken = data.accessToken
                     completion(true)
                     return
-                } else if data.code == 404 {
+                } else if data.code == "AUTH_4010" {
                     print("이미 탈퇴한 사용자로 찾을 수 없습니다.❌")
 //                    self.logout()
                 }

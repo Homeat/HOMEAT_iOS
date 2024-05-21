@@ -9,13 +9,17 @@ import Foundation
 import UIKit
 import Then
 import SnapKit
+import KakaoSDKUser
+import KakaoSDKAuth
+import KakaoSDKCommon
 
 class OnBoardingViewController : BaseViewController {
     
     private let introTitleLabel = UILabel()
     private let welcomeView = WelcomeView()
-    private let signupButton = UIButton()
-    private let signinButton = UIButton()
+    private let continueEmailButton = UIButton()
+    private let continueKakaoButton = UIButton()
+    private let continueAppleButton = UIButton()
     
     // MARK: Life Cycle
     override func viewDidLoad() {
@@ -35,19 +39,19 @@ class OnBoardingViewController : BaseViewController {
             $0.textColor = .turquoiseGreen
         }
         
-        signupButton.do {
+        continueEmailButton.do {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyMedium18
-            $0.setTitle("가입하기", for: .normal)
+            $0.setTitle("이메일로 계속하기", for: .normal)
             $0.setTitleColor(.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
         }
         
-        signinButton.do {
+        continueKakaoButton.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.titleLabel?.font = .bodyMedium18
-            $0.setTitle("계정이 이미 있어요", for: .normal)
+            $0.setTitle("카카오로 계속하기", for: .normal)
             $0.setTitleColor(.turquoiseGreen, for: .normal)
             $0.layer.cornerRadius = 10
             $0.clipsToBounds = true
@@ -55,10 +59,20 @@ class OnBoardingViewController : BaseViewController {
             $0.layer.borderWidth = 1
         }
         
+        continueAppleButton.do {
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.titleLabel?.font = .bodyMedium18
+            $0.setTitle("Apple로 계속하기", for: .normal)
+            $0.setTitleColor(.turquoiseGreen, for: .normal)
+            $0.layer.cornerRadius = 10
+            $0.clipsToBounds = true
+            $0.layer.borderColor = UIColor.turquoiseGreen.cgColor
+            $0.layer.borderWidth = 1
+        }
     }
     
     override func setConstraints() {
-        view.addSubviews(introTitleLabel, welcomeView, signupButton, signinButton)
+        view.addSubviews(introTitleLabel, welcomeView, continueEmailButton, continueKakaoButton, continueAppleButton)
         
         introTitleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -71,14 +85,21 @@ class OnBoardingViewController : BaseViewController {
             $0.top.equalTo(introTitleLabel.snp.bottom).offset(15)
         }
         
-        signupButton.snp.makeConstraints {
+        continueEmailButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(signinButton.snp.top).offset(-25)
+            $0.bottom.equalTo(continueKakaoButton.snp.top).offset(-25)
             $0.height.equalTo(57)
         }
         
-        signinButton.snp.makeConstraints {
+        continueKakaoButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalTo(continueAppleButton.snp.top).offset(-25)
+            $0.height.equalTo(57)
+        }
+        
+        continueAppleButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-76)
@@ -87,21 +108,45 @@ class OnBoardingViewController : BaseViewController {
     }
     
     private func setTarget() {
-        signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
-        signinButton.addTarget(self, action: #selector(signinButtonTapped), for: .touchUpInside)
+        continueEmailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
+        continueKakaoButton.addTarget(self, action: #selector(kakaoButtonTapped), for: .touchUpInside)
+        continueAppleButton.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc Func
-    @objc private func signupButtonTapped(_ sender: Any) {
+    @objc private func emailButtonTapped(_ sender: Any) {
         let nextVC = LoginViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    @objc private func signinButtonTapped() {
+    @objc private func kakaoButtonTapped(_ sender: Any) {
+        print("loginKakao() called.")
+        // ✅ 카카오톡 설치 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.")
+                    
+                    // ✅ 회원가입 성공 시 oauthToken 저장가능하다
+                    // _ = oauthToken
+                    print("-------------------------------------")
+                    print(oauthToken!)
+                    print("-------------------------------------")
+                }
+            }
+        }
+        else {
+            print("카카오톡 미설치")
+        }
+    }
+    
+    @objc private func appleButtonTapped() {
         let tabBarVC = HOMEATTabBarController()
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.changeRootViewController(to: tabBarVC)
         }
     }
-    
 }

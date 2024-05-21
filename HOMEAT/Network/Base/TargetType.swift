@@ -65,6 +65,8 @@ extension TargetType {
             urlRequest.setValue(KeychainHandler.shared.providerToken, forHTTPHeaderField: HTTPHeaderField.providerToken.rawValue)
         case .reAuthorization:
             urlRequest.setValue(KeychainHandler.shared.refreshToken, forHTTPHeaderField: HTTPHeaderField.authentication.rawValue)
+        case .emailAuthorization:
+            urlRequest.setValue("Bearer \(KeychainHandler.shared.accessToken)", forHTTPHeaderField: HTTPHeaderField.authentication.rawValue)
         }
         
         switch headerType {
