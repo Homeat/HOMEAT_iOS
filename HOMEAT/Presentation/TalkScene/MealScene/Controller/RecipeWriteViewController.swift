@@ -23,12 +23,12 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     }
     private var currentMode: Mode = .camera
     var activeField: UIView?
-    
     private var isCameraAuthorized: Bool {
        AVCaptureDevice.authorizationStatus(for: .video) == .authorized
      }
     //MARK: - Property
     private let scrollView = UIScrollView()
+    private let contentView = UIView()
     private let imagePicker = UIImagePickerController()
     //private let photoButton = UIButton()
     private lazy var collectionView: UICollectionView = {
@@ -56,6 +56,9 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     private let nameTextField = UITextField()
     private let memoLabel = UILabel()
     private let memoTextView = UITextView()
+    private let line = UIView()
+    private let stepLabel = UILabel()
+    private let stepAddButton = UIButton()
     
     //MARK: - LIfeCycle
     override func viewDidLoad() {
@@ -68,7 +71,11 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     //MARK: - SetUI
     let textViewPlaceHolder = "오늘의 음식이 담고 있는 이야기는?"
     override func setConfigure() {
-        view.do {
+        scrollView.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
+        
+        contentView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
         
@@ -142,10 +149,29 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
             $0.textContainerInset = UIEdgeInsets(top: 13, left: 20, bottom: 0, right: 0)
             $0.font = .bodyMedium16
         }
+        
+        line.do {
+            $0.backgroundColor = .turquoiseDarkGray
+        }
+        
+        stepLabel.do {
+            $0.text = "STEP"
+            $0.font = .bodyMedium18
+            $0.textColor = .turquoiseGreen
+        }
+        
+        stepAddButton.do {
+            $0.setTitle("레시피 추가하기", for: .normal)
+            $0.setTitleColor(UIColor(r: 248, g: 208, b: 186), for: .normal)
+            $0.titleLabel?.font = .bodyMedium16
+            $0.addTarget(self, action: #selector(stepAddButtonTapped), for: .touchUpInside)
+        }
     }
     
     override func setConstraints() {
-        view.addSubviews(customButton, collectionView,container, nameLabel, nameTextField, memoLabel, memoTextView)
+        view.addSubviews(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubviews(customButton, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton)
         self.view.addSubview(self.imageView)
         view.bringSubviewToFront(self.imageView)
         
@@ -153,8 +179,21 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         container.addArrangedSubview(lunchButton)
         container.addArrangedSubview(dinnerButton)
         
+        scrollView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.frameLayoutGuide)
+            $0.height.equalTo(1200)
+        }
+        
         customButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(51)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(176)
             $0.width.equalTo(176)
@@ -163,13 +202,13 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(176)
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(51)
         }
         
         imageView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
-            $0.leading.equalTo(view.snp.leading).offset(108)
-            $0.trailing.equalTo(view.snp.trailing).offset(-109)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(51)
+            $0.leading.equalTo(contentView.snp.leading).offset(108)
+            $0.trailing.equalTo(contentView.snp.trailing).offset(-109)
             $0.height.equalTo(176)
         }
         
@@ -202,32 +241,25 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
             $0.trailing.equalTo(nameTextField.snp.trailing)
             $0.height.equalTo(50)
         }
+        
+        line.snp.makeConstraints {
+            $0.leading.equalTo(nameTextField.snp.leading)
+            $0.trailing.equalTo(nameTextField.snp.trailing)
+            $0.top.equalTo(memoTextView.snp.bottom).offset(9)
+        }
+        
+        stepLabel.snp.makeConstraints {
+            $0.leading.equalTo(line.snp.leading)
+            $0.top.equalTo(line.snp.bottom).offset(18)
+        }
+        
+        stepAddButton.snp.makeConstraints {
+            $0.top.equalTo(stepLabel.snp.top)
+            $0.bottom.equalTo(stepLabel.snp.bottom)
+            $0.trailing.equalTo(memoTextView.snp.trailing)
+        }
     }
-    func makeCustomButton() -> UIButton {
-        var config = UIButton.Configuration.plain()
-        var attributedTitle = AttributedString("사진 추가")
-        attributedTitle.font = .systemFont(ofSize: 18, weight: .bold)
-        config.attributedTitle = attributedTitle
-        let pointSize = CGFloat(30)
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
-        config.image = UIImage.init(named: "cameraIcon")
-        config.preferredSymbolConfigurationForImage = imageConfig
-
-        config.imagePlacement = .top
-        config.background.backgroundColor = .darkGray
-        config.baseForegroundColor = .lightGray
-        config.cornerStyle = .small
-
-        // 이미지와 텍스트 간격 조절
-        config.imagePadding = 12.7
-        config.titlePadding = 10
-
-        let customButton = UIButton(configuration: config)
-        customButton.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
-        customButton.translatesAutoresizingMaskIntoConstraints = false
-
-        return customButton
-    }
+    
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크 글쓰기"
         self.navigationController?.navigationBar.tintColor = .white
@@ -306,6 +338,35 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         self.present(actionSheet, animated: true, completion: nil)
     }
     
+    @objc private func openCamera() {
+       #if targetEnvironment(simulator)
+       fatalError()
+       #endif
+       
+       AVCaptureDevice.requestAccess(for: .video) { [weak self] isAuthorized in
+         guard isAuthorized else {
+           self?.showAlertGoToSetting()
+           return
+         }
+           
+         DispatchQueue.main.async {
+           let pickerController = UIImagePickerController()
+           pickerController.sourceType = .camera
+           pickerController.allowsEditing = false
+           pickerController.mediaTypes = ["public.image"]
+           pickerController.delegate = self
+           self?.present(pickerController, animated: true)
+         }
+       }
+     }
+    
+    @objc func stepAddButtonTapped() {
+        let vc = StepWriteController()
+        vc.modalPresentationStyle = UIModalPresentationStyle.automatic
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    //MARK: - Methods
     func pickImage(){
             let photoLibrary = PHPhotoLibrary.shared()
             var configuration = PHPickerConfiguration(photoLibrary: photoLibrary)
@@ -320,61 +381,62 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
                 self.present(picker, animated: true, completion: nil) // 갤러리뷰 프리젠트
         }
     }
+    
+    func makeCustomButton() -> UIButton {
+        var config = UIButton.Configuration.plain()
+        var attributedTitle = AttributedString("사진 추가")
+        attributedTitle.font = .systemFont(ofSize: 18, weight: .bold)
+        config.attributedTitle = attributedTitle
+        let pointSize = CGFloat(30)
+        let imageConfig = UIImage.SymbolConfiguration(pointSize: pointSize)
+        config.image = UIImage.init(named: "cameraIcon")
+        config.preferredSymbolConfigurationForImage = imageConfig
 
-    
-    @objc private func openCamera() {
-       #if targetEnvironment(simulator)
-       fatalError()
-       #endif
-       
-       AVCaptureDevice.requestAccess(for: .video) { [weak self] isAuthorized in
-         guard isAuthorized else {
-           self?.showAlertGoToSetting()
-           return
-         }
-           
-         
-         DispatchQueue.main.async {
-           let pickerController = UIImagePickerController()
-           pickerController.sourceType = .camera
-           pickerController.allowsEditing = false
-           pickerController.mediaTypes = ["public.image"]
-           pickerController.delegate = self
-           self?.present(pickerController, animated: true)
-         }
-       }
-     }
-    
+        config.imagePlacement = .top
+        config.background.backgroundColor = .darkGray
+        config.baseForegroundColor = .lightGray
+        config.cornerStyle = .small
+
+        // 이미지와 텍스트 간격 조절
+        config.imagePadding = 12.7
+        config.titlePadding = 10
+
+        let customButton = UIButton(configuration: config)
+        customButton.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
+        customButton.translatesAutoresizingMaskIntoConstraints = false
+
+        return customButton
+    }
+
     func showAlertGoToSetting() {
         let alertController = UIAlertController(
-          title: "현재 카메라 사용에 대한 접근 권한이 없습니다.",
-          message: "설정 > {앱 이름}탭에서 접근을 활성화 할 수 있습니다.",
-          preferredStyle: .alert
+            title: "현재 카메라 사용에 대한 접근 권한이 없습니다.",
+            message: "설정 > {앱 이름}탭에서 접근을 활성화 할 수 있습니다.",
+            preferredStyle: .alert
         )
         let cancelAlert = UIAlertAction(
-          title: "취소",
-          style: .cancel
+            title: "취소",
+            style: .cancel
         ) { _ in
             alertController.dismiss(animated: true, completion: nil)
-          }
-        let goToSettingAlert = UIAlertAction(
-          title: "설정으로 이동하기",
-          style: .default) { _ in
-            guard
-              let settingURL = URL(string: UIApplication.openSettingsURLString),
-              UIApplication.shared.canOpenURL(settingURL)
-            else { return }
-            UIApplication.shared.open(settingURL, options: [:])
-          }
-        [cancelAlert, goToSettingAlert]
-          .forEach(alertController.addAction(_:))
-        DispatchQueue.main.async {
-          self.present(alertController, animated: true)
         }
-      }
+        let goToSettingAlert = UIAlertAction(
+            title: "설정으로 이동하기",
+            style: .default) { _ in
+                guard
+                    let settingURL = URL(string: UIApplication.openSettingsURLString),
+                    UIApplication.shared.canOpenURL(settingURL)
+                else { return }
+                UIApplication.shared.open(settingURL, options: [:])
+            }
+        [cancelAlert, goToSettingAlert]
+            .forEach(alertController.addAction(_:))
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true)
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // 셀 크기 설정
-        
         return CGSize(width: 176, height: 176)
         
     }
@@ -411,12 +473,10 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let identifiers = results.compactMap(\.assetIdentifier)
         let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
-
+        
         let group = DispatchGroup()
         fetchResult.enumerateObjects { asset, index, pointer in
-//            print("위도: \(asset.location?.coordinate.latitude)")
-//            print("경도: \(asset.location?.coordinate.longitude)")
-//            print("시간: \(asset.location?.timestamp)")
+            
         }
         for result in results {
             group.enter()
@@ -424,17 +484,17 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
             if itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) { [weak self] (image, error) in
                     guard let self = self else { return }
-
+                    
                     if let error = error {
                         print("Error loading image: \(error)")
                         group.leave()
                         return
                     }
-
+                    
                     if let image = image as? UIImage {
                         selectedImages.append(image)
                     }
-
+                    
                     group.leave()
                 }
             } else {
@@ -449,10 +509,10 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
                     self.customButton.isHidden = true
                     self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
-
+                    
                     // 이미지가 추가되었을 때 디버깅 정보 출력
                     print("selectedImages contents: \(self.selectedImages)")
-
+                    
                     self.collectionView.reloadData() // collectionView 갱신
                 }
             }

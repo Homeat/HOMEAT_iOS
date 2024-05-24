@@ -95,6 +95,7 @@
 		0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */; };
 		0309DD5F2BFCE9C500D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD5E2BFCE9C500D6133A /* IngredientView.swift */; };
 		0309DD612BFCE9D600D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD602BFCE9D600D6133A /* ReplyTextView.swift */; };
+		0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD622C00859B00D6133A /* StepWriteController.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
@@ -206,6 +207,7 @@
 		0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
 		0309DD5E2BFCE9C500D6133A /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		0309DD602BFCE9D600D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
+		0309DD622C00859B00D6133A /* StepWriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepWriteController.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 				0309DD402BE7729E00D6133A /* DeclareViewController.swift */,
 				0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */,
 				0309DD562BF99F0200D6133A /* RecipeWriteViewController.swift */,
+				0309DD622C00859B00D6133A /* StepWriteController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -984,6 +987,7 @@
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
+				0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */,
 				011DAFD82BE3ABB6000556D0 /* HomefoodCheckView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
