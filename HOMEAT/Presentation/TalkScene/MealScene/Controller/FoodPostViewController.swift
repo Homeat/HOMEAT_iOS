@@ -16,8 +16,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     private let postContent = PostContentView()
     private let replyTextView = ReplyTextView()
     var commentViewBottomConstraint: NSLayoutConstraint?
-    
-    
+
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,13 +29,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
-        self.hidesBottomBarWhenPushed = true
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        self.hidesBottomBarWhenPushed = false
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - SetUI
@@ -55,7 +56,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         
         commentViewBottomConstraint = replyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         view.addSubviews(tableView, replyTextView)
-
+        
         tableView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -100,9 +101,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - Method
@@ -116,29 +114,28 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    //MARK: - @objc
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = keyboardFrame.height
-            // 텍스트 뷰가 키보드와 함께 올라가도록 위치 조정
-            self.replyTextView.frame.origin.y -= keyboardHeight
-        }
-    }
-
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
-            let keyboardHeight = keyboardFrame.height
-            // 텍스트 뷰가 키보드가 사라질 때는 다시 이전 위치로 이동하지 않도록 조정
-            self.replyTextView.frame.origin.y += keyboardHeight
-        }
-    }
-    
-    @objc func dismissKeyboard() {
+    // MARK: -- objc
+    @objc private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    @objc func keyboardUp(notification: NSNotification) {
+        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            
+            UIView.animate(
+                withDuration: 0.3
+                , animations: {
+                    self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
+                }
+            )
+        }
+    }
+    @objc func keyboardDown() {
+        self.view.transform = .identity
     }
 }
 
-    
+
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
