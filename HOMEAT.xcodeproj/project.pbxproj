@@ -91,6 +91,15 @@
 		0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4F2BF5F07100D6133A /* IngredientView.swift */; };
 		0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD512BF7263200D6133A /* RecipeStepCell.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
+		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
+		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
+		2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CDE2BEBA23700A86CF9 /* ProgressViewController.swift */; };
+		2DA59CE12BEBB52400A86CF9 /* SetNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CE02BEBB52400A86CF9 /* SetNicknameViewController.swift */; };
+		2DA59CE42BEC473E00A86CF9 /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CE32BEC473E00A86CF9 /* ContinueButton.swift */; };
+		2DA59CE62BEC824800A86CF9 /* SetBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CE52BEC824800A86CF9 /* SetBirthViewController.swift */; };
+		2DA59CE82BEF6F4700A86CF9 /* SetGenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CE72BEF6F4700A86CF9 /* SetGenderViewController.swift */; };
+		2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CE92BF3AFC500A86CF9 /* SetIncomeViewController.swift */; };
+		2DA59CEC2BF3B68D00A86CF9 /* SetExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CEB2BF3B68D00A86CF9 /* SetExpenseViewController.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
@@ -208,6 +217,15 @@
 		0309DD4F2BF5F07100D6133A /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		0309DD512BF7263200D6133A /* RecipeStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStepCell.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
+		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
+		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
+		2DA59CDE2BEBA23700A86CF9 /* ProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressViewController.swift; sourceTree = "<group>"; };
+		2DA59CE02BEBB52400A86CF9 /* SetNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetNicknameViewController.swift; sourceTree = "<group>"; };
+		2DA59CE32BEC473E00A86CF9 /* ContinueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		2DA59CE52BEC824800A86CF9 /* SetBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBirthViewController.swift; sourceTree = "<group>"; };
+		2DA59CE72BEF6F4700A86CF9 /* SetGenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SetGenderViewController.swift; path = ../../../../../../../Movies/SetGenderViewController.swift; sourceTree = "<group>"; };
+		2DA59CE92BF3AFC500A86CF9 /* SetIncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetIncomeViewController.swift; sourceTree = "<group>"; };
+		2DA59CEB2BF3B68D00A86CF9 /* SetExpenseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetExpenseViewController.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
@@ -374,6 +392,7 @@
 			children = (
 				012383012BB40BC80048CC2D /* BaseViewController.swift */,
 				0123830B2BB40F070048CC2D /* BaseView.swift */,
+				2DA59CDE2BEBA23700A86CF9 /* ProgressViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -433,6 +452,7 @@
 			children = (
 				01D530FE2BCFDFBA008C368E /* View */,
 				01D530F92BCFB79F008C368E /* Controller */,
+				2DA59CE22BEC471B00A86CF9 /* Components */,
 			);
 			path = OnboardingScene;
 			sourceTree = "<group>";
@@ -576,6 +596,13 @@
 			children = (
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
 				01D531012BD14D89008C368E /* LoginViewController.swift */,
+				2DA59CE02BEBB52400A86CF9 /* SetNicknameViewController.swift */,
+				2DA59CE52BEC824800A86CF9 /* SetBirthViewController.swift */,
+				2DA59CE72BEF6F4700A86CF9 /* SetGenderViewController.swift */,
+				2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */,
+				2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */,
+				2DA59CE92BF3AFC500A86CF9 /* SetIncomeViewController.swift */,
+				2DA59CEB2BF3B68D00A86CF9 /* SetExpenseViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -970,11 +997,13 @@
 			files = (
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
+				2DA59CE62BEC824800A86CF9 /* SetBirthViewController.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
 				0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */,
 				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
+				2DA59CE12BEBB52400A86CF9 /* SetNicknameViewController.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				58E88E722BF8ED2200775F06 /* ReplyReactionView.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
@@ -996,6 +1025,7 @@
 				58E88E822BF92B2100775F06 /* InfoPostContentView.swift in Sources */,
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
+				2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
@@ -1018,6 +1048,7 @@
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				58E88E862BF92D4600775F06 /* PhotoCollectionViewCell.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
+				2DA59CE42BEC473E00A86CF9 /* ContinueButton.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
@@ -1032,10 +1063,12 @@
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
+				2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
 				01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
+				2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */,
 				01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
@@ -1045,11 +1078,14 @@
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
+				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
+				2DA59CE82BEF6F4700A86CF9 /* SetGenderViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
 				01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,
+				2DA59CEC2BF3B68D00A86CF9 /* SetExpenseViewController.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
