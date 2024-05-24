@@ -67,10 +67,14 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         setUpKeyboard()
         collectionView.isHidden = true
     }
-    
+
     //MARK: - SetUI
     let textViewPlaceHolder = "오늘의 음식이 담고 있는 이야기는?"
     override func setConfigure() {
+        self.view.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
+        
         scrollView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
@@ -270,12 +274,8 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     }
     
     func setUpKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - @objc

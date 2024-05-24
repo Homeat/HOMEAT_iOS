@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Then
+import SnapKit
 
 class FoodTalkViewController: BaseViewController {
     
@@ -191,7 +192,7 @@ class FoodTalkViewController: BaseViewController {
         
         writeButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(100)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(51)
             $0.width.equalTo(51)
         }
@@ -239,6 +240,7 @@ class FoodTalkViewController: BaseViewController {
     
     @objc func isWriteButtonTapped(_ sender: Any) {
         let nextVC = RecipeWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }

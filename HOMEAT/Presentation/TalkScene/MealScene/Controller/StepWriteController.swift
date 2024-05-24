@@ -168,6 +168,10 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         }
     }
     
+    private func setTapBarHidden() {
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
     //MARK: - Method
     private func openCamera() {
         imagePicker.sourceType = .camera
