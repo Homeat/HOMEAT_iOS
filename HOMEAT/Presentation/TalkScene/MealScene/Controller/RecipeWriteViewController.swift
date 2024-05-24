@@ -13,8 +13,8 @@ import Photos
 import PhotosUI
 import AVFoundation
 
-class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlowLayout {
-    
+class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout {
+    var selectedButton: UIButton?
     private var selectedImages: [UIImage] = []
     private lazy var customButton: UIButton = makeCustomButton()
     private enum Mode {
@@ -26,6 +26,8 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     private var isCameraAuthorized: Bool {
        AVCaptureDevice.authorizationStatus(for: .video) == .authorized
      }
+    var data: [String] = ["Cell 1", "Cell 2"]
+    var tableViewHeightConstraint: NSLayoutConstraint!
     //MARK: - Property
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -59,6 +61,7 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     private let line = UIView()
     private let stepLabel = UILabel()
     private let stepAddButton = UIButton()
+    private let tableView = UITableView()
     
     //MARK: - LIfeCycle
     override func viewDidLoad() {
@@ -66,6 +69,8 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         setNavigationBar()
         setUpKeyboard()
         collectionView.isHidden = true
+        setTableView()
+        navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
 
     //MARK: - SetUI
@@ -100,25 +105,34 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         breakfastButton.do {
             $0.setTitle("#아침", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.cornerRadius = 20
+            $0.layer.cornerRadius = 18
             $0.titleLabel?.font = .bodyBold15
             $0.backgroundColor = .turquoiseDarkGray
+            $0.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+            $0.layer.borderWidth = 2
+            $0.layer.borderColor = UIColor(named: "turquoiseDarkGray")?.cgColor
         }
         
         lunchButton.do {
             $0.setTitle("#점심", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.cornerRadius = 20
+            $0.layer.cornerRadius = 18
             $0.titleLabel?.font = .bodyBold15
             $0.backgroundColor = .turquoiseDarkGray
+            $0.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+            $0.layer.borderWidth = 2
+            $0.layer.borderColor = UIColor(named: "turquoiseDarkGray")?.cgColor
         }
         
         dinnerButton.do {
             $0.setTitle("#저녁", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.cornerRadius = 19
+            $0.layer.cornerRadius = 18
             $0.titleLabel?.font = .bodyBold15
             $0.backgroundColor = .turquoiseDarkGray
+            $0.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+            $0.layer.borderWidth = 2
+            $0.layer.borderColor = UIColor(named: "turquoiseDarkGray")?.cgColor
         }
         
         nameLabel.do {
@@ -175,7 +189,7 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     override func setConstraints() {
         view.addSubviews(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(customButton, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton)
+        contentView.addSubviews(customButton, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
         self.view.addSubview(self.imageView)
         view.bringSubviewToFront(self.imageView)
         
@@ -193,7 +207,7 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
         contentView.snp.makeConstraints {
             $0.edges.equalTo(scrollView.contentLayoutGuide)
             $0.width.equalTo(scrollView.frameLayoutGuide)
-            $0.height.equalTo(1200)
+            $0.height.equalTo(1000)
         }
         
         customButton.snp.makeConstraints {
@@ -262,6 +276,13 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
             $0.bottom.equalTo(stepLabel.snp.bottom)
             $0.trailing.equalTo(memoTextView.snp.trailing)
         }
+        
+        tableView.snp.makeConstraints {
+            $0.top.equalTo(stepLabel.snp.bottom).offset(9)
+            $0.leading.equalTo(line.snp.leading)
+            $0.trailing.equalTo(line.snp.trailing)
+            $0.height.equalTo(600)
+        }
     }
     
     private func setNavigationBar() {
@@ -276,6 +297,14 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     func setUpKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(RecipeWriteViewCell.self, forCellReuseIdentifier: RecipeWriteViewCell.identifier)
+        tableView.backgroundColor = UIColor(named: "homeBackgroundColor")
+        tableView.layer.cornerRadius = 10
     }
     
     //MARK: - @objc
@@ -362,8 +391,19 @@ class RecipeWriteViewController: BaseViewController,UICollectionViewDelegateFlow
     
     @objc func stepAddButtonTapped() {
         let vc = StepWriteController()
+        vc.delegate = self
         vc.modalPresentationStyle = UIModalPresentationStyle.automatic
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func isHashTagButtonTapped(_ sender: UIButton) {
+        if let selectedButton = selectedButton {
+            selectedButton.isSelected = false
+            selectedButton.layer.borderColor = UIColor(named: "turquoiseDarkGray")?.cgColor
+        }
+        sender.isSelected = true
+        sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+        selectedButton = sender
     }
     
     //MARK: - Methods
@@ -605,6 +645,34 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         }
     }
 }
+
+// 하단 레시피 TableView
+extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: RecipeWriteViewCell.identifier, for: indexPath) as! RecipeWriteViewCell
+        cell.textLabel?.text = data[indexPath.row]
+        cell.textLabel?.textColor = .white
+        cell.selectionStyle = .none
+        return cell
+    }
+}
+
+extension RecipeWriteViewController: ModalViewControllerDelegate {
+    func didAddCell() {
+        data.append("New Cell")
+        tableView.reloadData()
+    }
+}
+
+
+
+
+
 
 
 

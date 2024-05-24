@@ -10,8 +10,13 @@ import UIKit
 import Then
 import SnapKit
 
+protocol ModalViewControllerDelegate: AnyObject {
+    func didAddCell()
+}
+
 class StepWriteController: BaseViewController, UITextViewDelegate {
     
+    weak var delegate: ModalViewControllerDelegate?
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
@@ -205,12 +210,12 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     
     @objc func saveButtonTapped(_ sender: Any) {
         //데이터 전달
+        delegate?.didAddCell()
         self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension StepWriteController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             let resizeImage = image.resizeImage(toFit: photoButton)
