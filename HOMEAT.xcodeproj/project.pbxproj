@@ -90,17 +90,17 @@
 		0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD462BE8B4EA00D6133A /* PostContentView.swift */; };
 		0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD482BED294A00D6133A /* ReplyReactionView.swift */; };
 		0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */; };
-		0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */; };
-		0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD4F2BF5F07100D6133A /* IngredientView.swift */; };
 		0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD512BF7263200D6133A /* RecipeStepCell.swift */; };
 		0309DD572BF99F0200D6133A /* RecipeWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD562BF99F0200D6133A /* RecipeWriteViewController.swift */; };
+		0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */; };
+		0309DD5F2BFCE9C500D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD5E2BFCE9C500D6133A /* IngredientView.swift */; };
+		0309DD612BFCE9D600D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD602BFCE9D600D6133A /* ReplyTextView.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */; };
 		2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */; };
 		2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */; };
 		2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */; };
 		2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */; };
-		2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */; };
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
@@ -201,17 +201,17 @@
 		0309DD462BE8B4EA00D6133A /* PostContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostContentView.swift; path = HOMEAT/Presentation/TalkScene/View/PostContentView.swift; sourceTree = SOURCE_ROOT; };
 		0309DD482BED294A00D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReplyReactionView.swift; path = HOMEAT/Presentation/TalkScene/View/ReplyReactionView.swift; sourceTree = SOURCE_ROOT; };
 		0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeViewController.swift; sourceTree = "<group>"; };
-		0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
-		0309DD4F2BF5F07100D6133A /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		0309DD512BF7263200D6133A /* RecipeStepCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStepCell.swift; sourceTree = "<group>"; };
 		0309DD562BF99F0200D6133A /* RecipeWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeWriteViewController.swift; sourceTree = "<group>"; };
+		0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
+		0309DD5E2BFCE9C500D6133A /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
+		0309DD602BFCE9D600D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2DB408AA2BBC23AE001CB6F9 /* PayAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddViewController.swift; sourceTree = "<group>"; };
 		2DB408AC2BBC5F44001CB6F9 /* PayCheckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayCheckViewController.swift; sourceTree = "<group>"; };
 		2DB408AE2BBD81A3001CB6F9 /* EditDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDoneViewController.swift; sourceTree = "<group>"; };
 		2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkViewController.swift; sourceTree = "<group>"; };
-		2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
@@ -468,9 +468,9 @@
 		0123837E2BBA95900048CC2D /* TalkScene */ = {
 			isa = PBXGroup;
 			children = (
-				0309DD4A2BEF582800D6133A /* View */,
-				2DD9DECF2BCD96A8004664B6 /* cell */,
-				012383832BBA95EC0048CC2D /* Controller */,
+				0309DD5D2BFCE7D100D6133A /* InfoScene */,
+				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
+				0309DD5A2BFCE70100D6133A /* MealScene */,
 			);
 			path = TalkScene;
 			sourceTree = "<group>";
@@ -499,10 +499,9 @@
 		012383832BBA95EC0048CC2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				0123838D2BBA97290048CC2D /* TalkViewController.swift */,
+				2DD9DECF2BCD96A8004664B6 /* cell */,
 				2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */,
 				0309DD3E2BE7432500D6133A /* FoodPostViewController.swift */,
-				2DD9DED42BCD96E2004664B6 /* InfoTalkViewController.swift */,
 				0309DD402BE7729E00D6133A /* DeclareViewController.swift */,
 				0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */,
 				0309DD562BF99F0200D6133A /* RecipeWriteViewController.swift */,
@@ -636,13 +635,29 @@
 		0309DD4A2BEF582800D6133A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD602BFCE9D600D6133A /* ReplyTextView.swift */,
+				0309DD5E2BFCE9C500D6133A /* IngredientView.swift */,
 				0309DD422BE7849E00D6133A /* DeclareView.swift */,
 				0309DD462BE8B4EA00D6133A /* PostContentView.swift */,
 				0309DD482BED294A00D6133A /* ReplyReactionView.swift */,
-				0309DD4D2BF23E7600D6133A /* ReplyTextView.swift */,
-				0309DD4F2BF5F07100D6133A /* IngredientView.swift */,
 			);
-			path = View;
+			name = View;
+			sourceTree = "<group>";
+		};
+		0309DD5A2BFCE70100D6133A /* MealScene */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD4A2BEF582800D6133A /* View */,
+				012383832BBA95EC0048CC2D /* Controller */,
+			);
+			path = MealScene;
+			sourceTree = "<group>";
+		};
+		0309DD5D2BFCE7D100D6133A /* InfoScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = InfoScene;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -659,6 +674,7 @@
 				2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */,
 				0309DD442BE89DAD00D6133A /* FoodTalkReplyCell.swift */,
 				0309DD512BF7263200D6133A /* RecipeStepCell.swift */,
+				0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -906,7 +922,6 @@
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				0309DD572BF99F0200D6133A /* RecipeWriteViewController.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
-				0309DD502BF5F07100D6133A /* IngredientView.swift in Sources */,
 				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
@@ -920,7 +935,6 @@
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
-				0309DD4E2BF23E7600D6133A /* ReplyTextView.swift in Sources */,
 				58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD472BE8B4EA00D6133A /* PostContentView.swift in Sources */,
@@ -932,6 +946,7 @@
 				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
 				011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */,
+				0309DD612BFCE9D600D6133A /* ReplyTextView.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
@@ -941,11 +956,11 @@
 				0309DD432BE7849E00D6133A /* DeclareView.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
+				0309DD5F2BFCE9C500D6133A /* IngredientView.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
 				0309DD492BED294A00D6133A /* ReplyReactionView.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
-				2DD9DED52BCD96E2004664B6 /* InfoTalkViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
@@ -977,6 +992,7 @@
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
+				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
 				01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
