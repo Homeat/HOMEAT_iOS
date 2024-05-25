@@ -26,7 +26,7 @@ class SetBirthViewController: ProgressViewController {
         updateProgressBar(progress: 2/6)
         setTitleLabel(title: "생년월일을\n입력해주세요.")
         setDetailLabel(detail: "생년월일")
-        setNextVC(nextVC: SetGenderViewController())
+        //setNextVC(nextVC: SetGenderViewController())
         setupKeyboardDismissal()
     }
     
