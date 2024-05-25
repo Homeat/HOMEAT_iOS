@@ -16,7 +16,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     private let postContent = PostContentView()
     private let replyTextView = ReplyTextView()
     var commentViewBottomConstraint: NSLayoutConstraint?
-
+  
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -162,5 +162,3 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
         return 520
     }
 }
-
-

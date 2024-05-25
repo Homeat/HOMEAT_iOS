@@ -52,8 +52,7 @@ class TalkViewController: TabmanViewController {
     
     private func setViewControllers() {
         let foodTalkViewController = FoodTalkViewController()
-        let infoTalkViewController = InfoTalkViewController()
-        
+        let infoTalkViewController = InfoTalkViewController()     
         viewcontrollers.append(contentsOf: [foodTalkViewController, infoTalkViewController])
     }
     

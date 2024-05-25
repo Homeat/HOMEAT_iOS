@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Then
+import SnapKit
 
 class FoodTalkViewController: BaseViewController {
     
@@ -38,6 +39,7 @@ class FoodTalkViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isTranslucent = false
     }
+
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -189,7 +191,7 @@ class FoodTalkViewController: BaseViewController {
         
         writeButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(100)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(51)
             $0.width.equalTo(51)
         }
@@ -202,6 +204,7 @@ class FoodTalkViewController: BaseViewController {
         breakfastButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         lunchButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         dinnerButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        writeButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
     
     private func setUpCollectionView() {
@@ -232,6 +235,12 @@ class FoodTalkViewController: BaseViewController {
         button = sender as! UIButton
         button.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
+    }
+    
+    @objc func isWriteButtonTapped(_ sender: Any) {
+        let nextVC = RecipeWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
@@ -292,7 +301,6 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
 }
 
 extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
-  
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
@@ -305,4 +313,3 @@ extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
     }
     
 }
-
