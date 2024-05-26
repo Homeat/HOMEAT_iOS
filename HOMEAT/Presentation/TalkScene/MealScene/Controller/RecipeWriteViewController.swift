@@ -14,6 +14,7 @@ import PhotosUI
 import AVFoundation
 
 class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout {
+    var userId: Int?
     var selectedButton: UIButton?
     private var selectedImages: [UIImage] = []
     private lazy var customButton: UIButton = makeCustomButton()
@@ -62,6 +63,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private let stepLabel = UILabel()
     private let stepAddButton = UIButton()
     private let tableView = UITableView()
+    private let doneButton = UIButton()
     
     //MARK: - LIfeCycle
     override func viewDidLoad() {
@@ -184,6 +186,10 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             $0.titleLabel?.font = .bodyMedium16
             $0.addTarget(self, action: #selector(stepAddButtonTapped), for: .touchUpInside)
         }
+        
+        doneButton.do {
+            $0.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
+        }
     }
     
     override func setConstraints() {
@@ -292,6 +298,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
     }
     
     func setUpKeyboard() {
@@ -404,6 +411,23 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         sender.isSelected = true
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         selectedButton = sender
+    }
+    
+    @objc func saveButtonTapped() {
+        //서버에 게시글 전달
+        let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: "오키", memo: "오키", tag: "아침", image: imageDataArray)
+        NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) {
+            [weak self] response in
+            switch response {
+            case .success(let data):
+                //data.data 서버에서 받는 responsebody
+                guard let foodTalkData = data.data else { return }
+                self?.userId = foodTalkData
+            default :
+                print("데이터 존재 안함 ")
+            }
+        }
     }
     
     //MARK: - Methods

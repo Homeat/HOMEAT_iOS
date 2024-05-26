@@ -98,6 +98,10 @@
 		0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD832C01E3D200D6133A /* ReplyReactionView.swift */; };
 		0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD842C01E3D200D6133A /* ReplyTextView.swift */; };
 		0309DD8D2C01E44000D6133A /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD8B2C01E44000D6133A /* ContinueButton.swift */; };
+		0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */; };
+		0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */; };
+		0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */; };
+		0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
@@ -227,6 +231,10 @@
 		0309DD832C01E3D200D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyReactionView.swift; sourceTree = "<group>"; };
 		0309DD842C01E3D200D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
 		0309DD8B2C01E44000D6133A /* ContinueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkTarget.swift; sourceTree = "<group>"; };
+		0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkService.swift; sourceTree = "<group>"; };
+		0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
 		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
@@ -481,6 +489,7 @@
 		012383412BB7F8FF0048CC2D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD8E2C01E53600D6133A /* FoodTalk */,
 				58D1381B2BEF51E90048C228 /* WeekLook */,
 				01D530E12BC7BC57008C368E /* Base */,
 				01D5312C2BDFC576008C368E /* Onboarding */,
@@ -711,6 +720,57 @@
 				0309DD8B2C01E44000D6133A /* ContinueButton.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		0309DD8E2C01E53600D6133A /* FoodTalk */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA32C0204A700D6133A /* Service */,
+				0309DD9F2C02042700D6133A /* Router */,
+				0309DD8F2C01E54700D6133A /* DTO */,
+			);
+			path = FoodTalk;
+			sourceTree = "<group>";
+		};
+		0309DD8F2C01E54700D6133A /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD9A2C02021C00D6133A /* Response */,
+				0309DD922C01E5B500D6133A /* Request */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		0309DD922C01E5B500D6133A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
+				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		0309DD9A2C02021C00D6133A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		0309DD9F2C02042700D6133A /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		0309DDA32C0204A700D6133A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -1054,6 +1114,7 @@
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
+				0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */,
 				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
 				58E88E822BF92B2100775F06 /* InfoPostContentView.swift in Sources */,
 				0309DD862C01E3D200D6133A /* DeclareView.swift in Sources */,
@@ -1067,10 +1128,12 @@
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
+				0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
+				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
@@ -1111,6 +1174,7 @@
 				011DAFD82BE3ABB6000556D0 /* HomefoodCheckView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
+				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
