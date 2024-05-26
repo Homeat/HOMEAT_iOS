@@ -66,8 +66,9 @@ class PayCheckViewController : BaseViewController {
         }
         
         checkDetailButton.do {
-            $0.setTitle("세부 확인", for: .normal)
-            $0.titleLabel?.font = .bodyBold15
+            $0.setTitle("세부 지출 확인", for: .normal)
+            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 13.0)
+            $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
         }
     }
     
@@ -108,14 +109,12 @@ class PayCheckViewController : BaseViewController {
             $0.top.equalTo(calendarView.snp.bottom).offset(33)
             $0.leading.equalTo(calendarView)
             $0.trailing.equalTo(calendarView)
-            $0.bottom.equalToSuperview().offset(-200)
+            $0.bottom.equalToSuperview().offset(-113)
         }
         
         checkDetailButton.snp.makeConstraints {
-            $0.top.equalTo(payCheckView)
+            $0.top.equalTo(payCheckView).offset(-5)
             $0.trailing.equalTo(payCheckView)
-            $0.height.equalTo(30)
-            $0.width.equalTo(60)
         }
         
     }
