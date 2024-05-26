@@ -31,6 +31,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         self.tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -112,6 +114,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     func declareViewButtonTapped() {
         let nextVC = DeclareViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
