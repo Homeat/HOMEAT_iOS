@@ -104,6 +104,7 @@
 		0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */; };
 		0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */; };
 		0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */; };
+		0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
@@ -239,6 +240,7 @@
 		0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
 		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
@@ -752,6 +754,7 @@
 				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
 				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
 				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
+				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1177,6 +1180,7 @@
 				01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
+				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
 				0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */,
 				011DAFD82BE3ABB6000556D0 /* HomefoodCheckView.swift in Sources */,
