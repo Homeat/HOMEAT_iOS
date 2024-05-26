@@ -141,7 +141,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
 
 
 //MARK: - Extension
-extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
+extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
     }
@@ -149,6 +149,7 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodTalkReplyCell") as! FoodTalkReplyCell
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        cell.delegate = self
         return cell
     }
     
@@ -164,5 +165,12 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 520
+    }
+    
+    func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        print("Button tapped at row \(indexPath.row)")
+        let nextVC = DeclareViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
