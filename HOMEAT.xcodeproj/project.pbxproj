@@ -105,6 +105,8 @@
 		0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */; };
 		0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */; };
 		0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */; };
+		0309DDB72C031E8F00D6133A /* LatestRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB62C031E8F00D6133A /* LatestRequestBodyDTO.swift */; };
+		0309DDBB2C031FA500D6133A /* LatestResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDBA2C031FA500D6133A /* LatestResponseDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
@@ -241,6 +243,8 @@
 		0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB62C031E8F00D6133A /* LatestRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDBA2C031FA500D6133A /* LatestResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestResponseDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
 		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
@@ -750,11 +754,8 @@
 		0309DD922C01E5B500D6133A /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
-				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
-				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
-				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
-				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
+				0309DDB92C031ECD00D6133A /* View */,
+				0309DDB82C031EBB00D6133A /* Write */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -762,6 +763,7 @@
 		0309DD9A2C02021C00D6133A /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				0309DDBA2C031FA500D6133A /* LatestResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -780,6 +782,26 @@
 				0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		0309DDB82C031EBB00D6133A /* Write */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
+				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
+				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
+				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
+				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
+			);
+			path = Write;
+			sourceTree = "<group>";
+		};
+		0309DDB92C031ECD00D6133A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDB62C031E8F00D6133A /* LatestRequestBodyDTO.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -1202,7 +1224,9 @@
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
+				0309DDBB2C031FA500D6133A /* LatestResponseDTO.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
+				0309DDB72C031E8F00D6133A /* LatestRequestBodyDTO.swift in Sources */,
 				01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

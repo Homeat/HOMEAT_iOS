@@ -15,6 +15,7 @@ import AVFoundation
 
 class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout {
     var userId: Int?
+    var selectedTag: String?
     var selectedButton: UIButton?
     private var selectedImages: [UIImage] = []
     private lazy var customButton: UIButton = makeCustomButton()
@@ -300,6 +301,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     func setUpKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setTableView() {
@@ -407,12 +410,40 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         sender.isSelected = true
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         selectedButton = sender
+        if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
+            selectedTag = tag
+        }
+    }
+    
+    @objc func dismissKeyboard() {
+        // 키보드를 내립니다.
+        view.endEditing(true)
     }
     
     @objc func saveButtonTapped() {
+        //값 유무 확인
+        guard let name = nameTextField.text, !name.isEmpty else {
+            showAlert(message: "제목을 입력하세요")
+            return
+        }
+        
+        guard let memo = memoTextView.text, !memo.isEmpty else {
+            showAlert(message: "메모를 입력하세요")
+            return
+        }
+        
+        guard let tag = selectedTag, !tag.isEmpty else {
+            showAlert(message: "태그를 선택하세요")
+            return
+        }
+        
+        guard !selectedImages.isEmpty else {
+            showAlert(message: "이미지를 선택하세요")
+            return
+        }
         //서버에 게시글 전달
         let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
-        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: "오키", memo: "오키", tag: "아침", image: imageDataArray)
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, image: imageDataArray)
         NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) {
             [weak self] response in
             switch response {
@@ -649,6 +680,11 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         activeField = nil
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         activeField = textView
         if textView.text == textViewPlaceHolder {
@@ -663,6 +699,12 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
             textView.text = textViewPlaceHolder
             textView.textColor = .warmgray
         }
+    }
+    
+    func textViewShhouldReturn(_ textView: UITextView) -> Bool{
+        // 키보드 내리면서 동작
+        textView.resignFirstResponder()
+        return true
     }
 }
 

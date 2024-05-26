@@ -17,6 +17,8 @@ protocol FoodTalkServiceProtocol {
     func replyWrite(bodyDTO: ReplyWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func love(bodyDTO: LoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    
+    func latest(bodyDTO: LatestRequestBodyDTO, completion: @escaping (NetworkResult<LatestResponseDTO>) -> Void)
 }
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
@@ -43,6 +45,11 @@ final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServicePr
     //공감추가
     func love(bodyDTO: LoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .love(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    //최신순 게시글 조회
+    func latest(bodyDTO: LatestRequestBodyDTO, completion: @escaping (NetworkResult<LatestResponseDTO>) -> Void) {
+        fetchData(target: .latest(bodyDTO), responseData: LatestResponseDTO.self, completion: completion)
     }
 }
 
