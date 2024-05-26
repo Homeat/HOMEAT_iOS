@@ -186,10 +186,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             $0.titleLabel?.font = .bodyMedium16
             $0.addTarget(self, action: #selector(stepAddButtonTapped), for: .touchUpInside)
         }
-        
-        doneButton.do {
-            $0.addTarget(self, action: #selector(doneButtonTapped), for: .touchUpInside)
-        }
     }
     
     override func setConstraints() {
