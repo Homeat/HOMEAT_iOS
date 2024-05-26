@@ -11,9 +11,8 @@ import Then
 import SnapKit
 
 class FoodTalkViewController: BaseViewController {
-    
+    var selectedButton: UIButton?
     //MARK: - Property
-    
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
     private let scrollView = UIScrollView()
@@ -72,10 +71,12 @@ class FoodTalkViewController: BaseViewController {
         mainButton.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.setTitle("#전체글", for: .normal)
-            $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
+            $0.setTitleColor(.turquoiseGreen, for: .normal)
             $0.titleLabel?.font = .captionMedium13
-            $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
-            $0.makeCornerRound(radius: 17.5)
+            $0.isSelected = true
+            $0.makeBorder(width: 1.56, color: .turquoiseGreen)
+            $0.makeCornerRound(radius: 17)
+            selectedButton = mainButton
         }
         
         weekButton.do {
@@ -84,7 +85,7 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
             $0.titleLabel?.font = .captionMedium13
             $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
-            $0.makeCornerRound(radius: 17.5)
+            $0.makeCornerRound(radius: 17)
         }
         
         breakfastButton.do {
@@ -93,7 +94,7 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
             $0.titleLabel?.font = .captionMedium13
             $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
-            $0.makeCornerRound(radius: 17.5)
+            $0.makeCornerRound(radius: 17)
         }
         
         lunchButton.do {
@@ -102,7 +103,7 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
             $0.titleLabel?.font = .captionMedium13
             $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
-            $0.makeCornerRound(radius: 17.5)
+            $0.makeCornerRound(radius: 17)
         }
         
         dinnerButton.do {
@@ -111,7 +112,7 @@ class FoodTalkViewController: BaseViewController {
             $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
             $0.titleLabel?.font = .captionMedium13
             $0.makeBorder(width: 1.56, color: UIColor(r: 204, g: 204, b: 204))
-            $0.makeCornerRound(radius: 17.5)
+            $0.makeCornerRound(radius: 17)
         }
         
         foodCollectionView.do {
@@ -230,11 +231,16 @@ class FoodTalkViewController: BaseViewController {
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    @objc func isHashTagButtonTapped(_ sender: Any) {
-        var button = UIButton()
-        button = sender as! UIButton
-        button.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
-        button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
+    @objc func isHashTagButtonTapped(_ sender: UIButton) {
+        if let selectedButton = selectedButton {
+            selectedButton.isSelected = false
+            selectedButton.layer.borderColor = UIColor(named: "warmgray")?.cgColor
+            selectedButton.setTitleColor(.warmgray, for: .normal)
+        }
+        sender.isSelected = true
+        sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+        sender.setTitleColor(.turquoiseGreen, for: .normal)
+        selectedButton = sender
     }
     
     @objc func isWriteButtonTapped(_ sender: Any) {
