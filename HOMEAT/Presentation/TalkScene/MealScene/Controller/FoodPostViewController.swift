@@ -106,6 +106,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     //MARK: - Method
     func recipeViewButtonTapped() {
         let nextVC = RecipeViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
