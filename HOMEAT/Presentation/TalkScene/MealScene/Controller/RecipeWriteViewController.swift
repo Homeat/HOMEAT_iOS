@@ -290,12 +290,21 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크 글쓰기"
-        self.navigationController?.navigationBar.tintColor = .white
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!, // 원하는 폰트와 크기로 변경
+            .foregroundColor: UIColor.white
+        ]
+        navigationController?.navigationBar.titleTextAttributes = titleAttributes
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let rightAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont(name: "NotoSansKR-Medium", size: 18)!,
+            .foregroundColor: UIColor.white]
+        rightButton.setTitleTextAttributes(rightAttributes, for: .normal)
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     func setUpKeyboard() {
