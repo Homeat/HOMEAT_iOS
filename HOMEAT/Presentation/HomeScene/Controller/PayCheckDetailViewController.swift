@@ -37,7 +37,7 @@ class PayCheckDetailViewController: BaseViewController {
             $0.top.equalToSuperview().offset(136)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-21)
-            $0.bottom.equalToSuperview().offset(-607)
+            $0.bottom.equalToSuperview().offset(-520)
         }
         
         devideLine.snp.makeConstraints {

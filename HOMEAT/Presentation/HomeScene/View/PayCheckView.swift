@@ -27,8 +27,15 @@ class PayCheckView: BaseView {
     private let eatoutSpentLabel = UILabel()
     private let leftMoneyAmountLabel = UILabel()
     
+    //MARK: - Function
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
     override func setConfigure() {
-        self.backgroundColor = UIColor(named: "homeBackgroundColor")
+        self.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
         
         dateLabel.do {
             $0.text = "11월 1일 수요일"
