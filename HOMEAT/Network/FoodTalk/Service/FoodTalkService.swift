@@ -18,7 +18,9 @@ protocol FoodTalkServiceProtocol {
     
     func love(bodyDTO: LoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
-    func latest(bodyDTO: LatestRequestBodyDTO, completion: @escaping (NetworkResult<LatestResponseDTO>) -> Void)
+    func latestOrder(bodyDTO: LatestOrderRequestBodyDTO, completion: @escaping (NetworkResult<LatestOrderResponseDTO>) -> Void)
+    
+    func loveOrder(bodyDTO: LoveOrderRequestBodyDTO, completion: @escaping (NetworkResult<LoveOrderResponseDTO>) -> Void)
 }
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
@@ -48,8 +50,14 @@ final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServicePr
     }
     
     //최신순 게시글 조회
-    func latest(bodyDTO: LatestRequestBodyDTO, completion: @escaping (NetworkResult<LatestResponseDTO>) -> Void) {
-        fetchData(target: .latest(bodyDTO), responseData: LatestResponseDTO.self, completion: completion)
+    func latestOrder(bodyDTO: LatestOrderRequestBodyDTO, completion: @escaping (NetworkResult<LatestOrderResponseDTO>) -> Void) {
+        fetchData(target: .latestOrder(bodyDTO), responseData: LatestOrderResponseDTO.self, completion: completion)
     }
+    
+    //공감순 게시글 조회
+    func loveOrder(bodyDTO: LoveOrderRequestBodyDTO, completion: @escaping (NetworkResult<LoveOrderResponseDTO>) -> Void) {
+        fetchData(target: .loveOrder(bodyDTO), responseData: LoveOrderResponseDTO.self, completion: completion)
+    }
+    
 }
 

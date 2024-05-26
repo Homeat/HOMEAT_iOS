@@ -1,5 +1,5 @@
 //
-//  LatestResponseDTO.swift
+//  LoveOrderResponseDTO.swift
 //  HOMEAT
 //
 //  Created by 이지우 on 5/26/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LatestResponseDTO: Codable {
+struct LoveOrderResponseDTO: Codable {
     let isSuccess: Bool
     let code: String
     let message: String
@@ -17,10 +17,3 @@ struct LatestResponseDTO: Codable {
     let data: [FoodTalk]
 }
 
-struct FoodTalk: Codable {
-    let foodTalkId: Int
-    let url: String
-    let foodName: String
-    let view: Int
-    let love: Int
-}

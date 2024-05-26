@@ -15,7 +15,8 @@ enum FoodTalkTarget {
     case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
     case replyWrite(_ bodyDTO: ReplyWriteRequestBodyDTO)
     case love(_ bodyDTO: LoveRequestBodyDTO)
-    case latest(_ bodyDTO: LatestRequestBodyDTO)
+    case latestOrder(_ bodyDTO: LatestOrderRequestBodyDTO)
+    case loveOrder(_ bodyDTO: LoveOrderRequestBodyDTO)
 }
 
 extension FoodTalkTarget: TargetType {
@@ -31,7 +32,9 @@ extension FoodTalkTarget: TargetType {
             return .authorization
         case .love:
             return .authorization
-        case .latest:
+        case .latestOrder:
+            return .authorization
+        case .loveOrder:
             return .authorization
         }
     }
@@ -48,7 +51,9 @@ extension FoodTalkTarget: TargetType {
             return .hasToken
         case .love:
             return .hasToken
-        case .latest:
+        case .latestOrder:
+            return .hasToken
+        case .loveOrder:
             return .hasToken
         }
     }
@@ -65,7 +70,9 @@ extension FoodTalkTarget: TargetType {
             return .post
         case .love:
             return .post
-        case .latest:
+        case .latestOrder:
+            return .get
+        case .loveOrder:
             return .get
         }
     }
@@ -82,8 +89,10 @@ extension FoodTalkTarget: TargetType {
             return "/v1/foodTalk/reply"
         case .love(let bodyDTO):
             return "/v1/foodTalk/love/\(bodyDTO.id)"
-        case .latest:
+        case .latestOrder:
             return "/v1/foodTalk/posts/latest"
+        case .loveOrder:
+            return "/v1/foodTalk/posts/love"
         }
     }
     
@@ -99,8 +108,10 @@ extension FoodTalkTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case let .love(bodyDTO):
             return .requestQuery(bodyDTO)
-        case let .latest(bodyDTO):
-            return .requestQuery(bodyDTO)
+        case let .latestOrder(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .loveOrder(bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }
