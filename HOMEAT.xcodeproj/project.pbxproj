@@ -103,6 +103,7 @@
 		0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */; };
 		0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */; };
 		0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */; };
+		0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
@@ -237,6 +238,7 @@
 		0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkService.swift; sourceTree = "<group>"; };
 		0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
 		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
@@ -749,6 +751,7 @@
 				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
 				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
 				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
+				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1105,6 +1108,7 @@
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
+				0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */,
 				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,

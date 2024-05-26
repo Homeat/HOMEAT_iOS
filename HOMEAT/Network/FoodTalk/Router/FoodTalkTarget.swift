@@ -13,6 +13,7 @@ enum FoodTalkTarget {
     case foodTalkSave(_ bodyDTO: FoodTalkSaveRequestBodyDTO)
     case recipeSave(_ bodyDTO: RecipeSaveRequestBodyDTO)
     case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
+    case replyWrite(_ bodyDTO: ReplyWriteRequestBodyDTO)
 }
 
 extension FoodTalkTarget: TargetType {
@@ -23,6 +24,8 @@ extension FoodTalkTarget: TargetType {
         case .recipeSave:
             return .authorization
         case .commentWrite:
+            return .authorization
+        case .replyWrite:
             return .authorization
         }
     }
@@ -35,6 +38,8 @@ extension FoodTalkTarget: TargetType {
             return .hasToken
         case .commentWrite:
             return .hasToken
+        case .replyWrite:
+            return .hasToken
         }
     }
     
@@ -46,6 +51,8 @@ extension FoodTalkTarget: TargetType {
             return .post
         case .commentWrite:
             return .post
+        case .replyWrite:
+            return .post
         }
     }
     
@@ -56,6 +63,8 @@ extension FoodTalkTarget: TargetType {
         case .recipeSave:
             return "/v1/foodTalk/recipe"
         case .commentWrite:
+            return "/v1/foodTalk/comment"
+        case .replyWrite:
             return "/v1/foodTalk/reply"
         }
     }
@@ -67,6 +76,8 @@ extension FoodTalkTarget: TargetType {
         case let .recipeSave(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
         case let .commentWrite(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .replyWrite(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }

@@ -13,6 +13,8 @@ protocol FoodTalkServiceProtocol {
     func recipeSave(bodyDTO: RecipeSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func commentWrite(bodyDTO: CommentWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    
+    func replyWrite(bodyDTO: ReplyWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
@@ -29,6 +31,11 @@ final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServicePr
     //댓글작성
     func commentWrite(bodyDTO: CommentWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .commentWrite(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    //대댓글작성
+    func replyWrite(bodyDTO: ReplyWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .replyWrite(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
 }
 
