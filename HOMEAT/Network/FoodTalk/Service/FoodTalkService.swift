@@ -20,13 +20,14 @@ protocol FoodTalkServiceProtocol {
     
     func commentWrite(bodyDTO: CommentWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
+    func checkOne(bodyDTO: CheckOneRequestBodyDTO, completion: @escaping (NetworkResult<CheckOneResponseDTO>) -> Void)
+    
     func latestOrder(bodyDTO: LatestOrderRequestBodyDTO, completion: @escaping (NetworkResult<LatestOrderResponseDTO>) -> Void)
     
     func loveOrder(bodyDTO: LoveOrderRequestBodyDTO, completion: @escaping (NetworkResult<LoveOrderResponseDTO>) -> Void)
 }
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
-    
     //게시글 저장
     func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Int>>) -> Void) {
         fetchData(target: .foodTalkSave(bodyDTO), responseData: BaseResponse<Int>.self, completion: completion)
@@ -56,6 +57,12 @@ final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServicePr
     func commentWrite(bodyDTO: CommentWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .commentWrite(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
+    
+    //게시글 1개 조회
+    func checkOne(bodyDTO: CheckOneRequestBodyDTO, completion: @escaping (NetworkResult<CheckOneResponseDTO>) -> Void) {
+        fetchData(target: .checkOne(_bodyDTO: bodyDTO), responseData: CheckOneResponseDTO.self, completion: completion)
+    }
+    
     
     //최신순 게시글 조회
     func latestOrder(bodyDTO: LatestOrderRequestBodyDTO, completion: @escaping (NetworkResult<LatestOrderResponseDTO>) -> Void) {

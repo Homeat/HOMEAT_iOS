@@ -16,6 +16,7 @@ enum FoodTalkTarget {
     case love(_ bodyDTO: LoveRequestBodyDTO)
     case deleteLove(_ bodyDTO: DeleteLoveRequestBodyDTO)
     case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
+    case checkOne(_bodyDTO: CheckOneRequestBodyDTO)
     case latestOrder(_ bodyDTO: LatestOrderRequestBodyDTO)
     case loveOrder(_ bodyDTO: LoveOrderRequestBodyDTO)
 }
@@ -35,10 +36,13 @@ extension FoodTalkTarget: TargetType {
             return .authorization
         case .commentWrite:
             return .authorization
+        case .checkOne:
+            return .authorization
         case .latestOrder:
             return .authorization
         case .loveOrder:
             return .authorization
+        
         }
     }
     
@@ -56,11 +60,12 @@ extension FoodTalkTarget: TargetType {
             return .hasToken
         case .commentWrite:
             return .hasToken
+        case .checkOne:
+            return .hasToken
         case .latestOrder:
             return .hasToken
         case .loveOrder:
             return .hasToken
-        
         }
     }
     
@@ -78,11 +83,12 @@ extension FoodTalkTarget: TargetType {
             return .post
         case .deleteLove:
             return .delete
+        case .checkOne(_bodyDTO: let _bodyDTO):
+            return .get
         case .latestOrder:
             return .get
         case .loveOrder:
             return .get
-        
         }
     }
     
@@ -100,6 +106,8 @@ extension FoodTalkTarget: TargetType {
             return "/v1/foodTalk/love/\(bodyDTO.id)"
         case .commentWrite:
             return "/v1/foodTalk/comment"
+        case .checkOne(let bodyDTO):
+            return "/v1/foodTalk/\(bodyDTO.id)"
         case .latestOrder:
             return "/v1/foodTalk/posts/latest"
         case .loveOrder:
@@ -121,6 +129,8 @@ extension FoodTalkTarget: TargetType {
             return .requestQuery(bodyDTO)
         case let .commentWrite(bodyDTO):
             return .requestWithBody(bodyDTO)
+        case let .checkOne(bodyDTO):
+            return .requestQuery(bodyDTO)
         case let .latestOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .loveOrder(bodyDTO):
