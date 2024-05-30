@@ -11,10 +11,11 @@ import Alamofire
 enum FoodTalkTarget {
     //url별로 case 나눔
     case foodTalkSave(_ bodyDTO: FoodTalkSaveRequestBodyDTO)
-    case recipeSave(_ bodyDTO: RecipeSaveRequestBodyDTO)
-    case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
     case replyWrite(_ bodyDTO: ReplyWriteRequestBodyDTO)
+    case recipeSave(_ bodyDTO: RecipeSaveRequestBodyDTO)
     case love(_ bodyDTO: LoveRequestBodyDTO)
+    case deleteLove(_ bodyDTO: DeleteLoveRequestBodyDTO)
+    case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
     case latestOrder(_ bodyDTO: LatestOrderRequestBodyDTO)
     case loveOrder(_ bodyDTO: LoveOrderRequestBodyDTO)
 }
@@ -24,13 +25,15 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .authorization
-        case .recipeSave:
-            return .authorization
-        case .commentWrite:
-            return .authorization
         case .replyWrite:
             return .authorization
+        case .recipeSave:
+            return .authorization
         case .love:
+            return .authorization
+        case .deleteLove:
+            return .authorization
+        case .commentWrite:
             return .authorization
         case .latestOrder:
             return .authorization
@@ -43,18 +46,21 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .hasToken
-        case .recipeSave:
-            return .hasToken
-        case .commentWrite:
-            return .hasToken
         case .replyWrite:
             return .hasToken
+        case .recipeSave:
+            return .hasToken
         case .love:
+            return .hasToken
+        case .deleteLove:
+            return .hasToken
+        case .commentWrite:
             return .hasToken
         case .latestOrder:
             return .hasToken
         case .loveOrder:
             return .hasToken
+        
         }
     }
     
@@ -62,18 +68,21 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .post
-        case .recipeSave:
-            return .post
-        case .commentWrite:
-            return .post
         case .replyWrite:
+            return .post
+        case .recipeSave:
             return .post
         case .love:
             return .post
+        case .commentWrite:
+            return .post
+        case .deleteLove:
+            return .delete
         case .latestOrder:
             return .get
         case .loveOrder:
             return .get
+        
         }
     }
     
@@ -81,14 +90,16 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return "/v1/foodTalk/save"
-        case .recipeSave:
-            return "/v1/foodTalk/recipe"
-        case .commentWrite:
-            return "/v1/foodTalk/comment"
         case .replyWrite:
             return "/v1/foodTalk/reply"
+        case .recipeSave:
+            return "/v1/foodTalk/recipe"
         case .love(let bodyDTO):
             return "/v1/foodTalk/love/\(bodyDTO.id)"
+        case .deleteLove(let bodyDTO):
+            return "/v1/foodTalk/love/\(bodyDTO.id)"
+        case .commentWrite:
+            return "/v1/foodTalk/comment"
         case .latestOrder:
             return "/v1/foodTalk/posts/latest"
         case .loveOrder:
@@ -100,14 +111,16 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case let .foodTalkSave(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
-        case let .recipeSave(bodyDTO):
-            return .requestWithMultipart(bodyDTO.toMultipartFormData())
-        case let .commentWrite(bodyDTO):
-            return .requestWithBody(bodyDTO)
         case let .replyWrite(bodyDTO):
             return .requestWithBody(bodyDTO)
+        case let .recipeSave(bodyDTO):
+            return .requestWithMultipart(bodyDTO.toMultipartFormData())
         case let .love(bodyDTO):
             return .requestQuery(bodyDTO)
+        case let .deleteLove(bodyDTO):
+            return .requestQuery(bodyDTO)
+        case let .commentWrite(bodyDTO):
+            return .requestWithBody(bodyDTO)
         case let .latestOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .loveOrder(bodyDTO):
