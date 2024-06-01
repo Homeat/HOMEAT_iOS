@@ -114,7 +114,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     func declareViewButtonTapped() {
         let nextVC = DeclareViewController()
-        nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -122,6 +121,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -134,11 +134,11 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             )
         }
     }
+    
     @objc func keyboardDown() {
         self.view.transform = .identity
     }
 }
-
 
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
@@ -169,7 +169,6 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
     
     func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-        print("Button tapped at row \(indexPath.row)")
         let nextVC = CommentDeclareViewController()
         navigationController?.pushViewController(nextVC, animated: true)
     }

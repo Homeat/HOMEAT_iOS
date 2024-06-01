@@ -161,32 +161,24 @@ class DeclareViewController: BaseViewController {
     
     //MARK: - @objc
     @objc func optionActtion(_ sender: UIButton) {
+        let nextVC = DeclareWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         switch sender {
         case firstButton:
-            let declareWriteVC = DeclareWriteViewController()
-            declareWriteVC.optionLabel = firstButton.titleLabel?.text
-            declareWriteVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(declareWriteVC, animated: true)
+            nextVC.optionLabel = firstButton.titleLabel?.text
+            navigationController?.pushViewController(nextVC, animated: true)
         case secondButton:
-            let declareWriteVC = DeclareWriteViewController()
-            declareWriteVC.optionLabel = secondButton.titleLabel?.text
-            declareWriteVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(declareWriteVC, animated: true)
+            nextVC.optionLabel = secondButton.titleLabel?.text
+            navigationController?.pushViewController(nextVC, animated: true)
         case thirdButton:
-            let declareWriteVC = DeclareWriteViewController()
-            declareWriteVC.optionLabel = thirdButton.titleLabel?.text
-            declareWriteVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(declareWriteVC, animated: true)
+            nextVC.optionLabel = thirdButton.titleLabel?.text
+            navigationController?.pushViewController(nextVC, animated: true)
         case forthButton:
-            let declareWriteVC = DeclareWriteViewController()
-            declareWriteVC.optionLabel = forthButton.titleLabel?.text
-            declareWriteVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(declareWriteVC, animated: true)
+            nextVC.optionLabel = forthButton.titleLabel?.text
+            navigationController?.pushViewController(nextVC, animated: true)
         case fifthButton:
-            let declareWriteVC = DeclareWriteViewController()
-            declareWriteVC.optionLabel = fifthButton.titleLabel?.text
-            declareWriteVC.hidesBottomBarWhenPushed = true
-            navigationController?.pushViewController(declareWriteVC, animated: true)
+            nextVC.optionLabel = fifthButton.titleLabel?.text
+            navigationController?.pushViewController(nextVC, animated: true)
         default:
             fatalError("Error")
         }

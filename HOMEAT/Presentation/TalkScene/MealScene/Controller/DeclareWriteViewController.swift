@@ -171,4 +171,3 @@ extension DeclareWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         return true
     }
 }
-
