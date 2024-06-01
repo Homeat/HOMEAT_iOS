@@ -1,15 +1,13 @@
 //
-//  DeclareWriteViewController.swift
+//  CommentDeclareWriteViewController.swift
 //  HOMEAT
 //
-//  Created by 이지우 on 5/27/24.
+//  Created by 이지우 on 6/1/24.
 //
 
 import UIKit
-import SnapKit
-import Then
 
-class DeclareWriteViewController: BaseViewController {
+class CommentDeclareWriteViewController: BaseViewController {
     var activeField: UIView?
     var optionLabel: String?
     private let declareTitle = UILabel()
@@ -53,7 +51,6 @@ class DeclareWriteViewController: BaseViewController {
             $0.textColor = UIColor(r: 216, g: 216, b: 216)
             $0.font = .systemFont(ofSize: 16, weight: .medium)
             $0.textContainerInset = UIEdgeInsets(top: 15.0, left: 15.0, bottom: 0, right: 0)
-            $0.delegate = self
             $0.layer.cornerRadius = 10
         }
         
@@ -124,7 +121,7 @@ class DeclareWriteViewController: BaseViewController {
     }
 }
 
-extension DeclareWriteViewController: UITextFieldDelegate, UITextViewDelegate {
+extension CommentDeclareWriteViewController: UITextFieldDelegate, UITextViewDelegate {
     func adjustViewForKeyboard(show: Bool, keyboardHeight: CGFloat) {
         guard let activeField = self.activeField else { return }
         
@@ -171,4 +168,3 @@ extension DeclareWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         return true
     }
 }
-

@@ -20,14 +20,14 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private var selectedImages: [UIImage] = []
     private lazy var customButton: UIButton = makeCustomButton()
     private enum Mode {
-            case camera
-            case album
+        case camera
+        case album
     }
     private var currentMode: Mode = .camera
     var activeField: UIView?
     private var isCameraAuthorized: Bool {
-       AVCaptureDevice.authorizationStatus(for: .video) == .authorized
-     }
+        AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+    }
     var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     //MARK: - Property

@@ -170,7 +170,7 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
     func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         print("Button tapped at row \(indexPath.row)")
-        let nextVC = DeclareViewController()
+        let nextVC = CommentDeclareViewController()
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
