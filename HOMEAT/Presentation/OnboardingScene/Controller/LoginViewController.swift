@@ -19,6 +19,8 @@ final class LoginViewController : BaseViewController {
     private let passwordTextField = UITextField()
     private let loginButton = UIButton()
     private let signupButton = UIButton()
+    private let findPasswordButton = UIButton()
+    private let buttonStackView = UIStackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,11 +98,27 @@ final class LoginViewController : BaseViewController {
             $0.setTitle("회원가입", for: .normal)
             $0.setTitleColor(.white, for: .normal)
         }
+        
+        findPasswordButton.do {
+            $0.backgroundColor = .clear
+            $0.titleLabel?.font = .captionMedium13
+            $0.setTitle("비밀번호 찾기", for: .normal)
+            $0.setTitleColor(.white, for: .normal)
+        }
+        
+        buttonStackView.do {
+            $0.axis = .horizontal
+            $0.spacing = 10
+            $0.distribution = .fillEqually
+        }
     }
     
     override func setConstraints() {
         
-        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton, signupButton)
+        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton, buttonStackView)
+        
+        buttonStackView.addArrangedSubview(signupButton)
+        buttonStackView.addArrangedSubview(findPasswordButton)
         
         homeatTextLogo.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -131,25 +149,24 @@ final class LoginViewController : BaseViewController {
             $0.height.equalTo(57)
         }
         
+        buttonStackView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(passwordTextField.snp.bottom).offset(30)
+            $0.height.equalTo(30)
+        }
+        
         loginButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.top.equalTo(passwordTextField.snp.bottom).offset(72)
+            $0.top.equalTo(buttonStackView.snp.bottom).offset(40)
             $0.height.equalTo(57)
         }
-        
-        signupButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(passwordTextField.snp.bottom).offset(10)
-            $0.height.equalTo(30)
-            $0.width.equalTo(70)
-        }
-        
     }
     
     private func setTarget() {
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
         signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
+        findPasswordButton.addTarget(self, action: #selector(findPasswordButtonTapped), for: .touchUpInside)
     }
     
     @objc private func loginButtonTapped(_ sender: Any) {
@@ -158,6 +175,11 @@ final class LoginViewController : BaseViewController {
     
     @objc private func signupButtonTapped(_ sender: Any) {
         let nextVC = SignUpViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
+    @objc private func findPasswordButtonTapped(_ sender: Any) {
+        let nextVC = EmailApproveViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -181,6 +203,7 @@ final class LoginViewController : BaseViewController {
     
     func setNavigation() {
         self.navigationItem.title = "로그인"
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 }
 
