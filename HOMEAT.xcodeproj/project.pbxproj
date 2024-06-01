@@ -50,6 +50,7 @@
 		012383AE2BBC76D40048CC2D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 012383AD2BBC76D40048CC2D /* Alamofire */; };
 		012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B12BBD32100048CC2D /* UserInfoViewController.swift */; };
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
+		016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
 		01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DE2BC291D7008C368E /* PresentInfoView.swift */; };
 		01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530EF2BC7C4F9008C368E /* NetworkResult.swift */; };
@@ -163,6 +164,7 @@
 		012383992BBC55A40048CC2D /* MyPageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableViewCell.swift; sourceTree = "<group>"; };
 		012383B12BBD32100048CC2D /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
+		016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		01D530DE2BC291D7008C368E /* PresentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentInfoView.swift; sourceTree = "<group>"; };
 		01D530EF2BC7C4F9008C368E /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
@@ -555,6 +557,7 @@
 			children = (
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
 				01D531012BD14D89008C368E /* LoginViewController.swift */,
+				016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -919,6 +922,7 @@
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
+				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,

@@ -18,11 +18,12 @@ final class LoginViewController : BaseViewController {
     private let passwordLabel = UILabel()
     private let passwordTextField = UITextField()
     private let loginButton = UIButton()
-    private let signinButton = UIButton()
+    private let signupButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setNavigation()
         setTarget()
     }
     
@@ -89,7 +90,7 @@ final class LoginViewController : BaseViewController {
             $0.clipsToBounds = true
         }
         
-        signinButton.do {
+        signupButton.do {
             $0.backgroundColor = .clear
             $0.titleLabel?.font = .captionMedium13
             $0.setTitle("회원가입", for: .normal)
@@ -99,7 +100,7 @@ final class LoginViewController : BaseViewController {
     
     override func setConstraints() {
         
-        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton, signinButton)
+        view.addSubviews(homeatTextLogo, emailLabel, emailTextField, passwordLabel, passwordTextField, loginButton, signupButton)
         
         homeatTextLogo.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -137,7 +138,7 @@ final class LoginViewController : BaseViewController {
             $0.height.equalTo(57)
         }
         
-        signinButton.snp.makeConstraints {
+        signupButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(passwordTextField.snp.bottom).offset(10)
             $0.height.equalTo(30)
@@ -148,10 +149,16 @@ final class LoginViewController : BaseViewController {
     
     private func setTarget() {
         loginButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        signupButton.addTarget(self, action: #selector(signupButtonTapped), for: .touchUpInside)
     }
     
     @objc private func loginButtonTapped(_ sender: Any) {
         self.login(data: EmailLoginRequestBodyDTO(email: "rkdtnlzl@naver.com", password: "abcd1234!"))
+    }
+    
+    @objc private func signupButtonTapped(_ sender: Any) {
+        let nextVC = SignUpViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
     func login(data: EmailLoginRequestBodyDTO) {
@@ -170,6 +177,10 @@ final class LoginViewController : BaseViewController {
                 print("login error!!")
             }
         }
+    }
+    
+    func setNavigation() {
+        self.navigationItem.title = "로그인"
     }
 }
 
