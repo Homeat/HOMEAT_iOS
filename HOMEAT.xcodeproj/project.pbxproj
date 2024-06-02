@@ -92,6 +92,10 @@
 		0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */; };
 		0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD622C00859B00D6133A /* StepWriteController.swift */; };
 		0309DD652C00C3F300D6133A /* RecipeWriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD642C00C3F200D6133A /* RecipeWriteViewCell.swift */; };
+		2D0AABA52C0C98E4002F5C8F /* OcrResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0AABA42C0C98E4002F5C8F /* OcrResponseDTO.swift */; };
+		2D0AABA82C0C9AC4002F5C8F /* OcrRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0AABA72C0C9AC4002F5C8F /* OcrRequestBodyDTO.swift */; };
+		2D0AABAA2C0C9AD2002F5C8F /* PayAddRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0AABA92C0C9AD2002F5C8F /* PayAddRequestBodyDTO.swift */; };
+		2D0AABAC2C0C9D44002F5C8F /* PayAddResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0AABAB2C0C9D44002F5C8F /* PayAddResponseDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D4755E12C021EB700E014A9 /* DeclareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DB2C021EB700E014A9 /* DeclareView.swift */; };
 		2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DC2C021EB700E014A9 /* IngredientView.swift */; };
@@ -225,6 +229,10 @@
 		0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
 		0309DD622C00859B00D6133A /* StepWriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepWriteController.swift; sourceTree = "<group>"; };
 		0309DD642C00C3F200D6133A /* RecipeWriteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeWriteViewCell.swift; sourceTree = "<group>"; };
+		2D0AABA42C0C98E4002F5C8F /* OcrResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcrResponseDTO.swift; sourceTree = "<group>"; };
+		2D0AABA72C0C9AC4002F5C8F /* OcrRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcrRequestBodyDTO.swift; sourceTree = "<group>"; };
+		2D0AABA92C0C9AD2002F5C8F /* PayAddRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddRequestBodyDTO.swift; sourceTree = "<group>"; };
+		2D0AABAB2C0C9D44002F5C8F /* PayAddResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddResponseDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D4755DB2C021EB700E014A9 /* DeclareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclareView.swift; sourceTree = "<group>"; };
 		2D4755DC2C021EB700E014A9 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -687,6 +695,15 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
+		2D0AABA62C0C9AAD002F5C8F /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				2D0AABA72C0C9AC4002F5C8F /* OcrRequestBodyDTO.swift */,
+				2D0AABA92C0C9AD2002F5C8F /* PayAddRequestBodyDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		2D1C01C22BBF087000235836 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,6 +729,8 @@
 			isa = PBXGroup;
 			children = (
 				2D4755FF2C04533B00E014A9 /* HomeInfoResponseDTO.swift */,
+				2D0AABA42C0C98E4002F5C8F /* OcrResponseDTO.swift */,
+				2D0AABAB2C0C9D44002F5C8F /* PayAddResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -719,6 +738,7 @@
 		2D4756012C04533B00E014A9 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				2D0AABA62C0C9AAD002F5C8F /* Request */,
 				2D4756002C04533B00E014A9 /* Response */,
 			);
 			path = DTO;
@@ -1086,6 +1106,7 @@
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */,
 				58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */,
+				2D0AABA52C0C98E4002F5C8F /* OcrResponseDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
 				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
@@ -1113,6 +1134,7 @@
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
+				2D0AABAA2C0C9AD2002F5C8F /* PayAddRequestBodyDTO.swift in Sources */,
 				58E88E842BF92CEF00775F06 /* TagPlusViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				58E88E862BF92D4600775F06 /* PhotoCollectionViewCell.swift in Sources */,
@@ -1154,6 +1176,7 @@
 				2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
+				2D0AABAC2C0C9D44002F5C8F /* PayAddResponseDTO.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
@@ -1164,6 +1187,7 @@
 				01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,
 				0309DD652C00C3F300D6133A /* RecipeWriteViewCell.swift in Sources */,
 				2DA59CEC2BF3B68D00A86CF9 /* SetExpenseViewController.swift in Sources */,
+				2D0AABA82C0C9AC4002F5C8F /* OcrRequestBodyDTO.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,

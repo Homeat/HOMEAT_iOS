@@ -16,4 +16,6 @@ final class NetworkService {
     let onboardingService: OnboardingServiceProtocol = OnboardingService(apiLogger: APIEventLogger())
     let analysisService: AnalysisServiceProtocol = AnalysisService(apiLogger: APIEventLogger())
     let homeSceneService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
+    let ocrService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
+    let payAddService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
 }
