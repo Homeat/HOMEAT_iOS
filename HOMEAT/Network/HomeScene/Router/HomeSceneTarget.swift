@@ -69,7 +69,7 @@ extension HomeSceneTarget: TargetType {
         case .ocr(let bodyDTO):
             return .requestWithBody(bodyDTO)
         case .payAdd(let bodyDTO):
-            return .requestWithBody(bodyDTO.toMultipartFormData())
+            return .requestWithMultipart(bodyDTO.toMultipartFormData())
         }
     }
 }

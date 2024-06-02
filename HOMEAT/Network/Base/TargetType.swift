@@ -123,6 +123,7 @@ enum RequestParams {
     case requestWithBody(_ paramter: Encodable?)
     case requestQuery(_ parameter: Encodable?)
     case requestQueryWithBody(_ queryParameter: Encodable?, bodyParameter: Encodable?)
+    case requestWithMultipart(_ multipartFormData: (MultipartFormData) -> Void)
 }
 
 extension Encodable {
