@@ -114,6 +114,16 @@
 		0309DDDC2C08C81A00D6133A /* CheckOneResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */; };
 		0309DDDF2C0AF5AB00D6133A /* CommentDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDDE2C0AF5AB00D6133A /* CommentDeclareViewController.swift */; };
 		0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE02C0AF66C00D6133A /* CommentDeclareWriteViewController.swift */; };
+		0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */; };
+		0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */; };
+		0309DDE72C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */; };
+		0309DDE92C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */; };
+		0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */; };
+		0309DDED2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */; };
+		0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */; };
+		0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */; };
+		0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */; };
+		0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
@@ -259,6 +269,16 @@
 		0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOneResponseDTO.swift; sourceTree = "<group>"; };
 		0309DDDE2C0AF5AB00D6133A /* CommentDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeclareViewController.swift; sourceTree = "<group>"; };
 		0309DDE02C0AF66C00D6133A /* CommentDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeclareWriteViewController.swift; sourceTree = "<group>"; };
+		0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReplyRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePostRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderResponseDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDistrictViewController.swift; sourceTree = "<group>"; };
 		2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDistrictViewController.swift; sourceTree = "<group>"; };
@@ -770,8 +790,23 @@
 		0309DD922C01E5B500D6133A /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				0309DDB92C031ECD00D6133A /* View */,
-				0309DDB82C031EBB00D6133A /* Write */,
+				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
+				0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */,
+				0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */,
+				0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */,
+				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
+				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
+				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
+				0309DDD72C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift */,
+				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
+				0309DDD92C08C7F000D6133A /* CheckOneRequestBodyDTO.swift */,
+				0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */,
+				0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */,
+				0309DDBC2C03250B00D6133A /* LoveOrderRequestBody.swift */,
+				0309DDB62C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift */,
+				0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */,
+				0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */,
+				0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -779,9 +814,11 @@
 		0309DD9A2C02021C00D6133A /* Response */ = {
 			isa = PBXGroup;
 			children = (
-				0309DDBA2C031FA500D6133A /* LatestOrderResponseDTO.swift */,
-				0309DDBE2C03256700D6133A /* LoveOrderResponseDTO.swift */,
 				0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */,
+				0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */,
+				0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */,
+				0309DDBE2C03256700D6133A /* LoveOrderResponseDTO.swift */,
+				0309DDBA2C031FA500D6133A /* LatestOrderResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -800,29 +837,6 @@
 				0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		0309DDB82C031EBB00D6133A /* Write */ = {
-			isa = PBXGroup;
-			children = (
-				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
-				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
-				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
-				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
-				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
-				0309DDD72C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift */,
-			);
-			path = Write;
-			sourceTree = "<group>";
-		};
-		0309DDB92C031ECD00D6133A /* View */ = {
-			isa = PBXGroup;
-			children = (
-				0309DDB62C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift */,
-				0309DDBC2C03250B00D6133A /* LoveOrderRequestBody.swift */,
-				0309DDD92C08C7F000D6133A /* CheckOneRequestBodyDTO.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		2D1C01C22BBF087000235836 /* Components */ = {
@@ -1145,12 +1159,14 @@
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				0309DD572BF99F0200D6133A /* RecipeWriteViewController.swift in Sources */,
 				0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */,
+				0309DDE92C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift in Sources */,
 				2DA59CE62BEC824800A86CF9 /* SetBirthViewController.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
 				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
 				2DA59CE12BEBB52400A86CF9 /* SetNicknameViewController.swift in Sources */,
+				0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
@@ -1159,6 +1175,7 @@
 				0309DDDC2C08C81A00D6133A /* CheckOneResponseDTO.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
+				0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */,
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
 				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
@@ -1167,6 +1184,7 @@
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */,
 				58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */,
+				0309DDE72C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
@@ -1184,8 +1202,10 @@
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
+				0309DDED2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift in Sources */,
 				0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */,
 				0309DDDA2C08C7F000D6133A /* CheckOneRequestBodyDTO.swift in Sources */,
+				0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
@@ -1194,6 +1214,7 @@
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
+				0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */,
 				58E88E882BF931F200775F06 /* Mode.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
@@ -1206,12 +1227,14 @@
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				0309DDBF2C03256700D6133A /* LoveOrderResponseDTO.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
+				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
+				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
@@ -1255,6 +1278,7 @@
 				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
 				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
+				0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */,
 				01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

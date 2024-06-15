@@ -10,6 +10,6 @@ import Foundation
 struct LoveOrderRequestBodyDTO: Codable {
     let search: String
     let tag: String
-    let lastFoodTalkId: Int
+    let id: Int
     let love: Int
 }

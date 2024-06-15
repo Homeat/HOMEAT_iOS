@@ -11,14 +11,22 @@ import Alamofire
 enum FoodTalkTarget {
     //url별로 case 나눔
     case foodTalkSave(_ bodyDTO: FoodTalkSaveRequestBodyDTO)
+    case replyReport(_ bodyDTO: ReplyReportRequestBodyDTO)
+    case postReport(_ bodyDTO: PostReportRequestBodyDTO)
+    case commentReport(_ bodyDTO: CommentReportRequestBodyDTO)
     case replyWrite(_ bodyDTO: ReplyWriteRequestBodyDTO)
     case recipeSave(_ bodyDTO: RecipeSaveRequestBodyDTO)
     case love(_ bodyDTO: LoveRequestBodyDTO)
     case deleteLove(_ bodyDTO: DeleteLoveRequestBodyDTO)
     case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
-    case checkOne(_bodyDTO: CheckOneRequestBodyDTO)
-    case latestOrder(_ bodyDTO: LatestOrderRequestBodyDTO)
+    case checkOne(_ bodyDTO: CheckOneRequestBodyDTO)
+    case viewOrder(_ bodyDTO: ViewOrderRequestBodyDTO)
+    case oldestOrder(_bodyDTO: OldestOrderRequestBodyDTO)
     case loveOrder(_ bodyDTO: LoveOrderRequestBodyDTO)
+    case latestOrder(_ bodyDTO: LatestOrderRequestBodyDTO)
+    case deleteReply(_ bodyDTO: DeleteReplyRequestBodyDTO)
+    case deletePost(_ bodyDTO: DeletePostRequestBodyDTO)
+    case deleteComment( _bodyDTO: DeleteCommentRequestBodyDTO)
 }
 
 extension FoodTalkTarget: TargetType {
@@ -26,6 +34,12 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .authorization
+        case .replyReport:
+            return .authorization
+        case .postReport:
+            return .authorization
+        case .commentReport:
+            return .authorization
         case .replyWrite:
             return .authorization
         case .recipeSave:
@@ -38,11 +52,20 @@ extension FoodTalkTarget: TargetType {
             return .authorization
         case .checkOne:
             return .authorization
-        case .latestOrder:
+        case .viewOrder:
+            return .authorization
+        case .oldestOrder:
             return .authorization
         case .loveOrder:
             return .authorization
-        
+        case .latestOrder:
+            return .authorization
+        case .deleteReply:
+            return .authorization
+        case .deletePost:
+            return .authorization
+        case .deleteComment:
+            return .authorization
         }
     }
     
@@ -50,6 +73,12 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .hasToken
+        case .replyReport:
+            return .hasToken
+        case .postReport:
+            return .hasToken
+        case .commentReport:
+            return .hasToken
         case .replyWrite:
             return .hasToken
         case .recipeSave:
@@ -62,9 +91,19 @@ extension FoodTalkTarget: TargetType {
             return .hasToken
         case .checkOne:
             return .hasToken
-        case .latestOrder:
+        case .viewOrder:
+            return .hasToken
+        case .oldestOrder:
             return .hasToken
         case .loveOrder:
+            return .hasToken
+        case .latestOrder:
+            return .hasToken
+        case .deleteReply:
+            return .hasToken
+        case .deletePost:
+            return .hasToken
+        case .deleteComment:
             return .hasToken
         }
     }
@@ -73,22 +112,38 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return .post
+        case .replyReport:
+            return .post
+        case .postReport:
+            return .post
+        case .commentReport:
+            return .post
         case .replyWrite:
             return .post
         case .recipeSave:
             return .post
         case .love:
             return .post
-        case .commentWrite:
-            return .post
         case .deleteLove:
             return .delete
-        case .checkOne(_bodyDTO: let _bodyDTO):
+        case .commentWrite:
+            return .post
+        case .checkOne:
+            return .get
+        case .viewOrder:
+            return .get
+        case .oldestOrder:
             return .get
         case .latestOrder:
             return .get
         case .loveOrder:
             return .get
+        case .deleteReply:
+            return .delete
+        case .deletePost:
+            return .delete
+        case .deleteComment:
+            return .delete
         }
     }
     
@@ -96,6 +151,12 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case .foodTalkSave:
             return "/v1/foodTalk/save"
+        case .replyReport(let bodyDTO):
+            return "/v1/foodTalk/report/reply/\(bodyDTO.replyId)"
+        case .postReport(let bodyDTO):
+            return "/v1/foodTalk/report/post/\(bodyDTO.postId)"
+        case .commentReport(let bodyDTO):
+            return "/v1/foodTalk/report/comment/\(bodyDTO.commentId)"
         case .replyWrite:
             return "/v1/foodTalk/reply"
         case .recipeSave:
@@ -108,10 +169,20 @@ extension FoodTalkTarget: TargetType {
             return "/v1/foodTalk/comment"
         case .checkOne(let bodyDTO):
             return "/v1/foodTalk/\(bodyDTO.id)"
+        case .viewOrder:
+            return "/v1/foodTalk/posts/view"
+        case .oldestOrder:
+            return "/v1/foodTalk/posts/oldest"
         case .latestOrder:
             return "/v1/foodTalk/posts/latest"
         case .loveOrder:
             return "/v1/foodTalk/posts/love"
+       case .deleteReply(let bodyDTO):
+            return "/v1/foodTalk/delete/\(bodyDTO.replyId)"
+        case .deletePost(let bodyDTO):
+            return "/v1/foodTalk/reply/\(bodyDTO.id)"
+        case .deleteComment(let bodyDTO):
+            return "/v1/foodTalk/comment/\(bodyDTO.commentId)"
         }
     }
     
@@ -119,6 +190,12 @@ extension FoodTalkTarget: TargetType {
         switch self {
         case let .foodTalkSave(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
+        case let .replyReport(bodyDTO):
+            return .requestQuery(bodyDTO)
+        case let .postReport(bodyDTO):
+            return .requestQuery(bodyDTO)
+        case let .commentReport(bodyDTO):
+            return .requestQuery(bodyDTO)
         case let .replyWrite(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .recipeSave(bodyDTO):
@@ -131,10 +208,20 @@ extension FoodTalkTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case let .checkOne(bodyDTO):
             return .requestQuery(bodyDTO)
+        case let .viewOrder(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .oldestOrder(bodyDTO):
+            return .requestWithBody(bodyDTO)
         case let .latestOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .loveOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
+        case let .deleteReply(bodyDTO):
+            return .requestQuery(bodyDTO)
+        case let .deletePost(bodyDTO):
+            return .requestQuery(bodyDTO)
+        case let .deleteComment(bodyDTO):
+            return .requestQuery(bodyDTO)
         }
     }
 }

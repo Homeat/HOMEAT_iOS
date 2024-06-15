@@ -728,6 +728,8 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: RecipeWriteViewCell.identifier, for: indexPath) as! RecipeWriteViewCell
         cell.textLabel?.text = data[indexPath.row]
         cell.textLabel?.textColor = .white
+        cell.backgroundColor = .coolGray4
+        cell.layer.cornerRadius = 10
         cell.selectionStyle = .none
         return cell
     }
