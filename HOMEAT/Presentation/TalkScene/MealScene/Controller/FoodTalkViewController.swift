@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Then
+import SnapKit
 
 class FoodTalkViewController: BaseViewController {
     
@@ -35,6 +36,10 @@ class FoodTalkViewController: BaseViewController {
         setUpCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isTranslucent = false
+    }
+
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -179,15 +184,14 @@ class FoodTalkViewController: BaseViewController {
         }
         
         foodCollectionView.snp.makeConstraints {
-            $0.top.equalTo(scrollView.snp.bottom)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
+            $0.top.equalTo(scrollView.snp.bottom).offset(22)
+            $0.leading.trailing.equalToSuperview().inset(25)
             $0.bottom.equalToSuperview()
         }
         
         writeButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(100)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
             $0.height.equalTo(51)
             $0.width.equalTo(51)
         }
@@ -200,6 +204,7 @@ class FoodTalkViewController: BaseViewController {
         breakfastButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         lunchButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
         dinnerButton.addTarget(self, action: #selector(isHashTagButtonTapped), for: .touchUpInside)
+        writeButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
     
     private func setUpCollectionView() {
@@ -230,6 +235,12 @@ class FoodTalkViewController: BaseViewController {
         button = sender as! UIButton
         button.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         button.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
+    }
+    
+    @objc func isWriteButtonTapped(_ sender: Any) {
+        let nextVC = RecipeWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
@@ -267,7 +278,7 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return 9
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -283,23 +294,22 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // 셀을 선택하면 게시글 뷰로 넘어감.
+        let nextVC = FoodPostViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     
     }
 }
 
 extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return interval
-        }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 30
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let spacing: CGFloat = 20
+            let width = (collectionView.bounds.width - 8 - 8 - spacing) / 2 // 총 가로길이 - leading - trailing - 간격
+            let height = (collectionView.bounds.height - spacing * 2) / 3 // 총 세로길이 - top - bottom - 간격
+            return CGSize(width: width, height: height)
     }
     
 }

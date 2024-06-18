@@ -20,7 +20,6 @@ class TalkViewController: TabmanViewController {
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        super.viewDidLoad()
         self.title = "홈잇토크"
         setViewControllers()
         setConstraints()
@@ -53,9 +52,8 @@ class TalkViewController: TabmanViewController {
     
     private func setViewControllers() {
         let foodTalkViewController = FoodTalkViewController()
-        let weeklookViewController = WeekLookViewController()
-        
-        viewcontrollers.append(contentsOf: [foodTalkViewController, weeklookViewController])
+        let infoTalkViewController = InfoTalkViewController()     
+        viewcontrollers.append(contentsOf: [foodTalkViewController, infoTalkViewController])
     }
     
     private func setConstraints() {
