@@ -28,11 +28,6 @@ class RecipeWriteViewCell: UITableViewCell {
     
     //MARK: - SetUI
     private func setConfigure() {
-        self.do {
-            $0.backgroundColor = UIColor(named: "turquoiseDarkGray")
-            $0.layer.cornerRadius = 10
-        }
-        
         contentLabel.do {
             $0.text = "레시피 내용이 들어갈 자리 입니다."
             $0.font = .captionMedium10
@@ -42,6 +37,12 @@ class RecipeWriteViewCell: UITableViewCell {
     
     private func setConstraints() {
         contentView.addSubviews(contentLabel)
+        contentView.snp.makeConstraints {
+            $0.leading.equalTo(self.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing)
+            $0.top.equalTo(self.snp.top)
+            $0.bottom.equalTo(self.snp.bottom)
+        }
         
         contentLabel.snp.makeConstraints {
             $0.centerY.equalTo(contentView.snp.centerY)

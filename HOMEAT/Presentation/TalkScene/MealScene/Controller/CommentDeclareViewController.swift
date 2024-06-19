@@ -1,15 +1,14 @@
 //
-//  DeclareView.swift
+//  CommentDeclareViewController.swift
 //  HOMEAT
 //
-//  Created by 이지우 on 5/5/24.
+//  Created by 이지우 on 6/1/24.
 //
 
 import UIKit
 import SnapKit
-import Then
 
-class DeclareView: BaseView {
+class CommentDeclareViewController: BaseViewController {
     
     //MARK: - Property
     private let declareLabel = UILabel()
@@ -21,14 +20,27 @@ class DeclareView: BaseView {
     private let fifthButton = UIButton()
     private let submitButton = UIButton()
     
-    //MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    //MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isTranslucent = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     //MARK: - SetUI
     override func setConfigure() {
-        self.backgroundColor = UIColor(named: "homeBackgroundColor")
+        view.backgroundColor = UIColor(named: "homeBackgroundColor")
         
         declareLabel.do {
             $0.text = "신고하는 이유가 무엇인가요?"
@@ -40,11 +52,11 @@ class DeclareView: BaseView {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
             $0.axis = .vertical
             $0.distribution = .fillEqually
-            $0.spacing = 25
+            $0.spacing = 30
         }
         
         firstButton.do {
-            $0.setTitle("음란물입니다.", for: .normal)
+            $0.setTitle("비매너 사용자입니다.", for: .normal)
             $0.titleLabel?.font = .bodyBold16
             $0.setTitleColor(.white, for: .normal)
             $0.layer.cornerRadius = 10
@@ -52,10 +64,11 @@ class DeclareView: BaseView {
             $0.layer.borderColor = UIColor.warmgray6.cgColor
             $0.contentHorizontalAlignment = .left
             $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            $0.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
         }
         
         secondButton.do {
-            $0.setTitle("욕설/생명경시/혐오/차별적 표현입니다.", for: .normal)
+            $0.setTitle("욕설을 합니다.", for: .normal)
             $0.titleLabel?.font = .bodyBold16
             $0.setTitleColor(.white, for: .normal)
             $0.layer.cornerRadius = 10
@@ -63,10 +76,11 @@ class DeclareView: BaseView {
             $0.layer.borderColor = UIColor.warmgray6.cgColor
             $0.contentHorizontalAlignment = .left
             $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            $0.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
         }
         
         thirdButton.do {
-            $0.setTitle("불쾌한 표현이 있습니다.", for: .normal)
+            $0.setTitle("연애 목적의 대화를 시도합니다.", for: .normal)
             $0.titleLabel?.font = .bodyBold16
             $0.setTitleColor(.white, for: .normal)
             $0.layer.cornerRadius = 10
@@ -74,10 +88,11 @@ class DeclareView: BaseView {
             $0.layer.borderColor = UIColor.warmgray6.cgColor
             $0.contentHorizontalAlignment = .left
             $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            $0.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
         }
         
         forthButton.do {
-            $0.setTitle("개인정보 노출 게시물입니다.", for: .normal)
+            $0.setTitle("성희롱을 합니다.", for: .normal)
             $0.titleLabel?.font = .bodyBold16
             $0.setTitleColor(.white, for: .normal)
             $0.layer.cornerRadius = 10
@@ -85,10 +100,11 @@ class DeclareView: BaseView {
             $0.layer.borderColor = UIColor.warmgray6.cgColor
             $0.contentHorizontalAlignment = .left
             $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            $0.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
         }
         
         fifthButton.do {
-            $0.setTitle("불법정보를 표현하고 있습니다.", for: .normal)
+            $0.setTitle("다른 문제가 있습니다.", for: .normal)
             $0.titleLabel?.font = .bodyBold16
             $0.setTitleColor(.white, for: .normal)
             $0.layer.cornerRadius = 10
@@ -96,6 +112,7 @@ class DeclareView: BaseView {
             $0.layer.borderColor = UIColor.warmgray6.cgColor
             $0.contentHorizontalAlignment = .left
             $0.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+            $0.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
         }
         
         submitButton.do {
@@ -108,7 +125,7 @@ class DeclareView: BaseView {
     }
     
     override func setConstraints() {
-        self.addSubviews(declareLabel, container, submitButton)
+        view.addSubviews(declareLabel, container, submitButton)
         container.addArrangedSubview(firstButton)
         container.addArrangedSubview(secondButton)
         container.addArrangedSubview(thirdButton)
@@ -126,7 +143,7 @@ class DeclareView: BaseView {
             $0.top.equalTo(declareLabel.snp.bottom).offset(50)
             $0.leading.equalToSuperview().inset(21)
             $0.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(300)
+            $0.height.equalTo(355)
         }
         
         submitButton.snp.makeConstraints {
@@ -137,6 +154,44 @@ class DeclareView: BaseView {
         }
     }
     
-    //MARK: - @objc
+    private func setNavigationBar() {
+        navigationItem.title = "댓글 신고하기"
+        let backbutton = UIBarButtonItem()
+        backbutton.tintColor = .white
+        navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
+    }
     
+    //MARK: - @objc
+    @objc func optionActtion(_ sender: UIButton) {
+        switch sender {
+        case firstButton:
+            let declareWriteVC = DeclareWriteViewController()
+            declareWriteVC.optionLabel = firstButton.titleLabel?.text
+            declareWriteVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(declareWriteVC, animated: true)
+        case secondButton:
+            let declareWriteVC = DeclareWriteViewController()
+            declareWriteVC.optionLabel = secondButton.titleLabel?.text
+            declareWriteVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(declareWriteVC, animated: true)
+        case thirdButton:
+            let declareWriteVC = DeclareWriteViewController()
+            declareWriteVC.optionLabel = thirdButton.titleLabel?.text
+            declareWriteVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(declareWriteVC, animated: true)
+        case forthButton:
+            let declareWriteVC = DeclareWriteViewController()
+            declareWriteVC.optionLabel = forthButton.titleLabel?.text
+            declareWriteVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(declareWriteVC, animated: true)
+        case fifthButton:
+            let declareWriteVC = DeclareWriteViewController()
+            declareWriteVC.optionLabel = fifthButton.titleLabel?.text
+            declareWriteVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(declareWriteVC, animated: true)
+        default:
+            fatalError("Error")
+        }
+    }
 }
+

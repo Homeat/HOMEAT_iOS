@@ -95,6 +95,38 @@
 		0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */; };
 		0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD622C00859B00D6133A /* StepWriteController.swift */; };
 		0309DD652C00C3F300D6133A /* RecipeWriteViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD642C00C3F200D6133A /* RecipeWriteViewCell.swift */; };
+		0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD812C01E3D200D6133A /* IngredientView.swift */; };
+		0309DD882C01E3D200D6133A /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD822C01E3D200D6133A /* PostContentView.swift */; };
+		0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD832C01E3D200D6133A /* ReplyReactionView.swift */; };
+		0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD842C01E3D200D6133A /* ReplyTextView.swift */; };
+		0309DD8D2C01E44000D6133A /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD8B2C01E44000D6133A /* ContinueButton.swift */; };
+		0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */; };
+		0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */; };
+		0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */; };
+		0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */; };
+		0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */; };
+		0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */; };
+		0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */; };
+		0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDB62C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift */; };
+		0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDBA2C031FA500D6133A /* LatestOrderResponseDTO.swift */; };
+		0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDBC2C03250B00D6133A /* LoveOrderRequestBody.swift */; };
+		0309DDBF2C03256700D6133A /* LoveOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDBE2C03256700D6133A /* LoveOrderResponseDTO.swift */; };
+		0309DDD62C04B43A00D6133A /* DeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDD52C04B43A00D6133A /* DeclareWriteViewController.swift */; };
+		0309DDD82C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDD72C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift */; };
+		0309DDDA2C08C7F000D6133A /* CheckOneRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDD92C08C7F000D6133A /* CheckOneRequestBodyDTO.swift */; };
+		0309DDDC2C08C81A00D6133A /* CheckOneResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */; };
+		0309DDDF2C0AF5AB00D6133A /* CommentDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDDE2C0AF5AB00D6133A /* CommentDeclareViewController.swift */; };
+		0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE02C0AF66C00D6133A /* CommentDeclareWriteViewController.swift */; };
+		0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */; };
+		0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */; };
+		0309DDE72C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */; };
+		0309DDE92C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */; };
+		0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */; };
+		0309DDED2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */; };
+		0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */; };
+		0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */; };
+		0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */; };
+		0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */; };
 		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
 		2D4755E12C021EB700E014A9 /* DeclareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DB2C021EB700E014A9 /* DeclareView.swift */; };
 		2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DC2C021EB700E014A9 /* IngredientView.swift */; };
@@ -228,6 +260,38 @@
 		0309DD582BF9E62A00D6133A /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
 		0309DD622C00859B00D6133A /* StepWriteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepWriteController.swift; sourceTree = "<group>"; };
 		0309DD642C00C3F200D6133A /* RecipeWriteViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeWriteViewCell.swift; sourceTree = "<group>"; };
+		0309DD812C01E3D200D6133A /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
+		0309DD822C01E3D200D6133A /* PostContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostContentView.swift; sourceTree = "<group>"; };
+		0309DD832C01E3D200D6133A /* ReplyReactionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyReactionView.swift; sourceTree = "<group>"; };
+		0309DD842C01E3D200D6133A /* ReplyTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReplyTextView.swift; sourceTree = "<group>"; };
+		0309DD8B2C01E44000D6133A /* ContinueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
+		0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkTarget.swift; sourceTree = "<group>"; };
+		0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkService.swift; sourceTree = "<group>"; };
+		0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWriteRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDB62C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestOrderRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDBA2C031FA500D6133A /* LatestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDBC2C03250B00D6133A /* LoveOrderRequestBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveOrderRequestBody.swift; sourceTree = "<group>"; };
+		0309DDBE2C03256700D6133A /* LoveOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDD52C04B43A00D6133A /* DeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeclareWriteViewController.swift; sourceTree = "<group>"; };
+		0309DDD72C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteLoveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDD92C08C7F000D6133A /* CheckOneRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOneRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckOneResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDDE2C0AF5AB00D6133A /* CommentDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeclareViewController.swift; sourceTree = "<group>"; };
+		0309DDE02C0AF66C00D6133A /* CommentDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDeclareWriteViewController.swift; sourceTree = "<group>"; };
+		0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentReportRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReplyRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePostRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderResponseDTO.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D4755DB2C021EB700E014A9 /* DeclareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclareView.swift; sourceTree = "<group>"; };
 		2D4755DC2C021EB700E014A9 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -317,6 +381,7 @@
 			children = (
 				012382E32BB3F96D0048CC2D /* HOMEAT */,
 				012382E22BB3F96D0048CC2D /* Products */,
+				0309DD7F2C01E36200D6133A /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -484,6 +549,7 @@
 		012383412BB7F8FF0048CC2D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD8E2C01E53600D6133A /* FoodTalk */,
 				58D1381B2BEF51E90048C228 /* WeekLook */,
 				01D530E12BC7BC57008C368E /* Base */,
 				01D5312C2BDFC576008C368E /* Onboarding */,
@@ -552,6 +618,9 @@
 				0309DD4B2BEF5ECD00D6133A /* RecipeViewController.swift */,
 				0309DD562BF99F0200D6133A /* RecipeWriteViewController.swift */,
 				0309DD622C00859B00D6133A /* StepWriteController.swift */,
+				0309DDD52C04B43A00D6133A /* DeclareWriteViewController.swift */,
+				0309DDDE2C0AF5AB00D6133A /* CommentDeclareViewController.swift */,
+				0309DDE02C0AF66C00D6133A /* CommentDeclareWriteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -688,25 +757,105 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		2D1C01C22BBF087000235836 /* Components */ = {
+		0309DD7F2C01E36200D6133A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				2D1C01C32BBF088800235836 /* TagButton.swift */,
+				58E88E712BF8ED2200775F06 /* ReplyReactionView.swift */,
+				58E88E6F2BF8ED1400775F06 /* PostContentView.swift */,
+				2DA59CE32BEC473E00A86CF9 /* ContinueButton.swift */,
+				58E88E6D2BF8ED0A00775F06 /* DeclareView.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		0309DD852C01E3D200D6133A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD812C01E3D200D6133A /* IngredientView.swift */,
+				0309DD822C01E3D200D6133A /* PostContentView.swift */,
+				0309DD832C01E3D200D6133A /* ReplyReactionView.swift */,
+				0309DD842C01E3D200D6133A /* ReplyTextView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		0309DD8C2C01E44000D6133A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD8B2C01E44000D6133A /* ContinueButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		2D4755E02C021EB700E014A9 /* View */ = {
+		0309DD8E2C01E53600D6133A /* FoodTalk */ = {
 			isa = PBXGroup;
 			children = (
-				2D4755DB2C021EB700E014A9 /* DeclareView.swift */,
-				2D4755DC2C021EB700E014A9 /* IngredientView.swift */,
-				2D4755DD2C021EB700E014A9 /* PostContentView.swift */,
-				2D4755DE2C021EB700E014A9 /* ReplyReactionView.swift */,
-				2D4755DF2C021EB700E014A9 /* ReplyTextView.swift */,
+				0309DDA32C0204A700D6133A /* Service */,
+				0309DD9F2C02042700D6133A /* Router */,
+				0309DD8F2C01E54700D6133A /* DTO */,
 			);
-			name = View;
-			path = "../../../../../../../Library/Mobile Documents/.Trash/HOMEAT_iOS 오후 10.26.26/HOMEAT/Presentation/TalkScene/MealScene/View";
+			path = FoodTalk;
+			sourceTree = "<group>";
+		};
+		0309DD8F2C01E54700D6133A /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				0309DD9A2C02021C00D6133A /* Response */,
+				0309DD922C01E5B500D6133A /* Request */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		0309DD922C01E5B500D6133A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */,
+				0309DDE22C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift */,
+				0309DDE42C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift */,
+				0309DDE62C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift */,
+				0309DDB22C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift */,
+				0309DDAE2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift */,
+				0309DDB42C02DFAB00D6133A /* LoveRequestBodyDTO.swift */,
+				0309DDD72C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift */,
+				0309DDB02C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift */,
+				0309DDD92C08C7F000D6133A /* CheckOneRequestBodyDTO.swift */,
+				0309DDE82C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift */,
+				0309DDEA2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift */,
+				0309DDBC2C03250B00D6133A /* LoveOrderRequestBody.swift */,
+				0309DDB62C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift */,
+				0309DDEC2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift */,
+				0309DDEE2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift */,
+				0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		0309DD9A2C02021C00D6133A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDDB2C08C81A00D6133A /* CheckOneResponseDTO.swift */,
+				0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */,
+				0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */,
+				0309DDBE2C03256700D6133A /* LoveOrderResponseDTO.swift */,
+				0309DDBA2C031FA500D6133A /* LatestOrderResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		0309DD9F2C02042700D6133A /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		0309DDA32C0204A700D6133A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		2DB92DCC2C0218DE00629CED /* Components */ = {
@@ -846,8 +995,8 @@
 		58E88E6B2BF8EC4500775F06 /* MealScene */ = {
 			isa = PBXGroup;
 			children = (
+				0309DD852C01E3D200D6133A /* View */,
 				012383832BBA95EC0048CC2D /* Controller */,
-				2D4755E02C021EB700E014A9 /* View */,
 			);
 			path = MealScene;
 			sourceTree = "<group>";
@@ -1024,29 +1173,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0309DD882C01E3D200D6133A /* PostContentView.swift in Sources */,
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				0309DD572BF99F0200D6133A /* RecipeWriteViewController.swift in Sources */,
+				0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */,
+				0309DDE92C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift in Sources */,
 				2DA59CE62BEC824800A86CF9 /* SetBirthViewController.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
 				011DAFE32BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift in Sources */,
 				01D530F62BC7E9AC008C368E /* APIEventLogger.swift in Sources */,
 				01D531432BDFCE6A008C368E /* TokenRefreshResponseDTO.swift in Sources */,
 				2DA59CE12BEBB52400A86CF9 /* SetNicknameViewController.swift in Sources */,
+				0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
+				0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
+				0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */,
 				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
+				0309DDDC2C08C81A00D6133A /* CheckOneResponseDTO.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
+				0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */,
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
 				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
+				0309DDD62C04B43A00D6133A /* DeclareWriteViewController.swift in Sources */,
 				0123837C2BBA94DC0048CC2D /* HOMEATTabBarController.swift in Sources */,
 				012383022BB40BC80048CC2D /* BaseViewController.swift in Sources */,
 				58D138272BEF58CE0048C228 /* WeekLookResponseDTO.swift in Sources */,
 				58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */,
+				0309DDE72C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
+				0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
+				0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */,
+				0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */,
 				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
 				2D4755E32C021EB700E014A9 /* PostContentView.swift in Sources */,
 				58E88E822BF92B2100775F06 /* InfoPostContentView.swift in Sources */,
@@ -1060,13 +1222,19 @@
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
+				0309DDED2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift in Sources */,
+				0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */,
+				0309DDDA2C08C7F000D6133A /* CheckOneRequestBodyDTO.swift in Sources */,
+				0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
+				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
+				0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */,
 				58E88E882BF931F200775F06 /* Mode.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
@@ -1075,14 +1243,19 @@
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				58E88E862BF92D4600775F06 /* PhotoCollectionViewCell.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
+				0309DDDF2C0AF5AB00D6133A /* CommentDeclareViewController.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
+				0309DDBF2C03256700D6133A /* LoveOrderResponseDTO.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
+				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
+				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
+				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
 				2D4755E42C021EB700E014A9 /* ReplyReactionView.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
@@ -1097,16 +1270,20 @@
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
+				0309DD8D2C01E44000D6133A /* ContinueButton.swift in Sources */,
+				0309DDD82C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift in Sources */,
 				01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
 				2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */,
 				01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
+				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
 				0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */,
 				011DAFD82BE3ABB6000556D0 /* HomefoodCheckView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
+				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				2DB92DCD2C0218DE00629CED /* ContinueButton.swift in Sources */,
 				2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */,
@@ -1115,6 +1292,7 @@
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
+				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
 				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,
 				2D4755E52C021EB700E014A9 /* ReplyTextView.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
@@ -1125,8 +1303,11 @@
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
+				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
 				016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
+				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
+				0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */,
 				01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

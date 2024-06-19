@@ -31,6 +31,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         self.tabBarController?.tabBar.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
+        tabBarController?.tabBar.isHidden = true
+        tabBarController?.tabBar.isTranslucent = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +108,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     //MARK: - Method
     func recipeViewButtonTapped() {
         let nextVC = RecipeViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -118,6 +121,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -130,14 +134,14 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             )
         }
     }
+    
     @objc func keyboardDown() {
         self.view.transform = .identity
     }
 }
 
-
 //MARK: - Extension
-extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
+extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 6
     }
@@ -145,6 +149,7 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodTalkReplyCell") as! FoodTalkReplyCell
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        cell.delegate = self
         return cell
     }
     
@@ -160,5 +165,11 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 520
+    }
+    
+    func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let nextVC = CommentDeclareViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
 }

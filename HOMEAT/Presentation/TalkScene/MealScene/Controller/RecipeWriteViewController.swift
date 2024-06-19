@@ -14,18 +14,20 @@ import PhotosUI
 import AVFoundation
 
 class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout {
+    var userId: Int?
+    var selectedTag: String?
     var selectedButton: UIButton?
     private var selectedImages: [UIImage] = []
     private lazy var customButton: UIButton = makeCustomButton()
     private enum Mode {
-            case camera
-            case album
+        case camera
+        case album
     }
     private var currentMode: Mode = .camera
     var activeField: UIView?
     private var isCameraAuthorized: Bool {
-       AVCaptureDevice.authorizationStatus(for: .video) == .authorized
-     }
+        AVCaptureDevice.authorizationStatus(for: .video) == .authorized
+    }
     var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     //MARK: - Property
@@ -62,6 +64,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private let stepLabel = UILabel()
     private let stepAddButton = UIButton()
     private let tableView = UITableView()
+    private let doneButton = UIButton()
     
     //MARK: - LIfeCycle
     override func viewDidLoad() {
@@ -287,16 +290,28 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크 글쓰기"
-        self.navigationController?.navigationBar.tintColor = .white
+        let titleAttributes: [NSAttributedString.Key: Any] = [
+            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!, // 원하는 폰트와 크기로 변경
+            .foregroundColor: UIColor.white
+        ]
+        navigationController?.navigationBar.titleTextAttributes = titleAttributes
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
+        let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let rightAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont(name: "NotoSansKR-Medium", size: 18)!,
+            .foregroundColor: UIColor.white]
+        rightButton.setTitleTextAttributes(rightAttributes, for: .normal)
+        navigationItem.rightBarButtonItem = rightButton
     }
     
     func setUpKeyboard() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     private func setTableView() {
@@ -404,6 +419,51 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         sender.isSelected = true
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         selectedButton = sender
+        if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
+            selectedTag = tag
+        }
+    }
+    
+    @objc func dismissKeyboard() {
+        // 키보드를 내립니다.
+        view.endEditing(true)
+    }
+    
+    @objc func saveButtonTapped() {
+        //값 유무 확인
+        guard let name = nameTextField.text, !name.isEmpty else {
+            showAlert(message: "제목을 입력하세요")
+            return
+        }
+        
+        guard let memo = memoTextView.text, !memo.isEmpty else {
+            showAlert(message: "메모를 입력하세요")
+            return
+        }
+        
+        guard let tag = selectedTag, !tag.isEmpty else {
+            showAlert(message: "태그를 선택하세요")
+            return
+        }
+        
+        guard !selectedImages.isEmpty else {
+            showAlert(message: "이미지를 선택하세요")
+            return
+        }
+        //서버에 게시글 전달
+        let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, image: imageDataArray)
+        NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) {
+            [weak self] response in
+            switch response {
+            case .success(let data):
+                //data.data 서버에서 받는 responsebody
+                guard let foodTalkData = data.data else { return }
+                self?.userId = foodTalkData
+            default :
+                print("데이터 존재 안함 ")
+            }
+        }
     }
     
     //MARK: - Methods
@@ -629,6 +689,11 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         activeField = nil
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
         activeField = textView
         if textView.text == textViewPlaceHolder {
@@ -644,6 +709,12 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
             textView.textColor = .warmgray
         }
     }
+    
+    func textViewShhouldReturn(_ textView: UITextView) -> Bool{
+        // 키보드 내리면서 동작
+        textView.resignFirstResponder()
+        return true
+    }
 }
 
 // 하단 레시피 TableView
@@ -657,6 +728,8 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
         let cell = tableView.dequeueReusableCell(withIdentifier: RecipeWriteViewCell.identifier, for: indexPath) as! RecipeWriteViewCell
         cell.textLabel?.text = data[indexPath.row]
         cell.textLabel?.textColor = .white
+        cell.backgroundColor = .coolGray4
+        cell.layer.cornerRadius = 10
         cell.selectionStyle = .none
         return cell
     }

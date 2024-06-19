@@ -109,7 +109,13 @@ extension TargetType {
             let bodyParams = bodyRequest?.toDictionary() ?? [:]
             
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject: bodyParams)
+        case .requestWithMultipart(let multipartFormDataClosure):
+            // 멀티파트 폼 데이터 처리
+            var multipartFormData = MultipartFormData()
+            multipartFormDataClosure(multipartFormData)
             
+            urlRequest.httpBody = try multipartFormData.encode()
+            urlRequest.setValue(multipartFormData.contentType, forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
         case .requestPlain:
             break
         }
@@ -123,6 +129,7 @@ enum RequestParams {
     case requestWithBody(_ paramter: Encodable?)
     case requestQuery(_ parameter: Encodable?)
     case requestQueryWithBody(_ queryParameter: Encodable?, bodyParameter: Encodable?)
+    case requestWithMultipart(_ multipartFormData: (MultipartFormData) -> Void)
 }
 
 extension Encodable {
@@ -135,3 +142,4 @@ extension Encodable {
         return dictionaryData
     }
 }
+

@@ -10,8 +10,12 @@ import UIKit
 import Then
 import SnapKit
 
+protocol FoodTalkReplyCellDelgate: AnyObject {
+    func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell)
+}
+
 class FoodTalkReplyCell: UITableViewCell {
-    
+    weak var delegate: FoodTalkReplyCellDelgate?
     //MARK: - Property
     private let replyProfile = UIImageView()
     private let replyNickname = UILabel()
@@ -58,6 +62,7 @@ class FoodTalkReplyCell: UITableViewCell {
             $0.setTitle("신고하기", for: .normal)
             $0.setTitleColor(UIColor(named: "warmgray8"), for: .normal)
             $0.titleLabel?.font = .captionMedium10
+            $0.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
         }
         
         replyDate.do {
@@ -72,7 +77,7 @@ class FoodTalkReplyCell: UITableViewCell {
     }
     
     private func setConstraints() {
-        addSubviews(replyProfile, replyNickname, replyContent, replyDeclare, replyDate, line)
+        contentView.addSubviews(replyProfile, replyNickname, replyContent, replyDeclare, replyDate, line)
         
         replyProfile.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top).inset(16)
@@ -107,5 +112,10 @@ class FoodTalkReplyCell: UITableViewCell {
             $0.leading.equalTo(contentView.snp.leading)
             $0.trailing.equalTo(contentView.snp.trailing)
         }
+    }
+    
+    //MARK: - @objc
+    @objc func declareButtonTapped() {
+        delegate?.replyDeclareButtonTapped(self)
     }
 }
