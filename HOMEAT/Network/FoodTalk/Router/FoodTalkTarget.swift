@@ -213,7 +213,7 @@ extension FoodTalkTarget: TargetType {
         case let .oldestOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .latestOrder(bodyDTO):
-            return .requestWithBody(bodyDTO)
+            return .requestQuery(bodyDTO)
         case let .loveOrder(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .deleteReply(bodyDTO):

@@ -1,34 +1,42 @@
-//
 //  FoodTalkController.swift
 //  HOMEAT
 //
 //  Created by 이지우 on 4/4/24.
 //
 
-import Foundation
 import UIKit
 import Then
 import SnapKit
 
 class FoodTalkViewController: BaseViewController {
     var selectedButton: UIButton?
-    var lastest: [LatestOrderResponseDTO] = []
-    var lastFoodTalkId = 0
+    var lastest: [FoodTalk] = [] {
+        didSet {
+            foodCollectionView.reloadData()
+            updateContentSize()
+        }
+    }
+    var lastFoodTalkId = Int.max
     var search: String?
     var selectedTag: String?
+    var isLoading = false
+    
     //MARK: - Property
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
     private let scrollView = UIScrollView()
-    //버튼이 여러개 존재하는데 재사용 파일을 만들어야 하나?
     private let mainButton = UIButton()
     private let weekButton = UIButton()
     private let breakfastButton = UIButton()
     private let lunchButton = UIButton()
     private let dinnerButton = UIButton()
-    private let foodCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+    private let foodCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 161, height: 161)
+        layout.minimumLineSpacing = 16
+        return UICollectionView(frame: .zero, collectionViewLayout: layout)
+    }()
     private let writeButton = UIButton(type: .custom)
-    
     let interval = UIEdgeInsets(top: 19, left: 20, bottom: 10, right: 20)
     
     //MARK: - LifeCycle
@@ -36,12 +44,33 @@ class FoodTalkViewController: BaseViewController {
         super.viewDidLoad()
         setSearchBar()
         setAddTarget()
+        setConfigure()
+        setConstraints()
         setUpCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
         request()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        request()
         tabBarController?.tabBar.isTranslucent = false
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        foodCollectionView.collectionViewLayout.invalidateLayout()
+        updateContentSize()
+    }
+    
+    @objc private func dataChanged() {
+        lastFoodTalkId = Int.max // Reset lastFoodTalkId for new data
+        lastest.removeAll() // Clear current data
+        request()
+    }
+    
+    private func updateContentSize() {
+        foodCollectionView.contentSize = CGSize(width: foodCollectionView.bounds.width, height: foodCollectionView.collectionViewLayout.collectionViewContentSize.height)
     }
     
     //MARK: - SetUI
@@ -59,7 +88,6 @@ class FoodTalkViewController: BaseViewController {
             $0.delegate = self
         }
         
-        //asset이 없어서 기본 이미지로 구현.
         listButton.do {
             $0.setTitle("최신순", for: .normal)
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
@@ -216,10 +244,8 @@ class FoodTalkViewController: BaseViewController {
     private func setUpCollectionView() {
         foodCollectionView.dataSource = self
         foodCollectionView.delegate = self
+        foodCollectionView.prefetchDataSource = self
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
-        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = CGSize(width: 161, height: 161)
-        foodCollectionView.collectionViewLayout = flowLayout
     }
     
     //MARK: - @objc func
@@ -246,9 +272,18 @@ class FoodTalkViewController: BaseViewController {
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         sender.setTitleColor(.turquoiseGreen, for: .normal)
         selectedButton = sender
-        if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
+
+        // 전체글 버튼을 클릭했을 때 selectedTag를 nil로 설정
+        if sender == mainButton {
+            selectedTag = nil
+        } else if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
             selectedTag = tag
         }
+
+        lastFoodTalkId = Int.max // Reset lastFoodTalkId for new tag
+        lastest.removeAll() // Clear current data
+        foodCollectionView.reloadData()
+        request()
     }
     
     @objc func isWriteButtonTapped(_ sender: Any) {
@@ -258,17 +293,29 @@ class FoodTalkViewController: BaseViewController {
     }
     
     func request() {
+        guard !isLoading else { return }
+        isLoading = true
+        
         let bodyDTO = LatestOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", lastFoodTalkId: lastFoodTalkId)
         NetworkService.shared.foodTalkService.latestOrder(bodyDTO: bodyDTO) { [weak self] response in
-            switch response {
-            case .success(let data):
-                print("성공: 데이터가 반환되었습니다")
-            default:
-                print("데이터 저장 실패")
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success(let data):
+                    print("성공: 데이터가 반환되었습니다")
+                    self.lastest.append(contentsOf: data.data)
+                    self.lastFoodTalkId = self.lastest.last?.foodTalkId ?? Int.max
+                    self.isLoading = false
+                    self.foodCollectionView.reloadData()
+                default:
+                    print("데이터 저장 실패")
+                    self.isLoading = false
+                }
             }
         }
     }
 }
+
 //MARK: - Extension
 extension FoodTalkViewController: UISearchBarDelegate {
     
@@ -292,50 +339,56 @@ extension FoodTalkViewController: UISearchBarDelegate {
         }
         
         func performSearch(with searchText: String) {
-            // 검색 로직 구현하는 부분. 네트워크.
+            lastFoodTalkId = Int.max // Reset lastFoodTalkId for new search
+            lastest.removeAll() // Clear current data
+            foodCollectionView.reloadData()
+            request()
         }
     }
 }
 
-extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return lastest.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FoodTalkCollectionViewCell", for: indexPath) as? FoodTalkCollectionViewCell else {
-                return UICollectionViewCell()
+            return UICollectionViewCell()
         }
-        
+        let foodTalk = lastest[indexPath.item]
+        cell.configure(with: foodTalk)
         cell.backgroundColor = UIColor(r: 42, g: 42, b: 44)
-        cell.foodName.text = "샐러드"
-        
-    
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nextVC = FoodPostViewController()
         navigationController?.pushViewController(nextVC, animated: true)
-    
+    }
+
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        guard let maxRow = indexPaths.map({ $0.row }).max(), maxRow > lastest.count - 3 else {
+            return
+        }
+        request()
     }
 }
 
-extension FoodTalkViewController: UICollectionViewDelegateFlowLayout{
+extension FoodTalkViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let spacing: CGFloat = 20
-            let width = (collectionView.bounds.width - 8 - 8 - spacing) / 2 // 총 가로길이 - leading - trailing - 간격
-            let height = (collectionView.bounds.height - spacing * 2) / 3 // 총 세로길이 - top - bottom - 간격
-            return CGSize(width: width, height: height)
+        let spacing: CGFloat = 20
+        let width = (collectionView.bounds.width - 8 - 8 - spacing) / 2 // 총 가로길이 - leading - trailing - 간격
+        let height = (collectionView.bounds.height - spacing * 2) / 3 // 총 세로길이 - top - bottom - 간격
+        return CGSize(width: width, height: height)
     }
-    
 }

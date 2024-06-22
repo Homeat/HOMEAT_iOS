@@ -14,7 +14,10 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = PostContentView()
-    private let replyTextView = ReplyTextView()
+    private let replyTextView = UIView()
+    let replyTextField = UITextField()
+    private let heartButton = UIButton()
+    private let sendButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
   
     //MARK: - LifeCycle
@@ -52,6 +55,36 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         tableView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
+        
+        replyTextView.do {
+            $0.backgroundColor = .turquoiseDarkGray
+            $0.layer.cornerRadius = 10
+        }
+        
+        heartButton.do {
+            $0.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
+            $0.contentMode = .scaleAspectFit
+        }
+        
+        replyTextField.do {
+            $0.placeholder = "댓글을 남겨보세요."
+            $0.font = .bodyMedium16
+            $0.textColor = UIColor(named: "font5")
+            $0.layer.cornerRadius = 20
+            $0.backgroundColor = .turquoiseDarkGray
+            $0.attributedPlaceholder = NSAttributedString(string: "댓글을 남겨보세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "font5") ?? UIColor.gray])
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: $0.frame.height))
+            $0.leftViewMode = .always
+            $0.layer.borderColor = UIColor.init(named: "font7")?.cgColor
+            $0.layer.borderWidth = 1.0
+        }
+        
+        sendButton.do {
+            $0.setImage(UIImage(named: "sendIcon"), for: .normal)
+            $0.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
+        }
     }
     
     override func setConstraints() {
@@ -71,6 +104,27 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             $0.leading.equalTo(view.snp.leading)
             $0.trailing.equalTo(view.snp.trailing)
             $0.height.equalTo(91)
+        }
+        
+        replyTextView.addSubviews(heartButton, replyTextField, sendButton)
+        
+        heartButton.snp.makeConstraints {
+            $0.leading.equalTo(replyTextView.snp.leading).offset(20)
+            $0.centerY.equalTo(replyTextField.snp.centerY)
+            $0.height.equalTo(22.6)
+            $0.width.equalTo(22.6)
+        }
+        
+        replyTextField.snp.makeConstraints {
+            $0.leading.equalTo(heartButton.snp.trailing).offset(10)
+            $0.top.equalTo(replyTextView.snp.top).offset(24)
+            $0.bottom.equalTo(replyTextView.snp.bottom).inset(24)
+            $0.trailing.equalTo(replyTextView.snp.trailing).inset(20)
+        }
+        
+        sendButton.snp.makeConstraints {
+            $0.centerY.equalTo(replyTextField.snp.centerY)
+            $0.trailing.equalTo(replyTextField.snp.trailing).inset(8)
         }
     }
     
@@ -99,7 +153,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     func setupKeyboardEvent() {
-        replyTextView.replyTextField.delegate = self
+        replyTextField.delegate = self
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
@@ -118,6 +172,12 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     // MARK: -- objc
+    @objc func sendButtonTapped() {
+        //작성한 댓글을 서버로 전달
+        //작성한 댓글 삭제
+        //키보드 내림
+    }
+    
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }

@@ -18,7 +18,7 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("✋interceptor adapt 작동")
         /// request 될 때마다 실행됨
-        let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6NzMsImlhdCI6MTcxODk5MjA3MiwiZXhwIjoxNzE4OTk5MjcyfQ.DaBc9Aq38GQGeQph6FdHQA_TzdftJGpk1r1SNvMtADE"
+        let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6NzMsImlhdCI6MTcxOTA1MjAxOCwiZXhwIjoxNzE5MDU5MjE4fQ._cBR-amIKL9TBuhB1OimW5CYVvql5qYPJ3Gn-N38F2M"
         var urlRequest = urlRequest
         urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(urlRequest))

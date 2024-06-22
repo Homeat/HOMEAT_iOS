@@ -331,6 +331,13 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         tableView.layer.cornerRadius = 10
     }
     
+    func saveData() {
+        // 데이터 저장 로직 구현
+        // 저장이 완료되면 아래 알림을 보냄
+        NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
+        navigationController?.popViewController(animated: true)
+    }
+    
     //MARK: - @objc
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -468,24 +475,26 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         for recipe in bodyDTO.foodRecipeRequest {
             print("Recipe: \(recipe.recipe), Ingredient: \(recipe.ingredient)")
         }
-
+        
         NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) { [weak self] response in
-                switch response {
-                case .success(let data):
-                    print("성공: 데이터가 반환되었습니다")
-                    if let foodTalkData = data.data {
-                        // data.data 서버에서 받는 responsebody
-                        print("서버에서 받은 데이터: \(foodTalkData)")
-                    } else {
-                        print("성공했지만 데이터가 비어있습니다")
-                    }
-                    for (index, image) in imageDataArray.enumerated() {
-                        print("Image \(index) Size: \(image.count) bytes")
-                    }
-                default:
-                    print("데이터 저장 실패")
+            switch response {
+            case .success(let data):
+                print("성공: 데이터가 반환되었습니다")
+                if let foodTalkData = data.data {
+                    // data.data 서버에서 받는 responsebody
+                    print("서버에서 받은 데이터: \(foodTalkData)")
+                } else {
+                    print("성공했지만 데이터가 비어있습니다")
                 }
+                for (index, image) in imageDataArray.enumerated() {
+                    print("Image \(index) Size: \(image.count) bytes")
+                }
+                NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
+                self?.navigationController?.popViewController(animated: true)
+            default:
+                print("데이터 저장 실패")
             }
+        }
     }
     
     //MARK: - Methods
