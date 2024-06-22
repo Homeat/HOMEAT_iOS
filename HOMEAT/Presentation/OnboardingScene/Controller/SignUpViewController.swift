@@ -8,7 +8,7 @@
 import UIKit
 
 class SignUpViewController: BaseViewController {
-
+    
     private let emailLabel = UILabel()
     private let emailTextField = UITextField()
     private let approveButton = UIButton()
@@ -23,6 +23,7 @@ class SignUpViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setAddTarget()
     }
     
     // MARK: UI
@@ -196,4 +197,38 @@ class SignUpViewController: BaseViewController {
             $0.height.equalTo(57)
         }
     }
+    
+    func setAddTarget() {
+        approveButton.addTarget(self, action: #selector(approveButtonClicked), for: .touchUpInside)
+    }
+    
+    @objc func approveButtonClicked() {
+        guard let email = emailTextField.text, !email.isEmpty else {
+            showAlert(title: "이메일을 입력해주세요", message: "")
+            return
+        }
+        
+        let emailCertificationRequest = EmailCertificationRequestBodyDTO(email: email)
+        let apiLoader = APIRequestLoader<OnboardingTarget>(apiLogger: APIEventLogger())
+        
+        apiLoader.fetchData(target: .emailCertification(emailCertificationRequest), responseData: EmailCertificationResponseDTO.self) { result in
+            switch result {
+            case .success(let response):
+                if response.isSuccess {
+                    self.showAlert(title: "이메일 인증번호가 발송되었습니다.", message: "")
+                } else {
+                    self.showAlert(title: "이메일 형식을 올바르게 해주세요", message: "")
+                }
+            default :
+                print("Network error")
+            }
+        }
+    }
+    
+    func showAlert(title: String, message: String) {
+            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+        }
 }
