@@ -52,7 +52,6 @@
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
 		016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */; };
 		016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */; };
-		016B9B342C0B3B3C009D2996 /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B332C0B3B3C009D2996 /* ChangePasswordViewController.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
 		01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DE2BC291D7008C368E /* PresentInfoView.swift */; };
 		01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530EF2BC7C4F9008C368E /* NetworkResult.swift */; };
@@ -99,7 +98,6 @@
 		0309DD882C01E3D200D6133A /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD822C01E3D200D6133A /* PostContentView.swift */; };
 		0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD832C01E3D200D6133A /* ReplyReactionView.swift */; };
 		0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD842C01E3D200D6133A /* ReplyTextView.swift */; };
-		0309DD8D2C01E44000D6133A /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DD8B2C01E44000D6133A /* ContinueButton.swift */; };
 		0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA12C02046A00D6133A /* FoodTalkTarget.swift */; };
 		0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDA62C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift */; };
 		0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDAA2C021AAA00D6133A /* FoodTalkService.swift */; };
@@ -127,12 +125,7 @@
 		0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */; };
 		0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */; };
 		0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */; };
-		2D1C01C42BBF088800235836 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1C01C32BBF088800235836 /* TagButton.swift */; };
-		2D4755E12C021EB700E014A9 /* DeclareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DB2C021EB700E014A9 /* DeclareView.swift */; };
-		2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DC2C021EB700E014A9 /* IngredientView.swift */; };
-		2D4755E32C021EB700E014A9 /* PostContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DD2C021EB700E014A9 /* PostContentView.swift */; };
-		2D4755E42C021EB700E014A9 /* ReplyReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DE2C021EB700E014A9 /* ReplyReactionView.swift */; };
-		2D4755E52C021EB700E014A9 /* ReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4755DF2C021EB700E014A9 /* ReplyTextView.swift */; };
+		0309DDF72C259C2000D6133A /* PhotoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF62C259C2000D6133A /* PhotoManager.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
 		2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CDE2BEBA23700A86CF9 /* ProgressViewController.swift */; };
@@ -292,6 +285,7 @@
 		0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderResponseDTO.swift; sourceTree = "<group>"; };
 		0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDF62C259C2000D6133A /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D4755DB2C021EB700E014A9 /* DeclareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclareView.swift; sourceTree = "<group>"; };
 		2D4755DC2C021EB700E014A9 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -413,7 +407,6 @@
 				012383172BB69C600048CC2D /* Model */,
 				012382FB2BB401940048CC2D /* View */,
 				012382FC2BB401C40048CC2D /* Controller */,
-				2D1C01C22BBF087000235836 /* Components */,
 			);
 			path = HomeScene;
 			sourceTree = "<group>";
@@ -760,10 +753,14 @@
 		0309DD7F2C01E36200D6133A /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				58E88E712BF8ED2200775F06 /* ReplyReactionView.swift */,
-				58E88E6F2BF8ED1400775F06 /* PostContentView.swift */,
-				2DA59CE32BEC473E00A86CF9 /* ContinueButton.swift */,
-				58E88E6D2BF8ED0A00775F06 /* DeclareView.swift */,
+				2D4755DD2C021EB700E014A9 /* PostContentView.swift */,
+				2D1C01C32BBF088800235836 /* TagButton.swift */,
+				2D4755DE2C021EB700E014A9 /* ReplyReactionView.swift */,
+				2D4755DB2C021EB700E014A9 /* DeclareView.swift */,
+				016B9B332C0B3B3C009D2996 /* ChangePasswordViewController.swift */,
+				0309DD8B2C01E44000D6133A /* ContinueButton.swift */,
+				2D4755DC2C021EB700E014A9 /* IngredientView.swift */,
+				2D4755DF2C021EB700E014A9 /* ReplyTextView.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -779,20 +776,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		0309DD8C2C01E44000D6133A /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				0309DD8B2C01E44000D6133A /* ContinueButton.swift */,
-			);
-			path = Components;
-			sourceTree = "<group>";
-		};
 		0309DD8E2C01E53600D6133A /* FoodTalk */ = {
 			isa = PBXGroup;
 			children = (
 				0309DDA32C0204A700D6133A /* Service */,
 				0309DD9F2C02042700D6133A /* Router */,
 				0309DD8F2C01E54700D6133A /* DTO */,
+				0309DDF62C259C2000D6133A /* PhotoManager.swift */,
 			);
 			path = FoodTalk;
 			sourceTree = "<group>";
@@ -1210,7 +1200,6 @@
 				0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */,
 				0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */,
 				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
-				2D4755E32C021EB700E014A9 /* PostContentView.swift in Sources */,
 				58E88E822BF92B2100775F06 /* InfoPostContentView.swift in Sources */,
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
@@ -1251,26 +1240,21 @@
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
-				2D1C01C42BBF088800235836 /* TagButton.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
-				2D4755E42C021EB700E014A9 /* ReplyReactionView.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
-				2D4755E12C021EB700E014A9 /* DeclareView.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
-				016B9B342C0B3B3C009D2996 /* ChangePasswordViewController.swift in Sources */,
 				01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
 				2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
-				0309DD8D2C01E44000D6133A /* ContinueButton.swift in Sources */,
 				0309DDD82C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift in Sources */,
 				01D531002BCFDFC9008C368E /* WelcomeView.swift in Sources */,
 				2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */,
@@ -1286,15 +1270,14 @@
 				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				2DB92DCD2C0218DE00629CED /* ContinueButton.swift in Sources */,
-				2D4755E22C021EB700E014A9 /* IngredientView.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
+				0309DDF72C259C2000D6133A /* PhotoManager.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
 				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,
-				2D4755E52C021EB700E014A9 /* ReplyTextView.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
 				2DB92DCA2C0218A600629CED /* SetGenderViewController.swift in Sources */,
 				01D531332BDFC647008C368E /* KakaoLoginResponseDTO.swift in Sources */,

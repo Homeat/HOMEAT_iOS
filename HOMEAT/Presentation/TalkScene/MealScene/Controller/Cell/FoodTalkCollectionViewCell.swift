@@ -58,6 +58,5 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.bottom.equalToSuperview().inset(11)
         }
-        
     }
 }

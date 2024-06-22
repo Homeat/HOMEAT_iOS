@@ -12,6 +12,10 @@ import SnapKit
 
 class FoodTalkViewController: BaseViewController {
     var selectedButton: UIButton?
+    var lastest: [LatestOrderResponseDTO] = []
+    var lastFoodTalkId = 0
+    var search: String?
+    var selectedTag: String?
     //MARK: - Property
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
@@ -33,12 +37,13 @@ class FoodTalkViewController: BaseViewController {
         setSearchBar()
         setAddTarget()
         setUpCollectionView()
+        request()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isTranslucent = false
     }
-
+    
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -221,7 +226,7 @@ class FoodTalkViewController: BaseViewController {
     @objc func isListButtonTapped(_ sender: Any) {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
+        
         actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("최신순", for: .normal)}))
         actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("공감순", for: .normal)}))
         actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("조회순", for: .normal)}))
@@ -241,6 +246,9 @@ class FoodTalkViewController: BaseViewController {
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         sender.setTitleColor(.turquoiseGreen, for: .normal)
         selectedButton = sender
+        if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
+            selectedTag = tag
+        }
     }
     
     @objc func isWriteButtonTapped(_ sender: Any) {
@@ -248,8 +256,19 @@ class FoodTalkViewController: BaseViewController {
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    func request() {
+        let bodyDTO = LatestOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", lastFoodTalkId: lastFoodTalkId)
+        NetworkService.shared.foodTalkService.latestOrder(bodyDTO: bodyDTO) { [weak self] response in
+            switch response {
+            case .success(let data):
+                print("성공: 데이터가 반환되었습니다")
+            default:
+                print("데이터 저장 실패")
+            }
+        }
+    }
 }
-
 //MARK: - Extension
 extension FoodTalkViewController: UISearchBarDelegate {
     
@@ -267,6 +286,7 @@ extension FoodTalkViewController: UISearchBarDelegate {
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             if let searchText = searchBar.text {
                 performSearch(with: searchText)
+                search = searchText
             }
             searchBar.resignFirstResponder() // 키보드 숨기기
         }

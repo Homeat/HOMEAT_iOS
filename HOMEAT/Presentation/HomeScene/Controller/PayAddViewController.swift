@@ -16,9 +16,9 @@ class PayAddViewController: BaseViewController {
     private let priceTextField = UITextField()
     private let memoLabel = UILabel()
     private let memoTextField = UITextField()
-    private let shopTagButton = TagButton()
-    private let eatoutTagButton = TagButton()
-    private let deliveryTagButton = TagButton()
+//    private let shopTagButton = TagButton()
+//    private let eatoutTagButton = TagButton()
+//    private let deliveryTagButton = TagButton()
     private let saveAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
     private let cameraActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     
@@ -94,23 +94,23 @@ class PayAddViewController: BaseViewController {
             $0.distribution = .fillEqually
         }
         
-        shopTagButton.do {
-            var attributedTitle = AttributedString("#장보기")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
-        
-        eatoutTagButton.do {
-            var attributedTitle = AttributedString("#외식비")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
-        
-        deliveryTagButton.do {
-            var attributedTitle = AttributedString("#배달비")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
+//        shopTagButton.do {
+//            var attributedTitle = AttributedString("#장보기")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
+//        
+//        eatoutTagButton.do {
+//            var attributedTitle = AttributedString("#외식비")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
+//        
+//        deliveryTagButton.do {
+//            var attributedTitle = AttributedString("#배달비")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
         
         saveAlert.do {
             let confirm = UIAlertAction(title: "금액 추가하기", style: .default)
@@ -150,9 +150,9 @@ class PayAddViewController: BaseViewController {
     override func setConstraints(){
         view.addSubviews(cameraButton, priceTextField, memoLabel, memoTextField, tagStackView)
         
-        tagStackView.addArrangedSubview(shopTagButton)
-        tagStackView.addArrangedSubview(eatoutTagButton)
-        tagStackView.addArrangedSubview(deliveryTagButton)
+//        tagStackView.addArrangedSubview(shopTagButton)
+//        tagStackView.addArrangedSubview(eatoutTagButton)
+//        tagStackView.addArrangedSubview(deliveryTagButton)
         
         cameraButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(150)

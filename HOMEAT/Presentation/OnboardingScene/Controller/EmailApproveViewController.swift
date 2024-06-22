@@ -160,7 +160,7 @@ class EmailApproveViewController: BaseViewController {
     }
     
     @objc private func approveButtonTapped(_ sender: Any) {
-        let nextVC = ChangePasswordViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+//        let nextVC = ChangePasswordViewController()
+//        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }

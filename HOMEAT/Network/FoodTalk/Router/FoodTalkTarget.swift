@@ -150,7 +150,7 @@ extension FoodTalkTarget: TargetType {
     var path: String {
         switch self {
         case .foodTalkSave:
-            return "/v1/foodTalk/save"
+            return "/v1/foodTalk"
         case .replyReport(let bodyDTO):
             return "/v1/foodTalk/report/reply/\(bodyDTO.replyId)"
         case .postReport(let bodyDTO):
@@ -234,14 +234,23 @@ extension FoodTalkSaveRequestBodyDTO {
             formData.append(self.tag.data(using: .utf8) ?? Data(), withName: "tag")
             // 사진을 formData에 추가하는 경우
             print("multipartformdata 출력")
-            if let foodPhotos = self.image {
+            if let foodPhotos = self.foodPictures {
                 print("Profile Photos is not empty. Count: \(foodPhotos.count)")
                 for (index, image) in foodPhotos.enumerated() {
                     print("Index: \(index), Photo: \(image)")
-                    formData.append(image, withName: "foodPhotos", fileName: "image\(index).jpg", mimeType: "image/jpeg")
+                    formData.append(image, withName: "foodPictures", fileName: "image\(index).jpg", mimeType: "image/jpeg")
                 }
             } else {
                 print("Profile Photos is nil or empty")
+            }
+    
+            for (index, FoodRecipeDTOS) in self.foodRecipeRequest.enumerated() {
+                print("Appending recipe \(index)")
+                formData.append(FoodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].recipe")
+                formData.append(FoodRecipeDTOS.ingredient.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].ingredient")
+                if let recipePicture = FoodRecipeDTOS.recipePicture {
+                    formData.append(recipePicture, withName: "foodRecipeRequest[\(index)].recipePicture", fileName: "recipePicture\(index).jpg", mimeType: "image/jpeg")
+                }
             }
         }
     }

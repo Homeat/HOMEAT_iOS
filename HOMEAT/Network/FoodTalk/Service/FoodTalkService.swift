@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FoodTalkServiceProtocol {
-    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Int>>) -> Void)
+    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func replyReport(bodyDTO: ReplyReportRequestBodyDTO,completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
@@ -46,8 +46,8 @@ protocol FoodTalkServiceProtocol {
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
     //게시글 저장
-    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Int>>) -> Void) {
-        fetchData(target: .foodTalkSave(bodyDTO), responseData: BaseResponse<Int>.self, completion: completion)
+    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .foodTalkSave(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
     //대댓글 신고
