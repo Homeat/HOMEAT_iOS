@@ -11,12 +11,7 @@ import SnapKit
 import Then
 import DGCharts
 
-protocol WeakViewDelegate: AnyObject {
-    func didSelectYearMonthDay(year: Int, month: Int, day: Int)
-}
-
-final class WeakView: BaseView {
-    weak var delegate: WeakViewDelegate?
+final class WeekView: BaseView {
     //MARK: - Property
     private var currentDate = Date()
     private let weakMonthLabel = UILabel()
@@ -146,8 +141,8 @@ final class WeakView: BaseView {
     
     override func setting() {
         updateWeekMonthLabel(for: currentDate)
-        setupMealWeekBarChart(jipbapAverage: 40, weekJipbapPrice: 50)
-        setupDeliveryWeekBarChart(outAverage: 40, weekOutPrice: 50)
+//        setupMealWeekBarChart(jipbapAverage: 40, weekJipbapPrice: 50)
+//        setupDeliveryWeekBarChart(outAverage: 40, weekOutPrice: 50)
     }
     
     // MARK: - Function
@@ -228,7 +223,7 @@ final class WeakView: BaseView {
             barEntries.append(BarChartDataEntry(x: 1, y: Double(weekJipbapPrice)))
             barEntries.append(BarChartDataEntry(x: 1, y: 0))
             let barDataSet = BarChartDataSet(entries: barEntries)
-            if let customGreenColor = UIColor(named: "warmgray"),
+            if let customGreenColor = UIColor(named: "warmgray") ,
                let otherColor = UIColor(named: "turquoiseGreen") {
                 let nsCustomGreenColor = NSUIColor(cgColor: customGreenColor.cgColor)
                 let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
@@ -317,14 +312,33 @@ final class WeakView: BaseView {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
         let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
+        weekChart(year: year, month: month, day: date)
     }
     
     @objc func weekNextTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
         let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
+        weekChart(year: year, month: month, day: date)
     }
-    
+    // MARK: Week Server Function
+    private func weekChart(year: Int, month: Int,day: Int) {
+        let bodyDTO = AnalysisWeekRequestBodyDTO(input_year: "\(year)", input_month: "\(month)", input_day: "\(day)")
+        NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
+            switch response {
+            case .success(let data):
+                guard let analysisData = data.data else { return }
+                self?.handleWeekAnalysisData(analysisData)
+            default:
+                print("데이터 존재 안함")
+            }
+        }
+    }
+    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
+        updateGenderLabel(gender: data.gender)
+        updateGipbapContentsLabel(jibapSave: data.jipbapSave)
+        updateDeliveryContentsLabel(outSave: data.outSave)
+        setupMealWeekBarChart(jipbapAverage: data.jipbapAverage, weekJipbapPrice: data.weekJipbapPrice)
+        setupDeliveryWeekBarChart(outAverage: data.outAverage, weekOutPrice: data.weekOutPrice)
+    }
 }
