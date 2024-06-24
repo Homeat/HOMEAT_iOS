@@ -142,7 +142,7 @@
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
-		589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeakView.swift */; };
+		589145192BBDA9CC00CF9A05 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145182BBDA9CC00CF9A05 /* WeekView.swift */; };
 		589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */; };
 		589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCEF2BE4A67000BA332F /* AnalysisService.swift */; };
 		589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */; };
@@ -161,6 +161,8 @@
 		58DF7B6E2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B6D2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift */; };
 		58DF7B702C25E14500603763 /* InfoTalkTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B6F2C25E14500603763 /* InfoTalkTarget.swift */; };
 		58DF7B722C25E57100603763 /* InfoTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B712C25E57100603763 /* InfoTalkService.swift */; };
+		58DF7B752C26ED4D00603763 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 58DF7B742C26ED4D00603763 /* Kingfisher */; };
+		58DF7B772C29496500603763 /* ReportBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B762C29496500603763 /* ReportBadge.swift */; };
 		58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */; };
 		58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E782BF9091500775F06 /* InfoTalkViewController.swift */; };
 		58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */; };
@@ -315,7 +317,7 @@
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
-		589145182BBDA9CC00CF9A05 /* WeakView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeakView.swift; path = HOMEAT/Presentation/ReportScene/View/WeakView.swift; sourceTree = SOURCE_ROOT; };
+		589145182BBDA9CC00CF9A05 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WeekView.swift; path = HOMEAT/Presentation/ReportScene/View/WeekView.swift; sourceTree = SOURCE_ROOT; };
 		589CDCE92BE4A5A700BA332F /* AnalysisTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisTarget.swift; sourceTree = "<group>"; };
 		589CDCEF2BE4A67000BA332F /* AnalysisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisService.swift; sourceTree = "<group>"; };
 		589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisMonthRequestBodyDTO.swift; sourceTree = "<group>"; };
@@ -334,6 +336,7 @@
 		58DF7B6D2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58DF7B6F2C25E14500603763 /* InfoTalkTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkTarget.swift; sourceTree = "<group>"; };
 		58DF7B712C25E57100603763 /* InfoTalkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkService.swift; sourceTree = "<group>"; };
+		58DF7B762C29496500603763 /* ReportBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBadge.swift; sourceTree = "<group>"; };
 		58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkTableViewCell.swift; sourceTree = "<group>"; };
 		58E88E782BF9091500775F06 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
 		58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWriteViewController.swift; sourceTree = "<group>"; };
@@ -369,6 +372,7 @@
 				01D531222BDF851F008C368E /* KakaoSDKTemplate in Frameworks */,
 				01D531142BDF851F008C368E /* KakaoSDKCertCore in Frameworks */,
 				01D5310E2BDF851F008C368E /* KakaoSDK in Frameworks */,
+				58DF7B752C26ED4D00603763 /* Kingfisher in Frameworks */,
 				01D531102BDF851F008C368E /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -888,7 +892,7 @@
 			isa = PBXGroup;
 			children = (
 				58FE4CDC2BC802460059D174 /* WeekCellView.swift */,
-				589145182BBDA9CC00CF9A05 /* WeakView.swift */,
+				589145182BBDA9CC00CF9A05 /* WeekView.swift */,
 				589145162BBDA99800CF9A05 /* MonthView.swift */,
 			);
 			path = View;
@@ -994,6 +998,7 @@
 			isa = PBXGroup;
 			children = (
 				58D138262BEF58CE0048C228 /* WeekLookResponseDTO.swift */,
+				58DF7B762C29496500603763 /* ReportBadge.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1167,6 +1172,7 @@
 				01D531212BDF851F008C368E /* KakaoSDKTemplate */,
 				01D531232BDF851F008C368E /* KakaoSDKUser */,
 				01D5312A2BDFBCBA008C368E /* SwiftKeychainWrapper */,
+				58DF7B742C26ED4D00603763 /* Kingfisher */,
 			);
 			productName = HOMEAT;
 			productReference = 012382E12BB3F96D0048CC2D /* HOMEAT.app */;
@@ -1204,6 +1210,7 @@
 				012383AC2BBC76D40048CC2D /* XCRemoteSwiftPackageReference "Alamofire" */,
 				01D5310C2BDF851F008C368E /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				01D531292BDFBCBA008C368E /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				58DF7B732C26ED4D00603763 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 012382E22BB3F96D0048CC2D /* Products */;
 			projectDirPath = "";
@@ -1328,10 +1335,11 @@
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
-				589145192BBDA9CC00CF9A05 /* WeakView.swift in Sources */,
+				589145192BBDA9CC00CF9A05 /* WeekView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
+				58DF7B772C29496500603763 /* ReportBadge.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
@@ -1646,6 +1654,14 @@
 				minimumVersion = 4.0.1;
 			};
 		};
+		58DF7B732C26ED4D00603763 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1738,6 +1754,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 01D531292BDFBCBA008C368E /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
 			productName = SwiftKeychainWrapper;
+		};
+		58DF7B742C26ED4D00603763 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 58DF7B732C26ED4D00603763 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
