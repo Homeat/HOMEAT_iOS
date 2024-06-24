@@ -26,6 +26,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         setAddTarget()
         //delegate 설정
         mainView.delegate = self
+        homeInfo()
     }
     
     // MARK: - setConfigure
@@ -133,7 +134,39 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         
         payCheckButton.addTarget(self, action: #selector(isPayCheckButtonTapped), for: .touchUpInside)
     }
-    
+    private func homeInfo() {
+        NetworkService.shared.homeSceneService.homeInfo() { [weak self] response in
+              guard let self = self else { return }
+              switch response {
+              case .success(let data):
+                  guard let data = data.data else { return }
+                  print(data)
+                  print(data.nickname)
+                  updateUserInfo(data)
+              default:
+                  print("login error!!")
+              }
+          }
+    }
+    private func updateUserInfo(_ data: HomeInfoResponseDTO) {
+         welcomeLabel.text = "\(data.nickname)님 훌륭해요!"
+         mainView.goalLabel.text = "목표 \(data.targetMoney)원"
+         mainView.leftMoneyLabel.text = "\(data.remainingMoney)원"
+         mainView.setupPieChart(remainingPercent: data.remainingPercent)
+         let savingPercent = data.beforeSavingPercent
+         if savingPercent > 0 {
+             savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 절약하고 있어요"
+         }else if savingPercent == 0 {
+             savingLabel.text = "아직 비교할 과거 데이터가 존재하지 않아요"
+         }else {
+             savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 더 쓰고 있어요"
+         }
+         guard let url = URL(string: data.badgeImgUrl) else {return}
+         DispatchQueue.main.async {
+             guard let data = try? Data(contentsOf: url) else {return}
+             self.mainView.character.image = UIImage(data: data)
+         }
+    }
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
