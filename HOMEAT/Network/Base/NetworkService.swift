@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Foundation
 
 final class NetworkService {
     static let shared = NetworkService()
@@ -18,4 +17,5 @@ final class NetworkService {
     let foodTalkService: FoodTalkServiceProtocol = FoodTalkService(apiLogger: APIEventLogger())
     let infoTalkService: InfoTalkServiceProtocol = InfoTalkService(apiLogger: APIEventLogger())
     let weekLookService: WeekLookServiceProtocol = WeekLookService(apiLogger: APIEventLogger())
+    let homeSceneService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
 }
