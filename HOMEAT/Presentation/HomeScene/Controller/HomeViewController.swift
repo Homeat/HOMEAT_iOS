@@ -31,7 +31,9 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     
     // MARK: - setConfigure
     override func setConfigure() {
-        view.backgroundColor = UIColor(named: "homeBackgroundColor")
+        view.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
         
         HomeatLogo.do {
             $0.image = UIImage(named: "homeatTextLogo")

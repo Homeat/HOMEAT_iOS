@@ -32,14 +32,29 @@ class PayAddViewController: BaseViewController {
         setAddTarget()
     }
     
+    // MARK: - 탭바제거
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTapBarHidden()
+        
+        // 커스텀 탭바를 숨깁니다.
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // 다른 화면으로 넘어갈 때 커스텀 탭바를 다시 보이게 합니다.
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
     }
 
     // MARK: - setConfigure
     override func setConfigure() {
-        view.backgroundColor = UIColor(named: "homeBackgroundColor")
+        view.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
         
         memoLabel.do {
             $0.text = "메모"

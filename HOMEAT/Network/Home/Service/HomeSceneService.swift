@@ -11,7 +11,7 @@ import Foundation
 protocol HomeSceneServiceProtocol {
     func homeInfo(completion: @escaping (NetworkResult<BaseResponse<HomeInfoResponseDTO>>) -> Void)
     func ocr(bodyDTO: OcrRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<OcrResponseDTO>>) -> Void)
-    func payAdd(bodyDTO: PayAddRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PayAddResponseDTO>>) -> Void)
+    func payAdd(bodyDTO: PayAddRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<String?>>) -> Void)
 }
 
 final class HomeSceneService: APIRequestLoader<HomeSceneTarget>, HomeSceneServiceProtocol {
@@ -23,8 +23,8 @@ final class HomeSceneService: APIRequestLoader<HomeSceneTarget>, HomeSceneServic
         fetchData(target: .ocr(bodyDTO),
                   responseData: BaseResponse<OcrResponseDTO>.self, completion: completion)
     }
-    func payAdd(bodyDTO: PayAddRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PayAddResponseDTO>>) -> Void) {
+    func payAdd(bodyDTO: PayAddRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<String?>>) -> Void) {
         fetchData(target: .payAdd(bodyDTO),
-                  responseData: BaseResponse<PayAddResponseDTO>.self, completion: completion)
+                  responseData: BaseResponse<String?>.self, completion: completion)
     }
 }
