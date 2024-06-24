@@ -11,17 +11,23 @@ import SnapKit
 import Then
 import DGCharts
 
+protocol WeekViewDelegate: AnyObject {
+    func updateWeekContentLabel(text: String)
+    func weekBackButtonTapped()
+    func weekNextButtonTapped()
+}
 final class WeekView: BaseView {
     //MARK: - Property
+    weak var delegate : WeekViewDelegate?
     private var currentDate = Date()
     private let weakMonthLabel = UILabel()
     private let weekBackButton = UIButton()
     private let weekNextButton = UIButton()
-    private let genderLabel = UILabel()
-    private let jipbapContentsLabel = UILabel()
-    private let deliveryContentsLabel = UILabel()
-    private let jipbapWeekBarChartView = BarChartView()
-    private let deliveryWeekBarChartView = BarChartView()
+    let genderLabel = UILabel()
+    let jipbapContentsLabel = UILabel()
+    let deliveryContentsLabel = UILabel()
+    let jipbapWeekBarChartView = BarChartView()
+    let deliveryWeekBarChartView = BarChartView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -146,7 +152,9 @@ final class WeekView: BaseView {
     }
     
     // MARK: - Function
-    
+    func updateWeekContentLabel(text: String) {
+            jipbapContentsLabel.text = text
+    }
     func updateGenderLabel(gender: String) {
         self.genderLabel.text = "소득이 비슷한 또래 \(gender) 대비"
     }
@@ -311,34 +319,20 @@ final class WeekView: BaseView {
     @objc func weekBackTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
-        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        weekChart(year: year, month: month, day: date)
+        delegate?.weekBackButtonTapped()
+        
     }
     
     @objc func weekNextTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
-        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        weekChart(year: year, month: month, day: date)
+        delegate?.weekNextButtonTapped()
     }
-    // MARK: Week Server Function
-    private func weekChart(year: Int, month: Int,day: Int) {
-        let bodyDTO = AnalysisWeekRequestBodyDTO(input_year: "\(year)", input_month: "\(month)", input_day: "\(day)")
-        NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
-            switch response {
-            case .success(let data):
-                guard let analysisData = data.data else { return }
-                self?.handleWeekAnalysisData(analysisData)
-            default:
-                print("데이터 존재 안함")
-            }
-        }
-    }
-    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
-        updateGenderLabel(gender: data.gender)
-        updateGipbapContentsLabel(jibapSave: data.jipbapSave)
-        updateDeliveryContentsLabel(outSave: data.outSave)
-        setupMealWeekBarChart(jipbapAverage: data.jipbapAverage, weekJipbapPrice: data.weekJipbapPrice)
-        setupDeliveryWeekBarChart(outAverage: data.outAverage, weekOutPrice: data.weekOutPrice)
-    }
+//    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
+//        updateGenderLabel(gender: data.gender)
+//        updateGipbapContentsLabel(jibapSave: data.jipbap_save)
+//        updateDeliveryContentsLabel(outSave: data.out_save)
+//        setupMealWeekBarChart(jipbapAverage: data.jipbap_average, weekJipbapPrice: data.week_jipbap_price)
+//        setupDeliveryWeekBarChart(outAverage: data.out_average, weekOutPrice: data.week_out_price)
+//    }
 }

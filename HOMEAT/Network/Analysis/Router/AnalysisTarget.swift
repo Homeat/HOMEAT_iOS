@@ -47,7 +47,7 @@ extension AnalysisTarget: TargetType {
         case .Month:
             return "/v1/homeatReport/ofMonth"
         case .Week:
-            return "/vl/homeatReport/ofWeek"
+            return "/v1/homeatReport/ofWeek"
         }
     }
     
