@@ -5,29 +5,29 @@
 //  Created by 김민솔 on 4/4/24.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 import Then
 import Charts
 import DGCharts
+import Alamofire
 
 protocol MonthViewDelegate: AnyObject {
-    func didSelectYearMonth(year: Int, month: Int)
+    func updateMonthContentLabel(text: String)
+    func monthBackButtonTapped()
+    func monthNextButtonTapped()
 }
-
 final class MonthView: BaseView {
-    weak var delegate: MonthViewDelegate?
     //MARK: - Property
+    weak var delegate : MonthViewDelegate?
     private var currentDate = Date()
     private let monthBackButton = UIButton()
     private let monthNextButton = UIButton()
     private let yearMonthLabel = UILabel()
     private let monthContentLabel = UILabel()
-    private let pieChart = PieChartView()
-    private let barChartView = BarChartView()
+    let pieChart = PieChartView()
+    let barChartView = BarChartView()
     internal let barCornerRadius = CGFloat(5.0)
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -105,25 +105,35 @@ final class MonthView: BaseView {
     }
     
     // MARK: - Function
+    func updateMonthContentLabel(text: String) {
+            monthContentLabel.text = text
+    }
     func setStyledMonthContentLabel(savePercent: Double) {
         var text = ""
-        if savePercent >= 0 {
+        if savePercent == -1 {
+            text = "데이터가 존재하지 않습니다."
+        }
+        else if savePercent >= 0 {
             text = String(format: "저번달 보다 %.0f%% 절약했어요", savePercent)
         } else {
             text = String(format: "저번달 보다 %.0f%% 추가지출 했어요", abs(savePercent))
         }
         let attributedString = NSMutableAttributedString(string: text)
+        if savePercent != -1 {
+            // 텍스트에서 %.0f%%를 찾아서 색상을 변경
+            let range = (text as NSString).range(of: String(format: "%.0f%%", abs(savePercent)))
+            attributedString.addAttribute(.foregroundColor, value: UIColor(named: "turquoiseGreen") ?? UIColor.green, range: range)
+        }
+        //        let range = (text as NSString).range(of: String(format: "%.0f%%", abs(savePercent)))
+        //        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "turquoiseGreen") ?? UIColor.green, range: range)
         
-        // 텍스트에서 %.0f%%를 찾아서 색상을 변경
-        let range = (text as NSString).range(of: String(format: "%.0f%%", abs(savePercent)))
-        attributedString.addAttribute(.foregroundColor, value: UIColor(named: "green"), range: range)
         monthContentLabel.attributedText = attributedString
     }
     
-    func setupPieChart(jipbapRatio : Double, outRatio: Double) {
+    func setupPieChart(jipbapRatio : Int, outRatio: Int) {
         var entries = [ChartDataEntry]()
-        entries.append(PieChartDataEntry(value: jipbapRatio))
-        entries.append(PieChartDataEntry(value: outRatio))
+        entries.append(PieChartDataEntry(value: Double(jipbapRatio)))
+        entries.append(PieChartDataEntry(value: Double(outRatio)))
         let dataSet = PieChartDataSet(entries: entries)
         if let customGreenColor = UIColor(named: "turquoiseGreen"),
            let otherColor = UIColor(named: "turquoisePurple") {
@@ -147,13 +157,18 @@ final class MonthView: BaseView {
         
     }
     
-    func setupBarChart(jipbapPrice: Double, outPrice: Double) {
+    func setupBarChart(jipbapPrice: Int, outPrice: Int) {
+        guard jipbapPrice != -1, outPrice != -1 else {
+            // -1로 받아와지면 막대 차트를 숨깁니다.
+            barChartView.isHidden = true
+            return
+        }
         let names = ["집밥", "배달/외식"]
         
         let barChartHeight = 120
         // 각 막대의 비율을 계산합니다.
-        let jipbapBarHeight = CGFloat(jipbapPrice / (jipbapPrice + outPrice) * Double(barChartHeight))
-        let outBarHeight = CGFloat(outPrice / (jipbapPrice + outPrice) * Double(barChartHeight))
+        let jipbapBarHeight = CGFloat(jipbapPrice / (jipbapPrice + outPrice) * barChartHeight)
+        let outBarHeight = CGFloat(outPrice / (jipbapPrice + outPrice) * barChartHeight)
         print("집밥 높이:\(jipbapBarHeight)")
         print("배달 높이:\(outBarHeight)")
         
@@ -224,15 +239,17 @@ final class MonthView: BaseView {
     @objc func monthBackTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? Date()
         updateYearMonthLabel(for: currentDate)
-        let (year, month) = getCurrentYearMonth(for: currentDate)
-        delegate?.didSelectYearMonth(year: year, month: month)
+        delegate?.monthBackButtonTapped()
     }
     
     @objc func monthNextTapped() {
         currentDate = Calendar.current.date(byAdding: .month, value: +1, to: currentDate) ?? Date()
         updateYearMonthLabel(for: currentDate)
-        let (year, month) = getCurrentYearMonth(for: currentDate)
-        delegate?.didSelectYearMonth(year: year, month: month)
+        delegate?.monthNextButtonTapped()
     }
-    
+    private func handleAnalysisData(_ data: AnalysisMonthResponseDTO) {
+        setupPieChart(jipbapRatio: data.jipbap_ratio ?? 0,outRatio:data.out_ratio ?? 0)
+        setupBarChart(jipbapPrice: data.month_jipbap_price ?? 0, outPrice: data.month_out_price ?? 0)
+        setStyledMonthContentLabel(savePercent: Double(data.save_percent ?? 0))
+    }
 }

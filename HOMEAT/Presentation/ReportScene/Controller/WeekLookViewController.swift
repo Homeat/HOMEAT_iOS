@@ -11,8 +11,7 @@ import SnapKit
 
 class WeekLookViewController: BaseViewController {
     //MARK: - Property
-    let imageNames = ["egg_meat", "born_meat", "baby_meat", "infant_meat", "toddler_meat", "student_meat", "magic_meat", "adult_meat", "angel_meat"]
-    let lockImage = UIImage(named: "lockReport")
+    private var weekData: [ReportBadge] = []
     private var smileImg = UIImageView()
     private var nicknameLable = UILabel()
     private lazy var collectionView: UICollectionView = {
@@ -21,7 +20,6 @@ class WeekLookViewController: BaseViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceVertical = true
         collectionView.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.id)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.init(named: "turquoiseDarkGray")
         collectionView.isScrollEnabled = false
         collectionView.layer.cornerRadius = 35
@@ -33,6 +31,7 @@ class WeekLookViewController: BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateServer(lastWeekId: 0)
     }
     
     override func setConfigure() {
@@ -70,39 +69,52 @@ class WeekLookViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    private func updateServer(lastWeekId: Int) {
+        let queryDTO = WeekLookRequestBodyDTO(lastWeekId: lastWeekId)
+        NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
+            switch response {
+                
+            case .success(let data):
+                
+                guard let responseData = data.data else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    print("Fetched Data: \(data.data)")
+                    self.collectionView.reloadData()
+                }
+            case .requestErr(let statusResponse):
+                print("요청 에러: \(statusResponse.message)")
+            case .pathErr:
+                print("경로 에러")
+            case .serverErr:
+                print("서버 에러")
+            case .networkErr:
+                print("네트워크 에러")
+            case .failure:
+                print("실패")
+            }
+        }
+    }
+    
 }
 
 // MARK: - Extension
 extension WeekLookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return weekData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.updateWeekLabel(withWeekIndex: indexPath.row + 1)
-        
-        if indexPath.item == 8 {
-            cell.cellView.weekLabel.isHidden = true
-            cell.successMoney.isHidden = true
-            cell.failMoney.isHidden = true
-            cell.cellView.backgroundColor = UIColor(named: "turquoiseGray")
-            cell.cellView.imageView.image = lockImage
-        } else {
-            if indexPath.item == 1 {
-                cell.cellView.backgroundColor = UIColor(named: "turquoiseRed")
-            } else {
-                cell.cellView.backgroundColor = UIColor(named: "turquoiseGreen")
-            }
-            let imageName = imageNames[indexPath.item]
-            let model = WeekCellModel(weekIndex: indexPath.item + 1, imageName: imageName)
-            cell.model = model
-        }
+        let weekItem = weekData[indexPath.item]
+        cell.configure(with: weekItem)
         return cell
     }
 }
+
 
 extension WeekLookViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
