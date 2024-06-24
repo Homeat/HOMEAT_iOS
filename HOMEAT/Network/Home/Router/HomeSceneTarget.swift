@@ -79,7 +79,7 @@ extension PayAddRequestBodyDTO {
         return { formData in
             // 사진을 formData에 추가하는 경우
             print("multipartformdata 출력")
-            if let Photos = self.image {
+            if let Photos = self.url {
                 print("Profile Photos is not empty. Count: \(Photos.count)")
                 for (index, image) in Photos.enumerated() {
                     print("Index: \(index), Photo: \(image)")

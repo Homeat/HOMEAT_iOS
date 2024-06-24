@@ -7,5 +7,8 @@
 import Foundation
 
 struct PayAddRequestBodyDTO: Codable {
-    let image : [Data]?
+    let money : Int?
+    let type : String?
+    let memo : String?
+    let url : [Data]?
 }
