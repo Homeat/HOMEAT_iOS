@@ -52,6 +52,7 @@
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
 		016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */; };
 		016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */; };
+		01C361C52C26981900D8ED61 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C42C26981900D8ED61 /* TagButton.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
 		01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DE2BC291D7008C368E /* PresentInfoView.swift */; };
 		01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530EF2BC7C4F9008C368E /* NetworkResult.swift */; };
@@ -233,6 +234,7 @@
 		016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailApproveViewController.swift; sourceTree = "<group>"; };
 		016B9B332C0B3B3C009D2996 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		01C361C42C26981900D8ED61 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		01D530DE2BC291D7008C368E /* PresentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentInfoView.swift; sourceTree = "<group>"; };
 		01D530EF2BC7C4F9008C368E /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
@@ -424,6 +426,7 @@
 				58DF7B5D2C231D7900603763 /* Components */,
 				011DAFDB2BE3AC5C000556D0 /* Cell */,
 				012383172BB69C600048CC2D /* Model */,
+				01C361C22C2697B600D8ED61 /* Components */,
 				012382FB2BB401940048CC2D /* View */,
 				012382FC2BB401C40048CC2D /* Controller */,
 			);
@@ -671,6 +674,15 @@
 				012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		01C361C22C2697B600D8ED61 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				01C361C42C26981900D8ED61 /* TagButton.swift */,
+			);
+			name = Components;
+			path = ../MyPageScene/Components;
 			sourceTree = "<group>";
 		};
 		01D530E12BC7BC57008C368E /* Base */ = {
@@ -1329,6 +1341,7 @@
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
+				01C361C52C26981900D8ED61 /* TagButton.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
