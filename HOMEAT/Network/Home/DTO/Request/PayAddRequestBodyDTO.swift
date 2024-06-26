@@ -10,5 +10,5 @@ struct PayAddRequestBodyDTO: Codable {
     let money : Int?
     let type : String?
     let memo : String?
-    let url : [Data]?
+    let url : String?
 }

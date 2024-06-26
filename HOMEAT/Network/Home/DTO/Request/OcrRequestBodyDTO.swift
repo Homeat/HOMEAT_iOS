@@ -8,6 +8,5 @@
 import Foundation
 
 struct OcrRequestBodyDTO: Codable {
-    let inputYear : String
-    let inputMonth : String
+    let file : Data?
 }
