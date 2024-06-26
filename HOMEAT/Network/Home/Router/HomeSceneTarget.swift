@@ -8,11 +8,11 @@
 import Foundation
 import Alamofire
 
-
 enum HomeSceneTarget {
     case homeInfo
     case ocr(_ bodyDTO: OcrRequestBodyDTO)
     case payAdd(_ bodyDTO: PayAddRequestBodyDTO)
+    case payEdit(_ bodyDTO: PayEditRequestBodyDTO)
 }
 
 extension HomeSceneTarget: TargetType {
@@ -25,6 +25,8 @@ extension HomeSceneTarget: TargetType {
             return .authorization
         case .payAdd:
             return .authorization
+        case .payEdit:
+            return .authorization
         }
     }
 
@@ -35,6 +37,8 @@ extension HomeSceneTarget: TargetType {
         case .ocr:
             return .hasToken
         case .payAdd:
+            return .hasToken
+        case .payEdit:
             return .hasToken
         }
     }
@@ -47,6 +51,8 @@ extension HomeSceneTarget: TargetType {
             return .post
         case .payAdd:
             return .post
+        case .payEdit:
+            return .patch
         }
 
     }
@@ -59,6 +65,8 @@ extension HomeSceneTarget: TargetType {
             return "/v1/home/receipt"
         case .payAdd:
             return "/v1/home/add-expense"
+        case .payEdit:
+            return "/v1/home/next-target-expense"
         }
     }
 
@@ -66,28 +74,27 @@ extension HomeSceneTarget: TargetType {
         switch self {
         case .homeInfo:
             return .requestPlain
-        case .ocr(let bodyDTO):
-            return .requestWithBody(bodyDTO)
-        case .payAdd(let bodyDTO):
+        case let .ocr(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
+        case .payAdd(let bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case .payEdit(let bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }
 
-extension PayAddRequestBodyDTO {
+extension OcrRequestBodyDTO {
     func toMultipartFormData() -> (MultipartFormData) -> Void {
         return { formData in
-            // 사진을 formData에 추가하는 경우
             print("multipartformdata 출력")
-            if let Photos = self.url {
-                print("Profile Photos is not empty. Count: \(Photos.count)")
-                for (index, image) in Photos.enumerated() {
-                    print("Index: \(index), Photo: \(image)")
-                    formData.append(image, withName: "Photos", fileName: "image\(index).jpg", mimeType: "image/jpeg")
-                }
+            if let imageData = self.file {
+                print("Image data is not nil. Size: \(imageData.count)")
+                formData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
             } else {
-                print("Profile Photos is nil or empty")
+                print("Image data is nil or empty")
             }
         }
     }
 }
+
