@@ -16,9 +16,9 @@ class HomeView: BaseView {
     //MARK: - component
     private let leftHole = UIImageView()
     private let rightHole = UIImageView()
-    private let character = UIImageView()
-    private let goalLabel = UILabel()
-    private let leftMoneyLabel = UILabel()
+    let character = UIImageView()
+    let goalLabel = UILabel()
+    let leftMoneyLabel = UILabel()
     private let pieChart = PieChartView()
     private let editButton = UIButton()
 
@@ -108,14 +108,14 @@ class HomeView: BaseView {
         }
         
         pieChart.snp.makeConstraints {
-            $0.top.equalTo(leftMoneyLabel.snp.bottom)
+            $0.top.equalTo(leftMoneyLabel.snp.bottom).offset(8)
             $0.centerX.equalTo(leftMoneyLabel)
             $0.width.equalTo(206)
             $0.height.equalTo(206)
         }
         
         character.snp.makeConstraints {
-            $0.top.equalTo(pieChart.snp.top).offset(67)
+            $0.centerY.equalTo(pieChart.snp.centerY).offset(-6)
             $0.centerX.equalToSuperview()
         }
     }

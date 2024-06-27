@@ -14,6 +14,7 @@ class WeekLookViewController: BaseViewController {
     private var weekData: [ReportBadge] = []
     private var smileImg = UIImageView()
     private var nicknameLable = UILabel()
+    private var isDataEmpty = false
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 28, left: 20, bottom: 0, right: 20)
@@ -73,14 +74,17 @@ class WeekLookViewController: BaseViewController {
         let queryDTO = WeekLookRequestBodyDTO(lastWeekId: lastWeekId)
         NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
             switch response {
-                
             case .success(let data):
-                
-                guard let responseData = data.data else {
+                guard let responseData = data.data?.reportBage else {
+                    self.isDataEmpty = true
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
                     return
                 }
+                self.weekData = responseData
+                self.isDataEmpty = responseData.isEmpty
                 DispatchQueue.main.async {
-                    print("Fetched Data: \(data.data)")
                     self.collectionView.reloadData()
                 }
             case .requestErr(let statusResponse):
@@ -102,15 +106,21 @@ class WeekLookViewController: BaseViewController {
 // MARK: - Extension
 extension WeekLookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return weekData.count
+        return 9
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let weekItem = weekData[indexPath.item]
-        cell.configure(with: weekItem)
+        cell.configureAsLock()
+//        cell.updateWeekLabel(withWeekIndex: <#T##Int#>)
+//        if isDataEmpty {
+//            cell.configureAsLock()
+//        } else {
+//            let weekItem = weekData[indexPath.item]
+//            cell.configure(with: weekItem)
+//        }
         return cell
     }
 }
