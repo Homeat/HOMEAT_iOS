@@ -47,7 +47,7 @@ class CalendarCollectionViewCell: UICollectionViewCell {
         
         dayLabel.do {
             $0.textColor = UIColor.white
-            $0.font = .bodyBold15
+            $0.font = .bodyBold18
             $0.text = "0"
         }
     }
