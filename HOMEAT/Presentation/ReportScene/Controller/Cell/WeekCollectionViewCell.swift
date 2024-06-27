@@ -92,6 +92,13 @@ class WeekCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func configureAsLock() {
+        successMoney.text = nil
+        failMoney.text = nil
+        cellView.imageView.image = UIImage(named: "lockReport")
+        cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        cellView.weekLabel.isHidden = true
+    }
     func updateWeekLabel(withWeekIndex index: Int) {
         cellView.updateWeekLabel(withWeekIndex: index)
     }
