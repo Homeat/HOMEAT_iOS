@@ -167,9 +167,9 @@
 		58DF7B822C2957A800603763 /* PayAddRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */; };
 		58DF7B842C2957CD00603763 /* HomeInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */; };
 		58DF7B862C2957DB00603763 /* OcrResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B852C2957DB00603763 /* OcrResponseDTO.swift */; };
-		58DF7B882C2957EC00603763 /* PayAddResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B872C2957EC00603763 /* PayAddResponseDTO.swift */; };
 		58DF7B8A2C29580000603763 /* HomeSceneTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B892C29580000603763 /* HomeSceneTarget.swift */; };
 		58DF7B8C2C29580D00603763 /* HomeSceneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B8B2C29580D00603763 /* HomeSceneService.swift */; };
+		58DF7C0F2C2B101200603763 /* PayEditRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */; };
 		58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */; };
 		58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E782BF9091500775F06 /* InfoTalkViewController.swift */; };
 		58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */; };
@@ -348,9 +348,9 @@
 		58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoResponseDTO.swift; sourceTree = "<group>"; };
 		58DF7B852C2957DB00603763 /* OcrResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcrResponseDTO.swift; sourceTree = "<group>"; };
-		58DF7B872C2957EC00603763 /* PayAddResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddResponseDTO.swift; sourceTree = "<group>"; };
 		58DF7B892C29580000603763 /* HomeSceneTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneTarget.swift; sourceTree = "<group>"; };
 		58DF7B8B2C29580D00603763 /* HomeSceneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneService.swift; sourceTree = "<group>"; };
+		58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayEditRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkTableViewCell.swift; sourceTree = "<group>"; };
 		58E88E782BF9091500775F06 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
 		58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWriteViewController.swift; sourceTree = "<group>"; };
@@ -1116,6 +1116,7 @@
 			children = (
 				58DF7B7E2C29578E00603763 /* OcrRequestBodyDTO.swift */,
 				58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */,
+				58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1125,7 +1126,6 @@
 			children = (
 				58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */,
 				58DF7B852C2957DB00603763 /* OcrResponseDTO.swift */,
-				58DF7B872C2957EC00603763 /* PayAddResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1320,6 +1320,7 @@
 				0309DD882C01E3D200D6133A /* PostContentView.swift in Sources */,
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
+				58DF7C0F2C2B101200603763 /* PayEditRequestBodyDTO.swift in Sources */,
 				0309DD572BF99F0200D6133A /* RecipeWriteViewController.swift in Sources */,
 				0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */,
 				58DF7B8C2C29580D00603763 /* HomeSceneService.swift in Sources */,
@@ -1380,7 +1381,6 @@
 				0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
-				58DF7B882C2957EC00603763 /* PayAddResponseDTO.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
@@ -1606,6 +1606,8 @@
 				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1633,6 +1635,8 @@
 				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
