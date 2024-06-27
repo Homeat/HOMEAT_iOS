@@ -108,7 +108,7 @@ class HomeView: BaseView {
         }
         
         pieChart.snp.makeConstraints {
-            $0.top.equalTo(leftMoneyLabel.snp.bottom)
+            $0.top.equalTo(leftMoneyLabel.snp.bottom).offset(8)
             $0.centerX.equalTo(leftMoneyLabel)
             $0.width.equalTo(206)
             $0.height.equalTo(206)
