@@ -4,14 +4,16 @@
 //
 //  Created by 강삼고 on 4/10/24.
 //
-
-import Foundation
 import UIKit
 import SnapKit
 import Then
 
+protocol CalendarViewDelegate: AnyObject {
+    func calendarBackButtonTapped()
+    func calendarNextButtonTapped()
+}
 class CalendarView: BaseView {
-    
+    weak var delegate : CalendarViewDelegate?
     //MARK: - component
     private let leftHole = UIImageView()
     private let rightHole = UIImageView()
@@ -24,7 +26,7 @@ class CalendarView: BaseView {
     //calendar 관련 컴포넌트
     private let calendar = Calendar.current
     private let dateFormatter = DateFormatter()
-    private var calendarDate = Date()
+    var calendarDate = Date()
     private var days = [String]()
     
     //MARK: - Function
@@ -137,25 +139,24 @@ class CalendarView: BaseView {
     
     private func setAddTarget() {
         previousButton.addTarget(self, action: #selector(isPreviousButtonTapped), for: .touchUpInside)
-        
         nextButton.addTarget(self, action: #selector(isNextButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc Func
     @objc func isPreviousButtonTapped(_ sender: Any) {
+        delegate?.calendarBackButtonTapped()
         minusMonth()
     }
     
     @objc func isNextButtonTapped(_ sender: Any) {
+        delegate?.calendarNextButtonTapped()
         plusMonth()
     }
 }
 
 extension CalendarView {
-    
     private func configureWeekLabel() {
         let dayOfTheWeek = ["일", "월", "화", "수", "목", "금", "토"]
-        
         for i in 0..<7 {
             let label = UILabel()
             label.text = dayOfTheWeek[i]
@@ -173,7 +174,7 @@ extension CalendarView {
         updateCalendar()
         
     }
-
+    
     private func startDayOfTheWeek() -> Int {
         return calendar.component(.weekday, from: calendarDate) - 1
     }
@@ -185,6 +186,7 @@ extension CalendarView {
     private func updateCalendar() {
         updateTitle()
         updateDays()
+        dayCollectionView.reloadData()
     }
     
     private func updateTitle() {
@@ -224,24 +226,108 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return days.count
     }
-    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {return UICollectionViewCell()}
-        cell.update(day: days[indexPath.item])
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        
+        if cell.dayLabel.superview == nil {
+            cell.addSubview(cell.dayLabel)
+            cell.dayLabel.textColor = UIColor.black
+            cell.dayLabel.font = .bodyBold18
+            cell.dayLabel.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.centerX.equalToSuperview()
+            }
+        }
+        
+        cell.update(day: self.days[indexPath.item])
+        cell.backgroundColor = UIColor.coolGray4
+        cell.dayLabel.textColor = .white
+        for subview in cell.subviews {
+            if subview != cell.dayLabel {
+                subview.removeFromSuperview()
+            }
+        }
         
         return cell
     }
+
+
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (dayCollectionView.frame.width-10) / 7
         return CGSize(width: width, height: width * 0.8)
     }
-    
+    func collectionview(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let dispatchGroup = DispatchGroup()
+        dispatchGroup.enter()
+        
+        for visibleCell in collectionView.visibleCells {
+            if let cell = visibleCell as? CalendarCollectionViewCell {
+                cell.backgroundColor = UIColor.coolGray4
+                cell.dayLabel.textColor = .white
+            }
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
+    }
+    func updateCellBackground(jipbapPercentage: Double, outPricePercentage: Double, forDate date: String) {
+        let components = date.split(separator: "-")
+        guard let day = components.last else {
+            print("Failed to extract day from date: \(date)")
+            return
+        }
+        let dayString = String(day)
+        let jipbapColor = UIColor.turquoiseGreen
+        let outPriceColor = UIColor.turquoisePurple
+        
+        DispatchQueue.main.async {
+            for (index, cellDate) in self.days.enumerated() {
+                if cellDate == dayString {
+                    if let cell = self.dayCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? CalendarCollectionViewCell {
+                        let totalHeight = cell.frame.height
+                        let jipbapHeight = totalHeight * CGFloat(jipbapPercentage / 100.0)
+                        let outPriceHeight = totalHeight * CGFloat(outPricePercentage / 100.0)
+                        
+                        cell.subviews.forEach { $0.removeFromSuperview() }
+                        
+                        let jipbapView = UIView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: jipbapHeight))
+                        jipbapView.backgroundColor = jipbapColor
+                        cell.addSubview(jipbapView)
+                        
+                        let outPriceView = UIView(frame: CGRect(x: 0, y: jipbapHeight, width: cell.frame.width, height: outPriceHeight))
+                        outPriceView.backgroundColor = outPriceColor
+                        cell.addSubview(outPriceView)
+                        
+                        cell.layer.cornerRadius = 10
+                        cell.layer.masksToBounds = true
+                        self.addDayLabel(to: cell)
+                    }
+                    break
+                }
+            }
+        }
+    }
+    private func addDayLabel(to cell: CalendarCollectionViewCell) {
+        cell.addSubview(cell.dayLabel)
+        cell.dayLabel.textColor = UIColor.black
+        cell.dayLabel.font = .bodyBold18
+        cell.dayLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+        }
+    }
+    func refreshCalendar(data: [(date: String, jipbapPercentage: Double, outPricePercentage: Double)]) {
+        DispatchQueue.main.async {
+            for entry in data {
+                self.updateCellBackground(jipbapPercentage: entry.jipbapPercentage, outPricePercentage: entry.outPricePercentage, forDate: entry.date)
+            }
+        }
     }
 }

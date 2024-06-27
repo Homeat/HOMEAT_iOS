@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Alamofire
 
 class PayCheckViewController : BaseViewController {
     
@@ -19,11 +20,17 @@ class PayCheckViewController : BaseViewController {
     private let calendarView = CalendarView()
     private let payCheckView = PayCheckView()
     private let checkDetailButton = UIButton()
-    
     //MARK: - Function
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        calendarView.delegate = self
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: currentDate)
+        let month = String(format: "%02d", calendar.component(.month, from: currentDate))
+        updateCalendar(year: String(year), month: month)
+        
         setNavigationBar()
         setAddTarget()
     }
@@ -127,7 +134,27 @@ class PayCheckViewController : BaseViewController {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
     }
-    
+    private func updateCalendar(year: String, month: String) {
+        let request = CalendarCheckRequestBodyDTO(year: year, month: month)
+        NetworkService.shared.homeSceneService.calendarCheck(queryDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                guard let calendarData = data.data else { return }
+                let calendarEntries = calendarData.map { (date: $0.date, jipbapPercentage: Double($0.todayJipbapPricePercent), outPricePercentage: Double($0.todayOutPricePercent)) }
+                DispatchQueue.main.async {
+                    guard let currentMonth = Calendar.current.dateComponents([.year, .month], from: self.calendarView.calendarDate).month else { return }
+                    let incomingMonth = Int(month)
+                    if currentMonth == incomingMonth {
+                        self.calendarView.refreshCalendar(data: calendarEntries)
+                    }
+                }
+            default:
+                print("서버 연동 실패")
+            }
+        }
+    }
+
     private func setAddTarget() {
         checkDetailButton.addTarget(self, action: #selector(checkDetailButtonTapped), for: .touchUpInside)
     }
@@ -138,3 +165,28 @@ class PayCheckViewController : BaseViewController {
     }
 
 }
+
+extension PayCheckViewController: CalendarViewDelegate {
+    func calendarBackButtonTapped() {
+        var components = Calendar.current.dateComponents([.year, .month], from: calendarView.calendarDate)
+        components.month = components.month! - 1
+        let newDate = Calendar.current.date(from: components)!
+        
+        let year = Calendar.current.component(.year, from: newDate)
+        let month = String(format: "%02d", Calendar.current.component(.month, from: newDate))
+        print("전 월 \(year)\(month)")
+        updateCalendar(year: String(year), month: month)
+    }
+    
+    func calendarNextButtonTapped() {
+        var components = Calendar.current.dateComponents([.year, .month], from: calendarView.calendarDate)
+        components.month = components.month! + 1
+        let newDate = Calendar.current.date(from: components)!
+        
+        let year = Calendar.current.component(.year, from: newDate)
+        let month = String(format: "%02d", Calendar.current.component(.month, from: newDate))
+        
+        updateCalendar(year: String(year), month: month)
+    }
+}
+
