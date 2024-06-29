@@ -10,9 +10,9 @@ import SnapKit
 import Then
 import Alamofire
 
-class PayCheckViewController : BaseViewController {
-    
+class PayCheckViewController : BaseViewController{
     //MARK: - Property
+    var specialDates: Set<String> = Set()
     private let eatoutIcon = UIImageView()
     private let homefoodIcon = UIImageView()
     private let eatoutTitleLabel = UILabel()
@@ -25,12 +25,13 @@ class PayCheckViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         calendarView.delegate = self
+//        payCheckView.delegate = self
         let currentDate = Date()
         let calendar = Calendar.current
         let year = calendar.component(.year, from: currentDate)
         let month = String(format: "%02d", calendar.component(.month, from: currentDate))
         updateCalendar(year: String(year), month: month)
-        
+        updateCalendarDate(year: String(year), month: month, day: String(29))
         setNavigationBar()
         setAddTarget()
     }
@@ -74,7 +75,7 @@ class PayCheckViewController : BaseViewController {
         
         checkDetailButton.do {
             $0.setTitle("세부 지출 확인", for: .normal)
-            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 13.0)
+            $0.titleLabel?.font = UIFont.bodyMedium15
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
         }
     }
@@ -154,6 +155,37 @@ class PayCheckViewController : BaseViewController {
             }
         }
     }
+    //월,일,요일 받아와서 집밥가격,배달외식가격, 남은금액을 reponse body 값으로 받아옴
+    private func updateCalendarDate(year: String, month: String, day: String) {
+        let request = CalendarDailyRequestBodyDTO(year: year, month: month, day: day)
+        NetworkService.shared.homeSceneService.calendarDailyCheck(queryDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                    guard let calendarData = data.data else { return }
+                    DispatchQueue.main.async {
+                        let homeAmount = String(calendarData.todayJipbapPrice ?? 0)
+                        let eatOutAmount = String(calendarData.todayOutPrice ?? 0)
+                        let leftAmount = String(calendarData.remainingGoal ?? 0)
+                        let dateString = calendarData.date
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd"
+                        if let date = dateFormatter.date(from: dateString) {
+                            dateFormatter.dateFormat = "MM월 dd일 EEEE"
+                            dateFormatter.locale = Locale(identifier: "ko_KR")
+                            let formattedDate = dateFormatter.string(from: date)
+                            self.payCheckView.updateDateLabel(date: formattedDate)
+                        }
+                        self.payCheckView.updateSpentLabel(homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+                    }
+            default:
+                print("서버 연동 실패")
+                DispatchQueue.main.async {
+                    self.payCheckView.updateSpentLabel(homeAmount: String(0), eatOutAmount: String(0), leftAmount: String(0))
+                }
+            }
+        }
+    }
 
     private func setAddTarget() {
         checkDetailButton.addTarget(self, action: #selector(checkDetailButtonTapped), for: .touchUpInside)
@@ -167,6 +199,20 @@ class PayCheckViewController : BaseViewController {
 }
 
 extension PayCheckViewController: CalendarViewDelegate {
+    func didSelectDate(year: String, month: String, day: String) {
+        print("셀 클릭 시 년/월/일\(year)\(month)\(day)")
+        let dateString = "\(year)-\(month)-\(day)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "MM월 dd일 EEEE"
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            let formattedDate = dateFormatter.string(from: date)
+            self.payCheckView.updateDateLabel(date: formattedDate)
+        }
+        updateCalendarDate(year: year, month: month, day: day)
+    }
+    
     func calendarBackButtonTapped() {
         var components = Calendar.current.dateComponents([.year, .month], from: calendarView.calendarDate)
         components.month = components.month! - 1
@@ -188,5 +234,5 @@ extension PayCheckViewController: CalendarViewDelegate {
         
         updateCalendar(year: String(year), month: month)
     }
+    
 }
-
