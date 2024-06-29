@@ -17,7 +17,7 @@ class SetExpenseViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 6/6)
+        updateProgressBar(progress: 5/5)
         setTitleLabel(title: "한 주 목표 식비는\n얼마인가요?")
         setSubTitleLabel(subtitle: "외식, 배달비 모두 포함이에요!")
         setDetailLabel(detail: "한 주 목표 식비")
@@ -25,6 +25,8 @@ class SetExpenseViewController: ProgressViewController {
     
     override func setConfigure() {
         super.setConfigure()
+        
+        continueButton.configuration?.attributedTitle = AttributedString("완료하기")
     
         expenseTextField.do {
             $0.backgroundColor = UIColor(r: 54, g: 56, b: 57)
@@ -61,6 +63,18 @@ class SetExpenseViewController: ProgressViewController {
             $0.top.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().offset(-18.2)
         }
+    }
+    
+    @objc override func isContinueButtonTapped(_ sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: "추가정보입력이 완료되었습니다", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            let loginVC = LoginViewController() // 원하는 새로운 뷰 컨트롤러로 변경
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.changeRootViewController(to: loginVC)
+            }
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
 }
 

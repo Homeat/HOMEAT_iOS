@@ -18,9 +18,9 @@ class SetGenderViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 3/6)
+        updateProgressBar(progress: 3/5)
         setTitleLabel(title: "성별을\n선택해주세요.")
-        setNextVC(nextVC: SetDistrictViewController())
+        setNextVC(nextVC: SetIncomeViewController())
         setAddTaget()
     }
     

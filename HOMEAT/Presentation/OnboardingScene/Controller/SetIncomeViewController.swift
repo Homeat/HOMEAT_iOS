@@ -17,7 +17,7 @@ class SetIncomeViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 5/6)
+        updateProgressBar(progress: 4/5)
         setTitleLabel(title: "한 달 수입은\n얼마인가요?")
         setSubTitleLabel(subtitle: "용돈, 월급 모두 가능해요!")
         setDetailLabel(detail: "한 달 수입")
