@@ -18,7 +18,7 @@ class SignUpViewController: BaseViewController {
     private let passwordTextField = UITextField()
     private let passwordCheckLabel = UILabel()
     private let passwordCheckTextField = UITextField()
-    private let continueButton = UIButton()
+    private let signupButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,7 +121,7 @@ class SignUpViewController: BaseViewController {
             $0.attributedPlaceholder = NSAttributedString(string: "비밀번호를 한 번 더 입력해주세요. ", attributes: [NSAttributedString.Key.foregroundColor: UIColor(r: 216, g: 216, b: 216)])
         }
         
-        continueButton.do {
+        signupButton.do {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
             $0.titleLabel?.font = .bodyMedium18
             $0.setTitle("회원가입", for: .normal)
@@ -133,7 +133,7 @@ class SignUpViewController: BaseViewController {
     
     override func setConstraints() {
         
-        view.addSubviews(emailLabel, emailTextField, approveButton, emailApproveLabel, emailApproveTextField, passwordLabel, passwordTextField, passwordCheckLabel, passwordCheckTextField, continueButton)
+        view.addSubviews(emailLabel, emailTextField, approveButton, emailApproveLabel, emailApproveTextField, passwordLabel, passwordTextField, passwordCheckLabel, passwordCheckTextField, signupButton)
         
         emailLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
@@ -190,7 +190,7 @@ class SignUpViewController: BaseViewController {
             $0.height.equalTo(57)
         }
         
-        continueButton.snp.makeConstraints {
+        signupButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.bottom.equalToSuperview().offset(-100)
@@ -200,6 +200,7 @@ class SignUpViewController: BaseViewController {
     
     func setAddTarget() {
         approveButton.addTarget(self, action: #selector(approveButtonClicked), for: .touchUpInside)
+        signupButton.addTarget(self, action: #selector(signUpButtonClicked), for: .touchUpInside)
     }
     
     @objc func approveButtonClicked() {
@@ -225,10 +226,39 @@ class SignUpViewController: BaseViewController {
         }
     }
     
-    func showAlert(title: String, message: String) {
-            let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-            alertController.addAction(okAction)
-            present(alertController, animated: true, completion: nil)
+    @objc func signUpButtonClicked() {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            print("이메일과 비밀번호를 입력해주세요.")
+            return
         }
+        
+        let emailSignUpRequest = EmailSignUpRequestBodyDTO(email: email, password: password)
+        let apiLoader = APIRequestLoader<OnboardingTarget>(apiLogger: APIEventLogger())
+        
+        apiLoader.fetchData(target: .emailSignUp(emailSignUpRequest), responseData: EmailSignUpResponseDTO.self) { result in
+            switch result {
+            case .success(let response):
+                if response.isSuccess {
+                    self.showAlert(title: "회원가입이 완료되었습니다.", message: "", isSignUpSuccess: true)
+                } else {
+                    self.showAlert(title: "회원가입에 실패하였습니다.", message: "")
+                }
+            default:
+                print("Network Error")
+            }
+        }
+    }
+    
+    func showAlert(title: String, message: String, isSignUpSuccess: Bool = false) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+            if isSignUpSuccess {
+                let newViewController = CompleteSignupViewController()
+                self.navigationController?.pushViewController(newViewController, animated: true)
+            }
+        }
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
 }

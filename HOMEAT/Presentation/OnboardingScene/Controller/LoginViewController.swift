@@ -179,7 +179,7 @@ final class LoginViewController : BaseViewController {
     }
     
     @objc private func findPasswordButtonTapped(_ sender: Any) {
-        let nextVC = EmailApproveViewController()
+        let nextVC = FindPasswordViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
