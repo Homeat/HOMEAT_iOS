@@ -11,9 +11,11 @@ import Then
 protocol CalendarViewDelegate: AnyObject {
     func calendarBackButtonTapped()
     func calendarNextButtonTapped()
+    func didSelectDate(year: String, month: String, day: String)
 }
 class CalendarView: BaseView {
     weak var delegate : CalendarViewDelegate?
+    var specialDates: Set<String> = Set()
     //MARK: - component
     private let leftHole = UIImageView()
     private let rightHole = UIImageView()
@@ -27,6 +29,8 @@ class CalendarView: BaseView {
     private let calendar = Calendar.current
     private let dateFormatter = DateFormatter()
     var calendarDate = Date()
+    var year: Int = 2024
+    var month: Int = 6
     private var days = [String]()
     
     //MARK: - Function
@@ -219,64 +223,85 @@ extension CalendarView {
         calendarDate = calendar.date(byAdding: DateComponents(month: 1), to: calendarDate) ?? Date()
         updateCalendar()
     }
-    
 }
 
 extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return days.count
     }
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {
             return UICollectionViewCell()
         }
+        let day = self.days[indexPath.item]
+        let date = "\(self.year)-\(self.month)-\(day)"
         
-        if cell.dayLabel.superview == nil {
-            cell.addSubview(cell.dayLabel)
-            cell.dayLabel.textColor = UIColor.black
-            cell.dayLabel.font = .bodyBold18
-            cell.dayLabel.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.centerX.equalToSuperview()
-            }
-        }
-        
-        cell.update(day: self.days[indexPath.item])
+        cell.update(day: day)
         cell.backgroundColor = UIColor.coolGray4
         cell.dayLabel.textColor = .white
+        
         for subview in cell.subviews {
             if subview != cell.dayLabel {
                 subview.removeFromSuperview()
             }
         }
+
+        if self.specialDates.contains(date) {
+            cell.dayLabel.textColor = .black
+        }
+
+        self.addDayLabel(to: cell)
         
         return cell
     }
 
-
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (dayCollectionView.frame.width-10) / 7
+        let width = (dayCollectionView.frame.width - 10) / 7
         return CGSize(width: width, height: width * 0.8)
     }
-    func collectionview(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let dispatchGroup = DispatchGroup()
-        dispatchGroup.enter()
-        
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 모든 보이는 셀의 배경색과 글자색을 초기화
         for visibleCell in collectionView.visibleCells {
             if let cell = visibleCell as? CalendarCollectionViewCell {
+                let day = self.days[collectionView.indexPath(for: cell)!.item]
                 cell.backgroundColor = UIColor.coolGray4
                 cell.dayLabel.textColor = .white
+
             }
         }
+
+        // 선택된 셀의 배경색과 글자색을 업데이트
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? CalendarCollectionViewCell {
+            let day = self.days[indexPath.item]
+            let date = "\(self.year)-\(self.month)-\(day)"
+            selectedCell.backgroundColor = .white
+            selectedCell.dayLabel.textColor = .black
+        }
+
+        let selectedDate = calendar.date(byAdding: .day, value: indexPath.item - startDayOfTheWeek(), to: calendar.startOfDay(for: calendarDate))!
+        // 선택된 날짜가 현재 월에 있는지 확인
+        if !calendar.isDate(selectedDate, equalTo: calendarDate, toGranularity: .month) {
+            return
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateString = dateFormatter.string(from: selectedDate)
+        let components = dateString.split(separator: "-")
+        if components.count == 3 {
+            delegate?.didSelectDate(year: String(components[0]), month: String(components[1]), day: String(components[2]))
+        }
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return .zero
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
+
     func updateCellBackground(jipbapPercentage: Double, outPricePercentage: Double, forDate date: String) {
         let components = date.split(separator: "-")
         guard let day = components.last else {
@@ -304,25 +329,29 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
                         let outPriceView = UIView(frame: CGRect(x: 0, y: jipbapHeight, width: cell.frame.width, height: outPriceHeight))
                         outPriceView.backgroundColor = outPriceColor
                         cell.addSubview(outPriceView)
-                        
                         cell.layer.cornerRadius = 10
                         cell.layer.masksToBounds = true
                         self.addDayLabel(to: cell)
+                        self.specialDates.insert(date)
                     }
                     break
                 }
             }
         }
     }
+
     private func addDayLabel(to cell: CalendarCollectionViewCell) {
-        cell.addSubview(cell.dayLabel)
-        cell.dayLabel.textColor = UIColor.black
-        cell.dayLabel.font = .bodyBold18
-        cell.dayLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.centerX.equalToSuperview()
+        if cell.dayLabel.superview == nil {
+            cell.addSubview(cell.dayLabel)
+            cell.dayLabel.textColor = UIColor.black
+            cell.dayLabel.font = .bodyBold18
+            cell.dayLabel.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.centerX.equalToSuperview()
+            }
         }
     }
+
     func refreshCalendar(data: [(date: String, jipbapPercentage: Double, outPricePercentage: Double)]) {
         DispatchQueue.main.async {
             for entry in data {
