@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmailApproveViewController: BaseViewController {
+class FindPasswordViewController: BaseViewController {
 
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
