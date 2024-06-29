@@ -229,7 +229,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return days.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCollectionViewCell.identifier, for: indexPath) as? CalendarCollectionViewCell else {
             return UICollectionViewCell()
@@ -246,40 +246,38 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
                 subview.removeFromSuperview()
             }
         }
-
+        
         if self.specialDates.contains(date) {
             cell.dayLabel.textColor = .black
         }
-
+        
         self.addDayLabel(to: cell)
         
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (dayCollectionView.frame.width - 10) / 7
         return CGSize(width: width, height: width * 0.8)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // 모든 보이는 셀의 배경색과 글자색을 초기화
         for visibleCell in collectionView.visibleCells {
             if let cell = visibleCell as? CalendarCollectionViewCell {
-                let day = self.days[collectionView.indexPath(for: cell)!.item]
+//                let day = self.days[collectionView.indexPath(for: cell)!.item]
                 cell.backgroundColor = UIColor.coolGray4
                 cell.dayLabel.textColor = .white
-
+                
             }
         }
-
         // 선택된 셀의 배경색과 글자색을 업데이트
         if let selectedCell = collectionView.cellForItem(at: indexPath) as? CalendarCollectionViewCell {
-            let day = self.days[indexPath.item]
-            let date = "\(self.year)-\(self.month)-\(day)"
+            //let day = self.days[indexPath.item]
             selectedCell.backgroundColor = .white
             selectedCell.dayLabel.textColor = .black
         }
-
+        
         let selectedDate = calendar.date(byAdding: .day, value: indexPath.item - startDayOfTheWeek(), to: calendar.startOfDay(for: calendarDate))!
         // 선택된 날짜가 현재 월에 있는지 확인
         if !calendar.isDate(selectedDate, equalTo: calendarDate, toGranularity: .month) {
@@ -288,20 +286,31 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateString = dateFormatter.string(from: selectedDate)
+        var isSpecialDate = false
+        for specialDate in self.specialDates {
+            if specialDate == dateString {
+                isSpecialDate = true
+                print("specialdate=\(specialDate)")
+                break
+            }
+        }
+        if isSpecialDate {
+            
+        }
         let components = dateString.split(separator: "-")
         if components.count == 3 {
             delegate?.didSelectDate(year: String(components[0]), month: String(components[1]), day: String(components[2]))
         }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return .zero
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 2
     }
-
+    
     func updateCellBackground(jipbapPercentage: Double, outPricePercentage: Double, forDate date: String) {
         let components = date.split(separator: "-")
         guard let day = components.last else {
@@ -339,7 +348,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
             }
         }
     }
-
+    
     private func addDayLabel(to cell: CalendarCollectionViewCell) {
         if cell.dayLabel.superview == nil {
             cell.addSubview(cell.dayLabel)
@@ -351,7 +360,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
             }
         }
     }
-
+    
     func refreshCalendar(data: [(date: String, jipbapPercentage: Double, outPricePercentage: Double)]) {
         DispatchQueue.main.async {
             for entry in data {
