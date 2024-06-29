@@ -13,6 +13,8 @@ enum HomeSceneTarget {
     case ocr(_ bodyDTO: OcrRequestBodyDTO)
     case payAdd(_ bodyDTO: PayAddRequestBodyDTO)
     case payEdit(_ bodyDTO: PayEditRequestBodyDTO)
+    case calendar(_ bodyDTO: CalendarCheckRequestBodyDTO)
+    case calendarDaily(_ bodyDTO: CalendarDailyRequestBodyDTO)
 }
 
 extension HomeSceneTarget: TargetType {
@@ -27,6 +29,10 @@ extension HomeSceneTarget: TargetType {
             return .authorization
         case .payEdit:
             return .authorization
+        case .calendar:
+            return .authorization
+        case .calendarDaily:
+            return .authorization
         }
     }
 
@@ -39,6 +45,10 @@ extension HomeSceneTarget: TargetType {
         case .payAdd:
             return .hasToken
         case .payEdit:
+            return .hasToken
+        case .calendar:
+            return .hasToken
+        case .calendarDaily:
             return .hasToken
         }
     }
@@ -53,6 +63,10 @@ extension HomeSceneTarget: TargetType {
             return .post
         case .payEdit:
             return .patch
+        case .calendar:
+            return .get
+        case .calendarDaily:
+            return .get
         }
 
     }
@@ -67,6 +81,10 @@ extension HomeSceneTarget: TargetType {
             return "/v1/home/add-expense"
         case .payEdit:
             return "/v1/home/next-target-expense"
+        case .calendar:
+            return "/v1/home/calendar"
+        case .calendarDaily:
+            return "/v1/home/calendar/daily"
         }
     }
 
@@ -80,6 +98,10 @@ extension HomeSceneTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case .payEdit(let bodyDTO):
             return .requestWithBody(bodyDTO)
+        case let .calendar(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .calendarDaily(queryDTO):
+            return .requestQuery(queryDTO)
         }
     }
 }
