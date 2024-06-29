@@ -12,20 +12,6 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     static let identifier = "CalendarCollectionViewCell"
     lazy var dayLabel = UILabel()
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                backgroundColor = .white
-                dayLabel.textColor = .black
-                
-            }
-            else {
-                backgroundColor = UIColor(named: "coolGray4")
-                dayLabel.textColor = .white
-            }
-        }
-    }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setConfigure()
