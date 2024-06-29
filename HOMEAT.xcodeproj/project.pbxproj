@@ -51,10 +51,13 @@
 		012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B12BBD32100048CC2D /* UserInfoViewController.swift */; };
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
 		016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */; };
-		016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */; };
+		016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* FindPasswordViewController.swift */; };
 		01C361C52C26981900D8ED61 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C42C26981900D8ED61 /* TagButton.swift */; };
 		01C361C72C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C62C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift */; };
 		01C361C92C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C82C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift */; };
+		01C361CB2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CA2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift */; };
+		01C361CD2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CC2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift */; };
+		01C361CF2C26EC5000D8ED61 /* CompleteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CE2C26EC5000D8ED61 /* CompleteSignupViewController.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
 		01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DE2BC291D7008C368E /* PresentInfoView.swift */; };
 		01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530EF2BC7C4F9008C368E /* NetworkResult.swift */; };
@@ -224,11 +227,14 @@
 		012383B12BBD32100048CC2D /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTableViewCell.swift; sourceTree = "<group>"; };
 		016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailApproveViewController.swift; sourceTree = "<group>"; };
+		016B9B312C0B26EE009D2996 /* FindPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPasswordViewController.swift; sourceTree = "<group>"; };
 		016B9B332C0B3B3C009D2996 /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
 		01C361C42C26981900D8ED61 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		01C361C62C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCertificationRequestBodyDTO.swift; sourceTree = "<group>"; };
 		01C361C82C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCertificationResponseDTO.swift; sourceTree = "<group>"; };
+		01C361CA2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpRequestBodyDTO.swift; sourceTree = "<group>"; };
+		01C361CC2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailSignUpResponseDTO.swift; sourceTree = "<group>"; };
+		01C361CE2C26EC5000D8ED61 /* CompleteSignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteSignupViewController.swift; sourceTree = "<group>"; };
 		01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoModifyViewController.swift; sourceTree = "<group>"; };
 		01D530DE2BC291D7008C368E /* PresentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentInfoView.swift; sourceTree = "<group>"; };
 		01D530EF2BC7C4F9008C368E /* NetworkResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResult.swift; sourceTree = "<group>"; };
@@ -689,7 +695,8 @@
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
 				01D531012BD14D89008C368E /* LoginViewController.swift */,
 				016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */,
-				016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */,
+				01C361CE2C26EC5000D8ED61 /* CompleteSignupViewController.swift */,
+				016B9B312C0B26EE009D2996 /* FindPasswordViewController.swift */,
 				2DA59CE02BEBB52400A86CF9 /* SetNicknameViewController.swift */,
 				2DA59CE52BEC824800A86CF9 /* SetBirthViewController.swift */,
 				2DB92DC92C0218A600629CED /* SetGenderViewController.swift */,
@@ -750,6 +757,7 @@
 				01D531302BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift */,
 				011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */,
 				01C361C62C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift */,
+				01C361CA2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -762,6 +770,7 @@
 				01D531422BDFCE6A008C368E /* TokenRefreshResponseDTO.swift */,
 				011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */,
 				01C361C82C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift */,
+				01C361CC2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1219,6 +1228,7 @@
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */,
+				01C361CD2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
 				011DAFD42BE3AB96000556D0 /* CalendarView.swift in Sources */,
@@ -1236,6 +1246,7 @@
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
+				01C361CB2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
@@ -1255,6 +1266,7 @@
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				01C361C52C26981900D8ED61 /* TagButton.swift in Sources */,
+				01C361CF2C26EC5000D8ED61 /* CompleteSignupViewController.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
@@ -1304,7 +1316,7 @@
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
 				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
-				016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */,
+				016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
 				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
 				0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */,
