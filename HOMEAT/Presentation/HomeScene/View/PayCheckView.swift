@@ -5,13 +5,11 @@
 //  Created by 강삼고 on 4/10/24.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 import Then
 
 class PayCheckView: BaseView {
-    
     //MARK: - Property
     private let dateLabel = UILabel()
     private let homefoodIcon = UIImageView()
@@ -184,4 +182,23 @@ class PayCheckView: BaseView {
             $0.trailing.equalToSuperview()
         }
     }
+    func updateDateLabel(date: String) {
+        dateLabel.text = date
+    }
+    func updateSpentLabel(homeAmount: String, eatOutAmount: String, leftAmount: String) {
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        if let homeNumber = numberFormatter.number(from: homeAmount), let eatOutNumber = numberFormatter.number(from: eatOutAmount), let leftNumber = numberFormatter.number(from: leftAmount) {
+            homefoodSpentLabel.text = numberFormatter.string(from: homeNumber)?.appending("원")
+            eatoutSpentLabel.text = numberFormatter.string(from: eatOutNumber)?.appending("원")
+            leftMoneyAmountLabel.text = numberFormatter.string(from: leftNumber)?.appending("원")
+        } else {
+            homefoodSpentLabel.text = "\(homeAmount)원"
+            eatoutSpentLabel.text = "\(eatOutAmount)원"
+            leftMoneyAmountLabel.text = "\(leftAmount)원"
+        }
+    }
+
+
 }
