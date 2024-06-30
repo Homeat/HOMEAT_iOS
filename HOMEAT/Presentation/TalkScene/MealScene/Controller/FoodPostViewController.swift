@@ -13,13 +13,24 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
-    private let postContent = PostContentView()
+    var postContent = PostContentView()
     private let replyTextView = UIView()
     let replyTextField = UITextField()
     private let heartButton = UIButton()
     private let sendButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
-  
+    var foodTalkId: Int?
+
+    //MARK: - Initializer
+    init(foodTalkId: Int) {
+        self.foodTalkId = foodTalkId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +38,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         setTableView()
         setTabbar()
         setupKeyboardEvent()
+        PostRequest()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -171,6 +183,36 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
+    func PostRequest() {
+        guard let foodTalkId = foodTalkId else { return }
+        let bodyDTO = CheckOneRequestBodyDTO(id: foodTalkId)
+        NetworkService.shared.foodTalkService.checkOne(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success(let data):
+                    print("성공: 데이터가 반환되었습니다")
+                    let userName = data.data.postNickName
+                    let titleLabel = data.data.name
+                    let date = data.data.createdAt
+                    let tag = data.data.tag
+                    let memo = data.data.memo
+                    let love = String(data.data.love)
+                    let comment = String(data.data.commentNumber)
+                    let foodPictureImages = data.data.foodPictureImages
+                    let recipe = data.data.foodTalkRecipes
+                    if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
+                        headerView.updateContent(userName: userName, date: date, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: recipe)
+                    }
+                    self.tableView.reloadData()
+                default:
+                    print("데이터 저장 실패")
+                }
+            }
+            
+        }
+    }
+
     // MARK: -- objc
     @objc func sendButtonTapped() {
         //작성한 댓글을 서버로 전달

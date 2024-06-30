@@ -16,7 +16,14 @@ class FoodTalkViewController: BaseViewController {
             updateContentSize()
         }
     }
+    var oldest: [FoodTalk] = [] {
+        didSet {
+            foodCollectionView.reloadData()
+            updateContentSize()
+        }
+    }
     var lastFoodTalkId = Int.max
+    var foodTalkId: Int?
     var search: String?
     var selectedTag: String?
     var isLoading = false
@@ -393,7 +400,8 @@ extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let nextVC = FoodPostViewController()
+        let foodTalk = lastest[indexPath.item]
+        let nextVC = FoodPostViewController(foodTalkId: foodTalk.foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
     }
 
