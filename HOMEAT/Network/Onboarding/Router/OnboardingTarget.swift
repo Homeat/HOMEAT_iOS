@@ -19,7 +19,6 @@ enum OnboardingTarget {
 }
 
 extension OnboardingTarget: TargetType {
-    
     var authorization: Authorization {
         switch self {
         case .kakaoLogin:
