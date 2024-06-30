@@ -170,6 +170,10 @@
 		58DF7B8A2C29580000603763 /* HomeSceneTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B892C29580000603763 /* HomeSceneTarget.swift */; };
 		58DF7B8C2C29580D00603763 /* HomeSceneService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B8B2C29580D00603763 /* HomeSceneService.swift */; };
 		58DF7C0F2C2B101200603763 /* PayEditRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */; };
+		58DF7C112C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C102C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift */; };
+		58DF7C132C2D2A7E00603763 /* CalendarCheckResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C122C2D2A7E00603763 /* CalendarCheckResponseDTO.swift */; };
+		58DF7C152C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C142C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift */; };
+		58DF7C172C2E761900603763 /* CalendarDailyResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7C162C2E761900603763 /* CalendarDailyResponseDTO.swift */; };
 		58E88E772BF9084A00775F06 /* InfoTalkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */; };
 		58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E782BF9091500775F06 /* InfoTalkViewController.swift */; };
 		58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */; };
@@ -351,6 +355,10 @@
 		58DF7B892C29580000603763 /* HomeSceneTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneTarget.swift; sourceTree = "<group>"; };
 		58DF7B8B2C29580D00603763 /* HomeSceneService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSceneService.swift; sourceTree = "<group>"; };
 		58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayEditRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58DF7C102C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCheckRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58DF7C122C2D2A7E00603763 /* CalendarCheckResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCheckResponseDTO.swift; sourceTree = "<group>"; };
+		58DF7C142C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDailyRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58DF7C162C2E761900603763 /* CalendarDailyResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDailyResponseDTO.swift; sourceTree = "<group>"; };
 		58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkTableViewCell.swift; sourceTree = "<group>"; };
 		58E88E782BF9091500775F06 /* InfoTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkViewController.swift; sourceTree = "<group>"; };
 		58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoWriteViewController.swift; sourceTree = "<group>"; };
@@ -1117,6 +1125,8 @@
 				58DF7B7E2C29578E00603763 /* OcrRequestBodyDTO.swift */,
 				58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */,
 				58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */,
+				58DF7C102C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift */,
+				58DF7C142C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1126,6 +1136,8 @@
 			children = (
 				58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */,
 				58DF7B852C2957DB00603763 /* OcrResponseDTO.swift */,
+				58DF7C122C2D2A7E00603763 /* CalendarCheckResponseDTO.swift */,
+				58DF7C162C2E761900603763 /* CalendarDailyResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1381,6 +1393,7 @@
 				0309DDE32C1DC9C500D6133A /* ReplyReportRequestBodyDTO.swift in Sources */,
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
+				58DF7C112C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
@@ -1422,6 +1435,7 @@
 				2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */,
 				012383952BBBDF160048CC2D /* UIView+.swift in Sources */,
 				58E88E7E2BF9255500775F06 /* InfoWriteViewController.swift in Sources */,
+				58DF7C132C2D2A7E00603763 /* CalendarCheckResponseDTO.swift in Sources */,
 				58DF7B5E2C231D7900603763 /* TagButton.swift in Sources */,
 				0123838C2BBA97110048CC2D /* ReportViewController.swift in Sources */,
 				0309DDD82C08C44300D6133A /* DeleteLoveRequestBodyDTO.swift in Sources */,
@@ -1437,6 +1451,8 @@
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
 				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
+				58DF7C152C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift in Sources */,
+				58DF7C172C2E761900603763 /* CalendarDailyResponseDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				2DB92DCD2C0218DE00629CED /* ContinueButton.swift in Sources */,
 				0123838E2BBA97290048CC2D /* TalkViewController.swift in Sources */,

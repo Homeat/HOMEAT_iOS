@@ -13,7 +13,10 @@ protocol HomeSceneServiceProtocol {
     func ocr(bodyDTO: OcrRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<OcrResponseDTO>>) -> Void)
     func payAdd(bodyDTO: PayAddRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<String?>>) -> Void)
     func payEdit(bodyDTO: PayEditRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<String?>>) -> Void)
-                                                                        
+    func calendarCheck(queryDTO: CalendarCheckRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<[CalendarCheckResponseDTO]>>) -> Void)
+    func calendarDailyCheck(queryDTO: CalendarDailyRequestBodyDTO, completion: @escaping
+                            (NetworkResult<BaseResponse<CalendarDailyResponseDTO>>)->Void)
+    
 }
 
 final class HomeSceneService: APIRequestLoader<HomeSceneTarget>, HomeSceneServiceProtocol {
@@ -33,4 +36,11 @@ final class HomeSceneService: APIRequestLoader<HomeSceneTarget>, HomeSceneServic
         fetchData(target: .payAdd(bodyDTO),
                   responseData: BaseResponse<String?>.self, completion: completion)
     }
+    func calendarCheck(queryDTO: CalendarCheckRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<[CalendarCheckResponseDTO]>>) -> Void) {
+        fetchData(target: .calendar(queryDTO), responseData: BaseResponse<[CalendarCheckResponseDTO]>.self, completion: completion)
+    }
+    func calendarDailyCheck(queryDTO: CalendarDailyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<CalendarDailyResponseDTO>>) -> Void) {
+        fetchData(target: .calendarDaily(queryDTO), responseData: BaseResponse<CalendarDailyResponseDTO>.self, completion: completion)
+    }
+    
 }
