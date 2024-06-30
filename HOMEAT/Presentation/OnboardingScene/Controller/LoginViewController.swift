@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Then
 import SnapKit
+import SwiftKeychainWrapper
 
 final class LoginViewController : BaseViewController {
     
@@ -183,12 +184,37 @@ final class LoginViewController : BaseViewController {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    func login(data: EmailLoginRequestBodyDTO) {
-        NetworkService.shared.onboardingService.emailLogin(bodyDTO: data) { [weak self] response in
-            guard let self = self else { return }
+    private func extractAndStoreTokens(from headers: [AnyHashable: Any]) {
+        // Authorization 헤더에서 Access Token 추출
+        if let authHeader = headers[AnyHashable("Authorization")] as? String {
+            let accessToken = authHeader.replacingOccurrences(of: "Bearer ", with: "")
+            KeychainWrapper.standard.set(accessToken, forKey: "accessToken")
+        }
+        
+        // Set-Cookie 헤더에서 Refresh Token 추출
+        if let cookieHeader = headers[AnyHashable("Set-Cookie")] as? String {
+            let refreshToken = extractToken(from: cookieHeader, key: "refresh")
+            KeychainWrapper.standard.set(refreshToken, forKey: "refreshToken")
+            if let retrievedRefreshToken = KeychainWrapper.standard.string(forKey: "refreshToken") {
+                print("Stored Refresh Token: \(retrievedRefreshToken)")
+            } else {
+                print("Failed to retrieve Refresh Token")
+            }
+        }
+    }
+    
+    private func extractToken(from cookie: String, key: String) -> String {
+        guard let range = cookie.range(of: "\(key)=") else { return "" }
+        let startIndex = cookie.index(range.upperBound, offsetBy: 0)
+        let endIndex = cookie[startIndex...].firstIndex(of: ";") ?? cookie.endIndex
+        return String(cookie[startIndex..<endIndex])
+    }
+    
+    private func login(data: EmailLoginRequestBodyDTO) {
+        NetworkService.shared.onboardingService.emailLogin(bodyDTO: data) { [weak self] (response: NetworkResult<BaseResponse<EmailLoginResponseDTO>>) in
+            guard self != nil else { return }
             switch response {
             case .success(let data):
-                guard let data = data.data else { return }
                 print(data)
                 let tabBarVC = HOMEATTabBarController()
                 if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
