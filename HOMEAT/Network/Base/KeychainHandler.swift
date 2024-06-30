@@ -19,43 +19,20 @@ struct KeychainHandler {
     private let keychain = KeychainWrapper(serviceName: "HOMEAT", accessGroup: "HOMEAT.iOS")
     private let accessTokenKey = "accessToken"
     private let refreshTokenKey = "refreshToken"
-    private let kakaoUserIDKey = "kakaoUserID"
     private let providerTokenKey = "providerToken"
     
     var accessToken: String {
-        get {
-            return KeychainWrapper.standard.string(forKey: accessTokenKey) ?? ""
-        }
-        set {
-            KeychainWrapper.standard.set(newValue, forKey: accessTokenKey)
-        }
+        get { keychain.string(forKey: accessTokenKey) ?? "" }
+        set { keychain.set(newValue, forKey: accessTokenKey) }
     }
     
     var refreshToken: String {
-        get {
-            return KeychainWrapper.standard.string(forKey: refreshTokenKey) ?? ""
-        }
-        set {
-            KeychainWrapper.standard.set(newValue, forKey: refreshTokenKey)
-        }
-    }
-    
-    var kakaoUserID: String {
-        get {
-            return KeychainWrapper.standard.string(forKey: kakaoUserIDKey) ?? ""
-        }
-        set {
-            KeychainWrapper.standard.set(newValue, forKey: kakaoUserIDKey)
-        }
+        get { keychain.string(forKey: refreshTokenKey) ?? "" }
+        set { keychain.set(newValue, forKey: refreshTokenKey) }
     }
     
     var providerToken: String {
-        get {
-            return KeychainWrapper.standard.string(forKey: providerTokenKey) ?? ""
-        }
-        set {
-            KeychainWrapper.standard.set(newValue, forKey: providerTokenKey)
-        }
+        get { keychain.string(forKey: providerTokenKey) ?? "" }
+        set { keychain.set(newValue, forKey: providerTokenKey) }
     }
 }
-
