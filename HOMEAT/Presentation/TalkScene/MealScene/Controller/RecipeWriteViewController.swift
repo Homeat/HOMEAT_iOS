@@ -30,13 +30,13 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
-    var foodRecipes: [FoodRecipeDTOS] = []
+    var foodRecipes: [foodRecipeDTOS] = []
     func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?) {
         let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
-        let foodRecipe = FoodRecipeDTOS(recipe: recipe ?? "", ingredient: ingredient ?? "재료", recipePicture: recipePictureData)
+        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", ingredient: ingredient ?? "재료", recipePicture: recipePictureData)
         foodRecipes.append(foodRecipe)
         tableView.reloadData()
-        print("레시피: \(foodRecipe.recipe)")
+        print("레시피: \(foodRecipe.recipe)") 
         print("현재 foodRecipes 배열: \(foodRecipes.count) 개의 레시피가 있습니다.")
     }
     //MARK: - Property

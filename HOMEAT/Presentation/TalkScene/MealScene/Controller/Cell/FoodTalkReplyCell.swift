@@ -114,6 +114,12 @@ class FoodTalkReplyCell: UITableViewCell {
         }
     }
     
+    func updateContent(comment: FoodTalkComment) {
+        replyNickname.text = comment.commentNickName
+        replyContent.text = comment.content
+        replyDate.text = comment.createdAt
+    }
+    
     //MARK: - @objc
     @objc func declareButtonTapped() {
         delegate?.replyDeclareButtonTapped(self)

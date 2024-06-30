@@ -232,23 +232,27 @@ extension FoodTalkSaveRequestBodyDTO {
             formData.append(self.name.data(using: .utf8) ?? Data(), withName: "name")
             formData.append(self.memo.data(using: .utf8) ?? Data(), withName: "memo")
             formData.append(self.tag.data(using: .utf8) ?? Data(), withName: "tag")
-            // 사진을 formData에 추가하는 경우
+            
+            // 로그 추가
             print("multipartformdata 출력")
-            if let foodPhotos = self.foodPictures {
-                print("Profile Photos is not empty. Count: \(foodPhotos.count)")
+            
+            // 사진을 formData에 추가하는 경우
+            if let foodPhotos = self.foodPictures, !foodPhotos.isEmpty {
+                print("Food Photos is not empty. Count: \(foodPhotos.count)")
                 for (index, image) in foodPhotos.enumerated() {
-                    print("Index: \(index), Photo: \(image)")
+                    print("Index: \(index), Photo Size: \(image.count) bytes")
                     formData.append(image, withName: "foodPictures", fileName: "image\(index).jpg", mimeType: "image/jpeg")
                 }
             } else {
-                print("Profile Photos is nil or empty")
+                print("Food Photos is nil or empty")
             }
-    
-            for (index, FoodRecipeDTOS) in self.foodRecipeRequest.enumerated() {
+
+            for (index, foodRecipeDTOS) in self.foodRecipeRequest.enumerated() {
                 print("Appending recipe \(index)")
-                formData.append(FoodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].recipe")
-                formData.append(FoodRecipeDTOS.ingredient.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].ingredient")
-                if let recipePicture = FoodRecipeDTOS.recipePicture {
+                formData.append(foodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].recipe")
+                formData.append(foodRecipeDTOS.ingredient.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].ingredient")
+                if let recipePicture = foodRecipeDTOS.recipePicture {
+                    print("Appending recipe picture \(index), Size: \(recipePicture.count) bytes")
                     formData.append(recipePicture, withName: "foodRecipeRequest[\(index)].recipePicture", fileName: "recipePicture\(index).jpg", mimeType: "image/jpeg")
                 }
             }

@@ -20,6 +20,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     private let sendButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var foodTalkId: Int?
+    var foodTalkRecipes: [FoodTalkRecipe] = []
+    var comments: [FoodTalkComment] = []
 
     //MARK: - Initializer
     init(foodTalkId: Int) {
@@ -39,6 +41,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         setTabbar()
         setupKeyboardEvent()
         PostRequest()
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,7 +84,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         replyTextField.do {
             $0.placeholder = "댓글을 남겨보세요."
             $0.font = .bodyMedium16
-            $0.textColor = UIColor(named: "font5")
+            $0.textColor = .white
             $0.layer.cornerRadius = 20
             $0.backgroundColor = .turquoiseDarkGray
             $0.attributedPlaceholder = NSAttributedString(string: "댓글을 남겨보세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "font5") ?? UIColor.gray])
@@ -173,7 +176,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     //MARK: - Method
     func recipeViewButtonTapped() {
-        let nextVC = RecipeViewController()
+        let nextVC = RecipeViewController(foodTalkRecipes: foodTalkRecipes)
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -200,9 +203,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     let love = String(data.data.love)
                     let comment = String(data.data.commentNumber)
                     let foodPictureImages = data.data.foodPictureImages
-                    let recipe = data.data.foodTalkRecipes
+                    let receivedRecipes = data.data.foodTalkRecipes
+                    self.comments = data.data.foodTalkComments
+                    print("받은 레시피 수: \(receivedRecipes.count)")
+                    for recipe in receivedRecipes {
+                        print("레시피: \(recipe)")
+                    }
+                    self.foodTalkRecipes = receivedRecipes
                     if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
-                        headerView.updateContent(userName: userName, date: date, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: recipe)
+                        headerView.updateContent(userName: userName, date: date, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
                 default:
@@ -215,9 +224,37 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
 
     // MARK: -- objc
     @objc func sendButtonTapped() {
-        //작성한 댓글을 서버로 전달
-        //작성한 댓글 삭제
-        //키보드 내림
+        // 작성한 댓글을 서버로 전달
+        guard let foodTalkId = self.foodTalkId,
+              let content = replyTextField.text, !content.isEmpty else {
+            print("댓글 내용이 없습니다.")
+            return
+        }
+        
+        let bodyDTO = CommentWriteRequestBodyDTO(id: foodTalkId, content: content)
+        NetworkService.shared.foodTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success:
+                    print("성공: 댓글이 저장되었습니다")
+                    self.replyTextField.text = ""
+                    self.dismissKeyboard()
+                    self.PostRequest()
+                    self.scrollToBottom()
+                default:
+                    print("댓글 저장 실패")
+                }
+            }
+        }
+    }
+    
+    private func scrollToBottom() {
+        let lastRowIndex = self.comments.count - 1
+        if lastRowIndex > 0 {
+            let indexPath = IndexPath(row: lastRowIndex, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -225,33 +262,40 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     @objc func keyboardUp(notification: NSNotification) {
-        if let keyboardFrame:NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
             
-            UIView.animate(
-                withDuration: 0.3
-                , animations: {
-                    self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardRectangle.height)
-                }
-            )
+            UIView.animate(withDuration: 0.3) {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+                // 키보드가 나타날 때 테이블 뷰의 하단 여유 공간을 키보드 높이로 설정
+                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 91, right: 0)
+            }
         }
     }
-    
+
     @objc func keyboardDown() {
-        self.view.transform = .identity
+        UIView.animate(withDuration: 0.3) {
+            self.view.transform = .identity
+            // 키보드가 사라질 때 테이블 뷰의 하단 여유 공간을 원래대로 설정
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
+        }
     }
 }
 
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return comments.count // 댓글의 개수를 반환
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodTalkReplyCell") as! FoodTalkReplyCell
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
         cell.delegate = self
+        
+        let comment = comments[indexPath.row]
+        cell.updateContent(comment: comment)
         return cell
     }
     

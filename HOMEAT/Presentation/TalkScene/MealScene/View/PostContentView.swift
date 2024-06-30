@@ -111,12 +111,6 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
             $0.layer.borderWidth = 2
             $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         }
-        
-        scrollView.do {
-            $0.showsHorizontalScrollIndicator = false
-            $0.showsVerticalScrollIndicator = false
-            $0.isPagingEnabled = true // 페이지 단위로 스크롤되도록 설정
-        }
     }
     
     private func setConstraint() {
@@ -298,3 +292,4 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         delegate?.recipeViewButtonTapped()
     }
 }
+

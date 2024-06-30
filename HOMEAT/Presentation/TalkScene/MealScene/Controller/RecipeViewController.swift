@@ -16,12 +16,24 @@ class RecipeViewController: BaseViewController {
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let ingredientView = IngredientView()
     
+    var foodTalkRecipes: [FoodTalkRecipe]
+    
+    init(foodTalkRecipes: [FoodTalkRecipe]) {
+        self.foodTalkRecipes = foodTalkRecipes
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     //MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         setTableView()
         setTabbar()
+        print(foodTalkRecipes.count)
     }
     
     //MARK: - SetUI

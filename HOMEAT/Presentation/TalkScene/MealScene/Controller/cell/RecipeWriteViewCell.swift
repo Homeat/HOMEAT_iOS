@@ -76,7 +76,7 @@ class RecipeWriteViewCell: UITableViewCell {
         }
     }
     
-    func configure(with recipe: FoodRecipeDTOS) {
+    func configure(with recipe: foodRecipeDTOS) {
         if let imageData = recipe.recipePicture {
             stepImage.image = UIImage(data: imageData)
         } else {
