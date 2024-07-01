@@ -10,17 +10,38 @@ import Alamofire
 
 enum InfoTalkTarget {
     case infoTalkSave(_ bodyDTO: InfoTalkSaveRequestBodyDTO)
+    case viewInfo(_ bodyDTO: ViewInfoRequestBodyDTO)
+    case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
+    case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
+    case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
 }
 extension InfoTalkTarget: TargetType {
     var authorization: Authorization {
         switch self {
         case .infoTalkSave:
             return .authorization
+        case .viewInfo:
+            return .authorization
+        case .loveInfo:
+            return .authorization
+        case .latestInfo:
+            return .authorization
+        case .oldestInfo:
+            return .authorization
+            
         }
     }
     var headerType: HTTPHeaderType {
         switch self {
         case .infoTalkSave:
+            return .hasToken
+        case .viewInfo:
+            return .hasToken
+        case .loveInfo:
+            return .hasToken
+        case .latestInfo:
+            return .hasToken
+        case .oldestInfo:
             return .hasToken
         }
     }
@@ -28,18 +49,43 @@ extension InfoTalkTarget: TargetType {
         switch self {
         case .infoTalkSave:
             return .post
+        case .latestInfo:
+            return .get
+        case .viewInfo:
+            return .get
+        case .loveInfo:
+            return .get
+        case .oldestInfo:
+            return .get
         }
     }
     var path: String {
         switch self {
         case .infoTalkSave:
             return "/v1/infoTalk"
+        case .viewInfo:
+            return "/v1/infoTalk/posts/view"
+        case .loveInfo:
+            return "/v1/infoTalk/posts/love"
+        case .latestInfo:
+            return "/v1/infoTalk/posts/latest"
+        case .oldestInfo:
+            return "/v1/infoTalk/posts/oldest"
+            
         }
     }
     var parameters: RequestParams {
         switch self {
         case let .infoTalkSave(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
+        case let .latestInfo(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .loveInfo(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .viewInfo(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .oldestInfo(bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }
