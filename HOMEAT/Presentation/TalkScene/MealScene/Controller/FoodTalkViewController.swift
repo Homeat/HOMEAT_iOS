@@ -16,12 +16,6 @@ class FoodTalkViewController: BaseViewController {
             updateContentSize()
         }
     }
-    var oldest: [FoodTalk] = [] {
-        didSet {
-            foodCollectionView.reloadData()
-            updateContentSize()
-        }
-    }
     var lastFoodTalkId = Int.max
     var foodTalkId: Int?
     var search: String?
@@ -263,8 +257,7 @@ class FoodTalkViewController: BaseViewController {
         actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("최신순", for: .normal)}))
         actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("공감순", for: .normal)}))
         actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("조회순", for: .normal)}))
-        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("오래된 순", for: .normal)
-            self.oldestRequest()}))
+        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("오래된 순", for: .normal)}))
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true, completion: nil)
@@ -324,30 +317,6 @@ class FoodTalkViewController: BaseViewController {
         }
     }
     
-    func oldestRequest() {
-        guard !isLoading else { return }
-        isLoading = true
-
-        let bodyDTO = OldestOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", OldestFoodTalkId: lastFoodTalkId)
-        NetworkService.shared.foodTalkService.oldestOrder(bodyDTO: bodyDTO) { [weak self] response in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch response {
-                case .success(let data):
-                    print("성공: 데이터가 반환되었습니다")
-                    let reversedData = data.data.reversed() // 데이터를 거꾸로
-                    self.lastest.append(contentsOf: reversedData)
-                    self.lastFoodTalkId = self.lastest.last?.foodTalkId ?? Int.max
-                    self.isLoading = false
-                    self.foodCollectionView.reloadData()
-                default:
-                    print("데이터 저장 실패")
-                    self.isLoading = false
-                }
-            }
-        }
-    }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
             if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
                 // 스크롤이 아래쪽에 도달했을 때 실행할 코드
@@ -360,7 +329,7 @@ class FoodTalkViewController: BaseViewController {
 //MARK: - Extension
 extension FoodTalkViewController: UISearchBarDelegate {
     
-    func setSearchBar(){
+    func setSearchBar() {
         if let textfield = searchBar.value(forKey: "searchField") as? UITextField {
             textfield.backgroundColor = UIColor(named: "coolGray4")
             textfield.attributedPlaceholder = NSAttributedString(string: textfield.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor(r: 216, g: 216, b: 216)])
@@ -370,21 +339,22 @@ extension FoodTalkViewController: UISearchBarDelegate {
                 leftView.tintColor = UIColor(r: 216, g: 216, b: 216)
             }
         }
-        
-        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            if let searchText = searchBar.text {
-                performSearch(with: searchText)
-                search = searchText
-            }
-            searchBar.resignFirstResponder() // 키보드 숨기기
+        searchBar.delegate = self
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            search = searchText
+            performSearch(with: searchText)
         }
-        
-        func performSearch(with searchText: String) {
-            lastFoodTalkId = Int.max // Reset lastFoodTalkId for new search
-            lastest.removeAll() // Clear current data
-            foodCollectionView.reloadData()
-            request()
-        }
+        searchBar.resignFirstResponder() // 키보드 숨기기
+    }
+    
+    func performSearch(with searchText: String) {
+        lastFoodTalkId = Int.max
+        lastest.removeAll()
+        foodCollectionView.reloadData()
+        request()
     }
 }
 
