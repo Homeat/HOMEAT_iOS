@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 import Then
+import Alamofire
 
 class HomeViewController: BaseViewController, HomeViewDelegate {
     
@@ -26,11 +27,14 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         setAddTarget()
         //delegate 설정
         mainView.delegate = self
+        homeInfo()
     }
     
     // MARK: - setConfigure
     override func setConfigure() {
-        view.backgroundColor = UIColor(named: "homeBackgroundColor")
+        view.do {
+            $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
         
         HomeatLogo.do {
             $0.image = UIImage(named: "homeatTextLogo")
@@ -72,19 +76,27 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         
         editAlert.do {
             let confirm = UIAlertAction(title: StringLiterals.Home.main.Alert.yes, style: .default){ action in
-                self.navigationController?.pushViewController(EditDoneViewController(), animated: true)
+                if let textField = self.editAlert.textFields?.first, let inputText = textField.text, let targetExpense = Int(inputText) {
+                    self.updateNextTargetExpense(targetExpense: targetExpense)
+                } else {
+                    // Handle invalid input (optional)
+                }
+                let editDoneVC = EditDoneViewController()
+                editDoneVC.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(editDoneVC, animated: true)
             }
             let cancle = UIAlertAction(title: StringLiterals.Home.main.Alert.no, style: .destructive, handler: nil)
             $0.title = StringLiterals.Home.main.Alert.title
             $0.message = StringLiterals.Home.main.Alert.message
             $0.addTextField() { TextField in
                 TextField.placeholder = StringLiterals.Home.main.Alert.textField
+                TextField.keyboardType = .numberPad
             }
             editAlert.addAction(confirm)
             editAlert.addAction(cancle)
         }
     }
-
+    
     //MARK: - setConstraints
     override func setConstraints() {
         view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
@@ -130,18 +142,67 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - setButtonAction
     private func setAddTarget() {
         payAddButton.addTarget(self, action: #selector(isPayAddButtonTapped), for: .touchUpInside)
-        
         payCheckButton.addTarget(self, action: #selector(isPayCheckButtonTapped), for: .touchUpInside)
     }
-    
+    //MARK: - ServerFunction
+    private func homeInfo() {
+        NetworkService.shared.homeSceneService.homeInfo() { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                guard let data = data.data else { return }
+                print(data)
+                print(data.nickname)
+                updateUserInfo(data)
+            default:
+                print("login error!!")
+            }
+        }
+    }
+    private func updateUserInfo(_ data: HomeInfoResponseDTO) {
+        welcomeLabel.text = "\(data.nickname)님 훌륭해요!"
+        mainView.goalLabel.text = "목표 \(data.targetMoney)원"
+        mainView.leftMoneyLabel.text = "\(data.remainingMoney)원"
+        mainView.setupPieChart(remainingPercent: data.remainingPercent)
+        let savingPercent = data.beforeSavingPercent
+        if savingPercent > 0 {
+            savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 절약하고 있어요"
+        }else if savingPercent == 0 {
+            savingLabel.text = "아직 비교할 과거 데이터가 존재하지 않아요"
+        }else {
+            savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 더 쓰고 있어요"
+        }
+        guard let url = URL(string: data.badgeImgUrl) else {return}
+        DispatchQueue.main.async {
+            guard let data = try? Data(contentsOf: url) else {return}
+            self.mainView.character.image = UIImage(data: data)
+        }
+    }
+    // 다음주 지출 목표금액 수정
+    private func updateNextTargetExpense(targetExpense: Int) {
+        let request = PayEditRequestBodyDTO(nextTargetExpense: targetExpense)
+        NetworkService.shared.homeSceneService.payEdit(bodyDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case.success(let data):
+                guard let data = data.data else { return }
+                print(data)
+            default:
+                print("서버 연동 실패")
+            }
+            
+        }
+    }
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
     @objc func isPayCheckButtonTapped(_ sender: Any) {
         let nextVC = PayCheckViewController()
+        nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

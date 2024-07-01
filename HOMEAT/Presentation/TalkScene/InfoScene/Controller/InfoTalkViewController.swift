@@ -18,6 +18,7 @@ class InfoTalkViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+        setAddTarget()
     }
     
     //MARK: - SetUI
@@ -91,7 +92,7 @@ class InfoTalkViewController: BaseViewController {
     
     private func setAddTarget() {
         listButton.addTarget(self, action: #selector(isListButtonTapped), for: .touchUpInside)
-        
+        floatingButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc func
@@ -107,6 +108,13 @@ class InfoTalkViewController: BaseViewController {
         
         self.present(actionSheet, animated: true, completion: nil)
     }
+    
+    @objc func isWriteButtonTapped(_ sender: Any) {
+        let nextVC = InfoWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
+    
 }
 //MARK: - Extension
 extension InfoTalkViewController: UISearchBarDelegate {

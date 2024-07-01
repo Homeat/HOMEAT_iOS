@@ -8,6 +8,5 @@
 import Foundation
 
 struct WeekLookResponseDTO: Codable {
-    let tierStatus : String
-    let nickname: String
+    let reportBage: [ReportBadge]
 }

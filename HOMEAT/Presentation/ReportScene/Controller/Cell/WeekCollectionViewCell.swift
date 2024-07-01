@@ -15,14 +15,6 @@ class WeekCollectionViewCell: UICollectionViewCell {
     var successMoney = UILabel()
     var failMoney = UILabel()
     
-    var model: WeekCellModel? {
-        didSet {
-            guard let model = model else { return }
-            cellView.updateWeekLabel(withWeekIndex: model.weekIndex)
-            cellView.imageView.image = UIImage(named: model.imageName)
-        }
-    }
-    
     //MARK: -- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,13 +35,11 @@ class WeekCollectionViewCell: UICollectionViewCell {
         }
         
         successMoney.do {
-            $0.text = "50,000원"
             $0.font = .bodyBold15
             $0.textColor = .turquoiseGreen
         }
         
         failMoney.do {
-            $0.text = "4,500원"
             $0.font = .bodyBold15
             $0.textColor = UIColor(named: "turquoiseRed")
         }
@@ -77,7 +67,38 @@ class WeekCollectionViewCell: UICollectionViewCell {
             $0.height.equalTo(20)
         }
     }
+
+    func configure(with weekData: ReportBadge ) {
+        successMoney.text = String(weekData.goal_price)
+        failMoney.text =  String(weekData.exceed_price)
+        if let badgeUrl = URL(string: weekData.badge_url) {
+            DispatchQueue.global().async {
+                if let data = try? Data(contentsOf: badgeUrl) {
+                    DispatchQueue.main.async {
+                        self.cellView.imageView.image = UIImage(data: data)
+                    }
+                }
+            }
+        }
+        switch weekData.weekStatus {
+        case "SUCCESS":
+            cellView.backgroundColor = UIColor(named: "turquoiseGreen")
+        case "FAIL":
+            cellView.backgroundColor = UIColor(named: "turquoiseRed")
+        case "UNDO":
+            cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        default:
+            cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        }
+    }
     
+    func configureAsLock() {
+        successMoney.text = nil
+        failMoney.text = nil
+        cellView.imageView.image = UIImage(named: "lockReport")
+        cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        cellView.weekLabel.isHidden = true
+    }
     func updateWeekLabel(withWeekIndex index: Int) {
         cellView.updateWeekLabel(withWeekIndex: index)
     }

@@ -156,7 +156,7 @@ class EmailApproveViewController: BaseViewController {
     }
     
     private func setTarget() {
-        approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
+//        approveButton.addTarget(self, action: #selector(approveButtonTapped), for: .touchUpInside)
     }
     
     @objc private func approveButtonTapped(_ sender: Any) {

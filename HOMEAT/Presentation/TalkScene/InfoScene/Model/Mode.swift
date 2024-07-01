@@ -8,6 +8,6 @@
 import Foundation
 
 enum Mode {
-        case camera
-        case album
+    case camera
+    case album
 }
