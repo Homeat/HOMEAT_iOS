@@ -197,7 +197,20 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
                     let titleLabel = data.data.name
-                    let date = data.data.createdAt
+                    // 날짜 형식 변환
+                    let dateString = data.data.createdAt
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
+                    
+                    var displayDate = ""
+                    if let date = dateFormatter.date(from: dateString) {
+                        let displayFormatter = DateFormatter()
+                        displayFormatter.dateFormat = "MM월 dd일 HH:mm"
+                        displayDate = displayFormatter.string(from: date)
+                        print("변환된 날짜: \(displayDate)")
+                    } else {
+                        print("날짜 형식 변환 실패")
+                    }
                     let tag = data.data.tag
                     let memo = data.data.memo
                     let love = String(data.data.love)
@@ -211,7 +224,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     }
                     self.foodTalkRecipes = receivedRecipes
                     if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
-                        headerView.updateContent(userName: userName, date: date, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
+                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
                 default:
