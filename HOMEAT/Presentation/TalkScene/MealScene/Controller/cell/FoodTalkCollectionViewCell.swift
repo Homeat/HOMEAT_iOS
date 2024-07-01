@@ -13,6 +13,9 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .bodyMedium15
         label.textColor = .white
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        label.textAlignment = .center // 텍스트 중앙 정렬
         return label
     }()
     
@@ -61,7 +64,8 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         
         foodName.snp.makeConstraints { make in
             make.top.equalTo(foodImageView.snp.bottom).offset(5)
-            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(10) // 여유 공간 추가
+            make.trailing.equalToSuperview().offset(-10) // 여유 공간 추가
             make.bottom.equalTo(self.snp.bottom).offset(-5)
         }
     }
@@ -92,3 +96,4 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         }
     }
 }
+

@@ -40,7 +40,7 @@ class FoodTalkViewController: BaseViewController {
     private let foodCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 161, height: 161)
-        layout.minimumLineSpacing = 16
+        layout.minimumLineSpacing = 20
         return UICollectionView(frame: .zero, collectionViewLayout: layout)
     }()
     private let writeButton = UIButton(type: .custom)
@@ -60,7 +60,6 @@ class FoodTalkViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        request()
         tabBarController?.tabBar.isTranslucent = false
     }
 
@@ -71,8 +70,8 @@ class FoodTalkViewController: BaseViewController {
     }
     
     @objc private func dataChanged() {
-        lastFoodTalkId = Int.max // Reset lastFoodTalkId for new data
-        lastest.removeAll() // Clear current data
+        lastFoodTalkId = Int.max
+        lastest.removeAll()
         request()
     }
     
@@ -158,6 +157,7 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.showsVerticalScrollIndicator = false
+            $0.alwaysBounceVertical = true
         }
         
         writeButton.do {
@@ -315,6 +315,7 @@ class FoodTalkViewController: BaseViewController {
                     self.lastFoodTalkId = self.lastest.last?.foodTalkId ?? Int.max
                     self.isLoading = false
                     self.foodCollectionView.reloadData()
+                    self.foodCollectionView.layoutIfNeeded()
                 default:
                     print("데이터 저장 실패")
                     self.isLoading = false
@@ -346,6 +347,14 @@ class FoodTalkViewController: BaseViewController {
             }
         }
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
+                // 스크롤이 아래쪽에 도달했을 때 실행할 코드
+                request()
+                print("Reached the bottom of the collection view")
+            }
+        }
 }
 
 //MARK: - Extension
