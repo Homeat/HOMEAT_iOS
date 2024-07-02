@@ -50,27 +50,28 @@ class TagPlusCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with tag: String) {
+    func configure(with tag: String, isSelected: Bool) {
         self.tagTitle = tag
         tagButton.setTitle(tag, for: .normal)
-        // Adjust button width dynamically based on title size
         let titleSize = NSString(string: tag).size(withAttributes: [
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 15)
         ])
-        let buttonWidth = titleSize.width + 40 // Adjust the padding as needed
+        let buttonWidth = titleSize.width + 40
         tagButton.widthAnchor.constraint(equalToConstant: buttonWidth).isActive = true
+        updateSelectedState(isSelected)
     }
-    
-    @objc func tagButtonTapped() {
-        tagButton.isSelected.toggle()
+    private func updateSelectedState(_ isSelected: Bool) {
         let selectedBorderColor = UIColor.turquoiseGreen.cgColor
         let normalBorderColor = UIColor.warmgray.cgColor
-        tagButton.layer.borderColor = tagButton.isSelected ? selectedBorderColor : normalBorderColor
+        tagButton.layer.borderColor = isSelected ? selectedBorderColor : normalBorderColor
         let selectedTitleColor = UIColor.turquoiseGreen
         let normalTitleColor = UIColor.warmgray
-        tagButton.setTitleColor(tagButton.isSelected ? selectedTitleColor : normalTitleColor, for: .normal)
+        tagButton.setTitleColor(isSelected ? selectedTitleColor : normalTitleColor, for: .normal)
+        tagButton.isSelected = isSelected
+    }
+    @objc func tagButtonTapped() {
+        tagButton.isSelected.toggle()
+        updateSelectedState(tagButton.isSelected)
         delegate?.tagChangeByClick(isSelect: tagButton.isSelected, tag: tagTitle)
     }
-
-
 }
