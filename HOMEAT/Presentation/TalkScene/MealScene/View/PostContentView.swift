@@ -40,7 +40,6 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         super.init(reuseIdentifier: reuseIdentifier)
         setConfigure()
         setConstraint()
-        scrollView.delegate = self
         setPageControl()
         setAddTarget()
     }
@@ -97,6 +96,11 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
             $0.text = "메모내용이 들어갈 자리입니다."
             $0.font = .bodyMedium15
             $0.textColor = .white
+        }
+        
+        scrollView.do {
+            $0.delegate = self
+            $0.isPagingEnabled = true
         }
         
         underLine.do {

@@ -247,6 +247,8 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.delegate = self
         foodCollectionView.prefetchDataSource = self
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     //MARK: - @objc func
@@ -318,12 +320,15 @@ class FoodTalkViewController: BaseViewController {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
-                // 스크롤이 아래쪽에 도달했을 때 실행할 코드
-                request()
-                print("Reached the bottom of the collection view")
-            }
+        if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
+            request()
+            print("Reached the bottom of the collection view")
         }
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
 
 //MARK: - Extension

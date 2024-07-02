@@ -55,7 +55,7 @@ final class ReplyReactionView: UIStackView {
     
     func updateContent(love: String, comment: String) {
         self.heartCount.setTitle(love, for: .normal)
-        self.replyLabel.setTitle(love, for: .normal)
+        self.replyLabel.setTitle(comment, for: .normal)
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }

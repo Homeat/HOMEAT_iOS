@@ -10,9 +10,9 @@ import SnapKit
 import Then
 //MARK: 앨범 사진 셀
 
-protocol DeleteActionDelegate: AnyObject {
-    func delete(at index: Int)
-}
+//protocol DeleteActionDelegate: AnyObject {
+//    func delete(at index: Int)
+//}
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "PhotoCell"
