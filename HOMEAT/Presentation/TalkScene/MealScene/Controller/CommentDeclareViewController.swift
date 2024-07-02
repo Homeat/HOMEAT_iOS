@@ -165,27 +165,27 @@ class CommentDeclareViewController: BaseViewController {
     @objc func optionActtion(_ sender: UIButton) {
         switch sender {
         case firstButton:
-            let declareWriteVC = DeclareWriteViewController()
+            let declareWriteVC = CommentDeclareWriteViewController()
             declareWriteVC.optionLabel = firstButton.titleLabel?.text
             declareWriteVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(declareWriteVC, animated: true)
         case secondButton:
-            let declareWriteVC = DeclareWriteViewController()
+            let declareWriteVC = CommentDeclareWriteViewController()
             declareWriteVC.optionLabel = secondButton.titleLabel?.text
             declareWriteVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(declareWriteVC, animated: true)
         case thirdButton:
-            let declareWriteVC = DeclareWriteViewController()
+            let declareWriteVC = CommentDeclareWriteViewController()
             declareWriteVC.optionLabel = thirdButton.titleLabel?.text
             declareWriteVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(declareWriteVC, animated: true)
         case forthButton:
-            let declareWriteVC = DeclareWriteViewController()
+            let declareWriteVC = CommentDeclareWriteViewController()
             declareWriteVC.optionLabel = forthButton.titleLabel?.text
             declareWriteVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(declareWriteVC, animated: true)
         case fifthButton:
-            let declareWriteVC = DeclareWriteViewController()
+            let declareWriteVC = CommentDeclareWriteViewController()
             declareWriteVC.optionLabel = fifthButton.titleLabel?.text
             declareWriteVC.hidesBottomBarWhenPushed = true
             navigationController?.pushViewController(declareWriteVC, animated: true)

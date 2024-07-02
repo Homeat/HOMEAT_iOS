@@ -38,9 +38,9 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         super.viewDidLoad()
         setNavigationBar()
         setTableView()
+        setHeartButton()
         setTabbar()
         setupKeyboardEvent()
-        setHeartButton()
         PostRequest()
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
     }
@@ -157,14 +157,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         tableView.layoutIfNeeded()
     }
     
-    private func setNavigationBar() {
-        self.navigationItem.title = "집밥토크"
-        let backbutton = UIBarButtonItem()
-        backbutton.tintColor = .white
-        navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
-        navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
-    }
-    
     private func setHeartButton() {
         if let foodTalkId = self.foodTalkId {
             let isSelected = loadHeartButtonState()
@@ -172,6 +164,14 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
             self.heartButton.setImage(UIImage(named: imageName), for: .normal)
         }
+    }
+    
+    private func setNavigationBar() {
+        self.navigationItem.title = "집밥토크"
+        let backbutton = UIBarButtonItem()
+        backbutton.tintColor = .white
+        navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
+        navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
     
     private func setTabbar() {
@@ -194,7 +194,9 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     func declareViewButtonTapped() {
-        let nextVC = DeclareViewController()
+        guard let foodTalkId = self.foodTalkId else {return}
+        
+        let nextVC = DeclareViewController(foodTalkId: foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -209,7 +211,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
                     let titleLabel = data.data.name
-                    // 날짜 형식 변환
                     let dateString = data.data.createdAt
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
@@ -249,6 +250,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
 
     // MARK: -- objc
     @objc func sendButtonTapped() {
+        // 작성한 댓글을 서버로 전달
         guard let foodTalkId = self.foodTalkId,
               let content = replyTextField.text, !content.isEmpty else {
             print("댓글 내용이 없습니다.")
@@ -275,7 +277,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     @objc func heartButtonTapped() {
         guard let foodTalkId = self.foodTalkId else { return }
-
+        
         if heartButton.isSelected {
             self.heartButton.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
             let bodyDTO = DeleteLoveRequestBodyDTO(id: foodTalkId)
@@ -332,7 +334,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             
             UIView.animate(withDuration: 0.3) {
                 self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-                // 키보드가 나타날 때 테이블 뷰의 하단 여유 공간을 키보드 높이로 설정
                 self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 91, right: 0)
             }
         }
@@ -341,30 +342,29 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     @objc func keyboardDown() {
         UIView.animate(withDuration: 0.3) {
             self.view.transform = .identity
-            // 키보드가 사라질 때 테이블 뷰의 하단 여유 공간을 원래대로 설정
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
         }
     }
     
     //MARK: - UserDefault
-    func saveHeartButtonState(isSelected: Bool) {
-        if let foodTalkId = self.foodTalkId {
-            UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(foodTalkId)")
-        }
-    }
+       func saveHeartButtonState(isSelected: Bool) {
+           if let foodTalkId = self.foodTalkId {
+               UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(foodTalkId)")
+           }
+       }
 
-    func loadHeartButtonState() -> Bool {
-        if let foodTalkId = self.foodTalkId {
-            return UserDefaults.standard.bool(forKey: "heartButtonState_\(foodTalkId)")
-        }
-        return false
-    }
+       func loadHeartButtonState() -> Bool {
+           if let foodTalkId = self.foodTalkId {
+               return UserDefaults.standard.bool(forKey: "heartButtonState_\(foodTalkId)")
+           }
+           return false
+       }
 }
 
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments.count // 댓글의 개수를 반환
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

@@ -152,11 +152,11 @@ extension FoodTalkTarget: TargetType {
         case .foodTalkSave:
             return "/v1/foodTalk"
         case .replyReport(let bodyDTO):
-            return "/v1/foodTalk/report/reply/\(bodyDTO.replyId)"
+            return "/v1/foodTalk/report/reply/\(bodyDTO.replyId))"
         case .postReport(let bodyDTO):
-            return "/v1/foodTalk/report/post/\(bodyDTO.postId)"
+            return "/v1/foodTalk/report/post/{postId}\(bodyDTO.postId))"
         case .commentReport(let bodyDTO):
-            return "/v1/foodTalk/report/comment/\(bodyDTO.commentId)"
+            return "/v1/foodTalk/report/comment/\(bodyDTO.commentId))"
         case .replyWrite:
             return "/v1/foodTalk/reply"
         case .recipeSave:
