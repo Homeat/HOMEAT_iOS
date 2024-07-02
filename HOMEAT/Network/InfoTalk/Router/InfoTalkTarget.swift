@@ -14,6 +14,10 @@ enum InfoTalkTarget {
     case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
     case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
     case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
+    case postReport(_ bodyDTO: PostInfoRequestBodyDTO)
+    case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
+    case postLove(_ bodyDTO: InfoLoveRequestBodyDTO) //공감
+    case postLoveDelete(_ bodyDTO: InfoDeleteLoveRequestBodyDTO) //공감 취소
 }
 extension InfoTalkTarget: TargetType {
     var authorization: Authorization {
@@ -29,6 +33,14 @@ extension InfoTalkTarget: TargetType {
         case .oldestInfo:
             return .authorization
             
+        case .postReport:
+            return .authorization
+        case .commentReport:
+            return .authorization
+        case .postLove:
+            return .authorization
+        case .postLoveDelete:
+            return .authorization
         }
     }
     var headerType: HTTPHeaderType {
@@ -42,6 +54,14 @@ extension InfoTalkTarget: TargetType {
         case .latestInfo:
             return .hasToken
         case .oldestInfo:
+            return .hasToken
+        case .postReport:
+            return .hasToken
+        case .commentReport:
+            return .hasToken
+        case .postLove:
+            return .hasToken
+        case .postLoveDelete:
             return .hasToken
         }
     }
@@ -57,6 +77,14 @@ extension InfoTalkTarget: TargetType {
             return .get
         case .oldestInfo:
             return .get
+        case .postReport:
+            return .get
+        case .commentReport:
+            return .post
+        case .postLove:
+            return .post
+        case .postLoveDelete:
+            return .delete
         }
     }
     var path: String {
@@ -72,19 +100,35 @@ extension InfoTalkTarget: TargetType {
         case .oldestInfo:
             return "/v1/infoTalk/posts/oldest"
             
+        case .postReport(let queryDTO):
+            return "/v1/infoTalk/\(queryDTO.id)"
+        case .commentReport(let bodyDTO):
+            return "/v1/infoTalk/comment/\(bodyDTO.id)"
+        case .postLove(let bodyDTO):
+            return "/v1/infoTalk/love/\(bodyDTO.id)"
+        case .postLoveDelete(let bodyDTO):
+            return "/v1/infoTalk/love/\(bodyDTO.id)"
         }
     }
     var parameters: RequestParams {
         switch self {
         case let .infoTalkSave(bodyDTO):
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
-        case let .latestInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
+        case let .latestInfo(queryDTO):
+            return .requestQuery(queryDTO)
         case let .loveInfo(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .viewInfo(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .oldestInfo(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .postReport(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .commentReport(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .postLove(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .postLoveDelete(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }
