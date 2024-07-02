@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//정보토크 게시글 공감하기 dto
 struct InfoLoveRequestBodyDTO: Codable {
     let id: Int
 }
