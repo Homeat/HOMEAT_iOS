@@ -11,7 +11,7 @@ import Then
 
 class ContinueButton: UIButton {
     
-    static var selectedButton: TagButton?
+//    static var selectedButton: TagButton?
     
     override init(frame: CGRect) {
         super.init(frame: frame)

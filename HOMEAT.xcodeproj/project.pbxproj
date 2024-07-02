@@ -305,6 +305,7 @@
 		0309DDF02C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
 		0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewOrderResponseDTO.swift; sourceTree = "<group>"; };
 		0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderResponseDTO.swift; sourceTree = "<group>"; };
+		0309DDF62C259C2000D6133A /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D4755DB2C021EB700E014A9 /* DeclareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclareView.swift; sourceTree = "<group>"; };
 		2D4755DC2C021EB700E014A9 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -826,6 +827,7 @@
 				0309DDA32C0204A700D6133A /* Service */,
 				0309DD9F2C02042700D6133A /* Router */,
 				0309DD8F2C01E54700D6133A /* DTO */,
+				0309DDF62C259C2000D6133A /* PhotoManager.swift */,
 			);
 			path = FoodTalk;
 			sourceTree = "<group>";
@@ -1459,6 +1461,7 @@
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
+				0309DDF72C259C2000D6133A /* PhotoManager.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
 				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,

@@ -116,23 +116,23 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
             $0.distribution = .fillEqually
         }
         
-        shopTagButton.do {
-            var attributedTitle = AttributedString("#장보기")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
-        
-        eatoutTagButton.do {
-            var attributedTitle = AttributedString("#외식비")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
-        
-        deliveryTagButton.do {
-            var attributedTitle = AttributedString("#배달비")
-            attributedTitle.font = .bodyMedium15
-            $0.configuration?.attributedTitle = attributedTitle
-        }
+//        shopTagButton.do {
+//            var attributedTitle = AttributedString("#장보기")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
+//        
+//        eatoutTagButton.do {
+//            var attributedTitle = AttributedString("#외식비")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
+//        
+//        deliveryTagButton.do {
+//            var attributedTitle = AttributedString("#배달비")
+//            attributedTitle.font = .bodyMedium15
+//            $0.configuration?.attributedTitle = attributedTitle
+//        }
         
         saveAlert.do {
             let confirm = UIAlertAction(title: "네 맞습니다.", style: .default) { _ in

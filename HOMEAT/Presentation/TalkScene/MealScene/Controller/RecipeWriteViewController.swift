@@ -13,7 +13,7 @@ import Photos
 import PhotosUI
 import AVFoundation
 
-class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout {
+class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlowLayout, StepWriteViewControllerDelegate {
     var userId: Int?
     var selectedTag: String?
     var selectedButton: UIButton?
@@ -30,6 +30,15 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
+    var foodRecipes: [foodRecipeDTOS] = []
+    func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?) {
+        let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
+        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", ingredient: ingredient ?? "재료", recipePicture: recipePictureData)
+        foodRecipes.append(foodRecipe)
+        tableView.reloadData()
+        print("레시피: \(foodRecipe.recipe)") 
+        print("현재 foodRecipes 배열: \(foodRecipes.count) 개의 레시피가 있습니다.")
+    }
     //MARK: - Property
     private let scrollView = UIScrollView()
     private let contentView = UIView()
@@ -322,6 +331,13 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         tableView.layer.cornerRadius = 10
     }
     
+    func saveData() {
+        // 데이터 저장 로직 구현
+        // 저장이 완료되면 아래 알림을 보냄
+        NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
+        navigationController?.popViewController(animated: true)
+    }
+    
     //MARK: - @objc
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -407,6 +423,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     @objc func stepAddButtonTapped() {
         let vc = StepWriteController()
         vc.delegate = self
+        vc.stepDelegate = self
         vc.modalPresentationStyle = UIModalPresentationStyle.automatic
         self.present(vc, animated: true, completion: nil)
     }
@@ -450,18 +467,32 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             showAlert(message: "이미지를 선택하세요")
             return
         }
-        //서버에 게시글 전달
+        
         let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
-        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, image: imageDataArray)
-        NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) {
-            [weak self] response in
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, foodPictures: imageDataArray, foodRecipeRequest: foodRecipes)
+        print(bodyDTO)
+        print("bodyDTO.foodRecipeRequest count: \(bodyDTO.foodRecipeRequest.count)")
+        for recipe in bodyDTO.foodRecipeRequest {
+            print("Recipe: \(recipe.recipe), Ingredient: \(recipe.ingredient)")
+        }
+        
+        NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
-                //data.data 서버에서 받는 responsebody
-                guard let foodTalkData = data.data else { return }
-                self?.userId = foodTalkData
-            default :
-                print("데이터 존재 안함 ")
+                print("성공: 데이터가 반환되었습니다")
+                if let foodTalkData = data.data {
+                    // data.data 서버에서 받는 responsebody
+                    print("서버에서 받은 데이터: \(foodTalkData)")
+                } else {
+                    print("성공했지만 데이터가 비어있습니다")
+                }
+                for (index, image) in imageDataArray.enumerated() {
+                    print("Image \(index) Size: \(image.count) bytes")
+                }
+                NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
+                self?.navigationController?.popViewController(animated: true)
+            default:
+                print("데이터 저장 실패")
             }
         }
     }
@@ -561,10 +592,22 @@ extension RecipeWriteViewController: UICollectionViewDelegate, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoViewCell", for: indexPath) as! PhotoViewCell
-            let image = selectedImages[indexPath.item]
-            cell.imageView.image = image
-            return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoViewCell", for: indexPath) as! PhotoViewCell
+        let image = selectedImages[indexPath.item]
+        cell.postImageView.image = image
+        cell.index = indexPath.item
+        cell.delegate = self
+        return cell
+    }
+}
+
+extension RecipeWriteViewController: DeleteActionDelegate {
+    func delete(at index: Int) {
+        selectedImages.remove(at: index)
+        collectionView.reloadData()
+        if selectedImages.isEmpty {
+            customButton.isHidden = false
+        }
     }
 }
 
@@ -719,19 +762,22 @@ extension RecipeWriteViewController: UITextFieldDelegate, UITextViewDelegate {
 
 // 하단 레시피 TableView
 extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource {
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return foodRecipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RecipeWriteViewCell.identifier, for: indexPath) as! RecipeWriteViewCell
-        cell.textLabel?.text = data[indexPath.row]
-        cell.textLabel?.textColor = .white
-        cell.backgroundColor = .coolGray4
+        let foodRecipe = foodRecipes[indexPath.row]
+        cell.configure(with: foodRecipe)
+        cell.backgroundColor = UIColor(named: "homeBackgroundColor")
         cell.layer.cornerRadius = 10
         cell.selectionStyle = .none
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80 // 셀의 높이, 간격 포함
     }
 }
 

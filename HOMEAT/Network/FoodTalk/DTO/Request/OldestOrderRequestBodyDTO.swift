@@ -10,5 +10,5 @@ import Foundation
 struct OldestOrderRequestBodyDTO: Codable {
     let search: String
     let tag: String
-    let oldestFoodTalkId: Int
+    let OldestFoodTalkId: Int
 }

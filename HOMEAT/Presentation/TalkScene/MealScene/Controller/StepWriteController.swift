@@ -14,9 +14,14 @@ protocol ModalViewControllerDelegate: AnyObject {
     func didAddCell()
 }
 
+protocol StepWriteViewControllerDelegate: AnyObject {
+    func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?)
+}
+
 class StepWriteController: BaseViewController, UITextViewDelegate {
     
     weak var delegate: ModalViewControllerDelegate?
+    weak var stepDelegate: StepWriteViewControllerDelegate?
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
@@ -211,6 +216,14 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     @objc func saveButtonTapped(_ sender: Any) {
         //데이터 전달
         delegate?.didAddCell()
+        guard let recipe = recipTextView.text, !recipe.isEmpty else {
+            return
+        }
+        
+        let recipePicture = photoButton.image(for: .normal)
+        stepDelegate?.didSaveRecipe(recipe: recipe, ingredient: "재료", recipePicture: recipePicture)
+        
+        // Delegate 호출 후 현재 ViewController 닫기
         self.dismiss(animated: true, completion: nil)
     }
 }

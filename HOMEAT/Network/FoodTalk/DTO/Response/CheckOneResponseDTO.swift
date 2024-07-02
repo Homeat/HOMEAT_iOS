@@ -48,6 +48,7 @@ struct FoodTalkComment: Codable {
     let commentId: Int
     let commentNickName: String
     let content: String
+    let status: String
     let foodTalkReplies: [FoodTalkReply]
 }
 
@@ -58,5 +59,6 @@ struct FoodTalkReply: Codable {
     let replyId: Int
     let replyNickName: String
     let content: String
+    let status: String
 }
 

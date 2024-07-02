@@ -1,12 +1,9 @@
-//
-//  FoodTalkCollectionViewCell.swift
-//  HOMEAT
-//
-//  Created by 이지우 on 4/7/24.
-//
-
 import UIKit
 import SnapKit
+
+class ImageCache {
+    static let shared = NSCache<NSString, UIImage>()
+}
 
 class FoodTalkCollectionViewCell: UICollectionViewCell {
     
@@ -16,17 +13,21 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .bodyMedium15
         label.textColor = .white
-        
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        label.textAlignment = .center // 텍스트 중앙 정렬
         return label
     }()
     
     let foodImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 11
-        image.image = UIImage(named: "plusIcon")
-        
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
+    
+    private var imageDownloadTask: URLSessionDataTask?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,8 +38,15 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        foodImageView.image = nil
+        foodName.text = nil
+        imageDownloadTask?.cancel()
+        imageDownloadTask = nil
+    }
+    
     private func setUI() {
-        
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 4
@@ -50,14 +58,42 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         foodImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(14)
-            make.height.equalTo(106)
-            make.width.equalTo(125)
+            make.height.equalTo(100)
+            make.width.equalTo(120)
         }
         
         foodName.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(11)
+            make.top.equalTo(foodImageView.snp.bottom).offset(5)
+            make.leading.equalToSuperview().offset(10) // 여유 공간 추가
+            make.trailing.equalToSuperview().offset(-10) // 여유 공간 추가
+            make.bottom.equalTo(self.snp.bottom).offset(-5)
         }
+    }
+    
+    func configure(with foodTalk: FoodTalk) {
+        foodName.text = foodTalk.foodName
         
+        if let url = URL(string: foodTalk.url) {
+            // 캐시에서 이미지 확인
+            if let cachedImage = ImageCache.shared.object(forKey: url.absoluteString as NSString) {
+                foodImageView.image = cachedImage
+            } else {
+                // URL로부터 이미지 비동기적으로 로드
+                imageDownloadTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+                    guard let self = self, let data = data, error == nil, let image = UIImage(data: data) else {
+                        return
+                    }
+                    // 캐시에 저장
+                    ImageCache.shared.setObject(image, forKey: url.absoluteString as NSString)
+                    DispatchQueue.main.async {
+                        self.foodImageView.image = image
+                    }
+                }
+                imageDownloadTask?.resume()
+            }
+        } else {
+            foodImageView.image = nil
+        }
     }
 }
+

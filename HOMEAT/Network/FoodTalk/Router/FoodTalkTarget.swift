@@ -150,7 +150,7 @@ extension FoodTalkTarget: TargetType {
     var path: String {
         switch self {
         case .foodTalkSave:
-            return "/v1/foodTalk/save"
+            return "/v1/foodTalk"
         case .replyReport(let bodyDTO):
             return "/v1/foodTalk/report/reply/\(bodyDTO.replyId)"
         case .postReport(let bodyDTO):
@@ -209,13 +209,13 @@ extension FoodTalkTarget: TargetType {
         case let .checkOne(bodyDTO):
             return .requestQuery(bodyDTO)
         case let .viewOrder(bodyDTO):
-            return .requestWithBody(bodyDTO)
+            return .requestQuery(bodyDTO)
         case let .oldestOrder(bodyDTO):
-            return .requestWithBody(bodyDTO)
+            return .requestQuery(bodyDTO)
         case let .latestOrder(bodyDTO):
-            return .requestWithBody(bodyDTO)
+            return .requestQuery(bodyDTO)
         case let .loveOrder(bodyDTO):
-            return .requestWithBody(bodyDTO)
+            return .requestQuery(bodyDTO)
         case let .deleteReply(bodyDTO):
             return .requestQuery(bodyDTO)
         case let .deletePost(bodyDTO):
@@ -232,16 +232,29 @@ extension FoodTalkSaveRequestBodyDTO {
             formData.append(self.name.data(using: .utf8) ?? Data(), withName: "name")
             formData.append(self.memo.data(using: .utf8) ?? Data(), withName: "memo")
             formData.append(self.tag.data(using: .utf8) ?? Data(), withName: "tag")
-            // 사진을 formData에 추가하는 경우
+            
+            // 로그 추가
             print("multipartformdata 출력")
-            if let foodPhotos = self.image {
-                print("Profile Photos is not empty. Count: \(foodPhotos.count)")
+            
+            // 사진을 formData에 추가하는 경우
+            if let foodPhotos = self.foodPictures, !foodPhotos.isEmpty {
+                print("Food Photos is not empty. Count: \(foodPhotos.count)")
                 for (index, image) in foodPhotos.enumerated() {
-                    print("Index: \(index), Photo: \(image)")
-                    formData.append(image, withName: "foodPhotos", fileName: "image\(index).jpg", mimeType: "image/jpeg")
+                    print("Index: \(index), Photo Size: \(image.count) bytes")
+                    formData.append(image, withName: "foodPictures", fileName: "image\(index).jpg", mimeType: "image/jpeg")
                 }
             } else {
-                print("Profile Photos is nil or empty")
+                print("Food Photos is nil or empty")
+            }
+
+            for (index, foodRecipeDTOS) in self.foodRecipeRequest.enumerated() {
+                print("Appending recipe \(index)")
+                formData.append(foodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].recipe")
+                formData.append(foodRecipeDTOS.ingredient.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].ingredient")
+                if let recipePicture = foodRecipeDTOS.recipePicture {
+                    print("Appending recipe picture \(index), Size: \(recipePicture.count) bytes")
+                    formData.append(recipePicture, withName: "foodRecipeRequest[\(index)].recipePicture", fileName: "recipePicture\(index).jpg", mimeType: "image/jpeg")
+                }
             }
         }
     }

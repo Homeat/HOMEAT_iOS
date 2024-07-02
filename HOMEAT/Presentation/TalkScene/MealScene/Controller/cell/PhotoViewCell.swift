@@ -10,42 +10,64 @@ import UIKit
 import SnapKit
 import Then
 
+protocol DeleteActionDelegate: AnyObject {
+    func delete(at index: Int)
+}
+
 class PhotoViewCell: UICollectionViewCell {
     
-    let imageView = UIImageView()
-    let deleteButton = UIButton()
-    
+    static let reuseIdentifier = "PhotoCell"
+    //MARK: -- Property
+    var postImageView = UIImageView()
+    var deleteButton = UIButton()
+    weak var delegate: DeleteActionDelegate?
+    var index: Int?
     override init(frame: CGRect) {
         super.init(frame: frame)
         setConfigure()
         setConstraints()
     }
     
-    //MARK: - SetUI
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private func setConfigure() {
-        imageView.do {
+        postImageView.do {
             $0.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true
             $0.layer.cornerRadius = 14
+            $0.layer.masksToBounds = true
         }
         
         deleteButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
             $0.imageView?.contentMode = .scaleAspectFit
-            $0.setImage(UIImage(named: "ImageDeleteButton"), for: .normal)
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         }
     }
     
     private func setConstraints() {
-        contentView.addSubview(imageView)
+        contentView.addSubviews(postImageView,deleteButton)
         
-        imageView.snp.makeConstraints {
+        postImageView.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
-            $0.leading.equalTo(contentView.snp.leading)
+            $0.leading.equalTo(contentView.snp.leading).offset(25)
             $0.trailing.equalTo(contentView.snp.trailing)
             $0.bottom.equalTo(contentView.snp.bottom)
         }
+        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(postImageView.snp.top).offset(9)
+            $0.trailing.equalTo(postImageView.snp.trailing).inset(10.8)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
+        }
+        
     }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    
+    @objc private func deleteButtonTapped() {
+        guard let index = index else { return }
+        delegate?.delete(at: index)
     }
 }
