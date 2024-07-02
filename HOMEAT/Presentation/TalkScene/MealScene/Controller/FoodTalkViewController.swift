@@ -247,8 +247,6 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.delegate = self
         foodCollectionView.prefetchDataSource = self
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
     }
     
     //MARK: - @objc func

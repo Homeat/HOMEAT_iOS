@@ -40,6 +40,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         setTableView()
         setTabbar()
         setupKeyboardEvent()
+        setHeartButton()
         PostRequest()
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
     }
@@ -79,6 +80,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         heartButton.do {
             $0.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
             $0.contentMode = .scaleAspectFit
+            $0.isSelected = false
+            $0.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         }
         
         replyTextField.do {
@@ -162,6 +165,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
     
+    private func setHeartButton() {
+        if let foodTalkId = self.foodTalkId {
+            let isSelected = loadHeartButtonState()
+            self.heartButton.isSelected = isSelected
+            let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
+            self.heartButton.setImage(UIImage(named: imageName), for: .normal)
+        }
+    }
+    
     private func setTabbar() {
         tabBarController?.tabBar.isHidden = true
         tabBarController?.tabBar.isTranslucent = true
@@ -237,7 +249,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
 
     // MARK: -- objc
     @objc func sendButtonTapped() {
-        // 작성한 댓글을 서버로 전달
         guard let foodTalkId = self.foodTalkId,
               let content = replyTextField.text, !content.isEmpty else {
             print("댓글 내용이 없습니다.")
@@ -257,6 +268,46 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     self.scrollToBottom()
                 default:
                     print("댓글 저장 실패")
+                }
+            }
+        }
+    }
+    
+    @objc func heartButtonTapped() {
+        guard let foodTalkId = self.foodTalkId else { return }
+
+        if heartButton.isSelected {
+            self.heartButton.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
+            let bodyDTO = DeleteLoveRequestBodyDTO(id: foodTalkId)
+            NetworkService.shared.foodTalkService.deleteLove(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 취소 성공")
+                        self.PostRequest()
+                        self.heartButton.isSelected = false
+                        self.saveHeartButtonState(isSelected: false)
+                    default:
+                        print("좋아요 취소 실패")
+                    }
+                }
+            }
+        } else {
+            self.heartButton.setImage(UIImage(named: "isHeartSelected"), for: .normal)
+            let bodyDTO = LoveRequestBodyDTO(id: foodTalkId)
+            NetworkService.shared.foodTalkService.love(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 성공")
+                        self.PostRequest()
+                        self.heartButton.isSelected = true
+                        self.saveHeartButtonState(isSelected: true)
+                    default:
+                        print("좋아요 실패")
+                    }
                 }
             }
         }
@@ -293,6 +344,20 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             // 키보드가 사라질 때 테이블 뷰의 하단 여유 공간을 원래대로 설정
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
         }
+    }
+    
+    //MARK: - UserDefault
+    func saveHeartButtonState(isSelected: Bool) {
+        if let foodTalkId = self.foodTalkId {
+            UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(foodTalkId)")
+        }
+    }
+
+    func loadHeartButtonState() -> Bool {
+        if let foodTalkId = self.foodTalkId {
+            return UserDefaults.standard.bool(forKey: "heartButtonState_\(foodTalkId)")
+        }
+        return false
     }
 }
 
