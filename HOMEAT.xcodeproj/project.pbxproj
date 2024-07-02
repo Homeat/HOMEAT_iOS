@@ -182,6 +182,22 @@
 		58E88E842BF92CEF00775F06 /* TagPlusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E832BF92CEF00775F06 /* TagPlusViewController.swift */; };
 		58E88E862BF92D4600775F06 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E852BF92D4600775F06 /* PhotoCollectionViewCell.swift */; };
 		58E88E882BF931F200775F06 /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E88E872BF931F200775F06 /* Mode.swift */; };
+		58EEF5772C32570300C12C1E /* LatestInfoRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5762C32570300C12C1E /* LatestInfoRequestBodyDTO.swift */; };
+		58EEF5792C3257AC00C12C1E /* ViewInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5782C3257AC00C12C1E /* ViewInfoResponseDTO.swift */; };
+		58EEF57B2C3258F800C12C1E /* LoveInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF57A2C3258F800C12C1E /* LoveInfoResponseDTO.swift */; };
+		58EEF57D2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF57C2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift */; };
+		58EEF57F2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF57E2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift */; };
+		58EEF5812C325A2000C12C1E /* LatestInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5802C325A2000C12C1E /* LatestInfoResponseDTO.swift */; };
+		58EEF5832C325B2E00C12C1E /* OldestInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5822C325B2E00C12C1E /* OldestInfoResponseDTO.swift */; };
+		58EEF5852C325B7300C12C1E /* OldestInfoRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5842C325B7300C12C1E /* OldestInfoRequestBodyDTO.swift */; };
+		58EEF5872C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5862C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift */; };
+		58EEF5892C327C5C00C12C1E /* PostInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5882C327C5C00C12C1E /* PostInfoResponseDTO.swift */; };
+		58EEF58B2C3281CA00C12C1E /* InfoCommentRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF58A2C3281CA00C12C1E /* InfoCommentRequestBodyDTO.swift */; };
+		58EEF58D2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF58C2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift */; };
+		58EEF5912C328F4700C12C1E /* InfoReplyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5902C328F4700C12C1E /* InfoReplyTableViewCell.swift */; };
+		58EEF5952C3428C500C12C1E /* InfoDeleteLoveRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5942C3428C500C12C1E /* InfoDeleteLoveRequestBodyDTO.swift */; };
+		58EEF5972C342DAB00C12C1E /* InfoReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5962C342DAA00C12C1E /* InfoReplyTextView.swift */; };
+		58EEF59B2C34374B00C12C1E /* PostTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59A2C34374B00C12C1E /* PostTagCollectionViewCell.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -367,6 +383,22 @@
 		58E88E832BF92CEF00775F06 /* TagPlusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagPlusViewController.swift; sourceTree = "<group>"; };
 		58E88E852BF92D4600775F06 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		58E88E872BF931F200775F06 /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
+		58EEF5762C32570300C12C1E /* LatestInfoRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestInfoRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5782C3257AC00C12C1E /* ViewInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInfoResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF57A2C3258F800C12C1E /* LoveInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveInfoResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF57C2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoveInfoRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF57E2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInfoRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5802C325A2000C12C1E /* LatestInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestInfoResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5822C325B2E00C12C1E /* OldestInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestInfoResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5842C325B7300C12C1E /* OldestInfoRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestInfoRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5862C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5882C327C5C00C12C1E /* PostInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostInfoResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF58A2C3281CA00C12C1E /* InfoCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF58C2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoLoveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5902C328F4700C12C1E /* InfoReplyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoReplyTableViewCell.swift; sourceTree = "<group>"; };
+		58EEF5942C3428C500C12C1E /* InfoDeleteLoveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeleteLoveRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5962C342DAA00C12C1E /* InfoReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoReplyTextView.swift; sourceTree = "<group>"; };
+		58EEF59A2C34374B00C12C1E /* PostTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -1072,6 +1104,11 @@
 		58DF7B6B2C25DDAB00603763 /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5782C3257AC00C12C1E /* ViewInfoResponseDTO.swift */,
+				58EEF57A2C3258F800C12C1E /* LoveInfoResponseDTO.swift */,
+				58EEF5802C325A2000C12C1E /* LatestInfoResponseDTO.swift */,
+				58EEF5822C325B2E00C12C1E /* OldestInfoResponseDTO.swift */,
+				58EEF5882C327C5C00C12C1E /* PostInfoResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1080,6 +1117,14 @@
 			isa = PBXGroup;
 			children = (
 				58DF7B6D2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift */,
+				58EEF5762C32570300C12C1E /* LatestInfoRequestBodyDTO.swift */,
+				58EEF57C2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift */,
+				58EEF57E2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift */,
+				58EEF5842C325B7300C12C1E /* OldestInfoRequestBodyDTO.swift */,
+				58EEF5862C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift */,
+				58EEF58A2C3281CA00C12C1E /* InfoCommentRequestBodyDTO.swift */,
+				58EEF58C2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift */,
+				58EEF5942C3428C500C12C1E /* InfoDeleteLoveRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1176,10 +1221,12 @@
 		58E88E742BF8FA6F00775F06 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5902C328F4700C12C1E /* InfoReplyTableViewCell.swift */,
 				58E88E762BF9084A00775F06 /* InfoTalkTableViewCell.swift */,
 				58E88E852BF92D4600775F06 /* PhotoCollectionViewCell.swift */,
 				58DF7B5F2C2470F100603763 /* TagCollectionViewCell.swift */,
 				58DF7B612C24715600603763 /* TagPlusCollectionViewCell.swift */,
+				58EEF59A2C34374B00C12C1E /* PostTagCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1188,6 +1235,7 @@
 			isa = PBXGroup;
 			children = (
 				58E88E812BF92B2100775F06 /* InfoPostContentView.swift */,
+				58EEF5962C342DAA00C12C1E /* InfoReplyTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1330,6 +1378,9 @@
 			files = (
 				58DF7B5A2C23181800603763 /* ChangePasswordViewController.swift in Sources */,
 				0309DD882C01E3D200D6133A /* PostContentView.swift in Sources */,
+				58EEF5892C327C5C00C12C1E /* PostInfoResponseDTO.swift in Sources */,
+				58EEF5852C325B7300C12C1E /* OldestInfoRequestBodyDTO.swift in Sources */,
+				58EEF5952C3428C500C12C1E /* InfoDeleteLoveRequestBodyDTO.swift in Sources */,
 				011DAFDD2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift in Sources */,
 				01D531022BD14D89008C368E /* LoginViewController.swift in Sources */,
 				58DF7C0F2C2B101200603763 /* PayEditRequestBodyDTO.swift in Sources */,
@@ -1351,6 +1402,7 @@
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
 				0309DDB32C02DD1800D6133A /* ReplyWriteRequestBodyDTO.swift in Sources */,
 				2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */,
+				58EEF5792C3257AC00C12C1E /* ViewInfoResponseDTO.swift in Sources */,
 				0309DDDC2C08C81A00D6133A /* CheckOneResponseDTO.swift in Sources */,
 				58DF7B602C2470F100603763 /* TagCollectionViewCell.swift in Sources */,
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
@@ -1370,6 +1422,7 @@
 				0309DDE72C1DCA9500D6133A /* CommentReportRequestBodyDTO.swift in Sources */,
 				012383972BBBEBB40048CC2D /* InstagramAccountView.swift in Sources */,
 				0309DD8A2C01E3D200D6133A /* ReplyTextView.swift in Sources */,
+				58EEF5812C325A2000C12C1E /* LatestInfoResponseDTO.swift in Sources */,
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
 				0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */,
 				0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */,
@@ -1397,6 +1450,7 @@
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
+				58EEF57B2C3258F800C12C1E /* LoveInfoResponseDTO.swift in Sources */,
 				011DAFDA2BE3ABC4000556D0 /* EatoutCheckView.swift in Sources */,
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58DF7B8A2C29580000603763 /* HomeSceneTarget.swift in Sources */,
@@ -1417,10 +1471,12 @@
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
+				58EEF5772C32570300C12C1E /* LatestInfoRequestBodyDTO.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
+				58EEF5912C328F4700C12C1E /* InfoReplyTableViewCell.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
 				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeekView.swift in Sources */,
@@ -1429,6 +1485,7 @@
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				58DF7B772C29496500603763 /* ReportBadge.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
+				58EEF5972C342DAB00C12C1E /* InfoReplyTextView.swift in Sources */,
 				58DF7B7F2C29578E00603763 /* OcrRequestBodyDTO.swift in Sources */,
 				01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */,
 				01D530FB2BCFB7BB008C368E /* OnBoardingViewController.swift in Sources */,
@@ -1445,12 +1502,15 @@
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
+				58EEF57F2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
 				0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */,
 				011DAFD82BE3ABB6000556D0 /* HomefoodCheckView.swift in Sources */,
 				01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */,
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
+				58EEF5872C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift in Sources */,
 				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
+				58EEF5832C325B2E00C12C1E /* OldestInfoResponseDTO.swift in Sources */,
 				58DF7C152C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift in Sources */,
 				58DF7C172C2E761900603763 /* CalendarDailyResponseDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
@@ -1460,6 +1520,7 @@
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
+				58EEF57D2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift in Sources */,
 				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
 				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,
 				01D531282BDFBC5B008C368E /* KeychainHandler.swift in Sources */,
@@ -1468,10 +1529,13 @@
 				0309DD652C00C3F300D6133A /* RecipeWriteViewCell.swift in Sources */,
 				2DA59CEC2BF3B68D00A86CF9 /* SetExpenseViewController.swift in Sources */,
 				582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */,
+				58EEF58B2C3281CA00C12C1E /* InfoCommentRequestBodyDTO.swift in Sources */,
+				58EEF58D2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
 				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
 				016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */,
+				58EEF59B2C34374B00C12C1E /* PostTagCollectionViewCell.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
 				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
 				0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */,
