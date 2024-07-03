@@ -55,9 +55,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        //셀 만들어야 함
         collectionView.register(PhotoViewCell.self, forCellWithReuseIdentifier: "PhotoViewCell")
-        
         return collectionView
     }()
     private let imageView = UIImageView()
@@ -80,8 +78,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         super.viewDidLoad()
         setNavigationBar()
         setUpKeyboard()
-        collectionView.isHidden = true
         setTableView()
+        collectionView.isHidden = true
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
 
@@ -201,9 +199,9 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     override func setConstraints() {
         view.addSubviews(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(customButton, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
-        self.view.addSubview(self.imageView)
-        view.bringSubviewToFront(self.imageView)
+        contentView.addSubviews(imageView, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
+        contentView.bringSubviewToFront(imageView)
+        contentView.addSubview(customButton)
         
         container.addArrangedSubview(breakfastButton)
         container.addArrangedSubview(lunchButton)
@@ -300,7 +298,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크 글쓰기"
         let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!, // 원하는 폰트와 크기로 변경
+            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!,
             .foregroundColor: UIColor.white
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -332,8 +330,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     
     func saveData() {
-        // 데이터 저장 로직 구현
-        // 저장이 완료되면 아래 알림을 보냄
         NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
         navigationController?.popViewController(animated: true)
     }
@@ -362,8 +358,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
                 DispatchQueue.main.async {
                     self.showAlert(message: "갤러리를 불러올 수 없습니다. 핸드폰 설정에서 사진 접근 허용을 모든 사진으로 변경해주세요.")
                 }
-            case .authorized, .limited: // 모두 허용, 일부 허용
-                self.pickImage() // 갤러리 불러오는 동작을 할 함수
+            case .authorized, .limited:
+                self.pickImage()
             @unknown default:
                 print("PHPhotoLibrary::execute - \"Unknown case\"")
             }
@@ -442,12 +438,10 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     
     @objc func dismissKeyboard() {
-        // 키보드를 내립니다.
         view.endEditing(true)
     }
     
     @objc func saveButtonTapped() {
-        //값 유무 확인
         guard let name = nameTextField.text, !name.isEmpty else {
             showAlert(message: "제목을 입력하세요")
             return
@@ -455,6 +449,20 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         guard let memo = memoTextView.text, !memo.isEmpty else {
             showAlert(message: "메모를 입력하세요")
+            return
+        }
+        
+        if name.count >= 15 {
+            let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if memo.count >= 130 {
+            let alert = UIAlertController(title: "내용 길이 초과", message: "내용이 너무 길어요", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -501,14 +509,14 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             let photoLibrary = PHPhotoLibrary.shared()
             var configuration = PHPickerConfiguration(photoLibrary: photoLibrary)
 
-            configuration.selectionLimit = 3 //한번에 가지고 올 이미지 갯수 제한
-            configuration.filter = .any(of: [.images]) // 이미지, 비디오 등의 옵션
+            configuration.selectionLimit = 3
+            configuration.filter = .any(of: [.images])
 
-            DispatchQueue.main.async { // 메인 스레드에서 코드를 실행시켜야함
+            DispatchQueue.main.async {
                 let picker = PHPickerViewController(configuration: configuration)
                 picker.delegate = self
                 picker.isEditing = true
-                self.present(picker, animated: true, completion: nil) // 갤러리뷰 프리젠트
+                self.present(picker, animated: true, completion: nil)
         }
     }
     
@@ -533,8 +541,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
 
         let customButton = UIButton(configuration: config)
         customButton.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
-        customButton.translatesAutoresizingMaskIntoConstraints = false
-
         return customButton
     }
 
@@ -611,7 +617,6 @@ extension RecipeWriteViewController: DeleteActionDelegate {
 }
 
 extension RecipeWriteViewController: PHPickerViewControllerDelegate {
-    // 사진 선택이 끝났을 때 호출되는 함수
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let identifiers = results.compactMap(\.assetIdentifier)
         let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
@@ -644,15 +649,11 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
             }
         }
         group.notify(queue: .main) {
-            // 모든 이미지가 로드되었을 때 실행되는 부분
             DispatchQueue.main.async { [self] in
                 if self.currentMode == .album {
-                    // 앨범 모드일 경우의 처리
                     self.customButton.isHidden = true
                     self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
-                    
-                    // 이미지가 추가되었을 때 디버깅 정보 출력
                     print("selectedImages contents: \(self.selectedImages)")
                     
                     self.collectionView.reloadData() // collectionView 갱신
@@ -674,26 +675,17 @@ extension RecipeWriteViewController: UIImagePickerControllerDelegate, UINavigati
                 picker.dismiss(animated: true)
                 return
             }
-            // 이미지를 selectedImages 배열에 추가
             selectedImages.append(image)
-            
-            // 이미지 뷰에 선택된 이미지 표시
-            imageView.image = image //화면에 보일것이다.
-            // 버튼을 숨기고 이미지 뷰를 표시하도록 설정
-            //addImageButton.isHidden = true
+            imageView.image = image
             imageView.isHidden = false
-            customButton.isHidden = true // customButton도 함께 숨김
-
+            customButton.isHidden = true
             self.imageView.image = image
-            //imagePickercontroller를 죽인다.
-            picker.dismiss(animated: true, completion: nil)
-            
-            NSLayoutConstraint.activate([
-                customButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -200), //화면 밖으로 이동시킬려고 밖으로 빼냄
-                customButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 108),
-                customButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -109),
-                customButton.heightAnchor.constraint(equalToConstant: 176),
-            ])
+            picker.dismiss(animated: true)
+            customButton.snp.makeConstraints {
+                $0.top.equalTo(view.safeAreaLayoutGuide).offset(-200)
+                $0.leading.trailing.equalTo(108)
+                $0.height.equalTo(176)
+            }
         }
 }
 
