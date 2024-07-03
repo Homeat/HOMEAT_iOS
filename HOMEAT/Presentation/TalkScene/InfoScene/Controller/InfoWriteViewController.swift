@@ -584,7 +584,7 @@ extension InfoWriteViewController: UICollectionViewDelegate, UICollectionViewDat
             let image = selectedImages[indexPath.item]
             cell.postImageView.image = image
             cell.index = indexPath.item
-            cell.delegate = self
+//            cell.delegate = self
             return cell
             
         } else if collectionView == tagCollectionView {

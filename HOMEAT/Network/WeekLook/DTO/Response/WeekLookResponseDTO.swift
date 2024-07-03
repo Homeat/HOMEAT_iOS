@@ -8,5 +8,5 @@
 import Foundation
 
 struct WeekLookResponseDTO: Codable {
-    let reportBage: [ReportBadge]
+    let reportBadge: [ReportBadge]
 }
