@@ -104,6 +104,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         scrollView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+            $0.showsVerticalScrollIndicator = false
         }
         
         contentView.do {
@@ -663,16 +664,20 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
         group.notify(queue: .main) {
             DispatchQueue.main.async { [self] in
                 if self.currentMode == .album {
-                    self.customButton.isHidden = true
-                    self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
                     print("selectedImages contents: \(self.selectedImages)")
                     
-                    self.collectionView.reloadData() // collectionView 갱신
+                    if self.selectedImages.isEmpty {
+                        self.customButton.isHidden = false
+                    } else {
+                        self.customButton.isHidden = true
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData() // collectionView 갱신
+                    }
                 }
             }
             // 이미지 피커를 닫음
-            picker.dismiss(animated: true, completion: nil)
+            picker.dismiss(animated: true)
         }
     }
 }
