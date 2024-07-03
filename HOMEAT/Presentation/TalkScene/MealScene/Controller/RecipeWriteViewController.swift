@@ -253,7 +253,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
         
         container.snp.makeConstraints {
-            $0.top.equalTo(customButton.snp.bottom).offset(36)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide).offset(267)
             $0.leading.equalToSuperview().offset(47)
             $0.trailing.equalToSuperview().offset(-47)
         }

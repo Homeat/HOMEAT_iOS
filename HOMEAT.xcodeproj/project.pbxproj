@@ -1461,7 +1461,6 @@
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
-				0309DDF72C259C2000D6133A /* PhotoManager.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
 				0309DD592BF9E62A00D6133A /* PhotoViewCell.swift in Sources */,
@@ -1622,7 +1621,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G62DUX396A;
+				DEVELOPMENT_TEAM = TSGF3YP7J3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
@@ -1636,7 +1635,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seokho.HOMEAT;
+				PRODUCT_BUNDLE_IDENTIFIER = insa.HOMEAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1651,7 +1650,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = G62DUX396A;
+				DEVELOPMENT_TEAM = TSGF3YP7J3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
@@ -1665,7 +1664,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = seokho.HOMEAT;
+				PRODUCT_BUNDLE_IDENTIFIER = insa.HOMEAT;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
