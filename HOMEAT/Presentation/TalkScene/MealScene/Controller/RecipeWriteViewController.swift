@@ -43,7 +43,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let imagePicker = UIImagePickerController()
-    //private let photoButton = UIButton()
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -80,8 +79,21 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         setUpKeyboard()
         setTableView()
         collectionView.isHidden = true
+        memoTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if keyPath == "contentSize", let newSize = change?[.newKey] as? CGSize {
+                let newHeight = max(newSize.height, 50) // 최소 높이 제약 조건 설정
+                memoTextView.constraints.filter { $0.firstAttribute == .height }.first?.constant = newHeight
+                view.layoutIfNeeded()
+            }
+        }
+        deinit {
+            // 뷰 컨트롤러가 할당 해제될 때 옵저버를 제거
+            memoTextView.removeObserver(self, forKeyPath: "contentSize")
+        }
 
     //MARK: - SetUI
     let textViewPlaceHolder = "오늘의 음식이 담고 있는 이야기는?"
