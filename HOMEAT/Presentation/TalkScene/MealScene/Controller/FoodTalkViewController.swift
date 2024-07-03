@@ -359,6 +359,16 @@ extension FoodTalkViewController: UISearchBarDelegate {
         foodCollectionView.reloadData()
         request()
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            search = nil
+            lastFoodTalkId = Int.max
+            lastest.removeAll()
+            foodCollectionView.reloadData()
+            request()
+        }
+    }
 }
 
 extension FoodTalkViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching {
