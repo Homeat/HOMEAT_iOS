@@ -167,8 +167,10 @@ final class MonthView: BaseView {
         
         let barChartHeight = 120
         // 각 막대의 비율을 계산합니다.
-        let jipbapBarHeight = CGFloat(jipbapPrice / (jipbapPrice + outPrice) * barChartHeight)
-        let outBarHeight = CGFloat(outPrice / (jipbapPrice + outPrice) * barChartHeight)
+        let total = CGFloat(jipbapPrice + outPrice)
+        let jipbapBarHeight = jipbapPrice != 0 ? CGFloat(jipbapPrice) / total * CGFloat(barChartHeight) : 0
+        let outBarHeight = outPrice != 0 ? CGFloat(outPrice) / total * CGFloat(barChartHeight) : 0
+
         print("집밥 높이:\(jipbapBarHeight)")
         print("배달 높이:\(outBarHeight)")
         
