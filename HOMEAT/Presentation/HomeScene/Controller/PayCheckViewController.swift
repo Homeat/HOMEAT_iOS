@@ -31,7 +31,7 @@ class PayCheckViewController : BaseViewController{
         let year = calendar.component(.year, from: currentDate)
         let month = String(format: "%02d", calendar.component(.month, from: currentDate))
         updateCalendar(year: String(year), month: month)
-        updateCalendarDate(year: String(year), month: month, day: String(29))
+        //updateCalendarDate(year: String(year), month: month, day: String(29))
         setNavigationBar()
         setAddTarget()
     }
@@ -148,6 +148,7 @@ class PayCheckViewController : BaseViewController{
                     let incomingMonth = Int(month)
                     if currentMonth == incomingMonth {
                         self.calendarView.refreshCalendar(data: calendarEntries)
+                        print("현재 년 월 \(calendarEntries)")
                     }
                 }
             default:
