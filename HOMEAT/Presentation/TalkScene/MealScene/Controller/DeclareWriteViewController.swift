@@ -131,6 +131,13 @@ class DeclareWriteViewController: BaseViewController {
     }
      
     @objc func declareSendAction() {
+        guard declareTextField.text.count <= 300 else {
+            let alertController = UIAlertController(title: "경고", message: "300자 이내로 작성해주세요", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
         let bodyDTO = PostReportRequestBodyDTO(postId: foodTalkId)
         NetworkService.shared.foodTalkService.postReport(bodyDTO: bodyDTO) { response in
             switch response {

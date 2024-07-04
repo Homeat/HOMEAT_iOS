@@ -124,8 +124,14 @@ class CommentDeclareWriteViewController: BaseViewController {
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
     
-    // 신고하기 버튼을 눌렀을 떄 발생하는 메서드
     @objc func declareSendAction() {
+        guard declareTextField.text.count <= 300 else {
+            let alertController = UIAlertController(title: "경고", message: "300자 이내로 작성해주세요", preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
         let bodyDTO = CommentReportRequestBodyDTO(commentId: commentId)
         NetworkService.shared.foodTalkService.commentReport(bodyDTO: bodyDTO) { response in
             switch response {
