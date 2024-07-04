@@ -12,6 +12,7 @@ import Alamofire
 enum AnalysisTarget {
     case Month(_ bodyDTO: AnalysisMonthRequestBodyDTO)
     case Week(_ bodyDTO: AnalysisWeekRequestBodyDTO)
+    case Detail(_ bodyDTO: AnalysisDetailRequestBodyDTO)
 }
 
 extension AnalysisTarget: TargetType {
@@ -20,6 +21,8 @@ extension AnalysisTarget: TargetType {
         case .Month:
             return .authorization
         case .Week:
+            return .authorization
+        case .Detail:
             return .authorization
         }
     }
@@ -30,6 +33,8 @@ extension AnalysisTarget: TargetType {
             return .hasToken
         case .Week:
             return .hasToken
+        case .Detail:
+            return .hasToken
         }
     }
     
@@ -38,6 +43,8 @@ extension AnalysisTarget: TargetType {
         case .Month:
             return .get
         case .Week:
+            return .get
+        case .Detail:
             return .get
         }
     }
@@ -48,6 +55,8 @@ extension AnalysisTarget: TargetType {
             return "/v1/homeatReport/ofMonth"
         case .Week:
             return "/v1/homeatReport/ofWeek"
+        case .Detail:
+            return "/v1/home/calendar/daily/details"
         }
     }
     
@@ -56,6 +65,8 @@ extension AnalysisTarget: TargetType {
         case .Month(let bodyDTO):
             return .requestQuery(bodyDTO)
         case .Week(let bodyDTO):
+            return .requestQuery(bodyDTO)
+        case .Detail(let bodyDTO):
             return .requestQuery(bodyDTO)
         }
     }

@@ -199,6 +199,8 @@
 		58EEF5972C342DAB00C12C1E /* InfoReplyTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5962C342DAA00C12C1E /* InfoReplyTextView.swift */; };
 		58EEF59B2C34374B00C12C1E /* PostTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59A2C34374B00C12C1E /* PostTagCollectionViewCell.swift */; };
 		58EEF59D2C3540D800C12C1E /* ErrorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59C2C3540D800C12C1E /* ErrorData.swift */; };
+		58EEF59F2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59E2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift */; };
+		58EEF5A12C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -402,6 +404,8 @@
 		58EEF5962C342DAA00C12C1E /* InfoReplyTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoReplyTextView.swift; sourceTree = "<group>"; };
 		58EEF59A2C34374B00C12C1E /* PostTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTagCollectionViewCell.swift; sourceTree = "<group>"; };
 		58EEF59C2C3540D800C12C1E /* ErrorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorData.swift; sourceTree = "<group>"; };
+		58EEF59E2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisDetailRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisDetailResponseDTO.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -997,6 +1001,7 @@
 			children = (
 				589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */,
 				589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */,
+				58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1006,6 +1011,7 @@
 			children = (
 				589CDCF12BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift */,
 				589CDD4F2BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift */,
+				58EEF59E2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1469,6 +1475,7 @@
 				58E88E842BF92CEF00775F06 /* TagPlusViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
 				58E88E862BF92D4600775F06 /* PhotoCollectionViewCell.swift in Sources */,
+				58EEF5A12C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift in Sources */,
 				58DF7B6E2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift in Sources */,
 				2DB408AD2BBC5F44001CB6F9 /* PayCheckViewController.swift in Sources */,
 				0309DDDF2C0AF5AB00D6133A /* CommentDeclareViewController.swift in Sources */,
@@ -1490,6 +1497,7 @@
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
 				58DF7B772C29496500603763 /* ReportBadge.swift in Sources */,
+				58EEF59F2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
 				58EEF5972C342DAB00C12C1E /* InfoReplyTextView.swift in Sources */,
 				58DF7B7F2C29578E00603763 /* OcrRequestBodyDTO.swift in Sources */,
