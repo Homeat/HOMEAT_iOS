@@ -15,7 +15,7 @@ protocol ModalViewControllerDelegate: AnyObject {
 }
 
 protocol StepWriteViewControllerDelegate: AnyObject {
-    func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?)
+    func didSaveRecipe(recipe: String?, recipePicture: UIImage?)
 }
 
 class StepWriteController: BaseViewController, UITextViewDelegate {
@@ -221,7 +221,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         }
         
         let recipePicture = photoButton.image(for: .normal)
-        stepDelegate?.didSaveRecipe(recipe: recipe, ingredient: "재료", recipePicture: recipePicture)
+        stepDelegate?.didSaveRecipe(recipe: recipe, recipePicture: recipePicture)
         
         // Delegate 호출 후 현재 ViewController 닫기
         self.dismiss(animated: true, completion: nil)

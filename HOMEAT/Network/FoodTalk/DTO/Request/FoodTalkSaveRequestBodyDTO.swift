@@ -11,13 +11,13 @@ struct FoodTalkSaveRequestBodyDTO: Codable {
     let name: String
     let memo: String
     let tag: String
+    let ingredient: String?
     let foodPictures: [Data]?
     let foodRecipeRequest: [foodRecipeDTOS]
 }
 
 struct foodRecipeDTOS: Codable {
     let recipe: String
-    let ingredient: String
     let recipePicture: Data?
 }
 

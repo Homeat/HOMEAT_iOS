@@ -31,9 +31,9 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     var foodRecipes: [foodRecipeDTOS] = []
-    func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?) {
+    func didSaveRecipe(recipe: String?, recipePicture: UIImage?) {
         let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
-        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", ingredient: ingredient ?? "재료", recipePicture: recipePictureData)
+        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", recipePicture: recipePictureData)
         foodRecipes.append(foodRecipe)
         tableView.reloadData()
         print("레시피: \(foodRecipe.recipe)") 
@@ -490,11 +490,11 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
         
         let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
-        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, foodPictures: imageDataArray, foodRecipeRequest: foodRecipes)
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, ingredient: "재료", foodPictures: imageDataArray, foodRecipeRequest: foodRecipes)
         print(bodyDTO)
         print("bodyDTO.foodRecipeRequest count: \(bodyDTO.foodRecipeRequest.count)")
         for recipe in bodyDTO.foodRecipeRequest {
-            print("Recipe: \(recipe.recipe), Ingredient: \(recipe.ingredient)")
+            print("Recipe: \(recipe.recipe)")
         }
         
         NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) { [weak self] response in
