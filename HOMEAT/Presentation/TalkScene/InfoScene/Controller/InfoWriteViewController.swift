@@ -32,6 +32,7 @@ class InfoWriteViewController: BaseViewController {
     private var isCameraAuthorized: Bool {
         AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
+    private let deleteButton = UIButton()
     private let imagePicker = UIImagePickerController()
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -180,6 +181,11 @@ class InfoWriteViewController: BaseViewController {
             $0.setImage(UIImage(named: "greenHashTag"), for: .normal)
             $0.addTarget(self, action: #selector(navigateToTagPlusViewController), for: .touchUpInside)
         }
+        deleteButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -196,12 +202,20 @@ class InfoWriteViewController: BaseViewController {
         view.addSubviews(imageView,collectionView,tagCollectionView,tagButton,tagImage,nameLabel,
                          nameTextField,memoLabel,memoTextView)
         view.bringSubviewToFront(imageView)
+        view.addSubview(deleteButton)
+        view.bringSubviewToFront(deleteButton)
         view.addSubview(customButton)
         imageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(176)
             $0.width.equalTo(176)
+        }
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(47)
+            $0.trailing.equalTo(imageView.snp.trailing).offset(10.8)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
         }
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
@@ -402,7 +416,7 @@ class InfoWriteViewController: BaseViewController {
         let takePhotoAction = UIAlertAction(title: "사진 촬영", style: .default) { _ in
             self.currentMode = .camera
             self.openCamera()
-        }
+    }
         
         let chooseFromLibraryAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default) { _ in
             self.currentMode = .album
@@ -469,6 +483,9 @@ class InfoWriteViewController: BaseViewController {
         view.endEditing(true)
     }
     
+    @objc private func deleteButtonTapped() {
+    
+    }
 }
 //MARK: - Extension
 // TextField, TextView 키보드 처리
@@ -540,7 +557,7 @@ extension InfoWriteViewController: TagDeleteActionDelegate {
         }
     }
 }
-extension InfoWriteViewController: DeleteActionDelegate {
+extension InfoWriteViewController: InfoDeleteActionDelegate {
     func delete(at index: Int) {
         selectedImages.remove(at: index)
         collectionView.reloadData()
@@ -584,7 +601,7 @@ extension InfoWriteViewController: UICollectionViewDelegate, UICollectionViewDat
             let image = selectedImages[indexPath.item]
             cell.postImageView.image = image
             cell.index = indexPath.item
-//            cell.delegate = self
+            cell.delegate = self
             return cell
             
         } else if collectionView == tagCollectionView {
@@ -634,19 +651,27 @@ extension InfoWriteViewController: PHPickerViewControllerDelegate {
         group.notify(queue: .main) {
             DispatchQueue.main.async { [self] in
                 if self.currentMode == .album {
-                    // 앨범 모드일 경우의 처리
-                    self.customButton.isHidden = true
-                    self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
                     print("selectedImages contents: \(self.selectedImages)")
                     
-                    self.collectionView.reloadData() // collectionView 갱신
+                    if self.selectedImages.isEmpty {
+                        self.customButton.isHidden = false
+                    } else {
+                        self.customButton.isHidden = true
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData() // collectionView 갱신
+                    }
                 }
             }
             // 이미지 피커를 닫음
             picker.dismiss(animated: true)
         }
-    }
+            }
+    func pickerDidCancel(_ picker: PHPickerViewController) {
+            // 취소 버튼을 눌렀을 때 customButton을 다시 나타나게 함
+            self.customButton.isHidden = false
+            picker.dismiss(animated: true, completion: nil)
+        }
 }
 
 extension InfoWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -670,6 +695,11 @@ extension InfoWriteViewController: UIImagePickerControllerDelegate, UINavigation
             $0.height.equalTo(176)
         }
     }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            // 취소 버튼을 눌렀을 때 customButton을 다시 나타나게 함
+            self.customButton.isHidden = false
+            picker.dismiss(animated: true, completion: nil)
+        }
 }
 extension InfoWriteViewController: TagPlusViewControllerDelegate {
     func didUpdateTags(_ tags: [String]) {

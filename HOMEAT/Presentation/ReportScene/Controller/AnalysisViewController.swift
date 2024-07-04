@@ -243,11 +243,11 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                     self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                } else if data.code == "REPORT_4221" {
-                    self?.weekView.updateWeekContentLabel(text: "주간 분석 없어요")
+                } else if data.code == "REPORT_4042" {
+                    self?.weekView.updateWeekContentLabel(text: "비교할 회원이 존재하지 않습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                } else if data.code == "COMMON_500" {
+                } else if data.code == "COMMON_400" {
                     if let errorDataString = data.data as? String,
                        let errorData = self?.parseErrorData(errorDataString) {
                         print("Error Data: AgeRange=\(errorData.ageRange), Income=\(errorData.income)")
