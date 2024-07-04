@@ -195,7 +195,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     func declareViewButtonTapped() {
         guard let foodTalkId = self.foodTalkId else {return}
-        
         let nextVC = DeclareViewController(foodTalkId: foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
     }

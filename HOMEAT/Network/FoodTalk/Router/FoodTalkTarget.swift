@@ -154,7 +154,7 @@ extension FoodTalkTarget: TargetType {
         case .replyReport(let bodyDTO):
             return "/v1/foodTalk/report/reply/\(bodyDTO.replyId))"
         case .postReport(let bodyDTO):
-            return "/v1/foodTalk/report/post/{postId}\(bodyDTO.postId))"
+            return "/v1/foodTalk/report/post/\(bodyDTO.postId))"
         case .commentReport(let bodyDTO):
             return "/v1/foodTalk/report/comment/\(bodyDTO.commentId))"
         case .replyWrite:
