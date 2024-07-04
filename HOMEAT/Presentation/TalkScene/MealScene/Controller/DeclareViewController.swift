@@ -173,7 +173,7 @@ class DeclareViewController: BaseViewController {
         guard let foodTalkId = self.foodTalkId else {return}
         let nextVC = DeclareWriteViewController(foodTalkId: foodTalkId)
         nextVC.hidesBottomBarWhenPushed = true
-        switch sender {
+        switch sender { 
         case firstButton:
             nextVC.optionLabel = firstButton.titleLabel?.text
             navigationController?.pushViewController(nextVC, animated: true)

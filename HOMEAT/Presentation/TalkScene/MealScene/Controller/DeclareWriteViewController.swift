@@ -129,7 +129,7 @@ class DeclareWriteViewController: BaseViewController {
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
-    
+     
     @objc func declareSendAction() {
         let bodyDTO = PostReportRequestBodyDTO(postId: foodTalkId)
         NetworkService.shared.foodTalkService.postReport(bodyDTO: bodyDTO) { response in
