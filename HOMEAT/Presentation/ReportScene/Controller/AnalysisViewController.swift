@@ -205,7 +205,6 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                     self?.monthView.pieChart.isHidden = false
                     self?.monthView.barChartView.isHidden = false
                 } else if data.code == "REPORT_4041" {
-                    
                     self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
@@ -214,7 +213,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
                 } else {
-                    self?.monthView.updateMonthContentLabel(text: "알 수 없는 오류가 발생했습니다.")
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
                 }
@@ -226,9 +225,10 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
     }
     
     // MARK: Week Server Function
-    private func weekChart(year: Int, month: Int,day: Int) {
+    private func weekChart(year: Int, month: Int, day: Int) {
         let bodyDTO = AnalysisWeekRequestBodyDTO(input_year: "\(year)", input_month: "\(month)", input_day: "\(day)")
         print("Request Parameters: \(bodyDTO)")
+        
         NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
@@ -236,44 +236,45 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                 print("Response Code: \(data.code)")
                 self?.ageButton.setTitle(data.data?.age_range, for: .normal)
                 self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
-                if data.code == "COMMON_200" {
+                
+                // Handle different response codes
+                switch data.code {
+                case "COMMON_200":
                     guard let analysisData = data.data else { return }
                     self?.weekView.handleWeekAnalysisData(analysisData)
                     self?.weekView.jipbapWeekBarChartView.isHidden = false
                     self?.weekView.deliveryWeekBarChartView.isHidden = false
-                } else if data.code == "REPORT_4040" {
-//                    self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
+                case "REPORT_4041":
+                    self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                } else if data.code == "REPORT_4042" {
-//                    self?.weekView.updateWeekContentLabel(text: "비교할 회원이 존재하지 않습니다.")
+                case "REPORT_4042":
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                } else if data.code == "COMMON_400" {
+                case "COMMON_500":
                     if let errorDataString = data.data as? String,
                        let errorData = self?.parseErrorData(errorDataString) {
                         print("Error Data: AgeRange=\(errorData.ageRange), Income=\(errorData.income)")
                         self?.ageButton.setTitle(errorData.ageRange, for: .normal)
                         self?.incomeMoneyButton.setTitle(errorData.income, for: .normal)
                     } else {
-//                        self?.weekView.updateWeekContentLabel(text: "서버 에러 발생")
+                        // Handle unknown error scenario
                     }
-                } else {
+                default:
                     print("Unknown response code: \(data.code)")
                 }
-
+                
             case .serverErr:
                 print("서버 에러")
                 self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
                 self?.weekView.jipbapWeekBarChartView.isHidden = true
                 self?.weekView.deliveryWeekBarChartView.isHidden = true
+                
             default:
                 print("데이터 존재 안함")
             }
         }
     }
-    
-    // MARK: - Function
     private func parseErrorData(_ errorDataString: String) -> ErrorData? {
         let components = errorDataString.components(separatedBy: ", ")
         var ageRange = ""
