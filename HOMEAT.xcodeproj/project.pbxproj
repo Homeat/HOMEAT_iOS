@@ -201,6 +201,10 @@
 		58EEF59D2C3540D800C12C1E /* ErrorData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59C2C3540D800C12C1E /* ErrorData.swift */; };
 		58EEF59F2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF59E2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift */; };
 		58EEF5A12C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */; };
+		58EEF5A32C3655D700C12C1E /* PayDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A22C3655D600C12C1E /* PayDetailTableViewCell.swift */; };
+		58EEF5A52C3664D500C12C1E /* PayDetailRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A42C3664D500C12C1E /* PayDetailRequestBodyDTO.swift */; };
+		58EEF5A92C3796DC00C12C1E /* PayDetailsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A82C3796DC00C12C1E /* PayDetailsResponseDTO.swift */; };
+		58EEF5AB2C37A73000C12C1E /* Formatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5AA2C37A73000C12C1E /* Formatter+.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -406,6 +410,10 @@
 		58EEF59C2C3540D800C12C1E /* ErrorData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorData.swift; sourceTree = "<group>"; };
 		58EEF59E2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisDetailRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisDetailResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5A22C3655D600C12C1E /* PayDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayDetailTableViewCell.swift; sourceTree = "<group>"; };
+		58EEF5A42C3664D500C12C1E /* PayDetailRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayDetailRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5A82C3796DC00C12C1E /* PayDetailsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayDetailsResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5AA2C37A73000C12C1E /* Formatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+.swift"; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -445,6 +453,7 @@
 			isa = PBXGroup;
 			children = (
 				011DAFDC2BE3AC6D000556D0 /* CalendarCollectionViewCell.swift */,
+				58EEF5A22C3655D600C12C1E /* PayDetailTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -535,6 +544,7 @@
 				012383422BB7F93F0048CC2D /* CALayer+.swift */,
 				0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */,
 				012383942BBBDF160048CC2D /* UIView+.swift */,
+				58EEF5AA2C37A73000C12C1E /* Formatter+.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1183,6 +1193,7 @@
 				58DF7C0E2C2B101200603763 /* PayEditRequestBodyDTO.swift */,
 				58DF7C102C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift */,
 				58DF7C142C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift */,
+				58EEF5A42C3664D500C12C1E /* PayDetailRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1194,6 +1205,7 @@
 				58DF7B852C2957DB00603763 /* OcrResponseDTO.swift */,
 				58DF7C122C2D2A7E00603763 /* CalendarCheckResponseDTO.swift */,
 				58DF7C162C2E761900603763 /* CalendarDailyResponseDTO.swift */,
+				58EEF5A82C3796DC00C12C1E /* PayDetailsResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1482,9 +1494,11 @@
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				0309DDBF2C03256700D6133A /* LoveOrderResponseDTO.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
+				58EEF5A32C3655D700C12C1E /* PayDetailTableViewCell.swift in Sources */,
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
 				58EEF5772C32570300C12C1E /* LatestInfoRequestBodyDTO.swift in Sources */,
+				58EEF5A52C3664D500C12C1E /* PayDetailRequestBodyDTO.swift in Sources */,
 				0309DDBD2C03250B00D6133A /* LoveOrderRequestBody.swift in Sources */,
 				01D531372BDFC6A8008C368E /* OnboardingTarget.swift in Sources */,
 				016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */,
@@ -1515,7 +1529,9 @@
 				01D5313F2BDFCDB4008C368E /* HOMEATRequestInterceptor.swift in Sources */,
 				58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */,
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
+				58EEF5AB2C37A73000C12C1E /* Formatter+.swift in Sources */,
 				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
+				58EEF5A92C3796DC00C12C1E /* PayDetailsResponseDTO.swift in Sources */,
 				58EEF57F2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,
 				0309DD632C00859B00D6133A /* StepWriteController.swift in Sources */,
