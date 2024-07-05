@@ -130,7 +130,7 @@ final class MonthView: BaseView {
         monthContentLabel.attributedText = attributedString
     }
     
-    func setupPieChart(jipbapRatio : Int, outRatio: Int) {
+    func setupPieChart(jipbapRatio: Int, outRatio: Int) {
         var entries = [ChartDataEntry]()
         entries.append(PieChartDataEntry(value: Double(jipbapRatio)))
         entries.append(PieChartDataEntry(value: Double(outRatio)))
@@ -138,7 +138,6 @@ final class MonthView: BaseView {
         if let customGreenColor = UIColor(named: "turquoiseGreen"),
            let otherColor = UIColor(named: "turquoisePurple") {
             let nsCustomGreenColor = NSUIColor(cgColor: customGreenColor.cgColor)
-            let nsWhiteColor = NSUIColor.black
             let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
             dataSet.colors = [nsCustomGreenColor, nsOtherColor]
         }
@@ -146,15 +145,16 @@ final class MonthView: BaseView {
         let data = PieChartData(dataSet: dataSet)
         pieChart.holeRadiusPercent = 0.6
         pieChart.holeColor = .clear
-        dataSet.valueTextColor = .black
+        dataSet.valueTextColor = .clear  // 기본 값 숨김
         dataSet.valueFont = UIFont.systemFont(ofSize: 11.0)
         dataSet.valueLineColor = .black
         dataSet.valueLinePart1OffsetPercentage = 0.8
-        dataSet.drawValuesEnabled = true
+        dataSet.drawValuesEnabled = false
         dataSet.drawIconsEnabled = false
         pieChart.data = data
         pieChart.legend.enabled = false
         
+        pieChart.renderer = CustomPieChartRenderer(chart: pieChart, animator: pieChart.chartAnimator, viewPortHandler: pieChart.viewPortHandler)
     }
     
     func setupBarChart(jipbapPrice: Int, outPrice: Int) {
@@ -167,8 +167,10 @@ final class MonthView: BaseView {
         
         let barChartHeight = 120
         // 각 막대의 비율을 계산합니다.
-        let jipbapBarHeight = CGFloat(jipbapPrice / (jipbapPrice + outPrice) * barChartHeight)
-        let outBarHeight = CGFloat(outPrice / (jipbapPrice + outPrice) * barChartHeight)
+        let total = CGFloat(jipbapPrice + outPrice)
+        let jipbapBarHeight = jipbapPrice != 0 ? CGFloat(jipbapPrice) / total * CGFloat(barChartHeight) : 0
+        let outBarHeight = outPrice != 0 ? CGFloat(outPrice) / total * CGFloat(barChartHeight) : 0
+
         print("집밥 높이:\(jipbapBarHeight)")
         print("배달 높이:\(outBarHeight)")
         

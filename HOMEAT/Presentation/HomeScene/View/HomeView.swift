@@ -27,7 +27,7 @@ class HomeView: BaseView {
     //MARK: - Function
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupPieChart(remainingPercent: 3)
+        //setupPieChart(remainingPercent: 3)
         setAddTarget()
     }
     

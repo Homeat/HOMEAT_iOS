@@ -8,6 +8,8 @@
 import UIKit
 import Then
 import SnapKit
+import Alamofire
+import Kingfisher
 
 class InfoTalkTableViewCell: UITableViewCell {
     
@@ -63,7 +65,12 @@ class InfoTalkTableViewCell: UITableViewCell {
             $0.font = .bodyMedium10
             $0.numberOfLines = 0
         }
-        
+        chatImage.do {
+            $0.image = UIImage(named: "isReply")
+        }
+        heartImage.do {
+            $0.image = UIImage(named: "isSmallHeartSelected")
+        }
         chatLabel.do {
             $0.textColor = .turquoiseGreen
             $0.numberOfLines = 0
@@ -137,5 +144,29 @@ class InfoTalkTableViewCell: UITableViewCell {
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+    
+    func configure(with infoTalk: InfoTalk) {
+        let photoUrl = infoTalk.url
+        let url = URL(string: photoUrl)
+        let formattedCreatedAt = formatDateString(infoTalk.createdAt)
+        titleLabel.text = infoTalk.title
+        dateLabel.text = formattedCreatedAt
+        contentLabel.text = infoTalk.content
+        heartLabel.text = "\(infoTalk.love ?? 0)"
+        chatLabel.text = "\(infoTalk.commentNumber ?? 0)"
+        postImageView.kf.setImage(with: url)
+    }
+}
+extension InfoTalkTableViewCell {
+    func formatDateString(_ dateString: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSS"
+        if let date = formatter.date(from: dateString) {
+            formatter.dateFormat = "M월 d일 HH:mm"
+            return formatter.string(from: date)
+        } else {
+            return ""
+        }
     }
 }

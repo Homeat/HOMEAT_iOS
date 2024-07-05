@@ -20,7 +20,14 @@ class PayCheckViewController : BaseViewController{
     private let calendarView = CalendarView()
     private let payCheckView = PayCheckView()
     private let checkDetailButton = UIButton()
-    //MARK: - Function
+    private var selectedDay: String?
+    private var selectedHomeAmount: String?
+    private var selectedEatOutAmount: String?
+    private var selectedLeftAmount: String?
+    private var selectedYear: String?
+    private var selectedMonth: String?
+    private var selectedDate: String?
+    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +35,11 @@ class PayCheckViewController : BaseViewController{
 //        payCheckView.delegate = self
         let currentDate = Date()
         let calendar = Calendar.current
-        let year = calendar.component(.year, from: currentDate)
+        let year = String(calendar.component(.year, from: currentDate))
         let month = String(format: "%02d", calendar.component(.month, from: currentDate))
-        updateCalendar(year: String(year), month: month)
-        updateCalendarDate(year: String(year), month: month, day: String(29))
+        let day = String(format: "%02d", calendar.component(.day, from: currentDate))
+        updateCalendar(year: year, month: month)
+        updateCalendarDate(year: year, month: month, day: day)
         setNavigationBar()
         setAddTarget()
     }
@@ -148,6 +156,7 @@ class PayCheckViewController : BaseViewController{
                     let incomingMonth = Int(month)
                     if currentMonth == incomingMonth {
                         self.calendarView.refreshCalendar(data: calendarEntries)
+                        print("현재 년 월 \(calendarEntries)")
                     }
                 }
             default:
@@ -163,21 +172,28 @@ class PayCheckViewController : BaseViewController{
             switch response {
             case .success(let data):
                     guard let calendarData = data.data else { return }
-                    DispatchQueue.main.async {
-                        let homeAmount = String(calendarData.todayJipbapPrice ?? 0)
-                        let eatOutAmount = String(calendarData.todayOutPrice ?? 0)
-                        let leftAmount = String(calendarData.remainingGoal ?? 0)
-                        let dateString = calendarData.date
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "yyyy-MM-dd"
-                        if let date = dateFormatter.date(from: dateString) {
-                            dateFormatter.dateFormat = "MM월 dd일 EEEE"
-                            dateFormatter.locale = Locale(identifier: "ko_KR")
-                            let formattedDate = dateFormatter.string(from: date)
-                            self.payCheckView.updateDateLabel(date: formattedDate)
-                        }
-                        self.payCheckView.updateSpentLabel(homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+                DispatchQueue.main.async {
+                    let homeAmount = String(calendarData.todayJipbapPrice ?? 0)
+                    let eatOutAmount = String(calendarData.todayOutPrice ?? 0)
+                    let leftAmount = String(calendarData.remainingGoal ?? 0)
+                    let dateString = calendarData.date
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    if let date = dateFormatter.date(from: dateString) {
+                        dateFormatter.dateFormat = "MM월 dd일 EEEE"
+                        dateFormatter.locale = Locale(identifier: "ko_KR")
+                        let formattedDate = dateFormatter.string(from: date)
+                        self.payCheckView.updateDateLabel(date: formattedDate)
+                        self.selectedDay = formattedDate
                     }
+                    self.payCheckView.updateSpentLabel(homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+                    self.selectedHomeAmount = homeAmount
+                    self.selectedEatOutAmount = eatOutAmount
+                    self.selectedLeftAmount = leftAmount
+                    self.selectedYear = year
+                    self.selectedMonth = month
+                    self.selectedDate = day
+                }
             default:
                 print("서버 연동 실패")
                 DispatchQueue.main.async {
@@ -193,9 +209,18 @@ class PayCheckViewController : BaseViewController{
     
     //MARK: - @objc Func
     @objc func checkDetailButtonTapped(_ sender: UIButton) {
-        self.navigationController?.pushViewController(PayCheckDetailViewController(), animated: true)
+        guard let day = selectedDay,
+              let year = selectedYear,
+              let month = selectedMonth,
+              let date = selectedDate,
+                      let homeAmount = selectedHomeAmount,
+                      let eatOutAmount = selectedEatOutAmount,
+                      let leftAmount = selectedLeftAmount else {
+                    return
+                }
+        let detailVC = PayCheckDetailViewController(day: day, year: year, month: month, date: date, homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
-
 }
 
 extension PayCheckViewController: CalendarViewDelegate {

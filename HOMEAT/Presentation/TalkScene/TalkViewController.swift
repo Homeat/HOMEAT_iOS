@@ -66,6 +66,9 @@ class TalkViewController: TabmanViewController {
             $0.height.equalTo(40)
         }
     }
+    func switchToInfoTalk() {
+        self.scrollToPage(.at(index: 1), animated: true)
+    }
 }
 
 // MARK: - Extension

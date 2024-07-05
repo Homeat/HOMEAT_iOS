@@ -190,28 +190,23 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
     
     // MARK: Month Server Function
     private func monthChart(year: Int, month: Int) {
-        let bodyDTO = AnalysisMonthRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)")
+        let bodyDTO = AnalysisMonthRequestBodyDTO(input_year: "\(year)", input_month: "\(month)")
         NetworkService.shared.analysisService.analysisMonth(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
-                if Int(data.code) == 200 {
-                    guard let analysisData = data.data else { return }
-                    self?.handleAnalysisData(analysisData)
-                } else if data.code == "REPORT_4221" {
-                    // 현재 날짜와 비교하여 이번 달인지 확인
-                    let currentDate = Date()
-                    let calendar = Calendar.current
-                    let currentYear = calendar.component(.year, from: currentDate)
-                    let currentMonth = calendar.component(.month, from: currentDate)
-                    
-                    if year == currentYear && month == currentMonth {
-                        self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
-                    } else if year == currentYear && month == currentMonth + 1 {
-                        self?.monthView.updateMonthContentLabel(text: "다음달 지출 기록이 없습니다.")
-                    } else {
-                        self?.monthView.updateMonthContentLabel(text: "전달 지출 기록이 없습니다.")
+                if data.code == "COMMON_200" {
+                    guard let analysisData = data.data else {
+                        self?.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
+                        self?.monthView.pieChart.isHidden = true
+                        self?.monthView.barChartView.isHidden = true
+                        return
                     }
+                    self?.handleAnalysisData(analysisData)
+                    self?.monthView.pieChart.isHidden = false
+                    self?.monthView.barChartView.isHidden = false
+                } else if data.code == "REPORT_4041" {
                     
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
                 } else if data.code == "REPORT_4222" {
@@ -243,23 +238,35 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                 self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
                 if data.code == "COMMON_200" {
                     guard let analysisData = data.data else { return }
-                    self?.ageButton.setTitle(analysisData.age_range, for: .normal)
-                    self?.incomeMoneyButton.setTitle(analysisData.income, for: .normal)
-                    self?.handleWeekAnalysisData(analysisData)
+                    self?.weekView.handleWeekAnalysisData(analysisData)
+                    self?.weekView.jipbapWeekBarChartView.isHidden = false
+                    self?.weekView.deliveryWeekBarChartView.isHidden = false
                 } else if data.code == "REPORT_4040" {
-                    self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
+//                    self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                } else if data.code == "REPORT_4221"{
-                    self?.weekView.updateWeekContentLabel(text: "주간 분석 없어요")
+                } else if data.code == "REPORT_4042" {
+//                    self?.weekView.updateWeekContentLabel(text: "비교할 회원이 존재하지 않습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
+                } else if data.code == "COMMON_400" {
+                    if let errorDataString = data.data as? String,
+                       let errorData = self?.parseErrorData(errorDataString) {
+                        print("Error Data: AgeRange=\(errorData.ageRange), Income=\(errorData.income)")
+                        self?.ageButton.setTitle(errorData.ageRange, for: .normal)
+                        self?.incomeMoneyButton.setTitle(errorData.income, for: .normal)
+                    } else {
+//                        self?.weekView.updateWeekContentLabel(text: "서버 에러 발생")
+                    }
                 } else {
-                    self?.weekView.updateWeekContentLabel(text: "알 수 없는 오류 발생")
-                    self?.weekView.jipbapWeekBarChartView.isHidden = true
-                    self?.weekView.deliveryWeekBarChartView.isHidden = true
+                    print("Unknown response code: \(data.code)")
                 }
-                
+
+            case .serverErr:
+                print("서버 에러")
+                self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
+                self?.weekView.jipbapWeekBarChartView.isHidden = true
+                self?.weekView.deliveryWeekBarChartView.isHidden = true
             default:
                 print("데이터 존재 안함")
             }
@@ -267,6 +274,22 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
     }
     
     // MARK: - Function
+    private func parseErrorData(_ errorDataString: String) -> ErrorData? {
+        let components = errorDataString.components(separatedBy: ", ")
+        var ageRange = ""
+        var income = ""
+        
+        for component in components {
+            if component.hasPrefix("AgeRange") {
+                ageRange = component.replacingOccurrences(of: "AgeRange: ", with: "")
+            } else if component.hasPrefix("Income") {
+                income = component.replacingOccurrences(of: "Income: ", with: "")
+            }
+        }
+        
+        return ErrorData(ageRange: ageRange, income: income)
+    }
+    
     func updateMonthContentLabel(text: String) {
         monthView.updateMonthContentLabel(text: text)
     }
@@ -284,10 +307,8 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         print(year,month)
         monthChart(year: year, month: month)
     }
-    func updateWeekContentLabel(text: String) {
-        weekView.updateWeekContentLabel(text: text)
-    }
-    
+
+    //전 달 버튼 tapp
     func weekBackButtonTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
         let (year, month, date) = getCurrentYearMonthDay(for: currentDate)
@@ -311,13 +332,5 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         monthView.setupPieChart(jipbapRatio: data.jipbap_ratio ?? 0,outRatio:data.out_ratio ?? 0)
         monthView.setupBarChart(jipbapPrice: data.month_jipbap_price ?? 0, outPrice: data.month_out_price ?? 0)
         monthView.setStyledMonthContentLabel(savePercent: Double(data.save_percent ?? 0))
-    }
-    
-    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
-        weekView.updateGenderLabel(gender: data.gender)
-        //        weekView.updateGipbapContentsLabel(jibapSave: data.jipbapSave)
-        //        weekView.updateDeliveryContentsLabel(outSave: data.outSave)
-        weekView.setupMealWeekBarChart(jipbapAverage: data.jipbap_average ?? 0, weekJipbapPrice: data.week_jipbap_price ?? 0)
-        weekView.setupDeliveryWeekBarChart(outAverage: data.out_average ?? 0, weekOutPrice: data.week_out_price ?? 0)
     }
 }

@@ -9,17 +9,16 @@ import UIKit
 import SnapKit
 import Then
 //MARK: 앨범 사진 셀
-
-//protocol DeleteActionDelegate: AnyObject {
-//    func delete(at index: Int)
-//}
+protocol InfoDeleteActionDelegate: AnyObject {
+    func delete(at index: Int)
+}
 
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "PhotoCell"
     //MARK: -- Property
     var postImageView = UIImageView()
     var deleteButton = UIButton()
-    weak var delegate: DeleteActionDelegate?
+    weak var delegate: InfoDeleteActionDelegate?
     var index: Int?
     override init(frame: CGRect) {
         super.init(frame: frame)

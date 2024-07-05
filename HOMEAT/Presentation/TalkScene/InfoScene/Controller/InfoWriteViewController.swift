@@ -32,6 +32,7 @@ class InfoWriteViewController: BaseViewController {
     private var isCameraAuthorized: Bool {
         AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
+    private let deleteButton = UIButton()
     private let imagePicker = UIImagePickerController()
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,7 +40,6 @@ class InfoWriteViewController: BaseViewController {
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
@@ -65,20 +65,16 @@ class InfoWriteViewController: BaseViewController {
     } ()
     private var currentMode: Mode = .camera
     let textViewPlaceHolder = "질문이나 이야기를 해보세요!"
-
+    
     // MARK: - 탭바제거
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // 커스텀 탭바를 숨깁니다.
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = true
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        // 다른 화면으로 넘어갈 때 커스텀 탭바를 다시 보이게 합니다.
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
@@ -100,8 +96,6 @@ class InfoWriteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-        collectionView.isHidden = true
-        updateTagUI()
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
         memoTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
@@ -112,9 +106,9 @@ class InfoWriteViewController: BaseViewController {
             .foregroundColor: UIColor.white
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
-        let backbutton = UIBarButtonItem()
+        let backbutton = UIBarButtonItem(image: UIImage.init(named: "navigationBackIcon"), style: .plain, target: self, action: #selector(customBackButtonTapped))
         backbutton.tintColor = .white
-        navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
+        navigationItem.leftBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
         let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
         let rightAttributes: [NSAttributedString.Key: Any] = [
@@ -133,6 +127,7 @@ class InfoWriteViewController: BaseViewController {
         }
         imageView.do {
             $0.layer.cornerRadius = 14
+            $0.layer.masksToBounds = true
         }
         
         hashContainer.do {
@@ -186,6 +181,12 @@ class InfoWriteViewController: BaseViewController {
             $0.setImage(UIImage(named: "greenHashTag"), for: .normal)
             $0.addTarget(self, action: #selector(navigateToTagPlusViewController), for: .touchUpInside)
         }
+        deleteButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -199,16 +200,24 @@ class InfoWriteViewController: BaseViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     override func setConstraints() {
-        view.addSubviews(customButton,collectionView,tagCollectionView,tagButton,tagImage,nameLabel,
+        view.addSubviews(imageView,collectionView,tagCollectionView,tagButton,tagImage,nameLabel,
                          nameTextField,memoLabel,memoTextView)
-        
-        customButton.snp.makeConstraints {
+        view.bringSubviewToFront(imageView)
+        view.addSubview(deleteButton)
+        view.bringSubviewToFront(deleteButton)
+        view.addSubview(customButton)
+        imageView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(176)
             $0.width.equalTo(176)
         }
-        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(47)
+            $0.trailing.equalTo(imageView.snp.trailing).offset(10.8)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
+        }
         collectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(10)
             $0.height.equalTo(176)
@@ -251,23 +260,14 @@ class InfoWriteViewController: BaseViewController {
             $0.trailing.equalTo(nameTextField.snp.trailing)
             $0.height.equalTo(50)
         }
-        
-    }
-    func updateTagUI() {
-        if !selectedTags.isEmpty {
-            tagButton.isHidden = true
-            tagCollectionView.snp.makeConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide).offset(267)
-                $0.leading.equalToSuperview().inset(22)
-                $0.trailing.equalTo(tagImage.snp.leading).offset(-30)
-                $0.height.equalTo(40)
-            }
-        } else {
-            tagCollectionView.isHidden = true
-            tagButton.isHidden = false
+        customButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(51)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(176)
+            $0.height.equalTo(176)
         }
-    
     }
+    
     //MARK: - Methods
     func pickImage(){
         let photoLibrary = PHPhotoLibrary.shared()
@@ -305,8 +305,6 @@ class InfoWriteViewController: BaseViewController {
         
         let customButton = UIButton(configuration: config)
         customButton.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
-        customButton.translatesAutoresizingMaskIntoConstraints = false
-        
         return customButton
     }
     
@@ -337,20 +335,22 @@ class InfoWriteViewController: BaseViewController {
             self.present(alertController, animated: true)
         }
     }
-    
-
-    
-    func setUpKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
     //MARK: - @objc
+    
+    @objc private func customBackButtonTapped() {
+        if let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController {
+            self.navigationController?.popToViewController(talkVC, animated: true)
+            talkVC.switchToInfoTalk()
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
     @objc func navigateToTagPlusViewController() {
         let tagplusVC = TagPlusViewController()
         tabBarController?.tabBar.isHidden = true //하단 탭바 안보이게 전환
-
+        tagplusVC.selectedTags = self.selectedTags
+        tagplusVC.delegate = self
         self.navigationController?.pushViewController(tagplusVC, animated: true)
         print("tagplus click")
     }
@@ -362,7 +362,7 @@ class InfoWriteViewController: BaseViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-        if title.count >= 20 {
+        if title.count >= 15 {
             let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
@@ -381,16 +381,25 @@ class InfoWriteViewController: BaseViewController {
         print(infotalkRequest)
         NetworkService.shared.infoTalkService.infoTalkSave(bodyDTO: infotalkRequest) { response in
             switch response {
-            case .success(let data):
-                guard let data = data.data else { return }
+            case .success(_):
+                DispatchQueue.main.async {
+                    if let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController {
+                        self.navigationController?.popToViewController(talkVC, animated: true)
+                        talkVC.switchToInfoTalk()
+                    } else {
+                        let talkVC = TalkViewController()
+                        talkVC.navigationItem.hidesBackButton = true
+                        self.navigationController?.pushViewController(talkVC, animated: true)
+                        talkVC.switchToInfoTalk()
+                    }
+                }
                 print("데이터 서버 연동 성공")
             default:
                 print("데이터 서버 연동 실패")
-                        
             }
         }
-        
     }
+    
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height
@@ -404,25 +413,25 @@ class InfoWriteViewController: BaseViewController {
     
     @objc func photoButtonTapped() {
         let actionSheet = UIAlertController(title: "사진 선택", message: "원하는 방법을 선택하세요", preferredStyle: .actionSheet)
-
+        
         let takePhotoAction = UIAlertAction(title: "사진 촬영", style: .default) { _ in
             self.currentMode = .camera
             self.openCamera()
-        }
-
+    }
+        
         let chooseFromLibraryAction = UIAlertAction(title: "앨범에서 사진 선택", style: .default) { _ in
             self.currentMode = .album
             self.customButton.isHidden = true
             self.collectionView.isHidden = false
             self.touchUpImageAddButton(button: self.customButton)
         }
-
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-
+        
         takePhotoAction.setValue(UIColor.white, forKey: "titleTextColor")
         chooseFromLibraryAction.setValue(UIColor.white, forKey: "titleTextColor")
         cancelAction.setValue(UIColor.red, forKey: "titleTextColor")
-
+        
         actionSheet.addAction(takePhotoAction)
         actionSheet.addAction(chooseFromLibraryAction)
         actionSheet.addAction(cancelAction)
@@ -475,6 +484,12 @@ class InfoWriteViewController: BaseViewController {
         view.endEditing(true)
     }
     
+    @objc private func deleteButtonTapped() {
+        selectedImages.removeAll()
+        imageView.isHidden = true
+        customButton.isHidden = false
+        deleteButton.isHidden = true
+    }
 }
 //MARK: - Extension
 // TextField, TextView 키보드 처리
@@ -483,7 +498,7 @@ extension InfoWriteViewController: UITextFieldDelegate, UITextViewDelegate {
         guard let activeField = self.activeField else { return }
         
         let adjustmentHeight = (show ? keyboardHeight : 0)
-    
+        
         var aRect = self.view.frame
         aRect.size.height -= adjustmentHeight
         
@@ -546,7 +561,7 @@ extension InfoWriteViewController: TagDeleteActionDelegate {
         }
     }
 }
-extension InfoWriteViewController: DeleteActionDelegate {
+extension InfoWriteViewController: InfoDeleteActionDelegate {
     func delete(at index: Int) {
         selectedImages.remove(at: index)
         collectionView.reloadData()
@@ -583,7 +598,7 @@ extension InfoWriteViewController: UICollectionViewDelegate, UICollectionViewDat
         }
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.reuseIdentifier, for: indexPath) as! PhotoCollectionViewCell
@@ -592,7 +607,7 @@ extension InfoWriteViewController: UICollectionViewDelegate, UICollectionViewDat
             cell.index = indexPath.item
             cell.delegate = self
             return cell
-
+            
         } else if collectionView == tagCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TagCell", for: indexPath) as! TagCollectionViewCell
             let tag = selectedTags[indexPath.item]
@@ -638,24 +653,29 @@ extension InfoWriteViewController: PHPickerViewControllerDelegate {
             }
         }
         group.notify(queue: .main) {
-            // 모든 이미지가 로드되었을 때 실행되는 부분
             DispatchQueue.main.async { [self] in
                 if self.currentMode == .album {
-                    // 앨범 모드일 경우의 처리
-                    self.customButton.isHidden = true
-                    self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
-                    
-                    // 이미지가 추가되었을 때 디버깅 정보 출력
                     print("selectedImages contents: \(self.selectedImages)")
                     
-                    self.collectionView.reloadData() // collectionView 갱신
+                    if self.selectedImages.isEmpty {
+                        self.customButton.isHidden = false
+                    } else {
+                        self.customButton.isHidden = true
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData() // collectionView 갱신
+                    }
                 }
             }
             // 이미지 피커를 닫음
+            picker.dismiss(animated: true)
+        }
+            }
+    func pickerDidCancel(_ picker: PHPickerViewController) {
+            // 취소 버튼을 눌렀을 때 customButton을 다시 나타나게 함
+            self.customButton.isHidden = false
             picker.dismiss(animated: true, completion: nil)
         }
-    }
 }
 
 extension InfoWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -667,21 +687,36 @@ extension InfoWriteViewController: UIImagePickerControllerDelegate, UINavigation
             picker.dismiss(animated: true)
             return
         }
-        // 이미지를 selectedImages 배열에 추가
         selectedImages.append(image)
-        
-        // 이미지 뷰에 선택된 이미지 표시
         imageView.image = image
         imageView.isHidden = false
         customButton.isHidden = true
-        
+        deleteButton.isHidden = false
         self.imageView.image = image
-        picker.dismiss(animated: true, completion: nil)
-        customButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-200)
-            $0.leading.trailing.equalTo(108)
-            $0.height.equalTo(176)
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            self.customButton.isHidden = false
+            picker.dismiss(animated: true, completion: nil)
+    }
+}
+extension InfoWriteViewController: TagPlusViewControllerDelegate {
+    func didUpdateTags(_ tags: [String]) {
+        self.selectedTags = tags
+        if !selectedTags.isEmpty {
+            tagButton.isHidden = true
+            tagCollectionView.snp.makeConstraints {
+                $0.top.equalTo(view.safeAreaLayoutGuide).offset(267)
+                $0.leading.equalToSuperview().inset(22)
+                $0.trailing.equalTo(tagImage.snp.leading).offset(-30)
+                $0.height.equalTo(40)
+            }
+            tagCollectionView.reloadData()
+        } else {
+            tagCollectionView.isHidden = true
+            tagButton.isHidden = false
         }
+        
     }
 }
 //string 동적 계산
@@ -695,4 +730,3 @@ extension String {
         return ceil(boundingBox.width) + margin
     }
 }
-

@@ -75,7 +75,7 @@ class WeekLookViewController: BaseViewController {
         NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
             switch response {
             case .success(let data):
-                guard let responseData = data.data?.reportBage else {
+                guard let responseData = data.data?.reportBadge else {
                     self.isDataEmpty = true
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()

@@ -8,9 +8,14 @@
 import UIKit
 import SnapKit
 import Then
+import Alamofire
 
+protocol TagPlusViewControllerDelegate: AnyObject {
+    func didUpdateTags(_ tags: [String])
+}
 class TagPlusViewController: BaseViewController {
     //MARK: -- Property
+    weak var delegate: TagPlusViewControllerDelegate?
     var selectedTags: [String] = []
     var tags: [TagItem] = defaultTags
     private let tagPlusField = UITextField()
@@ -19,21 +24,25 @@ class TagPlusViewController: BaseViewController {
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumLineSpacing = 17
+        layout.minimumInteritemSpacing = 5
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = UIColor(named: "turquoiseGray2")
         collectionView.register(TagPlusCollectionViewCell.self, forCellWithReuseIdentifier: TagPlusCollectionViewCell.reuseIdentifier)
         return collectionView
     }()
     override func viewDidLoad() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(viewDidTap))
+        self.view.addGestureRecognizer(tapGesture)
         super.viewDidLoad()
         setCollection()
         setNavigationBar()
+        
     }
     // MARK: - 탭바제거
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // 커스텀 탭바를 숨깁니다.
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = true
         }
@@ -41,11 +50,12 @@ class TagPlusViewController: BaseViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        // 다른 화면으로 넘어갈 때 커스텀 탭바를 다시 보이게 합니다.
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
     }
+    
+    
     private func setNavigationBar() {
         self.navigationItem.title = "해시태그 추가"
         let titleAttributes: [NSAttributedString.Key: Any] = [
@@ -128,7 +138,9 @@ class TagPlusViewController: BaseViewController {
     }
     
     //MARK: -- objc
-    
+    @objc func viewDidTap(gesture: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
     @objc private func plusButtonTapped() {
         if let newTag = tagPlusField.text, !newTag.isEmpty {
             tags.append(TagItem(tagTitle: newTag))
@@ -137,10 +149,8 @@ class TagPlusViewController: BaseViewController {
         }
     }
     @objc func navigatetToInfoWritingViewController() {
-        let InfoWriteVC = InfoWriteViewController()
-        InfoWriteVC.selectedTags = selectedTags // 선택된 태그 전달
-        tabBarController?.tabBar.isHidden = true //하단 탭바 안보이게 전환
-        self.navigationController?.pushViewController(InfoWriteVC, animated: true)
+        delegate?.didUpdateTags(selectedTags)
+        navigationController?.popViewController(animated: true)
     }
 }
 extension TagPlusViewController: TagPlusDelegate {
@@ -165,12 +175,14 @@ extension TagPlusViewController: UICollectionViewDelegate {
 }
 extension TagPlusViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return defaultTags.count
+        return tags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagPlusCollectionViewCell.reuseIdentifier, for: indexPath) as! TagPlusCollectionViewCell
-        cell.configure(with: defaultTags[indexPath.item].tagTitle)
+        let tagTitle = tags[indexPath.item].tagTitle
+        let isSelected = selectedTags.contains(tagTitle)
+        cell.configure(with: tagTitle, isSelected: isSelected)
         cell.delegate = self
         return cell
     }

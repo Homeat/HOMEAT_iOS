@@ -265,7 +265,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
         // 모든 보이는 셀의 배경색과 글자색을 초기화
         for visibleCell in collectionView.visibleCells {
             if let cell = visibleCell as? CalendarCollectionViewCell {
-//                let day = self.days[collectionView.indexPath(for: cell)!.item]
+                let day = self.days[collectionView.indexPath(for: cell)!.item]
                 cell.backgroundColor = UIColor.coolGray4
                 cell.dayLabel.textColor = .white
                 
@@ -295,7 +295,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
             }
         }
         if isSpecialDate {
-            
+
         }
         let components = dateString.split(separator: "-")
         if components.count == 3 {
@@ -312,36 +312,44 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
     }
     
     func updateCellBackground(jipbapPercentage: Double, outPricePercentage: Double, forDate date: String) {
+        print("Updating cell background for date: \(date) with jipbapPercentage: \(jipbapPercentage), outPricePercentage: \(outPricePercentage)")
         let components = date.split(separator: "-")
         guard let day = components.last else {
             print("Failed to extract day from date: \(date)")
             return
         }
-        let dayString = String(day)
+        let dayString = String(Int(day) ?? 0)
         let jipbapColor = UIColor.turquoiseGreen
         let outPriceColor = UIColor.turquoisePurple
-        
+        print(dayString)
         DispatchQueue.main.async {
             for (index, cellDate) in self.days.enumerated() {
+                print(cellDate)
                 if cellDate == dayString {
                     if let cell = self.dayCollectionView.cellForItem(at: IndexPath(item: index, section: 0)) as? CalendarCollectionViewCell {
+                        print("Found cell for date \(date) at index \(index)")
+                        
                         let totalHeight = cell.frame.height
                         let jipbapHeight = totalHeight * CGFloat(jipbapPercentage / 100.0)
                         let outPriceHeight = totalHeight * CGFloat(outPricePercentage / 100.0)
-                        
                         cell.subviews.forEach { $0.removeFromSuperview() }
-                        
                         let jipbapView = UIView(frame: CGRect(x: 0, y: 0, width: cell.frame.width, height: jipbapHeight))
                         jipbapView.backgroundColor = jipbapColor
                         cell.addSubview(jipbapView)
-                        
+
                         let outPriceView = UIView(frame: CGRect(x: 0, y: jipbapHeight, width: cell.frame.width, height: outPriceHeight))
                         outPriceView.backgroundColor = outPriceColor
                         cell.addSubview(outPriceView)
+
                         cell.layer.cornerRadius = 10
                         cell.layer.masksToBounds = true
+                        
+                        // Re-add day label
                         self.addDayLabel(to: cell)
-                        self.specialDates.insert(date)
+                        
+                        print("Updated cell background for \(date) with jipbapHeight: \(jipbapHeight), outPriceHeight: \(outPriceHeight)")
+                    } else {
+                        print("Failed to find cell for date \(date) at index \(index)")
                     }
                     break
                 }
@@ -365,7 +373,10 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
         DispatchQueue.main.async {
             for entry in data {
                 self.updateCellBackground(jipbapPercentage: entry.jipbapPercentage, outPricePercentage: entry.outPricePercentage, forDate: entry.date)
+                print(entry.jipbapPercentage,entry.outPricePercentage)
             }
+            self.dayCollectionView.reloadData()
+            
         }
     }
 }

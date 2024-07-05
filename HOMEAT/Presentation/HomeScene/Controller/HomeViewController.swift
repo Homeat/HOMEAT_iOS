@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Alamofire
+import Kingfisher
 
 class HomeViewController: BaseViewController, HomeViewDelegate {
     
@@ -79,7 +80,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
                 if let textField = self.editAlert.textFields?.first, let inputText = textField.text, let targetExpense = Int(inputText) {
                     self.updateNextTargetExpense(targetExpense: targetExpense)
                 } else {
-                    // Handle invalid input (optional)
+                    
                 }
                 let editDoneVC = EditDoneViewController()
                 editDoneVC.hidesBottomBarWhenPushed = true
@@ -160,10 +161,10 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         }
     }
     private func updateUserInfo(_ data: HomeInfoResponseDTO) {
-        welcomeLabel.text = "\(data.nickname)님 훌륭해요!"
-        mainView.goalLabel.text = "목표 \(data.targetMoney)원"
-        mainView.leftMoneyLabel.text = "\(data.remainingMoney)원"
-        mainView.setupPieChart(remainingPercent: data.remainingPercent)
+        let formattedUsedMoney = data.targetMoney.formattedWithSeparator
+        mainView.goalLabel.text = "목표 \(formattedUsedMoney)원"
+        let formattedRemainMoney = data.remainingMoney.formattedWithSeparator
+        mainView.leftMoneyLabel.text = "\(formattedRemainMoney)원"
         let savingPercent = data.beforeSavingPercent
         if savingPercent > 0 {
             savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 절약하고 있어요"
@@ -172,11 +173,22 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         }else {
             savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 더 쓰고 있어요"
         }
-        guard let url = URL(string: data.badgeImgUrl) else {return}
-        DispatchQueue.main.async {
-            guard let data = try? Data(contentsOf: url) else {return}
-            self.mainView.character.image = UIImage(data: data)
+        let remainingMoney = data.remainingMoney
+        if remainingMoney >= 0 {
+            mainView.leftMoneyLabel.textColor = UIColor.turquoiseGreen
+            welcomeLabel.text = "\(data.nickname)님 훌륭해요!"
+            mainView.setupPieChart(remainingPercent: data.remainingPercent)
+            DispatchQueue.main.async {
+                guard let url = URL(string: data.badgeImgUrl) else {return}
+                self.mainView.character.kf.setImage(with: url)
+            }
+        } else {
+            mainView.leftMoneyLabel.textColor = UIColor.turquoiseRed
+            mainView.setupPieChart(remainingPercent: abs(data.remainingPercent))
+            self.mainView.character.image = UIImage(named: "sadCharacter")
+            welcomeLabel.text = "\(data.nickname)님 절약이 필요해요!"
         }
+        
     }
     // 다음주 지출 목표금액 수정
     private func updateNextTargetExpense(targetExpense: Int) {
