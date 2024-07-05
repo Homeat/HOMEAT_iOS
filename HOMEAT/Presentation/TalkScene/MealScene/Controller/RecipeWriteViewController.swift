@@ -780,14 +780,47 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // 데이터 소스에서 항목 제거
+            foodRecipes.remove(at: indexPath.row)
+            // 테이블 뷰에서 셀 제거
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRecipe = foodRecipes[indexPath.row]
+        let stepWriteVC = StepWriteController()
+        stepWriteVC.recipe = selectedRecipe
+        stepWriteVC.recipeIndex = indexPath.row
+        stepWriteVC.delegate = self
+        let navController = UINavigationController(rootViewController: stepWriteVC)
+        navController.modalPresentationStyle = .automatic
+        present(navController, animated: true, completion: nil)
     }
 }
 
 extension RecipeWriteViewController: ModalViewControllerDelegate {
     func didAddCell() {
-        tableView.reloadData()
-    }
+            tableView.reloadData()
+        }
+        
+        func didUpdateCell(at index: Int, with recipe: foodRecipeDTOS) {
+            foodRecipes[index] = recipe
+            tableView.reloadData()
+        }
 }
 
 

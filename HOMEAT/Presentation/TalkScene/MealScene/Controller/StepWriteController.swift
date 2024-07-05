@@ -12,6 +12,7 @@ import SnapKit
 
 protocol ModalViewControllerDelegate: AnyObject {
     func didAddCell()
+    func didUpdateCell(at index: Int, with recipe: foodRecipeDTOS)
 }
 
 protocol StepWriteViewControllerDelegate: AnyObject {
@@ -21,6 +22,8 @@ protocol StepWriteViewControllerDelegate: AnyObject {
 class StepWriteController: BaseViewController, UITextViewDelegate {
     weak var delegate: ModalViewControllerDelegate?
     weak var stepDelegate: StepWriteViewControllerDelegate?
+    var recipe: foodRecipeDTOS?
+    var recipeIndex: Int?
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
@@ -35,6 +38,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         super.viewDidLoad()
         setNavigationBar()
         setKeyboard()
+        setupRecipeData()
     }
     
     //MARK: - SetUI
@@ -62,6 +66,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             config.imagePadding = 19.7
             $0.configuration = config
             $0.layer.cornerRadius = 14
+            $0.imageView?.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true
             $0.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
         }
         
@@ -181,6 +187,16 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
+    // 레시피 데이터로 UI 업데이트
+    private func setupRecipeData() {
+        if let recipe = recipe {
+            recipTextView.text = recipe.recipe
+            if let recipePictureData = recipe.recipePicture, let image = UIImage(data: recipePictureData) {
+                photoButton.setImage(image, for: .normal)
+            }
+        }
+    }
+    
     //MARK: - Method
     private func openCamera() {
         imagePicker.sourceType = .camera
@@ -213,16 +229,20 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     }
     
     @objc func saveButtonTapped(_ sender: Any) {
-        //데이터 전달
         delegate?.didAddCell()
         guard let recipe = recipTextView.text, !recipe.isEmpty else {
             return
         }
         
         let recipePicture = photoButton.image(for: .normal)
-        stepDelegate?.didSaveRecipe(recipe: recipe, recipePicture: recipePicture)
+        let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
+        let updatedRecipe = foodRecipeDTOS(recipe: recipe, recipePicture: recipePictureData)
+        if let recipeIndex = recipeIndex {
+            delegate?.didUpdateCell(at: recipeIndex, with: updatedRecipe)
+        } else {
+            stepDelegate?.didSaveRecipe(recipe: recipe, recipePicture: recipePicture)
+        }
         
-        // Delegate 호출 후 현재 ViewController 닫기
         self.dismiss(animated: true, completion: nil)
     }
 }
