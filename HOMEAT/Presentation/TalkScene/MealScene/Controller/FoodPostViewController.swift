@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import SnapKit
+import Kingfisher
 
 class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
     

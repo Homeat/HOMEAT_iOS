@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 protocol HeaderViewDelegate: AnyObject {
     func recipeViewButtonTapped()
@@ -239,39 +240,33 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         imageViews.removeAll()
         scrollView.contentSize.width = 0
         
-        loadImages(from: foodPictureImages)
+        loadImagesWithKingfisher(from: foodPictureImages)
         
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }
 
-    private func loadImages(from urls: [String]) {
-        let group = DispatchGroup()
-        
-        for urlString in urls {
-            guard let url = URL(string: urlString) else { continue }
-            group.enter()
-            
-            // 비동기로 이미지 다운로드
-            DispatchQueue.global().async {
-                if let data = try? Data(contentsOf: url), let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.images.append(image)
-                        self.addImageToScrollView(image)
-                        self.pageControl.numberOfPages = self.images.count
-                        group.leave()
+    private func loadImagesWithKingfisher(from urls: [String]) {
+            for urlString in urls {
+                guard let url = URL(string: urlString) else { continue }
+                
+                // Kingfisher를 사용하여 비동기로 이미지 다운로드
+                let imageView = UIImageView()
+                imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.transition(.fade(0.2)), .cacheOriginalImage]) { result in
+                    switch result {
+                    case .success(let value):
+                        DispatchQueue.main.async {
+                            self.images.append(value.image)
+                            self.addImageToScrollView(value.image)
+                            self.pageControl.numberOfPages = self.images.count
+                            self.updateScrollViewContentSize()
+                        }
+                    case .failure(let error):
+                        print("Error: \(error)")
                     }
-                } else {
-                    group.leave()
                 }
             }
         }
-        
-        // 모든 이미지 로드 완료 후 scrollView 업데이트
-        group.notify(queue: .main) {
-            self.updateScrollViewContentSize()
-        }
-    }
 
     private func addImageToScrollView(_ image: UIImage) {
         let imageView = UIImageView()

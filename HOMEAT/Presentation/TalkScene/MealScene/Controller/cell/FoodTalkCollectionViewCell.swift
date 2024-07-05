@@ -1,9 +1,6 @@
 import UIKit
 import SnapKit
-
-class ImageCache {
-    static let shared = NSCache<NSString, UIImage>()
-}
+import Kingfisher
 
 class FoodTalkCollectionViewCell: UICollectionViewCell {
     
@@ -17,7 +14,7 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.5 
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -75,28 +72,9 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
     
     func configure(with foodTalk: FoodTalk) {
         foodName.text = foodTalk.foodName
-        
-        if let url = URL(string: foodTalk.url) {
-            // 캐시에서 이미지 확인
-            if let cachedImage = ImageCache.shared.object(forKey: url.absoluteString as NSString) {
-                foodImageView.image = cachedImage
-            } else {
-                // URL로부터 이미지 비동기적으로 로드
-                imageDownloadTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    guard let self = self, let data = data, error == nil, let image = UIImage(data: data) else {
-                        return
-                    }
-                    // 캐시에 저장
-                    ImageCache.shared.setObject(image, forKey: url.absoluteString as NSString)
-                    DispatchQueue.main.async {
-                        self.foodImageView.image = image
-                    }
-                }
-                imageDownloadTask?.resume()
-            }
-        } else {
-            foodImageView.image = nil
-        }
+        let photoUrl = foodTalk.url
+        let url = URL(string: photoUrl)
+        foodImageView.kf.setImage(with: url)
     }
 }
 
