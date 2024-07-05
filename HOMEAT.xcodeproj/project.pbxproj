@@ -205,6 +205,7 @@
 		58EEF5A52C3664D500C12C1E /* PayDetailRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A42C3664D500C12C1E /* PayDetailRequestBodyDTO.swift */; };
 		58EEF5A92C3796DC00C12C1E /* PayDetailsResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5A82C3796DC00C12C1E /* PayDetailsResponseDTO.swift */; };
 		58EEF5AB2C37A73000C12C1E /* Formatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5AA2C37A73000C12C1E /* Formatter+.swift */; };
+		58EEF5AD2C38158C00C12C1E /* CustomPieChartRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5AC2C38158C00C12C1E /* CustomPieChartRenderer.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -414,6 +415,7 @@
 		58EEF5A42C3664D500C12C1E /* PayDetailRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayDetailRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5A82C3796DC00C12C1E /* PayDetailsResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayDetailsResponseDTO.swift; sourceTree = "<group>"; };
 		58EEF5AA2C37A73000C12C1E /* Formatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatter+.swift"; sourceTree = "<group>"; };
+		58EEF5AC2C38158C00C12C1E /* CustomPieChartRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPieChartRenderer.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -967,6 +969,7 @@
 				58FE4CDC2BC802460059D174 /* WeekCellView.swift */,
 				589145182BBDA9CC00CF9A05 /* WeekView.swift */,
 				589145162BBDA99800CF9A05 /* MonthView.swift */,
+				58EEF5AC2C38158C00C12C1E /* CustomPieChartRenderer.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1420,6 +1423,7 @@
 				0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				58DF7B842C2957CD00603763 /* HomeInfoResponseDTO.swift in Sources */,
+				58EEF5AD2C38158C00C12C1E /* CustomPieChartRenderer.swift in Sources */,
 				58DF7B642C24871B00603763 /* TagItem.swift in Sources */,
 				0309DD892C01E3D200D6133A /* ReplyReactionView.swift in Sources */,
 				2DB408AF2BBD81A3001CB6F9 /* EditDoneViewController.swift in Sources */,
