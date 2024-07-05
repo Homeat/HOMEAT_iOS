@@ -713,7 +713,6 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
     }
 }
 
-
 extension RecipeWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(
         _ picker: UIImagePickerController,

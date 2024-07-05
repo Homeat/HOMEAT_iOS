@@ -72,7 +72,12 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             $0.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
         }
         
-
+        deletePhotoButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
+        }
         
         photoActionSheet.do {
             let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { action in
@@ -122,7 +127,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     }
     
     override func setConstraints() {
-        view.addSubviews(recipeWriteLabel, photoButton, line, recipTextView, saveButton)
+        view.addSubviews(recipeWriteLabel, photoButton, line, recipTextView, saveButton, deletePhotoButton)
+        view.bringSubviewToFront(deletePhotoButton)
         
         recipeWriteLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
@@ -134,6 +140,13 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             $0.top.equalToSuperview().offset(190)
             $0.height.equalTo(201)
             $0.width.equalTo(226)
+        }
+        
+        deletePhotoButton.snp.makeConstraints {
+            $0.top.equalTo(photoButton.snp.top).offset(-10)
+            $0.trailing.equalTo(photoButton.snp.trailing).offset(10)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
         }
         
         line.snp.makeConstraints {
@@ -247,14 +260,24 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func deleteButtonTapped(_ sender: Any) {
+        photoButton.setImage(nil, for: .normal)
+        
+        photoButton.configuration?.image = UIImage(named: "addIcon")
+        photoButton.configuration?.title = "사진 추가"
+        deletePhotoButton.isHidden = true
+    }
 }
 
+//MARK: - Extension
 extension StepWriteController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
             let resizeImage = image.resizeImage(toFit: photoButton)
             photoButton.setImage(resizeImage, for: .normal)
             photoButton.setTitle("", for: .normal)
+            deletePhotoButton.isHidden = false
         }
         picker.dismiss(animated: true)
     }
