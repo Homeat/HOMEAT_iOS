@@ -61,7 +61,7 @@ class CustomPieChartRenderer: PieChartRenderer {
                 width: size.width,
                 height: size.height
             )
-            let circleDiameter = max(size.width, size.height) + 4 
+            let circleDiameter = max(size.width, size.height) + 4
             let circleRect = CGRect(
                 x: center.x + labelX - circleDiameter / 2,
                 y: center.y + labelY - circleDiameter / 2,
