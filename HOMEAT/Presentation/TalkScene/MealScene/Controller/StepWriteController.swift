@@ -24,6 +24,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     weak var stepDelegate: StepWriteViewControllerDelegate?
     var recipe: foodRecipeDTOS?
     var recipeIndex: Int?
+    private var shouldSetupImage = false
+    private var setupImage: UIImage?
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
@@ -40,6 +42,17 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         setNavigationBar()
         setKeyboard()
         setupRecipeData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if shouldSetupImage, let image = setupImage {
+            let resizedImage = resizeImage(image: image, targetSize: photoButton.frame.size)
+            photoButton.setImage(resizedImage, for: .normal)
+            photoButton.setTitle("", for: .normal)
+            shouldSetupImage = false
+            setupImage = nil
+        }
     }
     
     //MARK: - SetUI
@@ -67,7 +80,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             config.imagePadding = 19.7
             $0.configuration = config
             $0.layer.cornerRadius = 14
-            $0.imageView?.contentMode = .scaleAspectFill
+            $0.imageView?.contentMode = .scaleAspectFit
             $0.clipsToBounds = true
             $0.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
         }
@@ -207,7 +220,11 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         if let recipe = recipe {
             recipTextView.text = recipe.recipe
             if let recipePictureData = recipe.recipePicture, let image = UIImage(data: recipePictureData) {
-                photoButton.setImage(image, for: .normal)
+                shouldSetupImage = true
+                setupImage = image
+                deletePhotoButton.isHidden = false
+            } else {
+                deletePhotoButton.isHidden = true
             }
         }
     }
@@ -221,6 +238,14 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     private func openPhotoLibrary() {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
+    }
+    
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let newImage = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+        return newImage
     }
     
     //MARK: - @objc
@@ -248,7 +273,6 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         guard let recipe = recipTextView.text, !recipe.isEmpty else {
             return
         }
-        
         let recipePicture = photoButton.image(for: .normal)
         let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
         let updatedRecipe = foodRecipeDTOS(recipe: recipe, recipePicture: recipePictureData)
@@ -266,16 +290,16 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         
         photoButton.configuration?.image = UIImage(named: "addIcon")
         photoButton.configuration?.title = "사진 추가"
-        deletePhotoButton.isHidden = true
+        deletePhotoButton.isHidden = true 
     }
 }
 
 //MARK: - Extension
 extension StepWriteController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-            let resizeImage = image.resizeImage(toFit: photoButton)
-            photoButton.setImage(resizeImage, for: .normal)
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            let resizedImage = resizeImage(image: image, targetSize: photoButton.frame.size)
+            photoButton.setImage(resizedImage, for: .normal)
             photoButton.setTitle("", for: .normal)
             deletePhotoButton.isHidden = false
         }
