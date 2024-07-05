@@ -15,6 +15,7 @@ enum HomeSceneTarget {
     case payEdit(_ bodyDTO: PayEditRequestBodyDTO)
     case calendar(_ bodyDTO: CalendarCheckRequestBodyDTO)
     case calendarDaily(_ bodyDTO: CalendarDailyRequestBodyDTO)
+    case calendarDetail(_ bodyDTO: PayDetailRequestBodyDTO)
 }
 
 extension HomeSceneTarget: TargetType {
@@ -33,6 +34,8 @@ extension HomeSceneTarget: TargetType {
             return .authorization
         case .calendarDaily:
             return .authorization
+        case .calendarDetail:
+            return .authorization
         }
     }
 
@@ -50,6 +53,8 @@ extension HomeSceneTarget: TargetType {
             return .hasToken
         case .calendarDaily:
             return .hasToken
+        case .calendarDetail:
+            return .hasToken
         }
     }
 
@@ -66,6 +71,8 @@ extension HomeSceneTarget: TargetType {
         case .calendar:
             return .get
         case .calendarDaily:
+            return .get
+        case .calendarDetail:
             return .get
         }
 
@@ -85,6 +92,8 @@ extension HomeSceneTarget: TargetType {
             return "/v1/home/calendar"
         case .calendarDaily:
             return "/v1/home/calendar/daily"
+        case .calendarDetail:
+            return "/v1/home/calendar/daily/details"
         }
     }
 
@@ -101,6 +110,8 @@ extension HomeSceneTarget: TargetType {
         case let .calendar(queryDTO):
             return .requestQuery(queryDTO)
         case let .calendarDaily(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .calendarDetail(queryDTO):
             return .requestQuery(queryDTO)
         }
     }

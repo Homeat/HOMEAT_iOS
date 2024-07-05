@@ -16,6 +16,7 @@ protocol HomeSceneServiceProtocol {
     func calendarCheck(queryDTO: CalendarCheckRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<[CalendarCheckResponseDTO]>>) -> Void)
     func calendarDailyCheck(queryDTO: CalendarDailyRequestBodyDTO, completion: @escaping
                             (NetworkResult<BaseResponse<CalendarDailyResponseDTO>>)->Void)
+    func calendarDetailCheck(queryDTO: PayDetailRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<[PayDetailsResponseDTO]>>)->Void)
     
 }
 
@@ -41,6 +42,9 @@ final class HomeSceneService: APIRequestLoader<HomeSceneTarget>, HomeSceneServic
     }
     func calendarDailyCheck(queryDTO: CalendarDailyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<CalendarDailyResponseDTO>>) -> Void) {
         fetchData(target: .calendarDaily(queryDTO), responseData: BaseResponse<CalendarDailyResponseDTO>.self, completion: completion)
+    }
+    func calendarDetailCheck(queryDTO: PayDetailRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<[PayDetailsResponseDTO]>>) -> Void) {
+        fetchData(target: .calendarDetail(queryDTO), responseData: BaseResponse<[PayDetailsResponseDTO]>.self, completion: completion)
     }
     
 }
