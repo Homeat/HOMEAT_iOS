@@ -489,7 +489,6 @@ class InfoWriteViewController: BaseViewController {
         imageView.isHidden = true
         customButton.isHidden = false
         deleteButton.isHidden = true
-        
     }
 }
 //MARK: - Extension
