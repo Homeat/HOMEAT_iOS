@@ -55,6 +55,10 @@ class FoodTalkViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isTranslucent = false
+        lastFoodTalkId = Int.max
+        lastest.removeAll()
+        foodCollectionView.reloadData()
+        request()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -277,12 +281,14 @@ class FoodTalkViewController: BaseViewController {
         // 전체글 버튼을 클릭했을 때 selectedTag를 nil로 설정
         if sender == mainButton {
             selectedTag = nil
+        } else if sender == weekButton {
+            selectedTag = ""
         } else if let tag = sender.titleLabel?.text?.replacingOccurrences(of: "#", with: "") {
             selectedTag = tag
         }
 
-        lastFoodTalkId = Int.max // Reset lastFoodTalkId for new tag
-        lastest.removeAll() // Clear current data
+        lastFoodTalkId = Int.max
+        lastest.removeAll()
         foodCollectionView.reloadData()
         request()
     }
@@ -307,8 +313,12 @@ class FoodTalkViewController: BaseViewController {
                     self.lastest.append(contentsOf: data.data)
                     self.lastFoodTalkId = self.lastest.last?.foodTalkId ?? Int.max
                     self.isLoading = false
+                    if self.selectedTag == "" {
+                        self.lastest.sort { $0.love > $1.love }
+                    }
                     self.foodCollectionView.reloadData()
                     self.foodCollectionView.layoutIfNeeded()
+                    self.isLoading = false
                 default:
                     print("데이터 저장 실패")
                     self.isLoading = false

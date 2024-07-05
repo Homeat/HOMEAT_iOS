@@ -17,7 +17,6 @@ protocol HeaderViewDelegate: AnyObject {
 }
 
 class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
-
     weak var delegate: HeaderViewDelegate?
     var name: String?
     //MARK: - Property
