@@ -234,17 +234,19 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
             case .success(let data):
                 print("Response Data: \(data)")
                 print("Response Code: \(data.code)")
+                self?.ageButton.setTitle(data.data?.age_range, for: .normal)
+                self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
                 if data.code == "COMMON_200" {
                     guard let analysisData = data.data else { return }
-                    self?.ageButton.setTitle(analysisData.age_range, for: .normal)
-                    self?.incomeMoneyButton.setTitle(analysisData.income, for: .normal)
-                    self?.handleWeekAnalysisData(analysisData)
+                    self?.weekView.handleWeekAnalysisData(analysisData)
+                    self?.weekView.jipbapWeekBarChartView.isHidden = false
+                    self?.weekView.deliveryWeekBarChartView.isHidden = false
                 } else if data.code == "REPORT_4040" {
-                    self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
+//                    self?.weekView.updateWeekContentLabel(text: "이달 주간 분석을 찾을 수 없습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
                 } else if data.code == "REPORT_4042" {
-                    self?.weekView.updateWeekContentLabel(text: "비교할 회원이 존재하지 않습니다.")
+//                    self?.weekView.updateWeekContentLabel(text: "비교할 회원이 존재하지 않습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
                 } else if data.code == "COMMON_400" {
@@ -254,7 +256,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                         self?.ageButton.setTitle(errorData.ageRange, for: .normal)
                         self?.incomeMoneyButton.setTitle(errorData.income, for: .normal)
                     } else {
-                        self?.weekView.updateWeekContentLabel(text: "서버 에러 발생")
+//                        self?.weekView.updateWeekContentLabel(text: "서버 에러 발생")
                     }
                 } else {
                     print("Unknown response code: \(data.code)")
@@ -262,7 +264,9 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
 
             case .serverErr:
                 print("서버 에러")
-
+                self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
+                self?.weekView.jipbapWeekBarChartView.isHidden = true
+                self?.weekView.deliveryWeekBarChartView.isHidden = true
             default:
                 print("데이터 존재 안함")
             }
@@ -303,9 +307,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         print(year,month)
         monthChart(year: year, month: month)
     }
-    func updateWeekContentLabel(text: String) {
-        weekView.updateWeekContentLabel(text: text)
-    }
+
     //전 달 버튼 tapp
     func weekBackButtonTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
@@ -330,13 +332,5 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         monthView.setupPieChart(jipbapRatio: data.jipbap_ratio ?? 0,outRatio:data.out_ratio ?? 0)
         monthView.setupBarChart(jipbapPrice: data.month_jipbap_price ?? 0, outPrice: data.month_out_price ?? 0)
         monthView.setStyledMonthContentLabel(savePercent: Double(data.save_percent ?? 0))
-    }
-    
-    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
-        weekView.updateGenderLabel(gender: data.gender)
-        //        weekView.updateGipbapContentsLabel(jibapSave: data.jipbapSave)
-        //        weekView.updateDeliveryContentsLabel(outSave: data.outSave)
-        weekView.setupMealWeekBarChart(jipbapAverage: data.jipbap_average ?? 0, weekJipbapPrice: data.week_jipbap_price ?? 0)
-        weekView.setupDeliveryWeekBarChart(outAverage: data.out_average ?? 0, weekOutPrice: data.week_out_price ?? 0)
     }
 }
