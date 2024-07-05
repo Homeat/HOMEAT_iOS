@@ -141,7 +141,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         }
         
         recipTextView.snp.makeConstraints {
-            $0.top.equalTo(line).offset(40)
+            $0.top.equalTo(line).offset(30)
             $0.leading.equalTo(line.snp.leading)
             $0.trailing.equalTo(line.snp.trailing)
             $0.height.equalTo(170)
@@ -150,7 +150,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         saveButton.snp.makeConstraints {
             $0.leading.equalTo(recipTextView.snp.leading)
             $0.trailing.equalTo(recipTextView.snp.trailing)
-            $0.top.equalTo(recipTextView.snp.bottom).offset(40)
+            $0.top.equalTo(recipTextView.snp.bottom).offset(20)
             $0.height.equalTo(57)
         }
     }
@@ -187,7 +187,6 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    // 레시피 데이터로 UI 업데이트
     private func setupRecipeData() {
         if let recipe = recipe {
             recipTextView.text = recipe.recipe
