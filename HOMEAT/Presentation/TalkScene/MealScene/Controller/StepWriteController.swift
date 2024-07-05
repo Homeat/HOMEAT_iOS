@@ -19,7 +19,6 @@ protocol StepWriteViewControllerDelegate: AnyObject {
 }
 
 class StepWriteController: BaseViewController, UITextViewDelegate {
-    
     weak var delegate: ModalViewControllerDelegate?
     weak var stepDelegate: StepWriteViewControllerDelegate?
     //MARK: - Property

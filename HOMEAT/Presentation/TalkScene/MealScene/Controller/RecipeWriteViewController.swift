@@ -28,7 +28,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private var isCameraAuthorized: Bool {
         AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
-    var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     var foodRecipes: [foodRecipeDTOS] = []
     func didSaveRecipe(recipe: String?, recipePicture: UIImage?) {
@@ -202,8 +201,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
         
         stepAddButton.do {
-            $0.setTitle("레시피 추가하기", for: .normal)
-            $0.setTitleColor(UIColor(r: 248, g: 208, b: 186), for: .normal)
+            $0.setTitle("+레시피 추가", for: .normal)
+            $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .bodyMedium16
             $0.addTarget(self, action: #selector(stepAddButtonTapped), for: .touchUpInside)
         }
@@ -501,7 +500,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             switch response {
             case .success(let data):
                 print("성공: 데이터가 반환되었습니다")
-                if let foodTalkData = data.data {print("서버에서 받은 데이터: \(foodTalkData)")}
+                if let foodTalkData = data.data {}
                 for (index, image) in imageDataArray.enumerated() {
                     print("Image \(index) Size: \(image.count) bytes")
                 }
@@ -781,13 +780,12 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 // 셀의 높이, 간격 포함
+        return 80 
     }
 }
 
 extension RecipeWriteViewController: ModalViewControllerDelegate {
     func didAddCell() {
-        data.append("New Cell")
         tableView.reloadData()
     }
 }
