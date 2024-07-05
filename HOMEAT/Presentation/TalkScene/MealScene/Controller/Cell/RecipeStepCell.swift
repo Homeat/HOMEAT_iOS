@@ -46,8 +46,9 @@ class RecipeStepCell: UITableViewCell {
         
         photoView.do {
             $0.backgroundColor = .turquoiseDarkGray
-            $0.contentMode = .scaleAspectFit
+            $0.contentMode = .scaleAspectFill
             $0.layer.cornerRadius = 9
+            $0.clipsToBounds = true
         }
         
         containerView.do {
@@ -85,8 +86,8 @@ class RecipeStepCell: UITableViewCell {
             photoView.snp.makeConstraints {
                 $0.top.equalTo(stepLabel.snp.bottom).offset(15)
                 $0.leading.equalTo(line.snp.leading)
-                $0.height.equalTo(111)
-                $0.width.equalTo(111)
+                $0.width.equalTo(contentView.snp.width).multipliedBy(1.0/3.0)
+                $0.height.equalTo(photoView.snp.width)
             }
             
             containerView.snp.makeConstraints {
@@ -107,5 +108,25 @@ class RecipeStepCell: UITableViewCell {
     func configure(with recipe: FoodTalkRecipe, step: Int) {
         stepLabel.text = "STEP \(step + 1)"
         contentLabel.text = recipe.recipe
+        if let imageUrlString = recipe.foodRecipeImages.first, let imageUrl = URL(string: imageUrlString) {
+            photoView.loadImage(from: imageUrl)
+        } else {
+            photoView.image = nil
+        }
+    }
+}
+
+extension UIImageView {
+    func loadImage(from url: URL, placeholder: UIImage? = nil) {
+        self.image = placeholder
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {return}
+            
+            guard let data = data, let image = UIImage(data: data) else {return}
+            DispatchQueue.main.async {
+                self.image = image
+                self.layoutIfNeeded()
+            }
+        }.resume()
     }
 }
