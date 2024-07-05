@@ -20,6 +20,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     private let sendButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var foodTalkId: Int?
+    var titleLabel = ""
     var foodTalkRecipes: [FoodTalkRecipe] = []
     var comments: [FoodTalkComment] = []
 
@@ -187,8 +188,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     //MARK: - Method
-    func recipeViewButtonTapped() {
-        let nextVC = RecipeViewController(foodTalkRecipes: foodTalkRecipes)
+    func recipeViewButtonTapped() { 
+        let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -209,7 +210,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                 case .success(let data):
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
-                    let titleLabel = data.data.name
+                    self.titleLabel = data.data.name
                     let dateString = data.data.createdAt
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
@@ -231,7 +232,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     self.comments = data.data.foodTalkComments
                     self.foodTalkRecipes = data.data.foodTalkRecipes
                     if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
-                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
+                        headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
                 default:
