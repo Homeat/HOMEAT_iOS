@@ -15,7 +15,6 @@ enum FoodTalkTarget {
     case postReport(_ bodyDTO: PostReportRequestBodyDTO)
     case commentReport(_ bodyDTO: CommentReportRequestBodyDTO)
     case replyWrite(_ bodyDTO: ReplyWriteRequestBodyDTO)
-    case recipeSave(_ bodyDTO: RecipeSaveRequestBodyDTO)
     case love(_ bodyDTO: LoveRequestBodyDTO)
     case deleteLove(_ bodyDTO: DeleteLoveRequestBodyDTO)
     case commentWrite(_ bodyDTO: CommentWriteRequestBodyDTO)
@@ -41,8 +40,6 @@ extension FoodTalkTarget: TargetType {
         case .commentReport:
             return .authorization
         case .replyWrite:
-            return .authorization
-        case .recipeSave:
             return .authorization
         case .love:
             return .authorization
@@ -81,8 +78,6 @@ extension FoodTalkTarget: TargetType {
             return .hasToken
         case .replyWrite:
             return .hasToken
-        case .recipeSave:
-            return .hasToken
         case .love:
             return .hasToken
         case .deleteLove:
@@ -120,8 +115,6 @@ extension FoodTalkTarget: TargetType {
             return .post
         case .replyWrite:
             return .post
-        case .recipeSave:
-            return .post
         case .love:
             return .post
         case .deleteLove:
@@ -152,15 +145,13 @@ extension FoodTalkTarget: TargetType {
         case .foodTalkSave:
             return "/v1/foodTalk"
         case .replyReport(let bodyDTO):
-            return "/v1/foodTalk/report/reply/\(bodyDTO.replyId)"
+            return "/v1/foodTalk/report/reply/\(bodyDTO.replyId))"
         case .postReport(let bodyDTO):
-            return "/v1/foodTalk/report/post/\(bodyDTO.postId)"
+            return "/v1/foodTalk/report/post/\(bodyDTO.postId))"
         case .commentReport(let bodyDTO):
-            return "/v1/foodTalk/report/comment/\(bodyDTO.commentId)"
+            return "/v1/foodTalk/report/comment/\(bodyDTO.commentId))"
         case .replyWrite:
             return "/v1/foodTalk/reply"
-        case .recipeSave:
-            return "/v1/foodTalk/recipe"
         case .love(let bodyDTO):
             return "/v1/foodTalk/love/\(bodyDTO.id)"
         case .deleteLove(let bodyDTO):
@@ -198,8 +189,6 @@ extension FoodTalkTarget: TargetType {
             return .requestQuery(bodyDTO)
         case let .replyWrite(bodyDTO):
             return .requestWithBody(bodyDTO)
-        case let .recipeSave(bodyDTO):
-            return .requestWithMultipart(bodyDTO.toMultipartFormData())
         case let .love(bodyDTO):
             return .requestQuery(bodyDTO)
         case let .deleteLove(bodyDTO):
@@ -232,8 +221,9 @@ extension FoodTalkSaveRequestBodyDTO {
             formData.append(self.name.data(using: .utf8) ?? Data(), withName: "name")
             formData.append(self.memo.data(using: .utf8) ?? Data(), withName: "memo")
             formData.append(self.tag.data(using: .utf8) ?? Data(), withName: "tag")
-            
-            // 로그 추가
+            if let ingredient = self.ingredient {
+                formData.append(ingredient.data(using: .utf8) ?? Data(), withName: "ingredient")
+            }
             print("multipartformdata 출력")
             
             // 사진을 formData에 추가하는 경우
@@ -249,36 +239,15 @@ extension FoodTalkSaveRequestBodyDTO {
 
             for (index, foodRecipeDTOS) in self.foodRecipeRequest.enumerated() {
                 print("Appending recipe \(index)")
-                formData.append(foodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].recipe")
-                formData.append(foodRecipeDTOS.ingredient.data(using: .utf8) ?? Data(), withName: "foodRecipeRequest[\(index)].ingredient")
+                formData.append(foodRecipeDTOS.recipe.data(using: .utf8) ?? Data(), withName: "foodRecipeDTOS[\(index)].recipe")
                 if let recipePicture = foodRecipeDTOS.recipePicture {
                     print("Appending recipe picture \(index), Size: \(recipePicture.count) bytes")
-                    formData.append(recipePicture, withName: "foodRecipeRequest[\(index)].recipePicture", fileName: "recipePicture\(index).jpg", mimeType: "image/jpeg")
+                    formData.append(recipePicture, withName: "foodRecipeDTOS[\(index)].recipePicture", fileName: "recipePicture\(index).jpg", mimeType: "image/jpeg")
                 }
             }
         }
     }
 }
 
-extension RecipeSaveRequestBodyDTO {
-    func toMultipartFormData() -> (MultipartFormData) -> Void {
-        return { formData in
-            formData.append("\(self.id)".data(using: .utf8) ?? Data(), withName: "id")
-            formData.append(self.recipe.data(using: .utf8) ?? Data(), withName: "memo")
-            formData.append(self.ingredient.data(using: .utf8) ?? Data(), withName: "ingredient")
-            formData.append(self.tip.data(using: .utf8) ?? Data(), withName: "tip")
-            // 사진을 formData에 추가하는 경우
-            print("multipartformdata 출력")
-            if let foodPhotos = self.files {
-                print("Profile Photos is not empty. Count: \(foodPhotos.count)")
-                for (index, image) in foodPhotos.enumerated() {
-                    print("Index: \(index), Photo: \(image)")
-                    formData.append(image, withName: "foodPhotos", fileName: "image\(index).jpg", mimeType: "image/jpeg")
-                }
-            } else {
-                print("Profile Photos is nil or empty")
-            }
-        }
-    }
-}
+
 

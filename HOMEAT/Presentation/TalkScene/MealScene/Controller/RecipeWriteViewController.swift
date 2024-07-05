@@ -28,12 +28,11 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private var isCameraAuthorized: Bool {
         AVCaptureDevice.authorizationStatus(for: .video) == .authorized
     }
-    var data: [String] = ["Cell 1", "Cell 2"]
     var tableViewHeightConstraint: NSLayoutConstraint!
     var foodRecipes: [foodRecipeDTOS] = []
-    func didSaveRecipe(recipe: String?, ingredient: String?, recipePicture: UIImage?) {
+    func didSaveRecipe(recipe: String?, recipePicture: UIImage?) {
         let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
-        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", ingredient: ingredient ?? "재료", recipePicture: recipePictureData)
+        let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", recipePicture: recipePictureData)
         foodRecipes.append(foodRecipe)
         tableView.reloadData()
         print("레시피: \(foodRecipe.recipe)") 
@@ -43,7 +42,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let imagePicker = UIImagePickerController()
-    //private let photoButton = UIButton()
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -55,12 +53,11 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         collectionView.dataSource = self
         collectionView.backgroundColor = .clear
         collectionView.showsHorizontalScrollIndicator = false
-        //셀 만들어야 함
         collectionView.register(PhotoViewCell.self, forCellWithReuseIdentifier: "PhotoViewCell")
-        
         return collectionView
     }()
     private let imageView = UIImageView()
+    private let deleteButton = UIButton()
     private let container = UIStackView()
     private let breakfastButton = UIButton()
     private let lunchButton = UIButton()
@@ -80,10 +77,36 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         super.viewDidLoad()
         setNavigationBar()
         setUpKeyboard()
-        collectionView.isHidden = true
         setTableView()
+        collectionView.isHidden = true
+        memoTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+    }
+    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+            if keyPath == "contentSize", let newSize = change?[.newKey] as? CGSize {
+                let newHeight = max(newSize.height, 50) // 최소 높이 제약 조건 설정
+                memoTextView.constraints.filter { $0.firstAttribute == .height }.first?.constant = newHeight
+                view.layoutIfNeeded()
+            }
+        }
+        deinit {
+            // 뷰 컨트롤러가 할당 해제될 때 옵저버를 제거
+            memoTextView.removeObserver(self, forKeyPath: "contentSize")
+        }
 
     //MARK: - SetUI
     let textViewPlaceHolder = "오늘의 음식이 담고 있는 이야기는?"
@@ -94,6 +117,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         scrollView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+            $0.showsVerticalScrollIndicator = false
         }
         
         contentView.do {
@@ -106,6 +130,14 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         imageView.do {
             $0.layer.cornerRadius = 14
+            $0.layer.masksToBounds = true
+        }
+        
+        deleteButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
         }
         
         container.do {
@@ -191,8 +223,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
         
         stepAddButton.do {
-            $0.setTitle("레시피 추가하기", for: .normal)
-            $0.setTitleColor(UIColor(r: 248, g: 208, b: 186), for: .normal)
+            $0.setTitle("+레시피 추가", for: .normal)
+            $0.setTitleColor(.white, for: .normal)
             $0.titleLabel?.font = .bodyMedium16
             $0.addTarget(self, action: #selector(stepAddButtonTapped), for: .touchUpInside)
         }
@@ -201,19 +233,18 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     override func setConstraints() {
         view.addSubviews(scrollView)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(customButton, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
-        self.view.addSubview(self.imageView)
-        view.bringSubviewToFront(self.imageView)
+        contentView.addSubviews(imageView, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
+        contentView.bringSubviewToFront(imageView)
+        contentView.addSubview(customButton)
+        contentView.addSubview(deleteButton)
+        contentView.bringSubviewToFront(deleteButton)
         
         container.addArrangedSubview(breakfastButton)
         container.addArrangedSubview(lunchButton)
         container.addArrangedSubview(dinnerButton)
         
         scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
         contentView.snp.makeConstraints {
@@ -237,13 +268,21 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         imageView.snp.makeConstraints {
             $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(51)
-            $0.leading.equalTo(contentView.snp.leading).offset(108)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-109)
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(176)
+            $0.width.equalTo(176)
+
+        }
+        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(47)
+            $0.trailing.equalTo(imageView.snp.trailing).offset(10.8)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
         }
         
         container.snp.makeConstraints {
-            $0.top.equalTo(customButton.snp.bottom).offset(36)
+            $0.top.equalTo(contentView.safeAreaLayoutGuide).offset(267)
             $0.leading.equalToSuperview().offset(47)
             $0.trailing.equalToSuperview().offset(-47)
         }
@@ -300,7 +339,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크 글쓰기"
         let titleAttributes: [NSAttributedString.Key: Any] = [
-            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!, // 원하는 폰트와 크기로 변경
+            .font:  UIFont(name: "NotoSansKR-Medium", size: 18)!,
             .foregroundColor: UIColor.white
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
@@ -332,8 +371,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     
     func saveData() {
-        // 데이터 저장 로직 구현
-        // 저장이 완료되면 아래 알림을 보냄
         NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
         navigationController?.popViewController(animated: true)
     }
@@ -362,8 +399,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
                 DispatchQueue.main.async {
                     self.showAlert(message: "갤러리를 불러올 수 없습니다. 핸드폰 설정에서 사진 접근 허용을 모든 사진으로 변경해주세요.")
                 }
-            case .authorized, .limited: // 모두 허용, 일부 허용
-                self.pickImage() // 갤러리 불러오는 동작을 할 함수
+            case .authorized, .limited:
+                self.pickImage()
             @unknown default:
                 print("PHPhotoLibrary::execute - \"Unknown case\"")
             }
@@ -442,12 +479,10 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     
     @objc func dismissKeyboard() {
-        // 키보드를 내립니다.
         view.endEditing(true)
     }
     
     @objc func saveButtonTapped() {
-        //값 유무 확인
         guard let name = nameTextField.text, !name.isEmpty else {
             showAlert(message: "제목을 입력하세요")
             return
@@ -455,6 +490,20 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         guard let memo = memoTextView.text, !memo.isEmpty else {
             showAlert(message: "메모를 입력하세요")
+            return
+        }
+        
+        if name.count >= 15 {
+            let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if memo.count >= 130 {
+            let alert = UIAlertController(title: "내용 길이 초과", message: "내용이 너무 길어요", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
             return
         }
         
@@ -469,23 +518,18 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
         
         let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
-        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, foodPictures: imageDataArray, foodRecipeRequest: foodRecipes)
+        let bodyDTO = FoodTalkSaveRequestBodyDTO(name: name, memo: memo, tag: tag, ingredient: "재료", foodPictures: imageDataArray, foodRecipeRequest: foodRecipes)
         print(bodyDTO)
         print("bodyDTO.foodRecipeRequest count: \(bodyDTO.foodRecipeRequest.count)")
         for recipe in bodyDTO.foodRecipeRequest {
-            print("Recipe: \(recipe.recipe), Ingredient: \(recipe.ingredient)")
+            print("Recipe: \(recipe.recipe)")
         }
         
         NetworkService.shared.foodTalkService.foodTalkSave(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
                 print("성공: 데이터가 반환되었습니다")
-                if let foodTalkData = data.data {
-                    // data.data 서버에서 받는 responsebody
-                    print("서버에서 받은 데이터: \(foodTalkData)")
-                } else {
-                    print("성공했지만 데이터가 비어있습니다")
-                }
+                if let foodTalkData = data.data {}
                 for (index, image) in imageDataArray.enumerated() {
                     print("Image \(index) Size: \(image.count) bytes")
                 }
@@ -497,19 +541,26 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
     }
     
+    @objc private func deleteButtonTapped() {
+        selectedImages.removeAll()
+        imageView.isHidden = true
+        customButton.isHidden = false
+        deleteButton.isHidden = true
+    }
+    
     //MARK: - Methods
     func pickImage(){
             let photoLibrary = PHPhotoLibrary.shared()
             var configuration = PHPickerConfiguration(photoLibrary: photoLibrary)
 
-            configuration.selectionLimit = 3 //한번에 가지고 올 이미지 갯수 제한
-            configuration.filter = .any(of: [.images]) // 이미지, 비디오 등의 옵션
+            configuration.selectionLimit = 3
+            configuration.filter = .any(of: [.images])
 
-            DispatchQueue.main.async { // 메인 스레드에서 코드를 실행시켜야함
+            DispatchQueue.main.async {
                 let picker = PHPickerViewController(configuration: configuration)
                 picker.delegate = self
                 picker.isEditing = true
-                self.present(picker, animated: true, completion: nil) // 갤러리뷰 프리젠트
+                self.present(picker, animated: true, completion: nil)
         }
     }
     
@@ -534,8 +585,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
 
         let customButton = UIButton(configuration: config)
         customButton.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
-        customButton.translatesAutoresizingMaskIntoConstraints = false
-
         return customButton
     }
 
@@ -612,7 +661,6 @@ extension RecipeWriteViewController: DeleteActionDelegate {
 }
 
 extension RecipeWriteViewController: PHPickerViewControllerDelegate {
-    // 사진 선택이 끝났을 때 호출되는 함수
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         let identifiers = results.compactMap(\.assetIdentifier)
         let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
@@ -645,57 +693,43 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
             }
         }
         group.notify(queue: .main) {
-            // 모든 이미지가 로드되었을 때 실행되는 부분
             DispatchQueue.main.async { [self] in
                 if self.currentMode == .album {
-                    // 앨범 모드일 경우의 처리
-                    self.customButton.isHidden = true
-                    self.collectionView.isHidden = false
                     self.selectedImages = selectedImages
-                    
-                    // 이미지가 추가되었을 때 디버깅 정보 출력
                     print("selectedImages contents: \(self.selectedImages)")
                     
-                    self.collectionView.reloadData() // collectionView 갱신
+                    if self.selectedImages.isEmpty {
+                        self.customButton.isHidden = false
+                    } else {
+                        self.customButton.isHidden = true
+                        self.collectionView.isHidden = false
+                        self.collectionView.reloadData() // collectionView 갱신
+                    }
                 }
             }
             // 이미지 피커를 닫음
-            picker.dismiss(animated: true, completion: nil)
+            picker.dismiss(animated: true)
         }
     }
 }
 
-
 extension RecipeWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(
-            _ picker: UIImagePickerController,
-            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-        ) {
-            guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-                picker.dismiss(animated: true)
-                return
-            }
-            // 이미지를 selectedImages 배열에 추가
-            selectedImages.append(image)
-            
-            // 이미지 뷰에 선택된 이미지 표시
-            imageView.image = image //화면에 보일것이다.
-            // 버튼을 숨기고 이미지 뷰를 표시하도록 설정
-            //addImageButton.isHidden = true
-            imageView.isHidden = false
-            customButton.isHidden = true // customButton도 함께 숨김
-
-            self.imageView.image = image
-            //imagePickercontroller를 죽인다.
-            picker.dismiss(animated: true, completion: nil)
-            
-            NSLayoutConstraint.activate([
-                customButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: -200), //화면 밖으로 이동시킬려고 밖으로 빼냄
-                customButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 108),
-                customButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -109),
-                customButton.heightAnchor.constraint(equalToConstant: 176),
-            ])
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            picker.dismiss(animated: true)
+            return
         }
+        selectedImages.append(image)
+        imageView.image = image
+        imageView.isHidden = false
+        customButton.isHidden = true
+        deleteButton.isHidden = false
+        self.imageView.image = image
+        picker.dismiss(animated: true)
+    }
 }
 
 // TextField, TextView 키보드 처리
@@ -777,15 +811,47 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80 // 셀의 높이, 간격 포함
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // 데이터 소스에서 항목 제거
+            foodRecipes.remove(at: indexPath.row)
+            // 테이블 뷰에서 셀 제거
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedRecipe = foodRecipes[indexPath.row]
+        let stepWriteVC = StepWriteController()
+        stepWriteVC.recipe = selectedRecipe
+        stepWriteVC.recipeIndex = indexPath.row
+        stepWriteVC.delegate = self
+        let navController = UINavigationController(rootViewController: stepWriteVC)
+        navController.modalPresentationStyle = .automatic
+        present(navController, animated: true, completion: nil)
     }
 }
 
 extension RecipeWriteViewController: ModalViewControllerDelegate {
     func didAddCell() {
-        data.append("New Cell")
-        tableView.reloadData()
-    }
+            tableView.reloadData()
+        }
+        
+        func didUpdateCell(at index: Int, with recipe: foodRecipeDTOS) {
+            foodRecipes[index] = recipe
+            tableView.reloadData()
+        }
 }
 
 

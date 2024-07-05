@@ -36,8 +36,8 @@ struct DataClass: Codable {
 struct FoodTalkRecipe: Codable {
     let step: Int
     let recipe: String
-    let ingredient: String
-    let tip: String
+    let ingredient: String?
+    let tip: String?
     let foodRecipeImages: [String]
 }
 

@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import Then
 //MARK: 앨범 사진 셀
-
 protocol InfoDeleteActionDelegate: AnyObject {
     func delete(at index: Int)
 }

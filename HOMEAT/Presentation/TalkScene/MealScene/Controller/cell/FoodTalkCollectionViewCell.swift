@@ -1,9 +1,6 @@
 import UIKit
 import SnapKit
-
-class ImageCache {
-    static let shared = NSCache<NSString, UIImage>()
-}
+import Kingfisher
 
 class FoodTalkCollectionViewCell: UICollectionViewCell {
     
@@ -15,7 +12,9 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.lineBreakMode = .byTruncatingTail
         label.numberOfLines = 1
-        label.textAlignment = .center // 텍스트 중앙 정렬
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
@@ -58,42 +57,24 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         foodImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(14)
-            make.height.equalTo(100)
-            make.width.equalTo(120)
+            make.height.equalToSuperview().multipliedBy(0.7)
+            make.width.equalTo(foodImageView.snp.height).multipliedBy(1.2)
         }
         
         foodName.snp.makeConstraints { make in
-            make.top.equalTo(foodImageView.snp.bottom).offset(5)
-            make.leading.equalToSuperview().offset(10) // 여유 공간 추가
-            make.trailing.equalToSuperview().offset(-10) // 여유 공간 추가
-            make.bottom.equalTo(self.snp.bottom).offset(-5)
+            make.top.equalTo(foodImageView.snp.bottom).offset(3)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
+            make.height.equalTo(20).priority(.high)
         }
     }
     
     func configure(with foodTalk: FoodTalk) {
         foodName.text = foodTalk.foodName
-        
-        if let url = URL(string: foodTalk.url) {
-            // 캐시에서 이미지 확인
-            if let cachedImage = ImageCache.shared.object(forKey: url.absoluteString as NSString) {
-                foodImageView.image = cachedImage
-            } else {
-                // URL로부터 이미지 비동기적으로 로드
-                imageDownloadTask = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
-                    guard let self = self, let data = data, error == nil, let image = UIImage(data: data) else {
-                        return
-                    }
-                    // 캐시에 저장
-                    ImageCache.shared.setObject(image, forKey: url.absoluteString as NSString)
-                    DispatchQueue.main.async {
-                        self.foodImageView.image = image
-                    }
-                }
-                imageDownloadTask?.resume()
-            }
-        } else {
-            foodImageView.image = nil
-        }
+        let photoUrl = foodTalk.url
+        let url = URL(string: photoUrl)
+        foodImageView.kf.setImage(with: url)
     }
 }
 

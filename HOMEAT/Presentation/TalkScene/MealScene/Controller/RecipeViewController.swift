@@ -11,14 +11,14 @@ import SnapKit
 import Then
 
 class RecipeViewController: BaseViewController {
-    
+    var postName: String
+    var foodTalkRecipes: [FoodTalkRecipe]
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let ingredientView = IngredientView()
     
-    var foodTalkRecipes: [FoodTalkRecipe]
-    
-    init(foodTalkRecipes: [FoodTalkRecipe]) {
+    init(postName: String, foodTalkRecipes: [FoodTalkRecipe]) {
+        self.postName = postName
         self.foodTalkRecipes = foodTalkRecipes
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,7 +36,7 @@ class RecipeViewController: BaseViewController {
         print(foodTalkRecipes.count)
     }
     
-    //MARK: - SetUI
+    //MARK: - SetUI 
     override func setConfigure() {
         
         view.do {
@@ -60,7 +60,7 @@ class RecipeViewController: BaseViewController {
     }
     
     func setNavigationBar() {
-        self.navigationItem.title = "연어 샐러드 레시피"
+        self.navigationItem.title = postName + " 레시피"
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
@@ -88,18 +88,20 @@ class RecipeViewController: BaseViewController {
 extension RecipeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return foodTalkRecipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeStepCell") as! RecipeStepCell
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        let recipe = foodTalkRecipes[indexPath.row]
+        cell.configure(with: recipe, step: indexPath.row)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

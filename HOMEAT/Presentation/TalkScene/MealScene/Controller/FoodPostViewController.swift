@@ -8,6 +8,7 @@
 import UIKit
 import Then
 import SnapKit
+import Kingfisher
 
 class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
     
@@ -20,6 +21,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     private let sendButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var foodTalkId: Int?
+    var titleLabel = ""
     var foodTalkRecipes: [FoodTalkRecipe] = []
     var comments: [FoodTalkComment] = []
 
@@ -38,6 +40,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         super.viewDidLoad()
         setNavigationBar()
         setTableView()
+        setHeartButton()
         setTabbar()
         setupKeyboardEvent()
         PostRequest()
@@ -79,6 +82,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         heartButton.do {
             $0.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
             $0.contentMode = .scaleAspectFit
+            $0.isSelected = false
+            $0.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         }
         
         replyTextField.do {
@@ -154,6 +159,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         tableView.layoutIfNeeded()
     }
     
+    private func setHeartButton() {
+        if let foodTalkId = self.foodTalkId {
+            let isSelected = loadHeartButtonState()
+            self.heartButton.isSelected = isSelected
+            let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
+            self.heartButton.setImage(UIImage(named: imageName), for: .normal)
+        }
+    }
+    
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크"
         let backbutton = UIBarButtonItem()
@@ -175,14 +189,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     //MARK: - Method
-    func recipeViewButtonTapped() {
-        let nextVC = RecipeViewController(foodTalkRecipes: foodTalkRecipes)
+    func recipeViewButtonTapped() { 
+        let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
     func declareViewButtonTapped() {
-        let nextVC = DeclareViewController()
+        guard let foodTalkId = self.foodTalkId else {return}
+        let nextVC = DeclareViewController(foodTalkId: foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
@@ -196,8 +211,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                 case .success(let data):
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
-                    let titleLabel = data.data.name
-                    // 날짜 형식 변환
+                    self.titleLabel = data.data.name
                     let dateString = data.data.createdAt
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
@@ -216,15 +230,10 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     let love = String(data.data.love)
                     let comment = String(data.data.commentNumber)
                     let foodPictureImages = data.data.foodPictureImages
-                    let receivedRecipes = data.data.foodTalkRecipes
                     self.comments = data.data.foodTalkComments
-                    print("받은 레시피 수: \(receivedRecipes.count)")
-                    for recipe in receivedRecipes {
-                        print("레시피: \(recipe)")
-                    }
-                    self.foodTalkRecipes = receivedRecipes
+                    self.foodTalkRecipes = data.data.foodTalkRecipes
                     if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
-                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
+                        headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
                 default:
@@ -262,6 +271,46 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         }
     }
     
+    @objc func heartButtonTapped() {
+        guard let foodTalkId = self.foodTalkId else { return }
+        
+        if heartButton.isSelected {
+            self.heartButton.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
+            let bodyDTO = DeleteLoveRequestBodyDTO(id: foodTalkId)
+            NetworkService.shared.foodTalkService.deleteLove(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 취소 성공")
+                        self.PostRequest()
+                        self.heartButton.isSelected = false
+                        self.saveHeartButtonState(isSelected: false)
+                    default:
+                        print("좋아요 취소 실패")
+                    }
+                }
+            }
+        } else {
+            self.heartButton.setImage(UIImage(named: "isHeartSelected"), for: .normal)
+            let bodyDTO = LoveRequestBodyDTO(id: foodTalkId)
+            NetworkService.shared.foodTalkService.love(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 성공")
+                        self.PostRequest()
+                        self.heartButton.isSelected = true
+                        self.saveHeartButtonState(isSelected: true)
+                    default:
+                        print("좋아요 실패")
+                    }
+                }
+            }
+        }
+    }
+    
     private func scrollToBottom() {
         let lastRowIndex = self.comments.count - 1
         if lastRowIndex > 0 {
@@ -281,7 +330,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             
             UIView.animate(withDuration: 0.3) {
                 self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-                // 키보드가 나타날 때 테이블 뷰의 하단 여유 공간을 키보드 높이로 설정
                 self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 91, right: 0)
             }
         }
@@ -290,16 +338,29 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     @objc func keyboardDown() {
         UIView.animate(withDuration: 0.3) {
             self.view.transform = .identity
-            // 키보드가 사라질 때 테이블 뷰의 하단 여유 공간을 원래대로 설정
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
         }
     }
+    
+    //MARK: - UserDefault
+       func saveHeartButtonState(isSelected: Bool) {
+           if let foodTalkId = self.foodTalkId {
+               UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(foodTalkId)")
+           }
+       }
+
+       func loadHeartButtonState() -> Bool {
+           if let foodTalkId = self.foodTalkId {
+               return UserDefaults.standard.bool(forKey: "heartButtonState_\(foodTalkId)")
+           }
+           return false
+       }
 }
 
 //MARK: - Extension
 extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comments.count // 댓글의 개수를 반환
+        return comments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -328,7 +389,9 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
     
     func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let comment = comments[indexPath.row]
         let nextVC = CommentDeclareViewController()
+        nextVC.commentId = comment.commentId
         navigationController?.pushViewController(nextVC, animated: true)
     }
 }
