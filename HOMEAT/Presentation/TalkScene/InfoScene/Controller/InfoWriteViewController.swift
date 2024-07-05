@@ -185,6 +185,7 @@ class InfoWriteViewController: BaseViewController {
             $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
             $0.imageView?.contentMode = .scaleAspectFit
             $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
         }
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -484,7 +485,11 @@ class InfoWriteViewController: BaseViewController {
     }
     
     @objc private func deleteButtonTapped() {
-    
+        selectedImages.removeAll()
+        imageView.isHidden = true
+        customButton.isHidden = false
+        deleteButton.isHidden = true
+        
     }
 }
 //MARK: - Extension
@@ -687,19 +692,14 @@ extension InfoWriteViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         imageView.isHidden = false
         customButton.isHidden = true
+        deleteButton.isHidden = false
         self.imageView.image = image
         picker.dismiss(animated: true)
-        customButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-200)
-            $0.leading.trailing.equalTo(108)
-            $0.height.equalTo(176)
-        }
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            // 취소 버튼을 눌렀을 때 customButton을 다시 나타나게 함
             self.customButton.isHidden = false
             picker.dismiss(animated: true, completion: nil)
-        }
+    }
 }
 extension InfoWriteViewController: TagPlusViewControllerDelegate {
     func didUpdateTags(_ tags: [String]) {
