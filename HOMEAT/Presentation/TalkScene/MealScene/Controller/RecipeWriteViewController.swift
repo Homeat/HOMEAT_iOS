@@ -57,6 +57,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         return collectionView
     }()
     private let imageView = UIImageView()
+    private let deleteButton = UIButton()
     private let container = UIStackView()
     private let breakfastButton = UIButton()
     private let lunchButton = UIButton()
@@ -80,6 +81,19 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         collectionView.isHidden = true
         memoTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -116,6 +130,14 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         imageView.do {
             $0.layer.cornerRadius = 14
+            $0.layer.masksToBounds = true
+        }
+        
+        deleteButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
         }
         
         container.do {
@@ -214,16 +236,15 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         contentView.addSubviews(imageView, collectionView, container, nameLabel, nameTextField, memoLabel, memoTextView, line, stepLabel, stepAddButton, tableView)
         contentView.bringSubviewToFront(imageView)
         contentView.addSubview(customButton)
+        contentView.addSubview(deleteButton)
+        contentView.bringSubviewToFront(deleteButton)
         
         container.addArrangedSubview(breakfastButton)
         container.addArrangedSubview(lunchButton)
         container.addArrangedSubview(dinnerButton)
         
         scrollView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.edges.equalToSuperview()
         }
         
         contentView.snp.makeConstraints {
@@ -247,9 +268,17 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         
         imageView.snp.makeConstraints {
             $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(51)
-            $0.leading.equalTo(contentView.snp.leading).offset(108)
-            $0.trailing.equalTo(contentView.snp.trailing).offset(-109)
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(176)
+            $0.width.equalTo(176)
+
+        }
+        
+        deleteButton.snp.makeConstraints {
+            $0.top.equalTo(contentView.safeAreaLayoutGuide.snp.top).offset(47)
+            $0.trailing.equalTo(imageView.snp.trailing).offset(10.8)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
         }
         
         container.snp.makeConstraints {
@@ -512,6 +541,13 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         }
     }
     
+    @objc private func deleteButtonTapped() {
+        selectedImages.removeAll()
+        imageView.isHidden = true
+        customButton.isHidden = false
+        deleteButton.isHidden = true
+    }
+    
     //MARK: - Methods
     func pickImage(){
             let photoLibrary = PHPhotoLibrary.shared()
@@ -680,25 +716,21 @@ extension RecipeWriteViewController: PHPickerViewControllerDelegate {
 
 extension RecipeWriteViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(
-            _ picker: UIImagePickerController,
-            didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-        ) {
-            guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
-                picker.dismiss(animated: true)
-                return
-            }
-            selectedImages.append(image)
-            imageView.image = image
-            imageView.isHidden = false
-            customButton.isHidden = true
-            self.imageView.image = image
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
             picker.dismiss(animated: true)
-            customButton.snp.makeConstraints {
-                $0.top.equalTo(view.safeAreaLayoutGuide).offset(-200)
-                $0.leading.trailing.equalTo(108)
-                $0.height.equalTo(176)
-            }
+            return
         }
+        selectedImages.append(image)
+        imageView.image = image
+        imageView.isHidden = false
+        customButton.isHidden = true
+        deleteButton.isHidden = false
+        self.imageView.image = image
+        picker.dismiss(animated: true)
+    }
 }
 
 // TextField, TextView 키보드 처리

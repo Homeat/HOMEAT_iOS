@@ -27,6 +27,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
+    private let deletePhotoButton = UIButton()
     private let photoActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     private let imagePicker = UIImagePickerController()
     private let line = UIView()
@@ -70,6 +71,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             $0.clipsToBounds = true
             $0.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
         }
+        
+
         
         photoActionSheet.do {
             let takeAction = UIAlertAction(title: "사진 촬영", style: .default) { action in
