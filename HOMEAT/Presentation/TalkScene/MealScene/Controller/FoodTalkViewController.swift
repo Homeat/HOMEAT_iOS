@@ -280,6 +280,19 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
     }
     
+    private func selectMainButton() {
+        if let selectedButton = selectedButton {
+            selectedButton.isSelected = false
+            selectedButton.layer.borderColor = UIColor(named: "warmgray")?.cgColor
+            selectedButton.setTitleColor(.warmgray, for: .normal)
+        }
+        mainButton.isSelected = true
+        mainButton.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+        mainButton.setTitleColor(.turquoiseGreen, for: .normal)
+        selectedButton = mainButton
+        selectedTag = nil
+    }
+    
     //MARK: - @objc func
     @objc func isListButtonTapped(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -291,8 +304,9 @@ class FoodTalkViewController: BaseViewController {
             self.hasNextPage = true
             self.lastest.removeAll()
             self.oldest.removeAll()
-            self.foodCollectionView.reloadData()
             self.currentSortOrder = .latest
+            self.selectMainButton()
+            self.foodCollectionView.reloadData()
             self.request()  // 최신순 정렬 요청
         }))
         actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in
@@ -302,6 +316,9 @@ class FoodTalkViewController: BaseViewController {
             self.hasNextPage = true
             self.lastest.removeAll()
             self.oldest.removeAll()
+            self.currentSortOrder = .none
+            self.selectMainButton()
+            self.foodCollectionView.reloadData()
             // 여기에 공감순 정렬 요청 메서드 호출 추가
         }))
         actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in
@@ -311,6 +328,9 @@ class FoodTalkViewController: BaseViewController {
             self.hasNextPage = true
             self.lastest.removeAll()
             self.oldest.removeAll()
+            self.currentSortOrder = .none
+            self.selectMainButton()
+            self.foodCollectionView.reloadData()
             // 여기에 조회순 정렬 요청 메서드 호출 추가
         }))
         actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in
@@ -318,15 +338,16 @@ class FoodTalkViewController: BaseViewController {
             self.oldestFoodTalkId = 0
             self.hasNextPage = true
             self.oldest.removeAll()
-            self.foodCollectionView.reloadData()
             self.currentSortOrder = .oldest
+            self.selectMainButton()
+            self.foodCollectionView.reloadData()
             self.requestOldestOrder()  // 오래된 순 정렬 요청
         }))
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true, completion: nil)
     }
-    
+
     @objc func isHashTagButtonTapped(_ sender: UIButton) {
         if let selectedButton = selectedButton {
             selectedButton.isSelected = false

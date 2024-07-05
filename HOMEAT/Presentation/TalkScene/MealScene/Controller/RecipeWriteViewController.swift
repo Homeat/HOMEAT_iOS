@@ -344,7 +344,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         ]
         navigationController?.navigationBar.titleTextAttributes = titleAttributes
         let backbutton = UIBarButtonItem()
-        backbutton.tintColor = .white 
+        backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
         let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
