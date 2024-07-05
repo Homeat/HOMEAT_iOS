@@ -228,13 +228,8 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     let love = String(data.data.love)
                     let comment = String(data.data.commentNumber)
                     let foodPictureImages = data.data.foodPictureImages
-                    let receivedRecipes = data.data.foodTalkRecipes
                     self.comments = data.data.foodTalkComments
-                    print("받은 레시피 수: \(receivedRecipes.count)")
-                    for recipe in receivedRecipes {
-                        print("레시피: \(recipe)")
-                    }
-                    self.foodTalkRecipes = receivedRecipes
+                    self.foodTalkRecipes = data.data.foodTalkRecipes
                     if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
                         headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }

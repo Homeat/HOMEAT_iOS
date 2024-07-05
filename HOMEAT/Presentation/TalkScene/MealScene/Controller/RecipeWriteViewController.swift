@@ -501,11 +501,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             switch response {
             case .success(let data):
                 print("성공: 데이터가 반환되었습니다")
-                if let foodTalkData = data.data {
-                    print("서버에서 받은 데이터: \(foodTalkData)")
-                } else {
-                    print("성공했지만 데이터가 비어있습니다")
-                }
+                if let foodTalkData = data.data {print("서버에서 받은 데이터: \(foodTalkData)")}
                 for (index, image) in imageDataArray.enumerated() {
                     print("Image \(index) Size: \(image.count) bytes")
                 }

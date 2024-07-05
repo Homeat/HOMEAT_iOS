@@ -88,19 +88,21 @@ class RecipeViewController: BaseViewController {
 extension RecipeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return foodTalkRecipes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeStepCell") as! RecipeStepCell
         cell.selectionStyle = .none
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        let recipe = foodTalkRecipes[indexPath.row]
+        cell.configure(with: recipe, step: indexPath.row)
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
-    }
+            return UITableView.automaticDimension
+        }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "IngredientView") as! IngredientView
