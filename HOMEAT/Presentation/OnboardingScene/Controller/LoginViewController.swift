@@ -10,6 +10,7 @@ import UIKit
 import Then
 import SnapKit
 import SwiftKeychainWrapper
+import Alamofire
 
 final class LoginViewController : BaseViewController {
     
@@ -27,6 +28,7 @@ final class LoginViewController : BaseViewController {
         super.viewDidLoad()
         
         setNavigation()
+        setConfigure()
         setTarget()
     }
     
@@ -170,8 +172,66 @@ final class LoginViewController : BaseViewController {
         findPasswordButton.addTarget(self, action: #selector(findPasswordButtonTapped), for: .touchUpInside)
     }
     
-    @objc private func loginButtonTapped(_ sender: Any) {
-        self.login(data: EmailLoginRequestBodyDTO(email: "rkdtnlzl@naver.com", password: "abcd1234!"))
+    @objc private func loginButtonTapped(_ sender: UIButton) {
+        guard let email = emailTextField.text, !email.isEmpty,
+              let password = passwordTextField.text, !password.isEmpty else {
+            print("이메일과 비밀번호를 입력해주세요.")
+            DispatchQueue.main.async {
+                self.showAlertWith(message: "이메일과 비밀번호를 입력해주세요.")
+            }
+            return
+        }
+        
+        login(email: email, password: password)
+    }
+    
+    private func login(email: String, password: String) {
+        let parameters: [String: Any] = [
+            "email": email,
+            "password": password
+        ]
+        let url = "https://dev.homeat.site/v1/members/login/email"
+        
+        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                print("로그인 성공: \(value)")
+                if let json = value as? [String: Any],
+                   let code = json["code"] as? String,
+                   code == "COMMON_200" {
+                    if let headers = response.response?.allHeaderFields as? [String: String],
+                       let accessToken = headers["Authorization"]?.replacingOccurrences(of: "Bearer ", with: "") {
+                        // AccessToken 저장
+                        KeychainWrapper.standard.set(accessToken, forKey: "accessToken")
+                        
+                        print("=============\(accessToken)===========")
+                    }
+                    
+                    if let data = json["data"] as? [String: Any],
+                       let refreshToken = data["refreshToken"] as? String {
+                        // RefreshToken 저장
+                        KeychainWrapper.standard.set(refreshToken, forKey: "refreshToken")
+                        print("=============\(refreshToken)===========")
+                    }
+                    
+                    DispatchQueue.main.async {
+                        let tabBarVC = HOMEATTabBarController()
+                        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                            sceneDelegate.changeRootViewController(to: tabBarVC)
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlertWith(message: "로그인 실패. 다시 시도해주세요.")
+                    }
+                }
+            case .failure(let error):
+                print("로그인 실패: \(error)")
+                DispatchQueue.main.async {
+                    self.showAlertWith(message: "로그인 요청 중 문제가 발생했습니다.")
+                }
+            }
+        }
     }
     
     @objc private func signupButtonTapped(_ sender: Any) {
@@ -184,47 +244,10 @@ final class LoginViewController : BaseViewController {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
-    private func extractAndStoreTokens(from headers: [AnyHashable: Any]) {
-        // Authorization 헤더에서 Access Token 추출
-        if let authHeader = headers[AnyHashable("Authorization")] as? String {
-            let accessToken = authHeader.replacingOccurrences(of: "Bearer ", with: "")
-            KeychainWrapper.standard.set(accessToken, forKey: "accessToken")
-        }
-        
-        // Set-Cookie 헤더에서 Refresh Token 추출
-        if let cookieHeader = headers[AnyHashable("Set-Cookie")] as? String {
-            let refreshToken = extractToken(from: cookieHeader, key: "refresh")
-            KeychainWrapper.standard.set(refreshToken, forKey: "refreshToken")
-            if let retrievedRefreshToken = KeychainWrapper.standard.string(forKey: "refreshToken") {
-                print("Stored Refresh Token: \(retrievedRefreshToken)")
-            } else {
-                print("Failed to retrieve Refresh Token")
-            }
-        }
-    }
-    
-    private func extractToken(from cookie: String, key: String) -> String {
-        guard let range = cookie.range(of: "\(key)=") else { return "" }
-        let startIndex = cookie.index(range.upperBound, offsetBy: 0)
-        let endIndex = cookie[startIndex...].firstIndex(of: ";") ?? cookie.endIndex
-        return String(cookie[startIndex..<endIndex])
-    }
-    
-    private func login(data: EmailLoginRequestBodyDTO) {
-        NetworkService.shared.onboardingService.emailLogin(bodyDTO: data) { [weak self] (response: NetworkResult<BaseResponse<EmailLoginResponseDTO>>) in
-            guard self != nil else { return }
-            switch response {
-            case .success(let data):
-                print(data)
-                let tabBarVC = HOMEATTabBarController()
-                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    sceneDelegate.changeRootViewController(to: tabBarVC)
-                }
-                print("로그인 성공!!")
-            default:
-                print("login error!!")
-            }
-        }
+    private func showAlertWith(message: String) {
+        let alert = UIAlertController(title: "로그인 실패", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func setNavigation() {
@@ -232,4 +255,3 @@ final class LoginViewController : BaseViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }
 }
-

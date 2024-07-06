@@ -12,6 +12,7 @@ protocol OnboardingServiceProtocol {
     func userInfo(completion: @escaping (NetworkResult<BaseResponse<UserInfoResponseDTO>>) -> Void)
     func postRefreshToken(completion: @escaping (NetworkResult<BaseResponse<TokenRefreshResponseDTO>>) -> Void)
     func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void)
+    func emailLoginWithHeader(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>, [AnyHashable: Any]) -> Void)
 }
 
 final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingServiceProtocol {
@@ -37,4 +38,8 @@ final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingSer
                 print(headers)
             }
         }
+    
+    func emailLoginWithHeader(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>, [AnyHashable: Any]) -> Void) {
+        fetchDataWithHeader(target: .emailLogin(bodyDTO), responseData: BaseResponse<EmailLoginResponseDTO>.self, completion: completion)
+    }
 }

@@ -63,7 +63,7 @@ extension OnboardingTarget: TargetType {
         case .postRefreshToken:
             return "/v1/auth/reissue"
         case .emailLogin:
-            return "/v1/members/login"
+            return "/v1/members/login/email"
         case .emailCertification:
             return "/v1/members/email-cerification"
         case .emailSignUp:
