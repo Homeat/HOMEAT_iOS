@@ -30,7 +30,7 @@ struct InfoTalkComments: Codable {
     let commentId: Int
     let commentNickName: String
     let content: String
-    let infoTalkReplise: [InfoTalkReplies]
+    let infoTalkReplies: [InfoTalkReplies]?
     
 }
 
