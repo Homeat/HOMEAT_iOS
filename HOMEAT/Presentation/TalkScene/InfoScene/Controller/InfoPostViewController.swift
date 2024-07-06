@@ -11,21 +11,36 @@ import SnapKit
 import Kingfisher
 import Alamofire
 
-class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
+class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextFieldDelegate {
     func declareViewButtonTapped() {
         
     }
     //MARK: - Property
-    var postId: Int = 0
+    var postId: Int?
+    var currentReplyContext: (isComment: Bool, id: Int)?
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = InfoPostContentView()
-    private let replyTextView = InfoReplyTextView()
+    private let replyTextView = UIView()
+    let replyTextField = UITextField()
+    private let sendButton = UIButton()
+    private let heartButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
-    //var comment = [InfoTalkComments] = []
+    var comments : [InfoTalkComments] = []
+    var recomments : [InfoTalkReplies] = []
+    //MARK: - Initializer
+    init(infoTalkId: Int) {
+        self.postId = infoTalkId
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
         setTableView()
+        setupKeyboardEvent()
+        setHeartButton()
         updatePost()
     }
     
@@ -33,12 +48,16 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
         self.tabBarController?.tabBar.isTranslucent = true
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardUp), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDown), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func setNavigationBar() {
@@ -54,10 +73,21 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.register(InfoReplyTableViewCell.self, forCellReuseIdentifier: "InfoReplyTableViewCell")
-        tableView.register(InfoPostContentView.self, forHeaderFooterViewReuseIdentifier: "InfoPostContentView")
         tableView.separatorStyle = .none
+
+        let headerView = InfoPostContentView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 520))
+        headerView.delegate = self
+        tableView.tableHeaderView = headerView
         tableView.reloadData()
         tableView.layoutIfNeeded()
+    }
+    private func setHeartButton() {
+        if let foodTalkId = self.postId {
+            let isSelected = loadHeartButtonState()
+            self.heartButton.isSelected = isSelected
+            let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
+            self.heartButton.setImage(UIImage(named: imageName), for: .normal)
+        }
     }
     //MARK: - SetUI
     override func setConfigure() {
@@ -66,6 +96,36 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
         }
         tableView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
+        }
+        replyTextView.do {
+            $0.backgroundColor = .turquoiseDarkGray
+            $0.layer.cornerRadius = 10
+        }
+        heartButton.do {
+            $0.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
+            $0.contentMode = .scaleAspectFit
+            $0.isSelected = false
+            $0.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
+        }
+        
+        replyTextField.do {
+            $0.placeholder = "댓글을 남겨보세요."
+            $0.font = .bodyMedium16
+            $0.textColor = .white
+            $0.layer.cornerRadius = 20
+            $0.backgroundColor = .turquoiseDarkGray
+            $0.attributedPlaceholder = NSAttributedString(string: "댓글을 남겨보세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "font5") ?? UIColor.gray])
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: $0.frame.height))
+            $0.leftViewMode = .always
+            $0.layer.borderColor = UIColor.init(named: "font7")?.cgColor
+            $0.layer.borderWidth = 1.0
+        }
+        
+        sendButton.do {
+            $0.setImage(UIImage(named: "sendIcon"), for: .normal)
+            $0.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(sendButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -85,26 +145,52 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
             $0.trailing.equalTo(view.snp.trailing)
             $0.height.equalTo(91)
         }
+        replyTextView.addSubviews(heartButton, replyTextField, sendButton)
+        heartButton.snp.makeConstraints {
+            $0.leading.equalTo(replyTextView.snp.leading).offset(20)
+            $0.centerY.equalTo(replyTextField.snp.centerY)
+            $0.height.equalTo(22.6)
+            $0.width.equalTo(22.6)
+        }
+        
+        replyTextField.snp.makeConstraints {
+            $0.leading.equalTo(heartButton.snp.trailing).offset(10)
+            $0.top.equalTo(replyTextView.snp.top).offset(24)
+            $0.bottom.equalTo(replyTextView.snp.bottom).inset(24)
+            $0.trailing.equalTo(replyTextView.snp.trailing).inset(20)
+        }
+        
+        sendButton.snp.makeConstraints {
+            $0.centerY.equalTo(replyTextField.snp.centerY)
+            $0.trailing.equalTo(replyTextField.snp.trailing).inset(8)
+        }
+        
     }
-    
+    func setupKeyboardEvent() {
+        replyTextField.delegate = self
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
+    }
     //MARK: - 서버 통신 func
     private func updateHeart() {
-        let bodyDTO = InfoLoveRequestBodyDTO(id: postId)
-            NetworkService.shared.infoTalkService.lovePost(bodyDTO: bodyDTO) { [weak self] response in
-                guard let self = self else { return }
-                DispatchQueue.main.async {
-                    switch response {
-                    case .success(let data):
-                        print("공감 서버 연동 성공")
-                    default:
-                        print("공감 서버 연동 실패")
-                        
-                    }
+        let bodyDTO = InfoLoveRequestBodyDTO(id: postId ?? 0)
+        NetworkService.shared.infoTalkService.lovePost(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success(let data):
+                    print("공감 서버 연동 성공")
+                default:
+                    print("공감 서버 연동 실패")
+                    
                 }
             }
         }
+    }
     private func updatePost() {
-        let request = PostInfoRequestBodyDTO(id: postId)
+        guard let infoTalkId = postId else { return }
+        let request = PostInfoRequestBodyDTO(id: infoTalkId)
         NetworkService.shared.infoTalkService.postReport(queryDTO: request) { [weak self] response in
             guard let self = self else { return }
             DispatchQueue.main.async {
@@ -120,6 +206,13 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
                     dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
                     let love = String(data.data?.love ?? 0)
                     let comment = String(data.data?.commentNumber ?? 0)
+                    self.comments = data.data?.infoTalkComments ?? []
+                    print("댓글\(self.comments)")
+//                    for comment in self.comments {
+//                        print("댓글\(comment)")
+//                       // print("Comment ID: \(comment.commentId), Replies: \(String(describing: comment.infoTalkReplise))")
+//                        print(comment.infoTalkReplise ?? [])
+//                    }
                     let infoImage = data.data?.infoPictureImages ?? []
                     var displayDate = ""
                     let tagsString = data.data?.tags ?? []
@@ -135,58 +228,226 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
                         print("날짜 형식 변환 실패")
                     }
                     print("이미지\(infoImage)")
-                    if let headerView = self.tableView.headerView(forSection: 0) as? InfoPostContentView {
-                        headerView.updateContent(userName: userName, date: displayDate , title: titleLabel, content: content,love: love,comment: comment,InfoPictureImages: infoImage,tags: cleanedTags)
-                    }
-                    self.tableView.reloadData()
+                    if let headerView = self.tableView.tableHeaderView as? InfoPostContentView {
+                                            headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
+                                        }
+                                        self.tableView.reloadData()
                 default:
                     print("서버연동 실패")
                 }
             }
         }
     }
-    
     //MARK: - objc
     
     @objc func sendButtonTapped() {
+        guard let content = replyTextField.text, !content.isEmpty else {
+            print("댓글 내용이 없습니다.")
+            return
+        }
         
-//        let bodyDTO = InfoCommentRequestBodyDTO(id: postId, content: <#T##String#>)
-//        NetworkService.shared.infoTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
-//            guard let self = self else { return }
-//            DispatchQueue.main.async {
-//                switch response {
-//                case .success:
-//                    print("성공 댓글 저장 완료")
-//                    
-//                default:
-//                    print("댓글 저장 실패")
-//                }
-//                
-//            }
-//            
-//        }
+        if let context = currentReplyContext {
+            let request = InfoReplyRequestBodyDTO(id: context.id, content: content)
+            NetworkService.shared.infoTalkService.replyComment(bodyDTO: request) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("성공 대댓글 저장 완료")
+                        self.replyTextField.text = ""
+                        self.dismissKeyboard()
+                        self.scrollToBottom()
+                        self.updatePost()
+                    default:
+                        print("대댓글 저장 실패")
+                    }
+                }
+            }
+        } else {
+            guard let infoTalkId = self.postId else { return }
+            let bodyDTO = InfoCommentRequestBodyDTO(id: infoTalkId, content: content)
+            NetworkService.shared.infoTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("성공 댓글 저장 완료")
+                        self.replyTextField.text = ""
+                        self.dismissKeyboard()
+                        self.scrollToBottom()
+                        self.updatePost()
+                    default:
+                        print("댓글 저장 실패")
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    @objc func heartButtonTapped() {
+        guard let infoTalkId = self.postId else { return }
+        
+        if heartButton.isSelected {
+            self.heartButton.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
+            let bodyDTO = InfoDeleteLoveRequestBodyDTO(id: infoTalkId)
+            NetworkService.shared.infoTalkService.deleteLove(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 취소 성공")
+                        self.updatePost()
+                        self.heartButton.isSelected = false
+                        self.saveHeartButtonState(isSelected: false)
+                    default:
+                        print("좋아요 취소 실패")
+                    }
+                }
+            }
+        } else {
+            self.heartButton.setImage(UIImage(named: "isHeartSelected"), for: .normal)
+            let bodyDTO = InfoLoveRequestBodyDTO(id: infoTalkId)
+            NetworkService.shared.infoTalkService.lovePost(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("좋아요 성공")
+                        self.updatePost()
+                        self.heartButton.isSelected = true
+                        self.saveHeartButtonState(isSelected: true)
+                    default:
+                        print("좋아요 실패")
+                    }
+                }
+            }
+        }
+    }
+    private func scrollToBottom() {
+        let lastRowIndex = self.comments.count - 1
+        if lastRowIndex > 0 {
+            let indexPath = IndexPath(row: lastRowIndex, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+        currentReplyContext = nil
+    }
+    @objc func keyboardUp(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            
+            UIView.animate(withDuration: 0.3) {
+                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+                self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight + 91, right: 0)
+            }
+        }
+    }
+    
+    @objc func keyboardDown() {
+        UIView.animate(withDuration: 0.3) {
+            self.view.transform = .identity
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
+        }
+    }
+    //MARK: - UserDefault
+    func saveHeartButtonState(isSelected: Bool) {
+        if let infoTalkId = self.postId {
+            UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(infoTalkId)")
+        }
+    }
+    
+    func loadHeartButtonState() -> Bool {
+        if let infoTalkId = self.postId {
+            return UserDefaults.standard.bool(forKey: "heartButtonState_\(infoTalkId)")
+        }
+        return false
     }
 }
 
-extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+// MARK: - UITableViewDelegate, UITableViewDataSource, InfoTalkReplyCellDelgate
+
+extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, InfoTalkReplyCellDelgate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return comments.count
     }
-    
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let comment = comments[section]
+        print("Comment ID: \(comment.commentId), Replies Count: \(comment.infoTalkReplies?.count ?? 0)")
+        return 1 + (comment.infoTalkReplies?.count ?? 0) // 댓글 하나와 대댓글 수
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "InfoReplyTableViewCell") as! InfoReplyTableViewCell
-        cell.backgroundColor =  UIColor(named: "homeBackgroundColor")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InfoReplyTableViewCell", for: indexPath) as! InfoReplyTableViewCell
+        cell.backgroundColor = UIColor(named: "homeBackgroundColor")
+        cell.delegate = self
+
+        let comment = comments[indexPath.section]
+
+        if indexPath.row == 0 {
+            cell.updateContent(comment: comment)
+        } else {
+            let replyIndex = indexPath.row - 1
+            print("대댓글:\(replyIndex)")
+            if let replies = comment.infoTalkReplies, replies.indices.contains(replyIndex) {
+                cell.updateContent(reply: replies[replyIndex])
+                
+            }
+            
+        }
         return cell
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "InfoPostContentView") as! InfoPostContentView
-        view.delegate = self
-        return view
-    }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 520
-    }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
+    }
+
+    func replyButtonTapped(_ cell: InfoReplyTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        var currentIndex = indexPath.row
+        for comment in comments {
+            if currentIndex == 0 {
+                currentReplyContext = (isComment: true, id: comment.commentId)
+                replyTextField.becomeFirstResponder()
+                return
+            }
+            currentIndex -= 1
+            if currentIndex < comment.infoTalkReplies?.count ?? 0 {
+                currentReplyContext = (isComment: false, id: comment.infoTalkReplies?[currentIndex].replyId ?? 0)
+                replyTextField.becomeFirstResponder()
+                return
+            }
+            currentIndex -= comment.infoTalkReplies?.count ?? 0
+        }
+    }
+
+    func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        var currentIndex = indexPath.row
+        for comment in comments {
+            if currentIndex == 0 {
+                let nextVC = CommentDeclareViewController()
+                nextVC.commentId = comment.commentId
+                navigationController?.pushViewController(nextVC, animated: true)
+                return
+            }
+            currentIndex -= 1
+            if let replies = comment.infoTalkReplies {
+                if currentIndex < replies.count {
+                    let nextVC = CommentDeclareViewController()
+                    nextVC.commentId = replies[currentIndex].replyId
+                    navigationController?.pushViewController(nextVC, animated: true)
+                    return
+                }
+                currentIndex -= replies.count
+            }
+        }
     }
 }

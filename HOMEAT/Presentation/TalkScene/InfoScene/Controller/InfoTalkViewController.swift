@@ -14,7 +14,11 @@ class InfoTalkViewController: BaseViewController {
     private let tableView = UITableView()
     private let listButton = UIButton()
     private let floatingButton = UIButton()
-    var lastest: [InfoTalk] = []
+    var lastest: [InfoTalk] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     var lastInfoTalkId = Int.max
     var search : String?
     var isLoading =  false
@@ -26,6 +30,7 @@ class InfoTalkViewController: BaseViewController {
         setSearchBar()
         setAddTarget()
         updateTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDataChanged"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +112,9 @@ class InfoTalkViewController: BaseViewController {
         floatingButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
     //MARK: - 서버 func
+    // 최신 순
     private func updateTableView() {
+        guard !isLoading else { return }
         isLoading = true
         let request = LatestInfoRequestBodyDTO(search: search ?? "", lastInfoTalkId: lastInfoTalkId)
         NetworkService.shared.infoTalkService.latestInfo(queryDTO: request) { [weak self] response in
@@ -129,6 +136,8 @@ class InfoTalkViewController: BaseViewController {
         }
         
     }
+    // 조회 순
+//    private func update
     //MARK: - @objc func
     @objc func isListButtonTapped(_ sender: Any) {
         
@@ -150,11 +159,17 @@ class InfoTalkViewController: BaseViewController {
     }
     @objc func navigateToPostViewController(with postId: Int) {
         
-        let postVC = InfoPostViewController()
+        let postVC = InfoPostViewController(infoTalkId: postId)
         postVC.postId = postId
         tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(postVC, animated: true)
         print("present click")
+    }
+    
+    @objc private func dataChanged() {
+        lastInfoTalkId = Int.max
+        lastest.removeAll()
+        updateTableView()
     }
     
 }
