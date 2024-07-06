@@ -186,7 +186,8 @@ extension InfoTalkViewController: UISearchBarDelegate {
                 leftView.tintColor = UIColor(r: 216, g: 216, b: 216)
             }
         }
-        
+        searchBar.delegate = self
+    }
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             if let searchText = searchBar.text {
                 search = searchText
@@ -200,7 +201,16 @@ extension InfoTalkViewController: UISearchBarDelegate {
             tableView.reloadData()
             updateTableView()
         }
-    }
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            if searchText.isEmpty {
+                search = nil
+                lastInfoTalkId = Int.max
+                lastest.removeAll()
+                tableView.reloadData()
+                updateTableView()
+            }
+        }
+    
 }
 
 extension InfoTalkViewController: UITableViewDataSource {

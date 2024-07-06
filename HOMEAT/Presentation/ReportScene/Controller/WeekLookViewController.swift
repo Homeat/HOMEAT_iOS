@@ -8,10 +8,11 @@
 import UIKit
 import Then
 import SnapKit
+import Kingfisher
 
 class WeekLookViewController: BaseViewController {
     //MARK: - Property
-    private var weekData: [ReportBadge] = []
+    private var weekData: [WeekLookResponseDTO] = []
     private var smileImg = UIImageView()
     private var nicknameLable = UILabel()
     private var isDataEmpty = false
@@ -32,7 +33,10 @@ class WeekLookViewController: BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        isDataEmpty = false
+        weekData = []
         updateServer(lastWeekId: 0)
+        updateTier()
     }
     
     override func setConfigure() {
@@ -71,32 +75,43 @@ class WeekLookViewController: BaseViewController {
         collectionView.dataSource = self
     }
     private func updateServer(lastWeekId: Int) {
-        let queryDTO = WeekLookRequestBodyDTO(lastWeekId: lastWeekId)
-        NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
+           let queryDTO = WeekLookRequestBodyDTO(lastWeekId: lastWeekId)
+           NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
+               switch response {
+               case .success(let data):
+                   if let weekData = data.data {
+                       self.weekData = weekData
+                       self.isDataEmpty = weekData.isEmpty
+                   } else {
+                       self.isDataEmpty = true
+                   }
+                   DispatchQueue.main.async {
+                       self.collectionView.reloadData()
+    
+                   }
+               default:
+                   self.isDataEmpty = true
+                   DispatchQueue.main.async {
+                       self.collectionView.reloadData()
+                   }
+                   print("실패")
+               }
+           }
+       }
+    private func updateTier() {
+        NetworkService.shared.weekLookService.weekLookBadge() { response in
             switch response {
             case .success(let data):
-                guard let responseData = data.data?.reportBadge else {
-                    self.isDataEmpty = true
-                    DispatchQueue.main.async {
-                        self.collectionView.reloadData()
+                print("티어 서버 연동")
+                
+                self.nicknameLable.text = {
+                    if let homeatTier = data.data?.homeatTier, let nickname = data.data?.nickname {
+                        return "\(homeatTier) \(nickname)"
+                    } else {
+                        return "정보 없음" 
                     }
-                    return
-                }
-                self.weekData = responseData
-                self.isDataEmpty = responseData.isEmpty
-                DispatchQueue.main.async {
-                    self.collectionView.reloadData()
-                }
-            case .requestErr(let statusResponse):
-                print("요청 에러: \(statusResponse.message)")
-            case .pathErr:
-                print("경로 에러")
-            case .serverErr:
-                print("서버 에러")
-            case .networkErr:
-                print("네트워크 에러")
-            case .failure:
-                print("실패")
+                }()            default:
+                print("티어 서버연동 실패")
             }
         }
     }
@@ -106,23 +121,23 @@ class WeekLookViewController: BaseViewController {
 // MARK: - Extension
 extension WeekLookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return isDataEmpty ? 9 : weekData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.configureAsLock()
-//        cell.updateWeekLabel(withWeekIndex: <#T##Int#>)
-//        if isDataEmpty {
-//            cell.configureAsLock()
-//        } else {
-//            let weekItem = weekData[indexPath.item]
-//            cell.configure(with: weekItem)
-//        }
-        return cell
-    }
+           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
+               return UICollectionViewCell()
+           }
+           
+           if isDataEmpty {
+               cell.configureAsLock()
+           } else {
+               let weekItem = weekData[indexPath.item]
+               cell.configure(with: weekItem)
+           }
+
+           return cell
+       }
 }
 
 

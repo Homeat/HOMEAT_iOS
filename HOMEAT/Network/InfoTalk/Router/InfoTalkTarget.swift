@@ -20,7 +20,7 @@ enum InfoTalkTarget {
     case postLoveDelete(_ bodyDTO: InfoDeleteLoveRequestBodyDTO) //공감 취소
     case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
     case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고 
-    case deletePost(_ bodyDTO: DeletePostRequestBodyDTO) //게시글 삭제
+    case deletePost(_ bodyDTO: InfoDeletePostRequestBodyDTO) //게시글 삭제
     case deleteComment(_ bodyDTO: DeleteCommentRequestBodyDTO) // 댓글 삭제
     case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
 }
