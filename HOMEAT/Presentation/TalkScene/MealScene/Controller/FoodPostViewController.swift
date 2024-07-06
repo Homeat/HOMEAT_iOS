@@ -11,6 +11,13 @@ import SnapKit
 import Kingfisher
 
 class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
+    var commentViewBottomConstraint: NSLayoutConstraint?
+    var foodTalkId: Int?
+    var titleLabel = ""
+    var foodTalkRecipes: [FoodTalkRecipe] = []
+    var comments: [FoodTalkComment] = []
+    var recomments : [InfoTalkReplies] = []
+    var currentReplyContext: (isComment: Bool, id: Int)?
     
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
@@ -19,11 +26,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     let replyTextField = UITextField()
     private let heartButton = UIButton()
     private let sendButton = UIButton()
-    var commentViewBottomConstraint: NSLayoutConstraint?
-    var foodTalkId: Int?
-    var titleLabel = ""
-    var foodTalkRecipes: [FoodTalkRecipe] = []
-    var comments: [FoodTalkComment] = []
+    
 
     //MARK: - Initializer
     init(foodTalkId: Int) {
@@ -153,7 +156,9 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
         tableView.register(FoodTalkReplyCell.self, forCellReuseIdentifier: "FoodTalkReplyCell")
-        tableView.register(PostContentView.self, forHeaderFooterViewReuseIdentifier: "PostContentView")
+        let headerView = PostContentView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 520))
+        headerView.delegate = self
+        tableView.tableHeaderView = headerView
         tableView.separatorStyle = .none
         tableView.reloadData()
         tableView.layoutIfNeeded()
@@ -189,7 +194,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     //MARK: - Method
-    func recipeViewButtonTapped() { 
+    func recipeViewButtonTapped() {
         let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
@@ -232,10 +237,11 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     let foodPictureImages = data.data.foodPictureImages
                     self.comments = data.data.foodTalkComments
                     self.foodTalkRecipes = data.data.foodTalkRecipes
-                    if let headerView = self.tableView.headerView(forSection: 0) as? PostContentView {
+                    if let headerView = self.tableView.tableHeaderView as? PostContentView {
                         headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
+                    self.scrollToBottom()
                 default:
                     print("데이터 저장 실패")
                 }
@@ -253,19 +259,40 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             return
         }
         
-        let bodyDTO = CommentWriteRequestBodyDTO(id: foodTalkId, content: content)
-        NetworkService.shared.foodTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
-            guard let self = self else { return }
-            DispatchQueue.main.async {
-                switch response {
-                case .success:
-                    print("성공: 댓글이 저장되었습니다")
-                    self.replyTextField.text = ""
-                    self.dismissKeyboard()
-                    self.PostRequest()
-                    self.scrollToBottom()
-                default:
-                    print("댓글 저장 실패")
+        if let context = currentReplyContext {
+            let request = ReplyWriteRequestBodyDTO(commentId: context.id, content: content)
+            print("DTO값\(request)")
+            NetworkService.shared.foodTalkService.replyWrite(bodyDTO: request) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("성공 대댓글 저장 완료")
+                        self.replyTextField.text = ""
+                        self.dismissKeyboard()
+                        self.scrollToBottom()
+                        self.PostRequest()
+                    default:
+                        print("대댓글 저장 실패")
+                    }
+                }
+            }
+        } else {
+            guard let foodTalkId = self.foodTalkId else { return }
+            let bodyDTO = CommentWriteRequestBodyDTO(postId: foodTalkId, content: content)
+            NetworkService.shared.foodTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                DispatchQueue.main.async {
+                    switch response {
+                    case .success:
+                        print("성공 댓글 저장 완료")
+                        self.replyTextField.text = ""
+                        self.dismissKeyboard()
+                        self.scrollToBottom()
+                        self.PostRequest()
+                    default:
+                        print("댓글 저장 실패")
+                    }
                 }
             }
         }
@@ -312,15 +339,16 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     private func scrollToBottom() {
-        let lastRowIndex = self.comments.count - 1
-        if lastRowIndex > 0 {
-            let indexPath = IndexPath(row: lastRowIndex, section: 0)
+        let sectionIndex = self.comments.count - 1
+        if sectionIndex >= 0 {
+            let indexPath = IndexPath(row: 0, section: sectionIndex)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        currentReplyContext = nil
     }
     
     @objc func keyboardUp(notification: NSNotification) {
@@ -358,9 +386,16 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
 }
 
 //MARK: - Extension
-extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, FoodTalkReplyCellDelgate{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
         return comments.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        let comment = comments[section]
+        print("Comment ID: \(comment.commentId), Replies Count: \(comment.foodTalkReplies?.count ?? 0)")
+        return 1 + (comment.foodTalkReplies?.count ?? 0) // 댓글 하나와 대댓글 수
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -368,23 +403,21 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
         cell.delegate = self
         
-        let comment = comments[indexPath.row]
-        cell.updateContent(comment: comment)
+        let comment = comments[indexPath.section]
+        if indexPath.row == 0 {
+            cell.updateContent(comment: comment)
+        } else {
+            let replyIndex = indexPath.row - 1
+            print("대댓글:\(replyIndex)")
+            if let replies = comment.foodTalkReplies, replies.indices.contains(replyIndex) {
+                cell.updateContent(reply: replies[replyIndex])
+            }
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "PostContentView") as! PostContentView
-        view.delegate = self
-        return view
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 520
     }
     
     func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
@@ -394,4 +427,25 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         nextVC.commentId = comment.commentId
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
+    func replyButtonTapped(_ cell: FoodTalkReplyCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        var currentIndex = indexPath.row
+        for comment in comments {
+            if currentIndex == 0 {
+                currentReplyContext = (isComment: true, id: comment.commentId)
+                replyTextField.becomeFirstResponder()
+                return
+            }
+            currentIndex -= 1
+            if currentIndex < comment.foodTalkReplies?.count ?? 0 {
+                currentReplyContext = (isComment: false, id: comment.foodTalkReplies?[currentIndex].replyId ?? 0)
+                replyTextField.becomeFirstResponder()
+                return
+            }
+            currentIndex -= comment.foodTalkReplies?.count ?? 0
+        }
+    }
+    
 }

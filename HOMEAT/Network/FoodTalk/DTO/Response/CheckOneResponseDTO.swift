@@ -49,7 +49,7 @@ struct FoodTalkComment: Codable {
     let commentNickName: String
     let content: String
     let status: String
-    let foodTalkReplies: [FoodTalkReply]
+    let foodTalkReplies: [FoodTalkReply]?
 }
 
 // MARK: - FoodTalkReply
