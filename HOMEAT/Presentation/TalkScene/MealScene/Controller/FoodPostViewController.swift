@@ -13,6 +13,7 @@ import Kingfisher
 class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
     var commentViewBottomConstraint: NSLayoutConstraint?
     var foodTalkId: Int?
+    var postUserName: String?
     var titleLabel = ""
     var foodTalkRecipes: [FoodTalkRecipe] = []
     var comments: [FoodTalkComment] = []
@@ -206,6 +207,33 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         navigationController?.pushViewController(nextVC, animated: true)
     }
     
+    func deletePostButtonTapped() {
+        let alert = UIAlertController(title: "게시글 삭제", message: "게시글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { (_) in
+            self.confirmDeletePost()
+        }))
+        alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func confirmDeletePost() {
+        //게시글 삭제
+        let bodyDTO = DeletePostRequestBodyDTO(id: foodTalkId ?? 0)
+        NetworkService.shared.foodTalkService.deletePost(bodyDTO: bodyDTO) { response in
+            DispatchQueue.main.async {
+                switch response {
+                case .success(_):
+                    print("게시글 삭제 성공")
+                    NotificationCenter.default.post(name: NSNotification.Name("FoodTalkDeleteChanged"), object: nil)
+                    let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController
+                    self.navigationController?.popToViewController(talkVC ?? TalkViewController(), animated: true)
+                default:
+                    print("게시글 삭제 실패")
+                }
+            }
+        }
+    }
+    
     func PostRequest() {
         guard let foodTalkId = foodTalkId else { return }
         let bodyDTO = CheckOneRequestBodyDTO(id: foodTalkId)
@@ -216,6 +244,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                 case .success(let data):
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
+                    self.postUserName = userName
                     self.titleLabel = data.data.name
                     let dateString = data.data.createdAt
                     let dateFormatter = DateFormatter()
@@ -431,21 +460,22 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
     func replyButtonTapped(_ cell: FoodTalkReplyCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        var currentIndex = indexPath.row
-        for comment in comments {
-            if currentIndex == 0 {
-                currentReplyContext = (isComment: true, id: comment.commentId)
-                replyTextField.becomeFirstResponder()
-                return
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
+        
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.foodTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                currentReplyContext = (isComment: false, id: replyId)
             }
-            currentIndex -= 1
-            if currentIndex < comment.foodTalkReplies?.count ?? 0 {
-                currentReplyContext = (isComment: false, id: comment.foodTalkReplies?[currentIndex].replyId ?? 0)
-                replyTextField.becomeFirstResponder()
-                return
-            }
-            currentIndex -= comment.foodTalkReplies?.count ?? 0
         }
-    }
+        
+        replyTextField.becomeFirstResponder()
+        }
     
 }

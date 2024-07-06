@@ -52,7 +52,7 @@ class FoodTalkViewController: BaseViewController {
     var oldestFoodTalkId = Int.max
     var viewCount = Int.max
     var loveCount = Int.max
-    
+    let pageSize = 6 
     //MARK: - Property
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
@@ -79,6 +79,7 @@ class FoodTalkViewController: BaseViewController {
         setConfigure()
         setConstraints()
         setUpCollectionView()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDeleteChanged"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
         currentSortOrder = .latest
         request()
@@ -343,6 +344,7 @@ class FoodTalkViewController: BaseViewController {
             self.currentSortOrder = .view
             self.isLoading = false
             self.hasNextPage = true
+            self.lastFoodTalkId = Int.max
             self.selectMainButton()
             self.foodCollectionView.setContentOffset(.zero, animated: false)
             self.requestViewOrder()
@@ -352,10 +354,10 @@ class FoodTalkViewController: BaseViewController {
             self.resetData()
             self.currentSortOrder = .oldest
             self.selectMainButton()
-            self.isLoading = false
-            self.hasNextPage = true
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
+            self.isLoading = false
+            self.hasNextPage = true
             self.foodCollectionView.setContentOffset(.zero, animated: false)
             self.requestOldestOrder()
         }))
@@ -386,12 +388,16 @@ class FoodTalkViewController: BaseViewController {
         resetData()
         switch currentSortOrder {
         case .latest:
+            resetData()
             request()
         case .oldest:
+            resetData()
             requestOldestOrder()
         case .view:
+            resetData()
             requestViewOrder()
         case .love:
+            resetData()
             requestLoveOrder()
         case .none:
             break
@@ -481,6 +487,7 @@ class FoodTalkViewController: BaseViewController {
     func requestViewOrder() {
         guard !isLoading && hasNextPage else { return }
         isLoading = true
+        lastFoodTalkId = Int.max
         print("조회순 데이터 요청 시작: lastFoodTalkId: \(lastFoodTalkId), viewCount: \(viewCount)")
         
         let bodyDTO = ViewOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", id: lastFoodTalkId, view: viewCount)
@@ -502,16 +509,11 @@ class FoodTalkViewController: BaseViewController {
                         self.viewOrder.append(contentsOf: newData)
                         
                         if let maxViewTalk = data.data.max(by: { $0.view < $1.view }) {
-                            if self.viewCount == Int.max {
-                                self.viewCount = maxViewTalk.view
-                            }
+                            self.viewCount = maxViewTalk.view
                         }
                         
                         if let lastFoodTalk = data.data.last {
-                            self.lastFoodTalkId = lastFoodTalk.foodTalkId
-                            if self.viewCount == Int.max {
-                                self.viewCount = lastFoodTalk.view
-                            }
+                            self.lastFoodTalkId = lastFoodTalk.foodTalkId 
                         }
                         self.hasNextPage = data.hasNext
                         
@@ -519,8 +521,12 @@ class FoodTalkViewController: BaseViewController {
                             self.oldest.sort { $0.love > $1.love }
                         }
                     }
+                    self.isLoading = false
                     self.foodCollectionView.reloadData()
-                    self.foodCollectionView.layoutIfNeeded()
+                    self.foodCollectionView.performBatchUpdates(nil, completion: { _ in
+                        self.foodCollectionView.setNeedsLayout()
+                        self.foodCollectionView.layoutIfNeeded()
+                    })
                 default:
                     print("조회순 데이터 요청 실패")
                     self.hasNextPage = false
@@ -570,13 +576,13 @@ class FoodTalkViewController: BaseViewController {
         if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
             switch currentSortOrder {
             case .latest:
-                if hasNextPage == true {request()}
+                if hasNextPage && !isLoading { request() }
             case .oldest:
-                if hasNextPage == true {requestOldestOrder()}
+                if hasNextPage && !isLoading { requestOldestOrder() }
             case .view:
-                if hasNextPage == true {requestViewOrder()}
+                if hasNextPage && !isLoading { requestViewOrder() }
             case .love:
-                if hasNextPage == true {requestLoveOrder()}
+                if hasNextPage && !isLoading { requestLoveOrder() }
             case .none:
                 break
             }

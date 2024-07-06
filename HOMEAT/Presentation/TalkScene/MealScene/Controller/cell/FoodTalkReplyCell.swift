@@ -93,25 +93,21 @@ class FoodTalkReplyCell: UITableViewCell {
         }
     }
     
-    private func setConstraints() {}
-    
-    func updateContent(comment: FoodTalkComment) {
-        contentView.addSubviews(replyProfile, replyNickname, replyContent, replyDeclare, replyDate, replyButton, line)
-        
-        replyProfile.snp.makeConstraints {
+    private func setConstraints() {
+        contentView.addSubview(replyProfile)
+        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
+        replyNickname.snp.makeConstraints {
+            $0.top.equalTo(replyProfile.snp.top)
+            $0.leading.equalTo(replyProfile.snp.trailing).offset(11.2)
+        }
+        replyProfile.snp.remakeConstraints {
             $0.top.equalTo(contentView.snp.top).inset(16)
             $0.leading.equalTo(contentView.snp.leading).inset(20)
             $0.height.equalTo(37.8)
             $0.width.equalTo(37.8)
         }
-        
-        replyNickname.snp.makeConstraints {
-            $0.top.equalTo(replyProfile.snp.top)
-            $0.leading.equalTo(replyProfile.snp.trailing).offset(11.2)
-        }
-        
         replyContent.snp.makeConstraints {
-            $0.bottom.equalTo(replyProfile.snp.bottom)
+            $0.top.equalTo(replyNickname.snp.bottom)
             $0.leading.equalTo(replyNickname.snp.leading)
         }
         
@@ -130,13 +126,15 @@ class FoodTalkReplyCell: UITableViewCell {
             $0.leading.equalTo(replyDate.snp.trailing).offset(8)
             $0.width.equalTo(13)
         }
-        
         line.snp.makeConstraints {
             $0.bottom.equalTo(contentView.snp.bottom)
             $0.height.equalTo(1)
             $0.leading.equalTo(contentView.snp.leading)
             $0.trailing.equalTo(contentView.snp.trailing)
         }
+    }
+    
+    func updateContent(comment: FoodTalkComment) {
         
         replyNickname.text = comment.commentNickName
         replyContent.text = comment.content
@@ -161,46 +159,7 @@ class FoodTalkReplyCell: UITableViewCell {
     }
     
     func updateContent(reply: FoodTalkReply) {
-        contentView.addSubview(replyAddProfile)
-        replyAddProfile.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).inset(16)
-            $0.leading.equalTo(contentView.snp.leading).inset(70)
-            $0.width.equalTo(25)
-            $0.height.equalTo(25)
-        }
-        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
         
-        replyNickname.snp.makeConstraints {
-            $0.top.equalTo(replyAddProfile.snp.top)
-            $0.leading.equalTo(replyAddProfile.snp.trailing).offset(11.2)
-        }
-        
-        replyContent.snp.makeConstraints {
-            $0.top.equalTo(replyNickname.snp.bottom).offset(5)
-            $0.leading.equalTo(replyNickname.snp.leading)
-        }
-        
-        replyDeclare.snp.makeConstraints {
-            $0.top.equalTo(replyAddProfile.snp.top)
-            $0.trailing.equalToSuperview().inset(22)
-        }
-        
-        replyDate.snp.makeConstraints {
-            $0.top.equalTo(replyContent.snp.bottom).offset(8)
-            $0.leading.equalTo(replyNickname.snp.leading)
-        }
-        
-        replyButton.snp.makeConstraints {
-            $0.top.equalTo(replyContent.snp.bottom).offset(5)
-            $0.leading.equalTo(replyDate.snp.trailing).offset(8)
-            $0.width.equalTo(13)
-        }
-        line.snp.makeConstraints {
-            $0.bottom.equalTo(contentView.snp.bottom)
-            $0.height.equalTo(1)
-            $0.leading.equalTo(contentView.snp.leading)
-            $0.trailing.equalTo(contentView.snp.trailing)
-        }
         replyNickname.text = reply.replyNickName
         replyContent.text = reply.content
 

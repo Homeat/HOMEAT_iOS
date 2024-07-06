@@ -171,7 +171,7 @@ extension FoodTalkTarget: TargetType {
        case .deleteReply(let bodyDTO):
             return "/v1/foodTalk/delete/\(bodyDTO.replyId)"
         case .deletePost(let bodyDTO):
-            return "/v1/foodTalk/reply/\(bodyDTO.id)"
+            return "/v1/foodTalk/\(bodyDTO.id)"
         case .deleteComment(let bodyDTO):
             return "/v1/foodTalk/comment/\(bodyDTO.commentId)"
         }
