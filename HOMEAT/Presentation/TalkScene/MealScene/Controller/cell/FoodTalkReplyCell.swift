@@ -114,6 +114,30 @@ class FoodTalkReplyCell: UITableViewCell {
         }
     }
     
+    func updateContent(comment: FoodTalkComment) {
+        replyNickname.text = comment.commentNickName
+        replyContent.text = comment.content
+        
+        // 날짜 형식 변환
+        let dateString = comment.createdAt
+        print("Original Date String: \(dateString)")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        
+        var displayDate = ""
+        if let date = dateFormatter.date(from: dateString) {
+            let displayFormatter = DateFormatter()
+            displayFormatter.dateFormat = "MM월 dd일 HH:mm"
+            displayDate = displayFormatter.string(from: date)
+            print("Converted Date: \(displayDate)")
+        } else {
+            print("날짜 형식 변환 실패")
+            // 기본 형식으로 설정
+            displayDate = dateString
+        }
+        replyDate.text = displayDate
+    }
+    
     //MARK: - @objc
     @objc func declareButtonTapped() {
         delegate?.replyDeclareButtonTapped(self)

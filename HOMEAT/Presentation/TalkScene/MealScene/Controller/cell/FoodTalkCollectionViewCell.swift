@@ -1,12 +1,6 @@
-//
-//  FoodTalkCollectionViewCell.swift
-//  HOMEAT
-//
-//  Created by 이지우 on 4/7/24.
-//
-
 import UIKit
 import SnapKit
+import Kingfisher
 
 class FoodTalkCollectionViewCell: UICollectionViewCell {
     
@@ -16,17 +10,23 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .bodyMedium15
         label.textColor = .white
-        
+        label.lineBreakMode = .byTruncatingTail
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         return label
     }()
     
     let foodImageView: UIImageView = {
         let image = UIImageView()
         image.layer.cornerRadius = 11
-        image.image = UIImage(named: "plusIcon")
-        
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
+    
+    private var imageDownloadTask: URLSessionDataTask?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,8 +37,15 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        foodImageView.image = nil
+        foodName.text = nil
+        imageDownloadTask?.cancel()
+        imageDownloadTask = nil
+    }
+    
     private func setUI() {
-        
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.5
         layer.shadowRadius = 4
@@ -50,14 +57,24 @@ class FoodTalkCollectionViewCell: UICollectionViewCell {
         foodImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(14)
-            make.height.equalTo(106)
-            make.width.equalTo(125)
+            make.height.equalToSuperview().multipliedBy(0.7)
+            make.width.equalTo(foodImageView.snp.height).multipliedBy(1.2)
         }
         
         foodName.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(11)
+            make.top.equalTo(foodImageView.snp.bottom).offset(3)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalToSuperview().offset(-5)
+            make.height.equalTo(20).priority(.high)
         }
-        
+    }
+    
+    func configure(with foodTalk: FoodTalk) {
+        foodName.text = foodTalk.foodName
+        let photoUrl = foodTalk.url
+        let url = URL(string: photoUrl)
+        foodImageView.kf.setImage(with: url)
     }
 }
+

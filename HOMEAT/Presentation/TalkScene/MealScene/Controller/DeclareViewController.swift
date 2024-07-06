@@ -8,7 +8,7 @@
 import UIKit
 
 class DeclareViewController: BaseViewController {
-    
+    var foodTalkId: Int?
     //MARK: - Property
     private let declareLabel = UILabel()
     private let container = UIStackView()
@@ -18,6 +18,15 @@ class DeclareViewController: BaseViewController {
     private let forthButton = UIButton()
     private let fifthButton = UIButton()
     private let submitButton = UIButton()
+    
+    init(foodTalkId: Int) {
+        self.foodTalkId = foodTalkId
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -161,9 +170,10 @@ class DeclareViewController: BaseViewController {
     
     //MARK: - @objc
     @objc func optionActtion(_ sender: UIButton) {
-        let nextVC = DeclareWriteViewController()
+        guard let foodTalkId = self.foodTalkId else {return}
+        let nextVC = DeclareWriteViewController(foodTalkId: foodTalkId)
         nextVC.hidesBottomBarWhenPushed = true
-        switch sender {
+        switch sender { 
         case firstButton:
             nextVC.optionLabel = firstButton.titleLabel?.text
             navigationController?.pushViewController(nextVC, animated: true)

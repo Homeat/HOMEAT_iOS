@@ -9,9 +9,10 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
-
+import Kingfisher
 protocol InfoHeaderViewDelegate: AnyObject {
     func declareViewButtonTapped()
+    func deletePostButtonTapped()
 }
 
 class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
@@ -23,25 +24,40 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     private let userName = UILabel()
     private let dateLabel = UILabel()
     private let declareButton = UIButton()
-    private let hashtagButton = UIButton()
     private let titleLabel = UILabel()
     private let contentLabel = UILabel()
     private let pageControl = UIPageControl()
     private let scrollView = UIScrollView()
-    private let reactionView = ReplyReactionView()
+    private let reactionView = UIStackView()
+    private let heartCount = UIButton()
+    private let replyCount = UIButton()
     private let underLine = UIView()
-    
-    var images = [UIImage(imageLiteralResourceName: "baseCharacter"), UIImage(imageLiteralResourceName: "baseCharacter"), UIImage(imageLiteralResourceName: "baseCharacter")]
+    var currentItsMe : String?
+    var selectedTags : [String] = []
+    var images = [UIImage]()
     var imageViews = [UIImageView]()
+    private lazy var tagCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 10
+        layout.minimumLineSpacing = 10
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(PostTagCollectionViewCell.self, forCellWithReuseIdentifier: "PostTagCell")
+        return collectionView
+    }()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setConfigure()
         setConstraint()
         scrollView.delegate = self
-        addContentScrollView()
         setPageControl()
         setAddTarget()
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +76,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         userName.do {
-            $0.text = "사용자이름"
+            $0.text = "홈잇러버 아리"
             $0.font = .bodyMedium15
             $0.textColor = .white
         }
@@ -72,20 +88,10 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.do {
-            $0.setTitle("신고하기", for: .normal)
+            $0.setImage(UIImage(named: "dots"), for: .normal)
             $0.setTitleColor(UIColor(named: "warmgray8"), for: .normal)
             $0.titleLabel?.font = .captionMedium10
         }
-        
-        hashtagButton.do {
-            $0.setTitle("#아침", for: .normal)
-            $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.cornerRadius = 10
-            $0.layer.borderWidth = 1.2
-            $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
-            $0.titleLabel?.font = .captionMedium10
-        }
-        
         titleLabel.do {
             $0.text = "연어 샐러드"
             $0.font = .bodyMedium18
@@ -101,12 +107,36 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         underLine.do {
             $0.backgroundColor = UIColor(named: "turquoiseDarkGray")
         }
-    
+        
+        heartCount.do {
+            $0.setTitle("9", for: .normal)
+            $0.titleLabel?.font = .bodyMedium10
+            $0.setTitleColor(UIColor.turquoiseGreen, for: .normal)
+            $0.setImage(UIImage(named: "isSmallHeartSelected"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        }
+        
+        replyCount.do {
+            $0.setTitle("2", for: .normal)
+            $0.titleLabel?.font = .bodyMedium10
+            $0.setTitleColor(UIColor.turquoiseGreen, for: .normal)
+            $0.setImage(UIImage(named: "isReply"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+        }
+        
+        reactionView.do {
+            $0.spacing = 10
+            $0.axis = .horizontal
+            $0.alignment = .center
+        }
     }
     
     private func setConstraint() {
-        addSubviews(profileIcon, userName, dateLabel, declareButton, hashtagButton,titleLabel, contentLabel, pageControl, scrollView, reactionView, underLine)
-        
+        addSubviews(profileIcon, userName, dateLabel, declareButton, tagCollectionView,titleLabel, contentLabel, pageControl, scrollView, reactionView, underLine)
+        reactionView.addArrangedSubview(heartCount)
+        reactionView.addArrangedSubview(replyCount)
         profileIcon.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
             $0.leading.equalTo(contentView.snp.leading).offset(20)
@@ -127,20 +157,20 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.top)
+            $0.top.equalTo(userName.snp.top)
             $0.bottom.equalTo(dateLabel.snp.bottom)
             $0.trailing.equalTo(self.snp.trailing).inset(20)
         }
         
-        hashtagButton.snp.makeConstraints {
+        tagCollectionView.snp.makeConstraints {
             $0.top.equalTo(profileIcon.snp.bottom).offset(20.2)
             $0.leading.equalTo(profileIcon.snp.leading)
-            $0.width.equalTo(41)
-            $0.height.equalTo(20)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(30)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(hashtagButton.snp.bottom).offset(8)
+            $0.top.equalTo(tagCollectionView.snp.bottom).offset(8)
             $0.leading.equalTo(profileIcon.snp.leading)
         }
         
@@ -152,7 +182,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(contentLabel.snp.bottom).offset(19)
             $0.leading.equalTo(profileIcon.snp.leading)
-            $0.trailing.equalTo(profileIcon.snp.leading)
+            $0.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(257)
         }
         
@@ -174,42 +204,161 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
     }
-        
+    
     private func setAddTarget() {
         declareButton.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - Method
     private func addContentScrollView() {
-        
-            for i in 0..<images.count {
-                let imageView = UIImageView()
-                let xPos = scrollView.frame.width * CGFloat(i)
-                imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-                imageView.image = images[i]
-                scrollView.addSubview(imageView)
-                scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
-            }
-            
+        for i in 0..<images.count {
+            let imageView = UIImageView()
+            let xPos = scrollView.frame.width * CGFloat(i)
+            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+            imageView.image = images[i]
+            imageView.contentMode = .scaleAspectFit
+            scrollView.addSubview(imageView)
+            scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(images.count), height: scrollView.frame.height)
         }
-        
-        private func setPageControl() {
-            pageControl.numberOfPages = images.count
-            
-        }
-        
-        private func setPageControlSelectedPage(currentPage:Int) {
-            pageControl.currentPage = currentPage
-        }
-        
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let value = scrollView.contentOffset.x/scrollView.frame.size.width
-            setPageControlSelectedPage(currentPage: Int(round(value)))
-        }
-
-    //MARK: - @objc
-    @objc func declareButtonTapped() {
-        delegate?.declareViewButtonTapped()
     }
+    
+    private func setPageControl() {
+        pageControl.numberOfPages = images.count
+        
+    }
+    
+    private func setPageControlSelectedPage(currentPage:Int) {
+        pageControl.currentPage = currentPage
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let value = scrollView.contentOffset.x/scrollView.frame.size.width
+        setPageControlSelectedPage(currentPage: Int(round(value)))
+    }
+    func updateUIWithImages() {
+        scrollView.subviews.forEach { $0.removeFromSuperview() }
+        for(index, image) in images.enumerated() {
+            let imageView = UIImageView(image: image)
+            imageView.contentMode = .scaleAspectFill
+            let xPos = CGFloat(index) * scrollView.bounds.width
+            imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+            scrollView.addSubview(imageView)
+        }
+        scrollView.contentSize = CGSize(width: scrollView.bounds.width * CGFloat(images.count), height: scrollView.bounds.height)
+        pageControl.numberOfPages = images.count
+    }
+    private func loadImages(from urls: [String]) {
+        images.removeAll()
+        let group = DispatchGroup()
+        
+        for urlString in urls {
+            guard let url = URL(string: urlString) else { continue }
+            group.enter()
+            KingfisherManager.shared.retrieveImage(with: url) { result in
+                switch result {
+                case .success(let value):
+                    self.images.append(value.image)
+                case .failure(let error):
+                    print("Error loading image: \(error)")
+                }
+                group.leave()
+            }
+        }
+        
+        group.notify(queue: .main) {
+            self.updateUIWithImages()
+        }
+    }
+    private func updateScrollViewContentSize() {
+        scrollView.contentSize.width = scrollView.bounds.width * CGFloat(images.count)
+    }
+    private func addImageToScrollView(_ image: UIImage) {
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        let xPos = scrollView.frame.width * CGFloat(images.count - 1)
+        imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+        scrollView.addSubview(imageView)
+        imageViews.append(imageView)
+    }
+    func updateContent(userName: String,date: String, title:String,content:String, love: String, comment: String, InfoPictureImages: [String],tags: [String]) {
+        self.userName.text = userName
+        self.dateLabel.text = date
+        self.titleLabel.text = title
+        self.contentLabel.text = content
+        // 이미지 로드를 위한 초기화
+        images.removeAll()
+        imageViews.forEach { $0.removeFromSuperview() }
+        imageViews.removeAll()
+        scrollView.contentSize.width = 0
+        self.heartCount.setTitle(love, for: .normal)
+        self.replyCount.setTitle(comment, for: .normal)
+        print(love)
+        print(comment)
+        let cleanedTags = tags.flatMap { tag in
+            tag.trimmingCharacters(in: CharacterSet(charactersIn: "[]\"")).components(separatedBy: "\", \"")
+        }
+        if cleanedTags.isEmpty || cleanedTags == [""] {
+            self.tagCollectionView.isHidden = true
+        } else {
+            self.tagCollectionView.isHidden = false
+            self.selectedTags = cleanedTags
+            self.tagCollectionView.reloadData()
+        }
+        loadImages(from: InfoPictureImages)
+        print("정보토크이미지\(InfoPictureImages)")
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+        self.tagCollectionView.reloadData()
+    }
+    
+    //MARK: - @objc
+    @objc private func declareButtonTapped() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        if currentItsMe == userName.text {
+            // 게시글 수정
+            actionSheet.addAction(UIAlertAction(title: "게시글 수정", style: .default, handler: { (_) in
+                // self.delegate?.editPostButtonTapped()
+            }))
+            
+            // 게시글 삭제
+            actionSheet.addAction(UIAlertAction(title: "게시글 삭제", style: .destructive, handler: { (_) in
+                self.delegate?.deletePostButtonTapped()
+            }))
+        } else {
+            // 게시글 신고
+            actionSheet.addAction(UIAlertAction(title: "게시글 신고", style: .default, handler: { (_) in
+                self.delegate?.declareViewButtonTapped()
+            }))
+        }
+        
+        // 취소
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        if let viewController = delegate as? UIViewController {
+            viewController.present(actionSheet, animated: true, completion: nil)
+        }
+    }
+    
+}
 
+extension InfoPostContentView: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return selectedTags.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PostTagCell", for: indexPath) as! PostTagCollectionViewCell
+        let tag = selectedTags[indexPath.item]
+        cell.configure(with: tag)
+        return cell
+    }
+}
+extension InfoPostContentView: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let tag = selectedTags[indexPath.item]
+        let tagWidth = tag.width(withConstrainedHeight: 35, font: UIFont.systemFont(ofSize: 10), margin: 30)
+        return CGSize(width: tagWidth, height: 30)
+    }
 }

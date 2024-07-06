@@ -6,13 +6,20 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 //MARK: 앨범 사진 셀
+protocol InfoDeleteActionDelegate: AnyObject {
+    func delete(at index: Int)
+}
+
 class PhotoCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "PhotoCell"
     //MARK: -- Property
     var postImageView = UIImageView()
     var deleteButton = UIButton()
-    
+    weak var delegate: InfoDeleteActionDelegate?
+    var index: Int?
     override init(frame: CGRect) {
         super.init(frame: frame)
         setConfigure()
@@ -28,11 +35,13 @@ class PhotoCollectionViewCell: UICollectionViewCell {
             $0.contentMode = .scaleAspectFill
             $0.clipsToBounds = true
             $0.layer.cornerRadius = 14
+            $0.layer.masksToBounds = true
         }
         
         deleteButton.do {
-            $0.setImage(UIImage(named: "deleteButton"), for: .normal)
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
             $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         }
     }
     
@@ -40,10 +49,10 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         contentView.addSubviews(postImageView,deleteButton)
         
         postImageView.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview().inset(25)
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
+            $0.top.equalTo(contentView.snp.top)
+            $0.leading.equalTo(contentView.snp.leading).offset(25)
+            $0.trailing.equalTo(contentView.snp.trailing)
+            $0.bottom.equalTo(contentView.snp.bottom)
         }
         
         deleteButton.snp.makeConstraints {
@@ -53,5 +62,10 @@ class PhotoCollectionViewCell: UICollectionViewCell {
             $0.width.equalTo(33.2)
         }
         
+    }
+    
+    @objc private func deleteButtonTapped() {
+        guard let index = index else { return }
+        delegate?.delete(at: index)
     }
 }

@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import Then
+import Kingfisher
 
 protocol HeaderViewDelegate: AnyObject {
     func recipeViewButtonTapped()
@@ -16,32 +17,29 @@ protocol HeaderViewDelegate: AnyObject {
 }
 
 class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
-    
     weak var delegate: HeaderViewDelegate?
-    
+    var name: String?
     //MARK: - Property
-    private let profileIcon = UIImageView()
-    private let userName = UILabel()
-    private let dateLabel = UILabel()
+    var profileIcon = UIImageView()
+    var userName = UILabel()
+    var dateLabel = UILabel()
     private let declareButton = UIButton()
-    private let hashtagButton = UIButton()
-    private let titleLabel = UILabel()
-    private let contentLabel = UILabel()
-    private let pageControl = UIPageControl()
+    var hashtagButton = UIButton()
+    var titleLabel = UILabel()
+    var contentLabel = UILabel()
+    var pageControl = UIPageControl()
     private let scrollView = UIScrollView()
-    private let reactionView = ReplyReactionView()
+    var reactionView = ReplyReactionView()
     private let underLine = UIView()
     private let recipeViewButton = UIButton()
     
-    var images = [UIImage(imageLiteralResourceName: "baseCharacter"), UIImage(imageLiteralResourceName: "baseCharacter"), UIImage(imageLiteralResourceName: "baseCharacter")]
+    var images = [UIImage]()
     var imageViews = [UIImageView]()
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         setConfigure()
         setConstraint()
-        scrollView.delegate = self
-        addContentScrollView()
         setPageControl()
         setAddTarget()
     }
@@ -100,6 +98,11 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
             $0.textColor = .white
         }
         
+        scrollView.do {
+            $0.delegate = self
+            $0.isPagingEnabled = true
+        }
+        
         underLine.do {
             $0.backgroundColor = UIColor(named: "turquoiseDarkGray")
         }
@@ -115,7 +118,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     }
     
     private func setConstraint() {
-        addSubviews(profileIcon, userName, dateLabel, declareButton, hashtagButton,titleLabel, contentLabel, pageControl, scrollView, reactionView, underLine, recipeViewButton)
+        addSubviews(profileIcon, userName, dateLabel, declareButton, hashtagButton, titleLabel, contentLabel, pageControl, scrollView, reactionView, underLine, recipeViewButton)
         
         profileIcon.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
@@ -162,7 +165,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         scrollView.snp.makeConstraints {
             $0.top.equalTo(contentLabel.snp.bottom).offset(19)
             $0.leading.equalTo(profileIcon.snp.leading)
-            $0.trailing.equalTo(profileIcon.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing).offset(-20)
             $0.height.equalTo(257)
         }
         
@@ -198,31 +201,85 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     
     //MARK: - Method
     private func addContentScrollView() {
-            
-            for i in 0..<images.count {
+        for i in 0..<images.count {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFit
+            imageView.frame = CGRect(x: scrollView.bounds.width * CGFloat(i), y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+            imageView.image = images[i]
+            scrollView.addSubview(imageView)
+            imageViews.append(imageView)
+        }
+        scrollView.contentSize.width = scrollView.bounds.width * CGFloat(images.count)
+    }
+        
+    private func setPageControl() {
+        pageControl.numberOfPages = images.count
+    }
+        
+    private func setPageControlSelectedPage(currentPage: Int) {
+        pageControl.currentPage = currentPage
+    }
+        
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let value = scrollView.contentOffset.x / scrollView.frame.size.width
+        setPageControlSelectedPage(currentPage: Int(round(value)))
+    }
+    
+    func updateContent(userName: String, date: String, title: String, memo: String, tag: String, love: String, comment: String, foodPictureImages: [String], foodTalkRecipes: [FoodTalkRecipe]) {
+        self.userName.text = userName
+        self.titleLabel.text = title
+        self.dateLabel.text = date
+        self.hashtagButton.setTitle("#" + tag, for: .normal)
+        self.contentLabel.text = memo
+        reactionView.updateContent(love: love, comment: comment)
+        
+        // 이미지 로드를 위한 초기화
+        images.removeAll()
+        imageViews.forEach { $0.removeFromSuperview() }
+        imageViews.removeAll()
+        scrollView.contentSize.width = 0
+        
+        loadImagesWithKingfisher(from: foodPictureImages)
+        
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
+
+    private func loadImagesWithKingfisher(from urls: [String]) {
+            for urlString in urls {
+                guard let url = URL(string: urlString) else { continue }
+                
+                // Kingfisher를 사용하여 비동기로 이미지 다운로드
                 let imageView = UIImageView()
-                let xPos = scrollView.frame.width * CGFloat(i)
-                imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
-                imageView.image = images[i]
-                scrollView.addSubview(imageView)
-                scrollView.contentSize.width = imageView.frame.width * CGFloat(i + 1)
+                imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.transition(.fade(0.2)), .cacheOriginalImage]) { result in
+                    switch result {
+                    case .success(let value):
+                        DispatchQueue.main.async {
+                            self.images.append(value.image)
+                            self.addImageToScrollView(value.image)
+                            self.pageControl.numberOfPages = self.images.count
+                            self.updateScrollViewContentSize()
+                        }
+                    case .failure(let error):
+                        print("Error: \(error)")
+                    }
+                }
             }
-            
         }
-        
-        private func setPageControl() {
-            pageControl.numberOfPages = images.count
-            
-        }
-        
-        private func setPageControlSelectedPage(currentPage:Int) {
-            pageControl.currentPage = currentPage
-        }
-        
-        func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            let value = scrollView.contentOffset.x/scrollView.frame.size.width
-            setPageControlSelectedPage(currentPage: Int(round(value)))
-        }
+
+    private func addImageToScrollView(_ image: UIImage) {
+        let imageView = UIImageView()
+        imageView.image = image
+        imageView.contentMode = .scaleAspectFit
+        let xPos = scrollView.frame.width * CGFloat(images.count - 1)
+        imageView.frame = CGRect(x: xPos, y: 0, width: scrollView.bounds.width, height: scrollView.bounds.height)
+        scrollView.addSubview(imageView)
+        imageViews.append(imageView)
+    }
+
+    private func updateScrollViewContentSize() {
+        scrollView.contentSize.width = scrollView.bounds.width * CGFloat(images.count)
+    }
 
     //MARK: - @objc
     @objc func declareButtonTapped() {
@@ -233,3 +290,4 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         delegate?.recipeViewButtonTapped()
     }
 }
+

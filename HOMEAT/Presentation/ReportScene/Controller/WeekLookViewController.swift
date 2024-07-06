@@ -8,20 +8,20 @@
 import UIKit
 import Then
 import SnapKit
+import Kingfisher
 
 class WeekLookViewController: BaseViewController {
     //MARK: - Property
-    let imageNames = ["egg_meat", "born_meat", "baby_meat", "infant_meat", "toddler_meat", "student_meat", "magic_meat", "adult_meat", "angel_meat"]
-    let lockImage = UIImage(named: "lockReport")
+    private var weekData: [WeekLookResponseDTO] = []
     private var smileImg = UIImageView()
     private var nicknameLable = UILabel()
+    private var isDataEmpty = false
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 28, left: 20, bottom: 0, right: 20)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.alwaysBounceVertical = true
         collectionView.register(WeekCollectionViewCell.self, forCellWithReuseIdentifier: WeekCollectionViewCell.id)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = UIColor.init(named: "turquoiseDarkGray")
         collectionView.isScrollEnabled = false
         collectionView.layer.cornerRadius = 35
@@ -33,6 +33,10 @@ class WeekLookViewController: BaseViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        isDataEmpty = false
+        weekData = []
+        updateServer(lastWeekId: 0)
+        updateTier()
     }
     
     override func setConfigure() {
@@ -70,39 +74,72 @@ class WeekLookViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
+    private func updateServer(lastWeekId: Int) {
+           let queryDTO = WeekLookRequestBodyDTO(lastWeekId: lastWeekId)
+           NetworkService.shared.weekLookService.weekLookReport(queryDTO: queryDTO) { response in
+               switch response {
+               case .success(let data):
+                   if let weekData = data.data {
+                       self.weekData = weekData
+                       self.isDataEmpty = weekData.isEmpty
+                   } else {
+                       self.isDataEmpty = true
+                   }
+                   DispatchQueue.main.async {
+                       self.collectionView.reloadData()
+    
+                   }
+               default:
+                   self.isDataEmpty = true
+                   DispatchQueue.main.async {
+                       self.collectionView.reloadData()
+                   }
+                   print("실패")
+               }
+           }
+       }
+    private func updateTier() {
+        NetworkService.shared.weekLookService.weekLookBadge() { response in
+            switch response {
+            case .success(let data):
+                print("티어 서버 연동")
+                
+                self.nicknameLable.text = {
+                    if let homeatTier = data.data?.homeatTier, let nickname = data.data?.nickname {
+                        return "\(homeatTier) \(nickname)"
+                    } else {
+                        return "정보 없음" 
+                    }
+                }()            default:
+                print("티어 서버연동 실패")
+            }
+        }
+    }
+    
 }
 
 // MARK: - Extension
 extension WeekLookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return isDataEmpty ? 9 : weekData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        cell.updateWeekLabel(withWeekIndex: indexPath.row + 1)
-        
-        if indexPath.item == 8 {
-            cell.cellView.weekLabel.isHidden = true
-            cell.successMoney.isHidden = true
-            cell.failMoney.isHidden = true
-            cell.cellView.backgroundColor = UIColor(named: "turquoiseGray")
-            cell.cellView.imageView.image = lockImage
-        } else {
-            if indexPath.item == 1 {
-                cell.cellView.backgroundColor = UIColor(named: "turquoiseRed")
-            } else {
-                cell.cellView.backgroundColor = UIColor(named: "turquoiseGreen")
-            }
-            let imageName = imageNames[indexPath.item]
-            let model = WeekCellModel(weekIndex: indexPath.item + 1, imageName: imageName)
-            cell.model = model
-        }
-        return cell
-    }
+           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
+               return UICollectionViewCell()
+           }
+           
+           if isDataEmpty {
+               cell.configureAsLock()
+           } else {
+               let weekItem = weekData[indexPath.item]
+               cell.configure(with: weekItem)
+           }
+
+           return cell
+       }
 }
+
 
 extension WeekLookViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

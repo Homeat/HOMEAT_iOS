@@ -8,10 +8,11 @@
 import UIKit
 import Then
 import SnapKit
+import Alamofire
 
-class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDelegate {
-    
+class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDelegate {
     //MARK: - Property
+    private var currentDate = Date()
     private let scrollView = UIScrollView()
     private let contentView = UIView()
     private let deliveryImage = UIImageView()
@@ -21,12 +22,32 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDeleg
     private let monthView = MonthView()
     private let ageButton = UIButton()
     private let incomeMoneyButton = UIButton()
-    private let weekView = WeakView()
+    private let weekView = WeekView()
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let currentDate = Date()
+        let (year, month, day) = getCurrentYearMonthDay(for: currentDate)
+        print(year, month, day)
+        monthChart(year: year, month: month)
+        monthView.delegate = self
+        weekView.delegate = self
+        weekChart(year: year, month: month, day: day)
     }
     
+    func getCurrentYearMonth(for date: Date) -> (year: Int, month: Int) {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        return (year, month)
+    }
+    func getCurrentYearMonthDay(for date: Date) -> (year: Int, month: Int, day: Int) {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        return (year, month, day)
+    }
     override func setConfigure() {
         view.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
@@ -71,21 +92,19 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDeleg
         }
         
         ageButton.do {
-            $0.setTitle("20대", for: .normal)
             $0.layer.cornerRadius = 16
             $0.clipsToBounds = true
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+            $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor ?? UIColor.green.cgColor
             $0.layer.borderWidth = 1.6
             $0.titleLabel?.font = .captionMedium13
         }
         
         incomeMoneyButton.do {
-            $0.setTitle("소득 100만원 이하", for: .normal)
             $0.layer.cornerRadius = 16.3
             $0.clipsToBounds = true
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
-            $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
+            $0.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor ?? UIColor.green.cgColor
             $0.layer.borderWidth = 1.6
             $0.titleLabel?.font = .captionMedium13
         }
@@ -169,61 +188,150 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeakViewDeleg
         }
     }
     
-    // MARK: - MonthViewDelegate
-    func didSelectYearMonth(year: Int, month: Int) {
-        monthChart(year: year, month: month)
-    }
-    
     // MARK: Month Server Function
     private func monthChart(year: Int, month: Int) {
-        let bodyDTO = AnalysisMonthRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)")
+        let bodyDTO = AnalysisMonthRequestBodyDTO(input_year: "\(year)", input_month: "\(month)")
         NetworkService.shared.analysisService.analysisMonth(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
-                guard let analysisData = data.data else { return }
-                self?.handleAnalysisData(analysisData)
-            default :
-                print("데이터 존재 안함 ")
+                if data.code == "COMMON_200" {
+                    guard let analysisData = data.data else {
+                        self?.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
+                        self?.monthView.pieChart.isHidden = true
+                        self?.monthView.barChartView.isHidden = true
+                        return
+                    }
+                    self?.handleAnalysisData(analysisData)
+                    self?.monthView.pieChart.isHidden = false
+                    self?.monthView.barChartView.isHidden = false
+                } else if data.code == "REPORT_4041" {
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
+                    self?.monthView.pieChart.isHidden = true
+                    self?.monthView.barChartView.isHidden = true
+                } else if data.code == "REPORT_4222" {
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
+                    self?.monthView.pieChart.isHidden = true
+                    self?.monthView.barChartView.isHidden = true
+                } else {
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
+                    self?.monthView.pieChart.isHidden = true
+                    self?.monthView.barChartView.isHidden = true
+                }
+            default:
+                print("응답 검증 오류")
+                
             }
         }
     }
     
-    // MARK: - WeekViewDelegate
-    func didSelectYearMonthDay(year: Int, month: Int, day: Int) {
-        weekChart(year: year, month: month, day: day)
-    }
     // MARK: Week Server Function
-    private func weekChart(year: Int, month: Int,day: Int) {
-        let bodyDTO = AnalysisWeekRequestBodyDTO(inputYear: "\(year)", inputMonth: "\(month)", inputDay: "\(day)")
+    private func weekChart(year: Int, month: Int, day: Int) {
+        let bodyDTO = AnalysisWeekRequestBodyDTO(input_year: "\(year)", input_month: "\(month)", input_day: "\(day)")
+        print("Request Parameters: \(bodyDTO)")
+        
         NetworkService.shared.analysisService.analysisWeek(bodyDTO: bodyDTO) { [weak self] response in
             switch response {
             case .success(let data):
-                guard let analysisData = data.data else { return }
-                self?.handleWeekAnalysisData(analysisData)
-                self?.updateUserInfo(analysisData)
+                print("Response Data: \(data)")
+                print("Response Code: \(data.code)")
+                self?.ageButton.setTitle(data.data?.age_range, for: .normal)
+                self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
+                
+                // Handle different response codes
+                switch data.code {
+                case "COMMON_200":
+                    guard let analysisData = data.data else { return }
+                    self?.weekView.handleWeekAnalysisData(analysisData)
+                    self?.weekView.jipbapWeekBarChartView.isHidden = false
+                    self?.weekView.deliveryWeekBarChartView.isHidden = false
+                case "REPORT_4041":
+                    self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
+                    self?.weekView.jipbapWeekBarChartView.isHidden = true
+                    self?.weekView.deliveryWeekBarChartView.isHidden = true
+                case "REPORT_4042":
+                    self?.weekView.jipbapWeekBarChartView.isHidden = true
+                    self?.weekView.deliveryWeekBarChartView.isHidden = true
+                case "COMMON_500":
+                    if let errorDataString = data.data as? String,
+                       let errorData = self?.parseErrorData(errorDataString) {
+                        print("Error Data: AgeRange=\(errorData.ageRange), Income=\(errorData.income)")
+                        self?.ageButton.setTitle(errorData.ageRange, for: .normal)
+                        self?.incomeMoneyButton.setTitle(errorData.income, for: .normal)
+                    } else {
+                        // Handle unknown error scenario
+                    }
+                default:
+                    print("Unknown response code: \(data.code)")
+                }
+                
+            case .serverErr:
+                print("서버 에러")
+                self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
+                self?.weekView.jipbapWeekBarChartView.isHidden = true
+                self?.weekView.deliveryWeekBarChartView.isHidden = true
+                
             default:
                 print("데이터 존재 안함")
             }
         }
     }
+    private func parseErrorData(_ errorDataString: String) -> ErrorData? {
+        let components = errorDataString.components(separatedBy: ", ")
+        var ageRange = ""
+        var income = ""
+        
+        for component in components {
+            if component.hasPrefix("AgeRange") {
+                ageRange = component.replacingOccurrences(of: "AgeRange: ", with: "")
+            } else if component.hasPrefix("Income") {
+                income = component.replacingOccurrences(of: "Income: ", with: "")
+            }
+        }
+        
+        return ErrorData(ageRange: ageRange, income: income)
+    }
     
-    // MARK: - Function
+    func updateMonthContentLabel(text: String) {
+        monthView.updateMonthContentLabel(text: text)
+    }
+    
+    func monthBackButtonTapped() {
+        currentDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) ?? Date()
+        let (year, month) = getCurrentYearMonth(for: currentDate)
+        print(year,month)
+        monthChart(year: year, month: month)
+    }
+    
+    func monthNextButtonTapped() {
+        currentDate = Calendar.current.date(byAdding: .month, value: +1, to: currentDate) ?? Date()
+        let (year, month) = getCurrentYearMonth(for: currentDate)
+        print(year,month)
+        monthChart(year: year, month: month)
+    }
+
+    //전 달 버튼 tapp
+    func weekBackButtonTapped() {
+        currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
+        let (year, month, date) = getCurrentYearMonthDay(for: currentDate)
+        print(year,month,date)
+        weekChart(year: year, month: month, day: date)
+    }
+    
+    func weekNextButtonTapped() {
+        currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
+        let (year, month, date) = getCurrentYearMonthDay(for: currentDate)
+        print(year,month,date)
+        weekChart(year: year, month: month, day: date)
+        
+    }
     private func updateUserInfo(_ data: AnalysisWeekResponseDTO) {
-        ageButton.titleLabel?.text = data.ageRange
+        ageButton.titleLabel?.text = data.age_range
         incomeMoneyButton.titleLabel?.text = data.income
     }
     
     private func handleAnalysisData(_ data: AnalysisMonthResponseDTO) {
-        monthView.setupPieChart(jipbapRatio: data.jipbapRatio,outRatio:data.outRatio)
-        monthView.setupBarChart(jipbapPrice: Double(data.jipbapMonthPrice), outPrice: Double(data.jipbapMonthOutPrice))
-        monthView.setStyledMonthContentLabel(savePercent: Double(data.savePercent) ?? 0)
-    }
-    
-    private func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
-        weekView.updateGenderLabel(gender: data.gender)
-        weekView.updateGipbapContentsLabel(jibapSave: data.jipbapSave)
-        weekView.updateDeliveryContentsLabel(outSave: data.outSave)
-        weekView.setupMealWeekBarChart(jipbapAverage: data.jipbapAverage, weekJipbapPrice: data.weekJipbapPrice)
-        weekView.setupDeliveryWeekBarChart(outAverage: data.outAverage, weekOutPrice: data.weekOutPrice)
+        monthView.setupPieChart(jipbapRatio: data.jipbap_ratio ?? 0,outRatio:data.out_ratio ?? 0)
+        monthView.setupBarChart(jipbapPrice: data.month_jipbap_price ?? 0, outPrice: data.month_out_price ?? 0)
+        monthView.setStyledMonthContentLabel(savePercent: Double(data.save_percent ?? 0))
     }
 }

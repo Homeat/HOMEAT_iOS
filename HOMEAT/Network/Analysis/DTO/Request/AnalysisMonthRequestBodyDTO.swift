@@ -8,6 +8,6 @@
 import Foundation
 
 struct AnalysisMonthRequestBodyDTO: Codable {
-    let inputYear : String
-    let inputMonth : String
+    let input_year : String
+    let input_month : String
 }

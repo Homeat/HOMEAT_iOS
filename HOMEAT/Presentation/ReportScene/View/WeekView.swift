@@ -11,23 +11,24 @@ import SnapKit
 import Then
 import DGCharts
 
-protocol WeakViewDelegate: AnyObject {
-    func didSelectYearMonthDay(year: Int, month: Int, day: Int)
+protocol WeekViewDelegate: AnyObject {
+    func weekBackButtonTapped()
+    func weekNextButtonTapped()
 }
-
-final class WeakView: BaseView {
-    weak var delegate: WeakViewDelegate?
+final class WeekView: BaseView {
     //MARK: - Property
+    weak var delegate : WeekViewDelegate?
     private var currentDate = Date()
     private let weakMonthLabel = UILabel()
     private let weekBackButton = UIButton()
     private let weekNextButton = UIButton()
-    private let genderLabel = UILabel()
-    private let jipbapContentsLabel = UILabel()
-    private let deliveryContentsLabel = UILabel()
-    private let jipbapWeekBarChartView = BarChartView()
-    private let deliveryWeekBarChartView = BarChartView()
-    
+    let genderLabel = UILabel()
+    let jipbapContentsLabel = UILabel()
+    let deliveryContentsLabel = UILabel()
+    let jipbapWeekBarChartView = BarChartView()
+    let deliveryWeekBarChartView = BarChartView()
+    let errorMessageLabel = UILabel()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -63,40 +64,30 @@ final class WeakView: BaseView {
         }
         
         jipbapContentsLabel.do {
-            $0.text = "집밥은 50,000원을 덜 쓰고,"
             $0.textColor = .white
             $0.textAlignment = .center
             $0.font = .bodyBold18
             $0.numberOfLines = 0
-            let attributedString3 = NSMutableAttributedString(string: jipbapContentsLabel.text ?? "")
-            let jipbapRange = (jipbapContentsLabel.text as NSString?)?.range(of: "집밥")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapRange ?? NSRange())
-            
-            let jipbapPriceRange = (jipbapContentsLabel.text as NSString?)?.range(of: "50,000원을 덜")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapPriceRange ?? NSRange())
-            jipbapContentsLabel.attributedText = attributedString3
         }
         
         deliveryContentsLabel.do {
-            $0.text = "외식과 배달은 120,000원을 더 썼어요"
             $0.textColor = .white
             $0.textAlignment = .center
             $0.font = .bodyBold18
             $0.numberOfLines = 0
-            // "외식과 배달"을 purple로 변경
-            let attributedString3 = NSMutableAttributedString(string: deliveryContentsLabel.text ?? "")
-            let deliveryRange = (deliveryContentsLabel.text as NSString?)?.range(of: "외식과 배달")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryRange ?? NSRange())
-            
-            let deliveryPriceRange = (deliveryContentsLabel.text as NSString?)?.range(of: "120,000원을 더")
-            attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryPriceRange ?? NSRange())
-            deliveryContentsLabel.attributedText = attributedString3
         }
+        errorMessageLabel.do {
+           $0.textColor = .white
+           $0.textAlignment = .center
+           $0.font = .bodyBold18
+           $0.numberOfLines = 0
+           $0.isHidden = true
+       }
         
     }
     
     override func setConstraints() {
-        addSubviews(weekBackButton,weakMonthLabel,weekNextButton,genderLabel,jipbapContentsLabel,deliveryContentsLabel,jipbapWeekBarChartView,deliveryWeekBarChartView)
+        addSubviews(weekBackButton,weakMonthLabel,weekNextButton,genderLabel,jipbapContentsLabel,deliveryContentsLabel,jipbapWeekBarChartView,deliveryWeekBarChartView,errorMessageLabel)
         
         weekBackButton.snp.makeConstraints {
             $0.height.equalTo(14.6)
@@ -142,51 +133,47 @@ final class WeakView: BaseView {
             $0.height.equalTo(125)
             $0.leading.trailing.equalToSuperview().inset(100)
         }
+        errorMessageLabel.snp.makeConstraints {
+                    $0.center.equalToSuperview()
+        }
     }
     
     override func setting() {
         updateWeekMonthLabel(for: currentDate)
-        setupMealWeekBarChart(jipbapAverage: 40, weekJipbapPrice: 50)
-        setupDeliveryWeekBarChart(outAverage: 40, weekOutPrice: 50)
     }
     
     // MARK: - Function
-    
     func updateGenderLabel(gender: String) {
         self.genderLabel.text = "소득이 비슷한 또래 \(gender) 대비"
     }
+    private func updateAttributedString(label: UILabel, text: String, highlightTextWithColors: [(String, UIColor)]) {
+        let attributedString = NSMutableAttributedString(string: text)
+        for (highlight, color) in highlightTextWithColors {
+            if let range = (text as NSString).range(of: highlight) as NSRange? {
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+            }
+        }
+        label.attributedText = attributedString
+    }
     
     func updateGipbapContentsLabel(jibapSave: Int) {
-        let attributedString3 = NSMutableAttributedString(string: jipbapContentsLabel.text ?? "")
-        let jipbapRange = (jipbapContentsLabel.text as NSString?)?.range(of: "집밥")
-        attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapRange ?? NSRange())
-        if jibapSave < 0 {
-            // 음수인 경우 "더" 사용
-            self.jipbapContentsLabel.text = "집밥은 \(abs(jibapSave))원을 더 쓰고,"
-        } else {
-            // 양수인 경우 "덜" 사용
-            self.jipbapContentsLabel.text = "집밥은 \(jibapSave)원을 덜 쓰고,"
-        }
-        let jipbapPriceRange = (jipbapContentsLabel.text as NSString?)?.range(of: "\(jibapSave)원을 덜")
-        attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoiseGreen") as Any, range: jipbapPriceRange ?? NSRange())
-        jipbapContentsLabel.attributedText = attributedString3
+        let jibapText = jibapSave < 0 ? "집밥은 \(abs(jibapSave))원을 더 쓰고," : "집밥은 \(jibapSave)원을 덜 쓰고,"
+        let highlightTextWithColors = [
+            ("집밥", UIColor(named: "turquoiseGreen") ?? .green),
+            ("\(abs(jibapSave))원을 더", UIColor(named: "turquoiseGreen") ?? .green),
+            ("\(jibapSave)원을 덜", UIColor(named: "turquoiseGreen") ?? .green)
+        ]
+        updateAttributedString(label: jipbapContentsLabel, text: jibapText, highlightTextWithColors: highlightTextWithColors)
     }
 
-    
     func updateDeliveryContentsLabel(outSave: Int) {
-        let attributedString3 = NSMutableAttributedString(string: deliveryContentsLabel.text ?? "")
-        let deliveryRange = (deliveryContentsLabel.text as NSString?)?.range(of: "외식과 배달")
-        attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryRange ?? NSRange())
-        if outSave < 0 {
-            // 음수인 경우 "덜" 사용
-            self.deliveryContentsLabel.text = "외식과 배달은 \(abs(outSave))원을 덜 썼어요"
-        } else {
-            // 양수인 경우 "더" 사용
-            self.deliveryContentsLabel.text = "외식과 배달은 \(outSave)원을 더 썼어요"
-        }
-        let deliveryPriceRange = (deliveryContentsLabel.text as NSString?)?.range(of: "\(outSave)원을 더")
-        attributedString3.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.init(named: "turquoisePurple") as Any, range: deliveryPriceRange ?? NSRange())
-        deliveryContentsLabel.attributedText = attributedString3
+        let outText = outSave < 0 ? "외식과 배달은 \(abs(outSave))원을 더 썼어요" : "외식과 배달은 \(outSave)원을 덜 썼어요"
+        let highlightTextWithColors = [
+            ("외식과 배달", UIColor(named: "turquoisePurple") ?? .purple),
+            ("\(abs(outSave))원을 더", UIColor(named: "turquoisePurple") ?? .purple),
+            ("\(outSave)원을 덜", UIColor(named: "turquoisePurple") ?? .purple)
+        ]
+        updateAttributedString(label: deliveryContentsLabel, text: outText, highlightTextWithColors: highlightTextWithColors)
     }
     
     func updateWeekMonthLabel(for date: Date) {
@@ -219,16 +206,15 @@ final class WeakView: BaseView {
         return (year, month, weekOfMonth)
     }
     
-    func setupMealWeekBarChart(jipbapAverage: Int,weekJipbapPrice: Int) {
-        if let name = UserDefaults.standard.string(forKey: "userNickname") {
-            let nameWithSuffix = "\(name) 님" // 닉네임 뒤에 "님"을 붙임
+    func setupMealWeekBarChart(jipbapAverage: Int,weekJipbapPrice: Int, name: String) {
+        let nameWithSuffix = "\(name) 님" // 닉네임 뒤에 "님"을 붙임
             let names = ["집밥 평균", nameWithSuffix]
             var barEntries = [BarChartDataEntry]()
             barEntries.append(BarChartDataEntry(x: 0, y: Double(jipbapAverage)))
             barEntries.append(BarChartDataEntry(x: 1, y: Double(weekJipbapPrice)))
             barEntries.append(BarChartDataEntry(x: 1, y: 0))
             let barDataSet = BarChartDataSet(entries: barEntries)
-            if let customGreenColor = UIColor(named: "warmgray"),
+            if let customGreenColor = UIColor(named: "warmgray") ,
                let otherColor = UIColor(named: "turquoiseGreen") {
                 let nsCustomGreenColor = NSUIColor(cgColor: customGreenColor.cgColor)
                 let nsOtherColor = NSUIColor(cgColor: otherColor.cgColor)
@@ -260,14 +246,11 @@ final class WeakView: BaseView {
             jipbapWeekBarChartView.notifyDataSetChanged()
             jipbapWeekBarChartView.legend.enabled = false
             jipbapWeekBarChartView.isUserInteractionEnabled = false
-        } else {
-            print("사용자 닉네임이 존재하지 않습니다.")
-        }
+        
     }
     
-    func setupDeliveryWeekBarChart(outAverage: Int,weekOutPrice: Int) {
-        if let name = UserDefaults.standard.string(forKey: "userNickname") {
-            let nameWithSuffix = "\(name) 님"
+    func setupDeliveryWeekBarChart(outAverage: Int,weekOutPrice: Int, name: String) {
+        let nameWithSuffix = "\(name) 님" // 닉네임 뒤에 "님"을 붙임
             
             let names = ["외식/배달 평균", nameWithSuffix]
             var barEntries = [BarChartDataEntry]()
@@ -308,23 +291,41 @@ final class WeakView: BaseView {
             deliveryWeekBarChartView.notifyDataSetChanged()
             deliveryWeekBarChartView.legend.enabled = false
             deliveryWeekBarChartView.isUserInteractionEnabled = false
-        } else {
-            print("사용자 닉네임이 존재하지 않습니다.")
-        }
+        
     }
     //MARK: - Action
     @objc func weekBackTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
-        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
+        delegate?.weekBackButtonTapped()
+        
     }
     
     @objc func weekNextTapped() {
         currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
         updateWeekMonthLabel(for: currentDate)
-        let (year, month, date) = getCurrentYearMonthWeek(for: currentDate)
-        delegate?.didSelectYearMonthDay(year: year, month: month, day: date)
+        delegate?.weekNextButtonTapped()
     }
-    
+    func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
+        errorMessageLabel.isHidden = true
+        genderLabel.isHidden = false
+        jipbapContentsLabel.isHidden = false
+        deliveryContentsLabel.isHidden = false
+        updateGenderLabel(gender: data.gender)
+        updateGipbapContentsLabel(jibapSave: data.jipbap_save ?? 0)
+        updateDeliveryContentsLabel(outSave: data.out_save ?? 0)
+        setupMealWeekBarChart(jipbapAverage: data.jipbap_average ?? 0, weekJipbapPrice: data.week_jipbap_price ?? 0, name: data.nickname)
+        setupDeliveryWeekBarChart(outAverage: data.out_average ?? 0, weekOutPrice: data.week_out_price ?? 0 , name: data.nickname)
+    }
+}
+extension WeekView {
+    func updateErrorMessage(_ message: String) {
+        errorMessageLabel.text = message
+        errorMessageLabel.isHidden = false
+        genderLabel.isHidden = true
+        jipbapContentsLabel.isHidden = true
+        deliveryContentsLabel.isHidden = true
+        jipbapWeekBarChartView.isHidden = true
+        deliveryWeekBarChartView.isHidden = true
+    }
 }

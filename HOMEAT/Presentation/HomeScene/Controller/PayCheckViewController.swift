@@ -8,10 +8,11 @@
 import UIKit
 import SnapKit
 import Then
+import Alamofire
 
-class PayCheckViewController : BaseViewController {
-    
+class PayCheckViewController : BaseViewController{
     //MARK: - Property
+    var specialDates: Set<String> = Set()
     private let eatoutIcon = UIImageView()
     private let homefoodIcon = UIImageView()
     private let eatoutTitleLabel = UILabel()
@@ -19,11 +20,26 @@ class PayCheckViewController : BaseViewController {
     private let calendarView = CalendarView()
     private let payCheckView = PayCheckView()
     private let checkDetailButton = UIButton()
+    private var selectedDay: String?
+    private var selectedHomeAmount: String?
+    private var selectedEatOutAmount: String?
+    private var selectedLeftAmount: String?
+    private var selectedYear: String?
+    private var selectedMonth: String?
+    private var selectedDate: String?
     
-    //MARK: - Function
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        calendarView.delegate = self
+//        payCheckView.delegate = self
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let year = String(calendar.component(.year, from: currentDate))
+        let month = String(format: "%02d", calendar.component(.month, from: currentDate))
+        let day = String(format: "%02d", calendar.component(.day, from: currentDate))
+        updateCalendar(year: year, month: month)
+        updateCalendarDate(year: year, month: month, day: day)
         setNavigationBar()
         setAddTarget()
     }
@@ -67,7 +83,7 @@ class PayCheckViewController : BaseViewController {
         
         checkDetailButton.do {
             $0.setTitle("세부 지출 확인", for: .normal)
-            $0.titleLabel?.font = UIFont(name: "NotoSansKR-Medium", size: 13.0)
+            $0.titleLabel?.font = UIFont.bodyMedium15
             $0.setTitleColor(UIColor(named: "turquoiseGreen"), for: .normal)
         }
     }
@@ -127,14 +143,121 @@ class PayCheckViewController : BaseViewController {
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
     }
-    
+    private func updateCalendar(year: String, month: String) {
+        let request = CalendarCheckRequestBodyDTO(year: year, month: month)
+        NetworkService.shared.homeSceneService.calendarCheck(queryDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                guard let calendarData = data.data else { return }
+                let calendarEntries = calendarData.map { (date: $0.date, jipbapPercentage: Double($0.todayJipbapPricePercent), outPricePercentage: Double($0.todayOutPricePercent)) }
+                DispatchQueue.main.async {
+                    guard let currentMonth = Calendar.current.dateComponents([.year, .month], from: self.calendarView.calendarDate).month else { return }
+                    let incomingMonth = Int(month)
+                    if currentMonth == incomingMonth {
+                        self.calendarView.refreshCalendar(data: calendarEntries)
+                        print("현재 년 월 \(calendarEntries)")
+                    }
+                }
+            default:
+                print("서버 연동 실패")
+            }
+        }
+    }
+    //월,일,요일 받아와서 집밥가격,배달외식가격, 남은금액을 reponse body 값으로 받아옴
+    private func updateCalendarDate(year: String, month: String, day: String) {
+        let request = CalendarDailyRequestBodyDTO(year: year, month: month, day: day)
+        NetworkService.shared.homeSceneService.calendarDailyCheck(queryDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                    guard let calendarData = data.data else { return }
+                DispatchQueue.main.async {
+                    let homeAmount = String(calendarData.todayJipbapPrice ?? 0)
+                    let eatOutAmount = String(calendarData.todayOutPrice ?? 0)
+                    let leftAmount = String(calendarData.remainingGoal ?? 0)
+                    let dateString = calendarData.date
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                    if let date = dateFormatter.date(from: dateString) {
+                        dateFormatter.dateFormat = "MM월 dd일 EEEE"
+                        dateFormatter.locale = Locale(identifier: "ko_KR")
+                        let formattedDate = dateFormatter.string(from: date)
+                        self.payCheckView.updateDateLabel(date: formattedDate)
+                        self.selectedDay = formattedDate
+                    }
+                    self.payCheckView.updateSpentLabel(homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+                    self.selectedHomeAmount = homeAmount
+                    self.selectedEatOutAmount = eatOutAmount
+                    self.selectedLeftAmount = leftAmount
+                    self.selectedYear = year
+                    self.selectedMonth = month
+                    self.selectedDate = day
+                }
+            default:
+                print("서버 연동 실패")
+                DispatchQueue.main.async {
+                    self.payCheckView.updateSpentLabel(homeAmount: String(0), eatOutAmount: String(0), leftAmount: String(0))
+                }
+            }
+        }
+    }
+
     private func setAddTarget() {
         checkDetailButton.addTarget(self, action: #selector(checkDetailButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc Func
     @objc func checkDetailButtonTapped(_ sender: UIButton) {
-        self.navigationController?.pushViewController(PayCheckDetailViewController(), animated: true)
+        guard let day = selectedDay,
+              let year = selectedYear,
+              let month = selectedMonth,
+              let date = selectedDate,
+                      let homeAmount = selectedHomeAmount,
+                      let eatOutAmount = selectedEatOutAmount,
+                      let leftAmount = selectedLeftAmount else {
+                    return
+                }
+        let detailVC = PayCheckDetailViewController(day: day, year: year, month: month, date: date, homeAmount: homeAmount, eatOutAmount: eatOutAmount, leftAmount: leftAmount)
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
+}
 
+extension PayCheckViewController: CalendarViewDelegate {
+    func didSelectDate(year: String, month: String, day: String) {
+        print("셀 클릭 시 년/월/일\(year)\(month)\(day)")
+        let dateString = "\(year)-\(month)-\(day)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = "MM월 dd일 EEEE"
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            let formattedDate = dateFormatter.string(from: date)
+            self.payCheckView.updateDateLabel(date: formattedDate)
+        }
+        updateCalendarDate(year: year, month: month, day: day)
+    }
+    
+    func calendarBackButtonTapped() {
+        var components = Calendar.current.dateComponents([.year, .month], from: calendarView.calendarDate)
+        components.month = components.month! - 1
+        let newDate = Calendar.current.date(from: components)!
+        
+        let year = Calendar.current.component(.year, from: newDate)
+        let month = String(format: "%02d", Calendar.current.component(.month, from: newDate))
+        print("전 월 \(year)\(month)")
+        updateCalendar(year: String(year), month: month)
+    }
+    
+    func calendarNextButtonTapped() {
+        var components = Calendar.current.dateComponents([.year, .month], from: calendarView.calendarDate)
+        components.month = components.month! + 1
+        let newDate = Calendar.current.date(from: components)!
+        
+        let year = Calendar.current.component(.year, from: newDate)
+        let month = String(format: "%02d", Calendar.current.component(.month, from: newDate))
+        
+        updateCalendar(year: String(year), month: month)
+    }
+    
 }

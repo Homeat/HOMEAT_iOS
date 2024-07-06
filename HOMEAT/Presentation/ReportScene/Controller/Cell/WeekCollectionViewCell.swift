@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class WeekCollectionViewCell: UICollectionViewCell {
     static let id = "WeekCollectionViewCell"
@@ -14,15 +15,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
     var cellView = WeekCellView()
     var successMoney = UILabel()
     var failMoney = UILabel()
-    
-    var model: WeekCellModel? {
-        didSet {
-            guard let model = model else { return }
-            cellView.updateWeekLabel(withWeekIndex: model.weekIndex)
-            cellView.imageView.image = UIImage(named: model.imageName)
-        }
-    }
-    
+    var currentWeekIndex: Int = 1
     //MARK: -- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,13 +36,11 @@ class WeekCollectionViewCell: UICollectionViewCell {
         }
         
         successMoney.do {
-            $0.text = "50,000원"
             $0.font = .bodyBold15
             $0.textColor = .turquoiseGreen
         }
         
         failMoney.do {
-            $0.text = "4,500원"
             $0.font = .bodyBold15
             $0.textColor = UIColor(named: "turquoiseRed")
         }
@@ -67,17 +58,52 @@ class WeekCollectionViewCell: UICollectionViewCell {
         
         successMoney.snp.makeConstraints {
             $0.top.equalTo(cellView.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(18)
+            $0.centerX.equalToSuperview()
+            //$0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(20)
         }
         
         failMoney.snp.makeConstraints {
             $0.top.equalTo(successMoney.snp.bottom)
-            $0.trailing.equalTo(successMoney.snp.trailing)
+            $0.centerX.equalToSuperview()
+            //$0.trailing.equalTo(successMoney.snp.trailing)
             $0.height.equalTo(20)
         }
     }
+
+    func configure(with weekData: WeekLookResponseDTO ) {
+        let formattedGoalMoney = weekData.goal_price.formattedWithSeparator
+        let formattedExceedMoney = weekData.exceed_price.formattedWithSeparator
+        successMoney.text = "\(formattedGoalMoney)원"
+        failMoney.text =  "\(formattedExceedMoney)원"
+        if let badgeUrl = URL(string: weekData.badge_url) {
+            DispatchQueue.global().async {
+                if let data = try? Data(contentsOf: badgeUrl) {
+                    DispatchQueue.main.async {
+                        self.cellView.imageView.image = UIImage(data: data)
+                    }
+                }
+            }
+        }
+        switch weekData.weekStatus {
+        case "SUCCESS":
+            cellView.backgroundColor = UIColor(named: "turquoiseGreen")
+        case "FAIL":
+            cellView.backgroundColor = UIColor(named: "turquoiseRed")
+        case "UNDO":
+            configureAsLock()
+        default:
+            cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        }
+    }
     
+    func configureAsLock() {
+        successMoney.text = nil
+        failMoney.text = nil
+        cellView.imageView.image = UIImage(named: "lockReport")
+        cellView.backgroundColor = UIColor(named: "turquoiseGray")
+        cellView.weekLabel.isHidden = true
+    }
     func updateWeekLabel(withWeekIndex index: Int) {
         cellView.updateWeekLabel(withWeekIndex: index)
     }

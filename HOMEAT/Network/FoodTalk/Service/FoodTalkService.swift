@@ -8,7 +8,7 @@
 import Foundation
 
 protocol FoodTalkServiceProtocol {
-    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Int>>) -> Void)
+    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func replyReport(bodyDTO: ReplyReportRequestBodyDTO,completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
@@ -17,8 +17,6 @@ protocol FoodTalkServiceProtocol {
     func commentReport(bodyDTO: CommentReportRequestBodyDTO,completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func replyWrite(bodyDTO: ReplyWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
-    
-    func recipeSave(bodyDTO: RecipeSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     
     func love(bodyDTO: LoveRequestBodyDTO, completion: @escaping
         (NetworkResult<BaseResponse<Data>>) -> Void)
@@ -46,8 +44,8 @@ protocol FoodTalkServiceProtocol {
 
 final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServiceProtocol {
     //게시글 저장
-    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Int>>) -> Void) {
-        fetchData(target: .foodTalkSave(bodyDTO), responseData: BaseResponse<Int>.self, completion: completion)
+    func foodTalkSave(bodyDTO: FoodTalkSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .foodTalkSave(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
     //대댓글 신고
@@ -68,11 +66,6 @@ final class FoodTalkService: APIRequestLoader<FoodTalkTarget>, FoodTalkServicePr
     //대댓글작성
     func replyWrite(bodyDTO: ReplyWriteRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .replyWrite(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
-    }
-    
-    //레시피 저장
-    func recipeSave(bodyDTO: RecipeSaveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
-        fetchData(target: .recipeSave(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
     //공감추가

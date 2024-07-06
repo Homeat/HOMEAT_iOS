@@ -15,4 +15,7 @@ final class NetworkService {
     let onboardingService: OnboardingServiceProtocol = OnboardingService(apiLogger: APIEventLogger())
     let analysisService: AnalysisServiceProtocol = AnalysisService(apiLogger: APIEventLogger())
     let foodTalkService: FoodTalkServiceProtocol = FoodTalkService(apiLogger: APIEventLogger())
+    let infoTalkService: InfoTalkServiceProtocol = InfoTalkService(apiLogger: APIEventLogger())
+    let weekLookService: WeekLookServiceProtocol = WeekLookService(apiLogger: APIEventLogger())
+    let homeSceneService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
 }

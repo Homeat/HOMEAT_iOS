@@ -6,20 +6,37 @@
 //
 
 import UIKit
+import Alamofire
 
 class InfoTalkViewController: BaseViewController {
-    
     //MARK: - Property
     private let searchBar = UISearchBar()
     private let tableView = UITableView()
     private let listButton = UIButton()
     private let floatingButton = UIButton()
+    var lastest: [InfoTalk] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var lastInfoTalkId = Int.max
+    var search : String?
+    var isLoading =  false
+    let pageSize = 6 // 한 번에 가져올 아이템 수
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+        setSearchBar()
+        setAddTarget()
+        updateTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDataChanged"), object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isTranslucent = false
+    }
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -29,7 +46,7 @@ class InfoTalkViewController: BaseViewController {
         searchBar.do {
             $0.backgroundImage = UIImage()
             $0.backgroundColor = UIColor(named: "coolGray4")
-            $0.searchTextField.placeholder = "관심있는 집밥을 검색해보세요!"
+            $0.searchTextField.placeholder = "관심있는 정보를 검색해보세요!"
             $0.makeBorder(width: 1, color: UIColor(r: 102, g: 102, b: 102))
             $0.makeCornerRound(radius: 7)
             $0.delegate = self
@@ -39,6 +56,7 @@ class InfoTalkViewController: BaseViewController {
             $0.dataSource = self
             $0.delegate = self
             $0.allowsSelection = true
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.showsVerticalScrollIndicator = true
             $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             $0.register(InfoTalkTableViewCell.self, forCellReuseIdentifier: InfoTalkTableViewCell.identifier)
@@ -91,9 +109,35 @@ class InfoTalkViewController: BaseViewController {
     
     private func setAddTarget() {
         listButton.addTarget(self, action: #selector(isListButtonTapped), for: .touchUpInside)
+        floatingButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
+    }
+    //MARK: - 서버 func
+    // 최신 순
+    private func updateTableView() {
+        guard !isLoading else { return }
+        isLoading = true
+        let request = LatestInfoRequestBodyDTO(search: search ?? "", lastInfoTalkId: lastInfoTalkId)
+        NetworkService.shared.infoTalkService.latestInfo(queryDTO: request) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success(let data):
+                    print("성공: 데이터가 반환되었습니다")
+                    self.lastest.append(contentsOf: data.data)
+                    self.lastInfoTalkId = self.lastest.last?.infoTalkId ?? Int.max
+                    self.isLoading = false
+                    //테이블 뷰 reload
+                    self.tableView.reloadData()
+                default:
+                    print("데이터 저장 실패")
+                    self.isLoading = false
+                }
+            }
+        }
         
     }
-    
+    // 조회 순
+//    private func update
     //MARK: - @objc func
     @objc func isListButtonTapped(_ sender: Any) {
         
@@ -107,6 +151,27 @@ class InfoTalkViewController: BaseViewController {
         
         self.present(actionSheet, animated: true, completion: nil)
     }
+    
+    @objc func isWriteButtonTapped(_ sender: Any) {
+        let nextVC = InfoWriteViewController()
+        nextVC.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
+    @objc func navigateToPostViewController(with postId: Int) {
+        
+        let postVC = InfoPostViewController(infoTalkId: postId)
+        postVC.postId = postId
+        tabBarController?.tabBar.isHidden = true
+        navigationController?.pushViewController(postVC, animated: true)
+        print("present click")
+    }
+    
+    @objc private func dataChanged() {
+        lastInfoTalkId = Int.max
+        lastest.removeAll()
+        updateTableView()
+    }
+    
 }
 //MARK: - Extension
 extension InfoTalkViewController: UISearchBarDelegate {
@@ -121,39 +186,45 @@ extension InfoTalkViewController: UISearchBarDelegate {
                 leftView.tintColor = UIColor(r: 216, g: 216, b: 216)
             }
         }
-        
+        searchBar.delegate = self
+    }
         func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
             if let searchText = searchBar.text {
+                search = searchText
                 performSearch(with: searchText)
             }
-            searchBar.resignFirstResponder() // 키보드 숨기기
+            searchBar.resignFirstResponder()
         }
-        
         func performSearch(with searchText: String) {
-            // 검색 로직 구현하는 부분. 네트워크.
+            lastInfoTalkId = Int.max
+            lastest.removeAll()
+            tableView.reloadData()
+            updateTableView()
         }
-    }
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            if searchText.isEmpty {
+                search = nil
+                lastInfoTalkId = Int.max
+                lastest.removeAll()
+                tableView.reloadData()
+                updateTableView()
+            }
+        }
+    
 }
 
 extension InfoTalkViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        lastest.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InfoTalkTableViewCell.identifier, for: indexPath) as? InfoTalkTableViewCell else {
             return UITableViewCell()
         }
-        cell.titleLabel.text = "선재야선재야"
-        cell.dateLabel.text = "11월 5일 08:00"
-        cell.contentLabel.text = "꽁꽁얼어붙은 한강위에 고양이가 걸어다닌다 한강위에 고양이가 걸어다닌다 야옹야옹한강위에 고양이가 걸어다닌다 야옹야옹한강위에"
-        cell.heartLabel.text = "30"
-        cell.chatLabel.text = "5"
+        let post = lastest[indexPath.row]
         cell.selectionStyle = .none
-        cell.postImageView.image = UIImage(named: "woosuck")
-        cell.heartImage.image = UIImage(named: "isSmallHeartSelected")
-        cell.chatImage.image = UIImage(named: "isReply")
-        
+        cell.configure(with: post)
         return cell
     }
 }
@@ -161,5 +232,13 @@ extension InfoTalkViewController: UITableViewDataSource {
 extension InfoTalkViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("cell click")
+        let selectedPost = lastest[indexPath.row]
+        tableView.deselectRow(at: indexPath, animated: true)
+        navigateToPostViewController(with: selectedPost.infoTalkId)
+        print(selectedPost.infoTalkId)
+
     }
 }

@@ -12,7 +12,7 @@ import SnapKit
 
 final class ReplyReactionView: UIStackView {
     
-    private let heartCount: UIButton = {
+    var heartCount: UIButton = {
         let button = UIButton()
         button.setTitle("9", for: .normal)
         button.titleLabel?.font = .captionMedium10
@@ -23,7 +23,7 @@ final class ReplyReactionView: UIStackView {
         return button
     }()
     
-    private let replyLabel: UIButton = {
+    var replyLabel: UIButton = {
         let button = UIButton()
         button.setTitle("2", for: .normal)
         button.titleLabel?.font = .captionMedium10
@@ -53,4 +53,10 @@ final class ReplyReactionView: UIStackView {
         addArrangedSubview(replyLabel)
     }
     
+    func updateContent(love: String, comment: String) {
+        self.heartCount.setTitle(love, for: .normal)
+        self.replyLabel.setTitle(comment, for: .normal)
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
+    }
 }

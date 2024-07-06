@@ -12,14 +12,24 @@ import SnapKit
 
 protocol ModalViewControllerDelegate: AnyObject {
     func didAddCell()
+    func didUpdateCell(at index: Int, with recipe: foodRecipeDTOS)
+}
+
+protocol StepWriteViewControllerDelegate: AnyObject {
+    func didSaveRecipe(recipe: String?, recipePicture: UIImage?)
 }
 
 class StepWriteController: BaseViewController, UITextViewDelegate {
-    
     weak var delegate: ModalViewControllerDelegate?
+    weak var stepDelegate: StepWriteViewControllerDelegate?
+    var recipe: foodRecipeDTOS?
+    var recipeIndex: Int?
+    private var shouldSetupImage = false
+    private var setupImage: UIImage?
     //MARK: - Property
     private let recipeWriteLabel = UILabel()
     private let photoButton = UIButton()
+    private let deletePhotoButton = UIButton()
     private let photoActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     private let imagePicker = UIImagePickerController()
     private let line = UIView()
@@ -31,6 +41,18 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         super.viewDidLoad()
         setNavigationBar()
         setKeyboard()
+        setupRecipeData()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if shouldSetupImage, let image = setupImage {
+            let resizedImage = resizeImage(image: image, targetSize: photoButton.frame.size)
+            photoButton.setImage(resizedImage, for: .normal)
+            photoButton.setTitle("", for: .normal)
+            shouldSetupImage = false
+            setupImage = nil
+        }
     }
     
     //MARK: - SetUI
@@ -58,7 +80,16 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             config.imagePadding = 19.7
             $0.configuration = config
             $0.layer.cornerRadius = 14
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.clipsToBounds = true
             $0.addTarget(self, action: #selector(photoButtonTapped), for: .touchUpInside)
+        }
+        
+        deletePhotoButton.do {
+            $0.setImage(UIImage(named: "DeleteButton"), for: .normal)
+            $0.imageView?.contentMode = .scaleAspectFit
+            $0.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+            $0.isHidden = true
         }
         
         photoActionSheet.do {
@@ -109,7 +140,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     }
     
     override func setConstraints() {
-        view.addSubviews(recipeWriteLabel, photoButton, line, recipTextView, saveButton)
+        view.addSubviews(recipeWriteLabel, photoButton, line, recipTextView, saveButton, deletePhotoButton)
+        view.bringSubviewToFront(deletePhotoButton)
         
         recipeWriteLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
@@ -123,6 +155,13 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             $0.width.equalTo(226)
         }
         
+        deletePhotoButton.snp.makeConstraints {
+            $0.top.equalTo(photoButton.snp.top).offset(-10)
+            $0.trailing.equalTo(photoButton.snp.trailing).offset(10)
+            $0.height.equalTo(33.2)
+            $0.width.equalTo(33.2)
+        }
+        
         line.snp.makeConstraints {
             $0.top.equalTo(photoButton.snp.bottom).offset(45)
             $0.leading.equalToSuperview().offset(21)
@@ -131,7 +170,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         }
         
         recipTextView.snp.makeConstraints {
-            $0.top.equalTo(line).offset(40)
+            $0.top.equalTo(line).offset(30)
             $0.leading.equalTo(line.snp.leading)
             $0.trailing.equalTo(line.snp.trailing)
             $0.height.equalTo(170)
@@ -140,7 +179,7 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         saveButton.snp.makeConstraints {
             $0.leading.equalTo(recipTextView.snp.leading)
             $0.trailing.equalTo(recipTextView.snp.trailing)
-            $0.top.equalTo(recipTextView.snp.bottom).offset(40)
+            $0.top.equalTo(recipTextView.snp.bottom).offset(20)
             $0.height.equalTo(57)
         }
     }
@@ -177,6 +216,19 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
+    private func setupRecipeData() {
+        if let recipe = recipe {
+            recipTextView.text = recipe.recipe
+            if let recipePictureData = recipe.recipePicture, let image = UIImage(data: recipePictureData) {
+                shouldSetupImage = true
+                setupImage = image
+                deletePhotoButton.isHidden = false
+            } else {
+                deletePhotoButton.isHidden = true
+            }
+        }
+    }
+    
     //MARK: - Method
     private func openCamera() {
         imagePicker.sourceType = .camera
@@ -186,6 +238,14 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     private func openPhotoLibrary() {
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true)
+    }
+    
+    private func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+        let newImage = renderer.image { _ in
+            image.draw(in: CGRect(origin: .zero, size: targetSize))
+        }
+        return newImage
     }
     
     //MARK: - @objc
@@ -209,18 +269,39 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
     }
     
     @objc func saveButtonTapped(_ sender: Any) {
-        //데이터 전달
         delegate?.didAddCell()
+        guard let recipe = recipTextView.text, !recipe.isEmpty else {
+            return
+        }
+        let recipePicture = photoButton.image(for: .normal)
+        let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
+        let updatedRecipe = foodRecipeDTOS(recipe: recipe, recipePicture: recipePictureData)
+        if let recipeIndex = recipeIndex {
+            delegate?.didUpdateCell(at: recipeIndex, with: updatedRecipe)
+        } else {
+            stepDelegate?.didSaveRecipe(recipe: recipe, recipePicture: recipePicture)
+        }
+        
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func deleteButtonTapped(_ sender: Any) {
+        photoButton.setImage(nil, for: .normal)
+        
+        photoButton.configuration?.image = UIImage(named: "addIcon")
+        photoButton.configuration?.title = "사진 추가"
+        deletePhotoButton.isHidden = true 
     }
 }
 
+//MARK: - Extension
 extension StepWriteController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
-            let resizeImage = image.resizeImage(toFit: photoButton)
-            photoButton.setImage(resizeImage, for: .normal)
+        if let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            let resizedImage = resizeImage(image: image, targetSize: photoButton.frame.size)
+            photoButton.setImage(resizedImage, for: .normal)
             photoButton.setTitle("", for: .normal)
+            deletePhotoButton.isHidden = false
         }
         picker.dismiss(animated: true)
     }

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class WeekCellView: BaseView {
     //MARK: - Property
@@ -45,6 +46,14 @@ class WeekCellView: BaseView {
     
     func updateWeekLabel(withWeekIndex index: Int) {
         weekLabel.text = "\(index)W"
+    }
+    
+    func configure(with badgeUrl: String) {
+        guard let url = URL(string: badgeUrl) else {
+            
+            return
+        }
+        imageView.kf.setImage(with: url)
     }
     
 }
