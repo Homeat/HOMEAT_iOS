@@ -13,15 +13,40 @@ protocol InfoTalkServiceProtocol {
     func viewOrder(bodyDTO: ViewInfoRequestBodyDTO, completion: @escaping (NetworkResult<ViewInfoResponseDTO>) -> Void)
     func oldestOrder(bodyDTO: OldestInfoRequestBodyDTO, completion: @escaping (NetworkResult<OldestInfoResponseDTO>) -> Void)
     func loveOrder(bodyDTO: LoveInfoRequestBodyDTO, completion: @escaping (NetworkResult<LoveInfoResponseDTO>) -> Void)
-    func postReport(queryDTO: PostInfoRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PostInfoResponseDTO>>) -> Void)
+    func postReport(queryDTO: PostInfoRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PostInfoResponseDTO>>) -> Void) //게시글 서버연동
     func commentWrite(bodyDTO: InfoCommentRequestBodyDTO, completion:
     @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func lovePost(bodyDTO: InfoLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
-    func lovePostDelete(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func deleteLove(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func complainPost(bodyDTO: ComplainPostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func complainComment(bodyDTO: ComplainCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func deletePost(bodyDTO: DeletePostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func deleteComment(bodyDTO: DeleteCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func replyComment(bodyDTO: InfoReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class InfoTalkService : APIRequestLoader<InfoTalkTarget>,InfoTalkServiceProtocol {
-    func lovePostDelete(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+    func replyComment(bodyDTO: InfoReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .replyComment(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func deletePost(bodyDTO: DeletePostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .deletePost(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func deleteComment(bodyDTO: DeleteCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .deleteComment(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func complainPost(bodyDTO: ComplainPostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .complainPost(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func complainComment(bodyDTO: ComplainCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .complainComment(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func deleteLove(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .postLoveDelete(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
@@ -33,7 +58,7 @@ final class InfoTalkService : APIRequestLoader<InfoTalkTarget>,InfoTalkServicePr
         fetchData(target: .commentReport(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
-    func postReport(queryDTO: PostInfoRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PostInfoResponseDTO>>) -> Void) {
+    func postReport(queryDTO: PostInfoRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PostInfoResponseDTO>>) -> Void) { // 게시글 서버연동
         fetchData(target: .postReport(queryDTO), responseData: BaseResponse<PostInfoResponseDTO>.self, completion: completion)
     }
     

@@ -290,6 +290,8 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         scrollView.contentSize.width = 0
         self.heartCount.setTitle(love, for: .normal)
         self.replyCount.setTitle(comment, for: .normal)
+        print(love)
+        print(comment)
         let cleanedTags = tags.flatMap { tag in
             tag.trimmingCharacters(in: CharacterSet(charactersIn: "[]\"")).components(separatedBy: "\", \"")
         }
@@ -302,9 +304,9 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         loadImages(from: InfoPictureImages)
         print("정보토크이미지\(InfoPictureImages)")
-        self.tagCollectionView.reloadData()
         self.setNeedsLayout()
         self.layoutIfNeeded()
+        self.tagCollectionView.reloadData()
     }
     
     //MARK: - @objc

@@ -154,6 +154,7 @@ class InfoTalkTableViewCell: UITableViewCell {
         dateLabel.text = formattedCreatedAt
         contentLabel.text = infoTalk.content
         heartLabel.text = "\(infoTalk.love ?? 0)"
+        print(heartLabel.text)
         chatLabel.text = "\(infoTalk.commentNumber ?? 0)"
         postImageView.kf.setImage(with: url)
     }
