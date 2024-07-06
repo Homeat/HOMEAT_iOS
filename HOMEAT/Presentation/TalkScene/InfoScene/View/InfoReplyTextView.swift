@@ -5,7 +5,6 @@
 //  Created by 김민솔 on 7/2/24.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 import Then
@@ -89,8 +88,6 @@ class InfoReplyTextView: BaseView {
         heartButton.setImage(UIImage(named: imageName), for: .normal)
         updateHeartStatus(increment: isHeartSelected)
     }
-    
-    
 }
-    
+
 

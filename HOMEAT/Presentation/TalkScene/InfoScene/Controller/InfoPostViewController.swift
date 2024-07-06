@@ -21,7 +21,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     func declareViewButtonTapped() {
         guard let infoTalkId = self.postId else {return}
         let nextVC = InfoDeclareViewController(infoTalkId: infoTalkId)
@@ -87,7 +87,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.showsVerticalScrollIndicator = false
         tableView.register(InfoReplyTableViewCell.self, forCellReuseIdentifier: "InfoReplyTableViewCell")
         tableView.separatorStyle = .none
-
+        
         let headerView = InfoPostContentView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 520))
         headerView.delegate = self
         tableView.tableHeaderView = headerView
@@ -111,8 +111,10 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                 switch response {
                 case .success(_):
                     print("게시글 삭제 성공")
-                    self.tableView.reloadData()
-                    
+                    NotificationCenter.default.post(name: NSNotification.Name("InfoTalkDeleteChanged"), object: nil)
+                    let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController
+                    self.navigationController?.popToViewController(talkVC ?? TalkViewController(), animated: true)
+                    talkVC?.switchToInfoTalk()
                 default:
                     print("게시글 삭제 실패")
                 }
@@ -240,11 +242,6 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     let comment = String(data.data?.commentNumber ?? 0)
                     self.comments = data.data?.infoTalkComments ?? []
                     print("댓글\(self.comments)")
-//                    for comment in self.comments {
-//                        print("댓글\(comment)")
-//                       // print("Comment ID: \(comment.commentId), Replies: \(String(describing: comment.infoTalkReplise))")
-//                        print(comment.infoTalkReplise ?? [])
-//                    }
                     let infoImage = data.data?.infoPictureImages ?? []
                     var displayDate = ""
                     let tagsString = data.data?.tags ?? []
@@ -261,8 +258,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     }
                     print("이미지\(infoImage)")
                     if let headerView = self.tableView.tableHeaderView as? InfoPostContentView {
-                                            headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
-                                        }
+                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
+                    }
                     self.tableView.reloadData()
                 default:
                     print("서버연동 실패")
@@ -407,20 +404,20 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
     func numberOfSections(in tableView: UITableView) -> Int {
         return comments.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let comment = comments[section]
         print("Comment ID: \(comment.commentId), Replies Count: \(comment.infoTalkReplies?.count ?? 0)")
         return 1 + (comment.infoTalkReplies?.count ?? 0) // 댓글 하나와 대댓글 수
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InfoReplyTableViewCell", for: indexPath) as! InfoReplyTableViewCell
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
         cell.delegate = self
-
+        
         let comment = comments[indexPath.section]
-
+        
         if indexPath.row == 0 {
             cell.updateContent(comment: comment)
         } else {
@@ -434,31 +431,32 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
     }
-
+    
     func replyButtonTapped(_ cell: InfoReplyTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        var currentIndex = indexPath.row
-        for comment in comments {
-            if currentIndex == 0 {
-                currentReplyContext = (isComment: true, id: comment.commentId)
-                replyTextField.becomeFirstResponder()
-                return
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
+        
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.infoTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                currentReplyContext = (isComment: false, id: replyId)
             }
-            currentIndex -= 1
-            if currentIndex < comment.infoTalkReplies?.count ?? 0 {
-                currentReplyContext = (isComment: false, id: comment.infoTalkReplies?[currentIndex].replyId ?? 0)
-                replyTextField.becomeFirstResponder()
-                return
-            }
-            currentIndex -= comment.infoTalkReplies?.count ?? 0
         }
+        
+        replyTextField.becomeFirstResponder()
     }
-
+    
     func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         

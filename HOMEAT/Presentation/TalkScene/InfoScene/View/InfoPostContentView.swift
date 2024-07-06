@@ -312,15 +312,15 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         self.tagCollectionView.reloadData()
     }
     
-    //MARK: - @objc
+    //MARK: - @objc 
     @objc private func declareButtonTapped() {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         if currentItsMe == userName.text {
             // 게시글 수정
-            actionSheet.addAction(UIAlertAction(title: "게시글 수정", style: .default, handler: { (_) in
-                // self.delegate?.editPostButtonTapped()
-            }))
+            //            actionSheet.addAction(UIAlertAction(title: "게시글 수정", style: .default, handler: { (_) in
+            //                // self.delegate?.editPostButtonTapped()
+            //            }))
             
             // 게시글 삭제
             actionSheet.addAction(UIAlertAction(title: "게시글 삭제", style: .destructive, handler: { (_) in

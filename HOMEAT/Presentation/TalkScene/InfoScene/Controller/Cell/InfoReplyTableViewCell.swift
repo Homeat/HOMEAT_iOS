@@ -15,7 +15,7 @@ protocol InfoTalkReplyCellDelgate: AnyObject {
 }
 class InfoReplyTableViewCell: UITableViewCell {
     weak var delegate: InfoTalkReplyCellDelgate?
-
+    
     static let identifier = "InfoReplyTableViewCell"
     //MARK: - Property
     private let replyProfile = UIImageView()
@@ -88,27 +88,20 @@ class InfoReplyTableViewCell: UITableViewCell {
         }
     }
     private func setConstraints() {
-        
-    }
-    
-    func updateContent(comment: InfoTalkComments) {
         contentView.addSubview(replyProfile)
-        
-        replyProfile.snp.makeConstraints {
+        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
+        replyNickname.snp.makeConstraints {
+            $0.top.equalTo(replyProfile.snp.top)
+            $0.leading.equalTo(replyProfile.snp.trailing).offset(11.2)
+        }
+        replyProfile.snp.remakeConstraints {
             $0.top.equalTo(contentView.snp.top).inset(16)
             $0.leading.equalTo(contentView.snp.leading).inset(20)
             $0.height.equalTo(37.8)
             $0.width.equalTo(37.8)
         }
-        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
-        
-        replyNickname.snp.makeConstraints {
-            $0.top.equalTo(replyProfile.snp.top)
-            $0.leading.equalTo(replyProfile.snp.trailing).offset(11.2)
-        }
-        
         replyContent.snp.makeConstraints {
-            $0.bottom.equalTo(replyProfile.snp.bottom)
+            $0.top.equalTo(replyNickname.snp.bottom)
             $0.leading.equalTo(replyNickname.snp.leading)
         }
         
@@ -133,9 +126,11 @@ class InfoReplyTableViewCell: UITableViewCell {
             $0.leading.equalTo(contentView.snp.leading)
             $0.trailing.equalTo(contentView.snp.trailing)
         }
+    }
+    
+    func updateContent(comment: InfoTalkComments) {
         replyNickname.text = comment.commentNickName
         replyContent.text = comment.content
-        
         // 날짜 형식 변환
         let dateString = comment.createdAt
         print("Original Date String: \(dateString)")
@@ -154,67 +149,28 @@ class InfoReplyTableViewCell: UITableViewCell {
             displayDate = dateString
         }
         replyDate.text = displayDate
+        
     }
     
     func updateContent(reply: InfoTalkReplies) {
-        contentView.addSubview(replyAddProfile)
-        replyAddProfile.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).inset(16)
-            $0.leading.equalTo(contentView.snp.leading).inset(70)
-            $0.width.equalTo(25)
-            $0.height.equalTo(25)
-        }
-        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
+        replyNickname.text = reply.replyNickName
+        replyContent.text = reply.content
+        print(reply)
+        // 날짜 형식 변환
+        let dateString = reply.createdAt
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
-        replyNickname.snp.makeConstraints {
-            $0.top.equalTo(replyAddProfile.snp.top)
-            $0.leading.equalTo(replyAddProfile.snp.trailing).offset(11.2)
+        var displayDate = ""
+        if let date = dateFormatter.date(from: dateString) {
+            let displayFormatter = DateFormatter()
+            displayFormatter.dateFormat = "MM월 dd일 HH:mm"
+            displayDate = displayFormatter.string(from: date)
+        } else {
+            displayDate = dateString
         }
-        
-        replyContent.snp.makeConstraints {
-            $0.top.equalTo(replyNickname.snp.bottom).offset(5)
-            $0.leading.equalTo(replyNickname.snp.leading)
-        }
-        
-        replyDeclare.snp.makeConstraints {
-            $0.top.equalTo(replyAddProfile.snp.top)
-            $0.trailing.equalToSuperview().inset(22)
-        }
-        
-        replyDate.snp.makeConstraints {
-            $0.top.equalTo(replyContent.snp.bottom).offset(8)
-            $0.leading.equalTo(replyNickname.snp.leading)
-        }
-        
-        replyButton.snp.makeConstraints {
-            $0.top.equalTo(replyContent.snp.bottom).offset(5)
-            $0.leading.equalTo(replyDate.snp.trailing).offset(8)
-            $0.width.equalTo(13)
-        }
-        line.snp.makeConstraints {
-            $0.bottom.equalTo(contentView.snp.bottom)
-            $0.height.equalTo(1)
-            $0.leading.equalTo(contentView.snp.leading)
-            $0.trailing.equalTo(contentView.snp.trailing)
-        }
-            replyNickname.text = reply.replyNickName
-            replyContent.text = reply.content
-            print(reply)
-            // 날짜 형식 변환
-            let dateString = reply.createdAt
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-            
-            var displayDate = ""
-            if let date = dateFormatter.date(from: dateString) {
-                let displayFormatter = DateFormatter()
-                displayFormatter.dateFormat = "MM월 dd일 HH:mm"
-                displayDate = displayFormatter.string(from: date)
-            } else {
-                displayDate = dateString
-            }
-            replyDate.text = displayDate
-        }
+        replyDate.text = displayDate
+    }
     
     //MARK: - @objc
     @objc func declareButtonTapped() {
@@ -224,5 +180,5 @@ class InfoReplyTableViewCell: UITableViewCell {
     @objc func replyButtonTapped() {
         delegate?.replyButtonTapped(self)
     }
-
+    
 }

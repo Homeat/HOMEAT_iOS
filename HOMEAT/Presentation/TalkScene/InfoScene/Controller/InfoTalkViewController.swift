@@ -30,6 +30,7 @@ class InfoTalkViewController: BaseViewController {
         setSearchBar()
         setAddTarget()
         updateTableView()
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDeleteChanged"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDataChanged"), object: nil)
     }
     
@@ -137,7 +138,7 @@ class InfoTalkViewController: BaseViewController {
         
     }
     // 조회 순
-//    private func update
+    //    private func update
     //MARK: - @objc func
     @objc func isListButtonTapped(_ sender: Any) {
         
@@ -188,28 +189,28 @@ extension InfoTalkViewController: UISearchBarDelegate {
         }
         searchBar.delegate = self
     }
-        func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-            if let searchText = searchBar.text {
-                search = searchText
-                performSearch(with: searchText)
-            }
-            searchBar.resignFirstResponder()
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        if let searchText = searchBar.text {
+            search = searchText
+            performSearch(with: searchText)
         }
-        func performSearch(with searchText: String) {
+        searchBar.resignFirstResponder()
+    }
+    func performSearch(with searchText: String) {
+        lastInfoTalkId = Int.max
+        lastest.removeAll()
+        tableView.reloadData()
+        updateTableView()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.isEmpty {
+            search = nil
             lastInfoTalkId = Int.max
             lastest.removeAll()
             tableView.reloadData()
             updateTableView()
         }
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            if searchText.isEmpty {
-                search = nil
-                lastInfoTalkId = Int.max
-                lastest.removeAll()
-                tableView.reloadData()
-                updateTableView()
-            }
-        }
+    }
     
 }
 
@@ -239,6 +240,6 @@ extension InfoTalkViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         navigateToPostViewController(with: selectedPost.infoTalkId)
         print(selectedPost.infoTalkId)
-
+        
     }
 }
