@@ -32,12 +32,12 @@ final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingSer
     }
     
     func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void) {
-            fetchDataWithHeader(target: .emailLogin(bodyDTO),
-                                responseData: BaseResponse<EmailLoginResponseDTO>.self) { (result, headers) in
-                completion(result)
-                print(headers)
-            }
+        fetchDataWithHeader(target: .emailLogin(bodyDTO),
+                            responseData: BaseResponse<EmailLoginResponseDTO>.self) { (result, headers) in
+            completion(result)
+            print(headers)
         }
+    }
     
     func emailLoginWithHeader(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>, [AnyHashable: Any]) -> Void) {
         fetchDataWithHeader(target: .emailLogin(bodyDTO), responseData: BaseResponse<EmailLoginResponseDTO>.self, completion: completion)
