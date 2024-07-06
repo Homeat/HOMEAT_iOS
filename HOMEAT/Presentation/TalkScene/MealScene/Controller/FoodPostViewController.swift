@@ -270,7 +270,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                         headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
-                    self.scrollToBottom()
                 default:
                     print("데이터 저장 실패")
                 }
