@@ -35,7 +35,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         let foodRecipe = foodRecipeDTOS(recipe: recipe ?? "", recipePicture: recipePictureData)
         foodRecipes.append(foodRecipe)
         tableView.reloadData()
-        print("레시피: \(foodRecipe.recipe)") 
+        updateContentViewHeight()
+        print("레시피: \(foodRecipe.recipe)")
         print("현재 foodRecipes 배열: \(foodRecipes.count) 개의 레시피가 있습니다.")
     }
     //MARK: - Property
@@ -80,6 +81,7 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         setTableView()
         collectionView.isHidden = true
         memoTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
+        updateContentViewHeight()
         navigationController?.navigationBar.barTintColor = UIColor(named: "homeBackgroundColor")
     }
     
@@ -107,6 +109,11 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             // 뷰 컨트롤러가 할당 해제될 때 옵저버를 제거
             memoTextView.removeObserver(self, forKeyPath: "contentSize")
         }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateContentViewHeight()
+    }
+
 
     //MARK: - SetUI
     let textViewPlaceHolder = "오늘의 음식이 담고 있는 이야기는?"
@@ -375,6 +382,13 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         navigationController?.popViewController(animated: true)
     }
     
+    private func updateContentViewHeight() {
+        let contentHeight = tableView.contentSize.height + 600 // 기본 높이 + 테이블 뷰의 높이
+        contentView.snp.updateConstraints { make in
+            make.height.equalTo(contentHeight)
+        }
+        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
+    }
     //MARK: - @objc
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -819,6 +833,7 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        updateContentViewHeight()
         return .delete
     }
     
