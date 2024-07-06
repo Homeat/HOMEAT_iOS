@@ -214,7 +214,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
                 } else {
-                    self?.monthView.updateMonthContentLabel(text: "알 수 없는 오류가 발생했습니다.")
+                    self?.monthView.updateMonthContentLabel(text: "이달 지출 기록이 없습니다.")
                     self?.monthView.pieChart.isHidden = true
                     self?.monthView.barChartView.isHidden = true
                 }
