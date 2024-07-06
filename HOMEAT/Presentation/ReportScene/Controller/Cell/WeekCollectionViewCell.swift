@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class WeekCollectionViewCell: UICollectionViewCell {
     static let id = "WeekCollectionViewCell"
@@ -14,7 +15,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
     var cellView = WeekCellView()
     var successMoney = UILabel()
     var failMoney = UILabel()
-    
+    var currentWeekIndex: Int = 1
     //MARK: -- Init
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,20 +58,24 @@ class WeekCollectionViewCell: UICollectionViewCell {
         
         successMoney.snp.makeConstraints {
             $0.top.equalTo(cellView.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(18)
+            $0.centerX.equalToSuperview()
+            //$0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(20)
         }
         
         failMoney.snp.makeConstraints {
             $0.top.equalTo(successMoney.snp.bottom)
-            $0.trailing.equalTo(successMoney.snp.trailing)
+            $0.centerX.equalToSuperview()
+            //$0.trailing.equalTo(successMoney.snp.trailing)
             $0.height.equalTo(20)
         }
     }
 
-    func configure(with weekData: ReportBadge ) {
-        successMoney.text = String(weekData.goal_price)
-        failMoney.text =  String(weekData.exceed_price)
+    func configure(with weekData: WeekLookResponseDTO ) {
+        let formattedGoalMoney = weekData.goal_price.formattedWithSeparator
+        let formattedExceedMoney = weekData.exceed_price.formattedWithSeparator
+        successMoney.text = "\(formattedGoalMoney)원"
+        failMoney.text =  "\(formattedExceedMoney)원"
         if let badgeUrl = URL(string: weekData.badge_url) {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: badgeUrl) {
@@ -86,7 +91,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
         case "FAIL":
             cellView.backgroundColor = UIColor(named: "turquoiseRed")
         case "UNDO":
-            cellView.backgroundColor = UIColor(named: "turquoiseGray")
+            configureAsLock()
         default:
             cellView.backgroundColor = UIColor(named: "turquoiseGray")
         }

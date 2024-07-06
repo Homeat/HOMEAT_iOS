@@ -11,12 +11,15 @@ import Alamofire
 
 enum WeekLookTarget {
     case weekLook(_ queryDTO : WeekLookRequestBodyDTO)
+    case weekBadgeInfo
 }
 
 extension WeekLookTarget: TargetType {
     var authorization: Authorization {
         switch self {
         case .weekLook:
+            return .authorization
+        case .weekBadgeInfo:
             return .authorization
         }
     }
@@ -25,6 +28,8 @@ extension WeekLookTarget: TargetType {
         switch self {
         case .weekLook:
             return .hasToken
+        case .weekBadgeInfo:
+            return .hasToken
         }
     }
     
@@ -32,13 +37,17 @@ extension WeekLookTarget: TargetType {
         switch self {
         case .weekLook:
             return .get
+        case .weekBadgeInfo:
+            return .get
         }
     }
     
     var path: String {
         switch self {
         case .weekLook:
-            return "/v1/badgeReport/Badge"
+            return "/v1/badgeReport/BadgeImg"
+        case .weekBadgeInfo:
+            return "/v1/badgeReport/BadgeInfo"
         }
     }
     
@@ -46,6 +55,8 @@ extension WeekLookTarget: TargetType {
         switch self {
         case .weekLook(let queryDTO):
             return .requestQuery(queryDTO)
+        case .weekBadgeInfo:
+            return .requestPlain
         }
     }
 

@@ -162,7 +162,6 @@
 		58DF7B702C25E14500603763 /* InfoTalkTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B6F2C25E14500603763 /* InfoTalkTarget.swift */; };
 		58DF7B722C25E57100603763 /* InfoTalkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B712C25E57100603763 /* InfoTalkService.swift */; };
 		58DF7B752C26ED4D00603763 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 58DF7B742C26ED4D00603763 /* Kingfisher */; };
-		58DF7B772C29496500603763 /* ReportBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B762C29496500603763 /* ReportBadge.swift */; };
 		58DF7B7F2C29578E00603763 /* OcrRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B7E2C29578E00603763 /* OcrRequestBodyDTO.swift */; };
 		58DF7B822C2957A800603763 /* PayAddRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */; };
 		58DF7B842C2957CD00603763 /* HomeInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */; };
@@ -213,6 +212,7 @@
 		58EEF5B72C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B62C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift */; };
 		58EEF5B92C39447F00C12C1E /* InfoDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */; };
 		58EEF5BB2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */; };
+		58EEF5BD2C3989C700C12C1E /* WeekBadgeResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -379,7 +379,6 @@
 		58DF7B6D2C25DE8E00603763 /* InfoTalkSaveRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkSaveRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58DF7B6F2C25E14500603763 /* InfoTalkTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkTarget.swift; sourceTree = "<group>"; };
 		58DF7B712C25E57100603763 /* InfoTalkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTalkService.swift; sourceTree = "<group>"; };
-		58DF7B762C29496500603763 /* ReportBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBadge.swift; sourceTree = "<group>"; };
 		58DF7B7E2C29578E00603763 /* OcrRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OcrRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58DF7B812C2957A800603763 /* PayAddRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayAddRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58DF7B832C2957CD00603763 /* HomeInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeInfoResponseDTO.swift; sourceTree = "<group>"; };
@@ -430,6 +429,7 @@
 		58EEF5B62C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoReplyRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareViewController.swift; sourceTree = "<group>"; };
 		58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareWriteViewController.swift; sourceTree = "<group>"; };
+		58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekBadgeResponseDTO.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -1090,8 +1090,8 @@
 			isa = PBXGroup;
 			children = (
 				58D138262BEF58CE0048C228 /* WeekLookResponseDTO.swift */,
-				58DF7B762C29496500603763 /* ReportBadge.swift */,
 				58EEF59C2C3540D800C12C1E /* ErrorData.swift */,
+				58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1461,6 +1461,7 @@
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
 				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
 				58DF7B822C2957A800603763 /* PayAddRequestBodyDTO.swift in Sources */,
+				58EEF5BD2C3989C700C12C1E /* WeekBadgeResponseDTO.swift in Sources */,
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
 				0309DDD62C04B43A00D6133A /* DeclareWriteViewController.swift in Sources */,
 				58DF7B702C25E14500603763 /* InfoTalkTarget.swift in Sources */,
@@ -1541,7 +1542,6 @@
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
 				2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */,
 				012382E72BB3F96D0048CC2D /* SceneDelegate.swift in Sources */,
-				58DF7B772C29496500603763 /* ReportBadge.swift in Sources */,
 				58EEF59F2C35B36D00C12C1E /* AnalysisDetailRequestBodyDTO.swift in Sources */,
 				011DAFDF2BE3ACA7000556D0 /* PayCheckDetailViewController.swift in Sources */,
 				58EEF5972C342DAB00C12C1E /* InfoReplyTextView.swift in Sources */,
