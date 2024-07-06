@@ -12,12 +12,13 @@ import Alamofire
 enum OnboardingTarget {
     case kakaoLogin(_ bodyDTO: KakaoLoginRequestBodyDTO)
     case emailLogin(_ bodyDTO: EmailLoginRequestBodyDTO)
+    case emailCertification(_ bodyDTO: EmailCertificationRequestBodyDTO)
+    case emailSignUp(_ bodyDTO: EmailSignUpRequestBodyDTO)
     case userInfo
     case postRefreshToken
 }
 
 extension OnboardingTarget: TargetType {
-    
     var authorization: Authorization {
         switch self {
         case .kakaoLogin:
@@ -26,7 +27,7 @@ extension OnboardingTarget: TargetType {
             return .authorization
         case .postRefreshToken:
             return .reAuthorization
-        case .emailLogin:
+        case .emailLogin, .emailCertification, .emailSignUp:
             return .emailAuthorization
         }
     }
@@ -39,21 +40,17 @@ extension OnboardingTarget: TargetType {
             return .hasToken
         case .postRefreshToken:
             return .refreshToken
-        case .emailLogin:
+        case .emailLogin, .emailCertification, .emailSignUp:
             return .plain
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .kakaoLogin:
+        case .kakaoLogin, .postRefreshToken, .emailLogin, .emailCertification, .emailSignUp:
             return .post
         case .userInfo:
             return .get
-        case .postRefreshToken:
-            return .post
-        case .emailLogin:
-            return .post
         }
     }
     
@@ -66,7 +63,11 @@ extension OnboardingTarget: TargetType {
         case .postRefreshToken:
             return "/v1/auth/reissue"
         case .emailLogin:
-            return "/v1/members/login"
+            return "/v1/members/login/email"
+        case .emailCertification:
+            return "/v1/members/email-cerification"
+        case .emailSignUp:
+            return "/v1/members/join/email"
         }
     }
     
@@ -74,13 +75,14 @@ extension OnboardingTarget: TargetType {
         switch self {
         case let .kakaoLogin(bodyDTO):
             return .requestWithBody(bodyDTO)
-        case .userInfo:
-            return .requestPlain
-        case .postRefreshToken:
+        case .userInfo, .postRefreshToken:
             return .requestPlain
         case let .emailLogin(bodyDTO):
             return .requestWithBody(bodyDTO)
+        case let .emailCertification(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .emailSignUp(bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
-    
 }

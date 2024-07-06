@@ -16,7 +16,7 @@ class SetNicknameViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 1/6)
+        updateProgressBar(progress: 1/5)
         setTitleLabel(title: "사용할 닉네임을\n입력해주세요!")
         setDetailLabel(detail: "닉네임")
         setNextVC(nextVC: SetBirthViewController())
