@@ -52,13 +52,11 @@
 		012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 012383B32BBD75D30048CC2D /* UserInfoTableViewCell.swift */; };
 		016B9B302C0AFCA3009D2996 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */; };
 		016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* FindPasswordViewController.swift */; };
-		01C361C52C26981900D8ED61 /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C42C26981900D8ED61 /* TagButton.swift */; };
 		01C361C72C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C62C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift */; };
 		01C361C92C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361C82C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift */; };
 		01C361CB2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CA2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift */; };
 		01C361CD2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CC2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift */; };
 		01C361CF2C26EC5000D8ED61 /* CompleteSignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01C361CE2C26EC5000D8ED61 /* CompleteSignupViewController.swift */; };
-		016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 016B9B312C0B26EE009D2996 /* EmailApproveViewController.swift */; };
 		01D530DD2BBFE344008C368E /* UserInfoModifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */; };
 		01D530DF2BC291D7008C368E /* PresentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530DE2BC291D7008C368E /* PresentInfoView.swift */; };
 		01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D530EF2BC7C4F9008C368E /* NetworkResult.swift */; };
@@ -888,6 +886,7 @@
 				0309DD8B2C01E44000D6133A /* ContinueButton.swift */,
 				2D4755DC2C021EB700E014A9 /* IngredientView.swift */,
 				2D4755DF2C021EB700E014A9 /* ReplyTextView.swift */,
+				01C361C42C26981900D8ED61 /* TagButton.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -1549,7 +1548,6 @@
 				58EEF5A32C3655D700C12C1E /* PayDetailTableViewCell.swift in Sources */,
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
 				0123838A2BBA96ED0048CC2D /* MyPageViewController.swift in Sources */,
-				01C361C52C26981900D8ED61 /* TagButton.swift in Sources */,
 				01C361CF2C26EC5000D8ED61 /* CompleteSignupViewController.swift in Sources */,
 				58EEF5772C32570300C12C1E /* LatestInfoRequestBodyDTO.swift in Sources */,
 				58EEF5A52C3664D500C12C1E /* PayDetailRequestBodyDTO.swift in Sources */,
@@ -1621,7 +1619,7 @@
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
 				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
 				016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */,
-				016B9B322C0B26EE009D2996 /* EmailApproveViewController.swift in Sources */,
+				016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */,
 				58EEF59B2C34374B00C12C1E /* PostTagCollectionViewCell.swift in Sources */,
 				58D138252BEF58B90048C228 /* WeekLookRequestBodyDTO.swift in Sources */,
 				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
