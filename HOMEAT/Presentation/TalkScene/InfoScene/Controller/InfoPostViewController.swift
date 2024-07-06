@@ -232,6 +232,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     print("서버연동 성공")
                     let userName = data.data?.postNickName ?? ""
                     self.postUserName = userName
+                    let url = data.data?.profileImgUrl
                     let titleLabel = data.data?.title ?? ""
                     let content = data.data?.content ?? ""
                     // 날짜 형식 변환
@@ -257,8 +258,9 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                         print("날짜 형식 변환 실패")
                     }
                     print("이미지\(infoImage)")
+                    print("프로필 url:\(url)")
                     if let headerView = self.tableView.tableHeaderView as? InfoPostContentView {
-                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
+                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags,profileImg: url ?? "")
                     }
                     self.tableView.reloadData()
                 default:

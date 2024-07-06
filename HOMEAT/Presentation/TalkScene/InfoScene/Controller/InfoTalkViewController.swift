@@ -8,6 +8,13 @@
 import UIKit
 import Alamofire
 
+enum SortOrder {
+    case latest
+    case oldest
+    case view
+    case love
+    case none
+}
 class InfoTalkViewController: BaseViewController {
     //MARK: - Property
     private let searchBar = UISearchBar()
@@ -19,7 +26,27 @@ class InfoTalkViewController: BaseViewController {
             tableView.reloadData()
         }
     }
+    var oldest: [InfoTalk] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var viewOrder: [InfoTalk] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var loveOrder: [InfoTalk] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    var currentSortOrder: SortOrder = .none
+    var lastFoodTalkId = Int.max
+    var oldestFoodTalkId = Int.max
     var lastInfoTalkId = Int.max
+    var viewCount = Int.max
+    var loveCount = Int.max
     var search : String?
     var isLoading =  false
     let pageSize = 6 // 한 번에 가져올 아이템 수
@@ -30,6 +57,7 @@ class InfoTalkViewController: BaseViewController {
         setSearchBar()
         setAddTarget()
         updateTableView()
+        currentSortOrder = .latest
         NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDeleteChanged"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("InfoTalkDataChanged"), object: nil)
     }
@@ -37,6 +65,18 @@ class InfoTalkViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isTranslucent = false
+        switch currentSortOrder {
+                case .latest:
+                    updateTableView()
+        case .oldest: break
+                 //   requestOldestOrder()
+        case .view: break
+                //    requestViewOrder()
+        case .love: break
+                 //   requestLoveOrder()
+        case .none:
+            break
+                }
     }
     //MARK: - SetUI
     override func setConfigure() {
@@ -112,6 +152,17 @@ class InfoTalkViewController: BaseViewController {
         listButton.addTarget(self, action: #selector(isListButtonTapped), for: .touchUpInside)
         floatingButton.addTarget(self, action: #selector(isWriteButtonTapped), for: .touchUpInside)
     }
+    
+    private func resetData() {
+        lastInfoTalkId = Int.max
+        oldestFoodTalkId = 0
+        isLoading = false
+        lastest.removeAll()
+        oldest.removeAll()
+        viewOrder.removeAll()
+        loveOrder.removeAll()
+        tableView.reloadData()
+    }
     //MARK: - 서버 func
     // 최신 순
     private func updateTableView() {
@@ -140,6 +191,10 @@ class InfoTalkViewController: BaseViewController {
     // 조회 순
     //    private func update
     //MARK: - @objc func
+    @objc private func dataChanged() {
+        resetData()
+        updateTableView()
+    }
     @objc func isListButtonTapped(_ sender: Any) {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

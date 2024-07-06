@@ -20,7 +20,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     weak var delegate: InfoHeaderViewDelegate?
     
     //MARK: - Property
-    private let profileIcon = UIImageView()
+    var profileIcon = UIImageView()
     private let userName = UILabel()
     private let dateLabel = UILabel()
     private let declareButton = UIButton()
@@ -68,7 +68,6 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     private func setConfigure() {
         profileIcon.do {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
-            $0.image = UIImage(named: "profileIcon")
             $0.layer.cornerRadius = 20
             $0.layer.borderWidth = 1.3
             $0.layer.borderColor = UIColor.white.cgColor
@@ -281,7 +280,19 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         scrollView.addSubview(imageView)
         imageViews.append(imageView)
     }
-    func updateContent(userName: String,date: String, title:String,content:String, love: String, comment: String, InfoPictureImages: [String],tags: [String]) {
+    func updateContent(userName: String,date: String, title:String,content:String, love: String, comment: String, InfoPictureImages: [String],tags: [String],profileImg: String) {
+        DispatchQueue.main.async {
+            if let url = URL(string: profileImg) {
+                self.profileIcon.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { result in
+                    switch result {
+                    case .success(let value):
+                        print("Image successfully loaded: \(value.source.url?.absoluteString ?? "")")
+                    case .failure(let error):
+                        print("Error loading image: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
         self.userName.text = userName
         self.dateLabel.text = date
         self.titleLabel.text = title

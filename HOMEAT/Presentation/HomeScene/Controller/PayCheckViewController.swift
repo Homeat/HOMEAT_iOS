@@ -173,6 +173,7 @@ class PayCheckViewController : BaseViewController{
             case .success(let data):
                     guard let calendarData = data.data else { return }
                 DispatchQueue.main.async {
+                    self.checkDetailButton.isHidden = false
                     let homeAmount = String(calendarData.todayJipbapPrice ?? 0)
                     let eatOutAmount = String(calendarData.todayOutPrice ?? 0)
                     let leftAmount = String(calendarData.remainingGoal ?? 0)
@@ -197,6 +198,7 @@ class PayCheckViewController : BaseViewController{
             default:
                 print("서버 연동 실패")
                 DispatchQueue.main.async {
+                    self.checkDetailButton.isHidden = true
                     self.payCheckView.updateSpentLabel(homeAmount: String(0), eatOutAmount: String(0), leftAmount: String(0))
                 }
             }
