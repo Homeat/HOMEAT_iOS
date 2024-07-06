@@ -153,7 +153,8 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             case .success(let data):
                 guard let data = data.data else { return }
                 print(data)
-                print(data.nickname)
+                UserDefaults.standard.set(data.nickname, forKey: "userNickname")
+                UserDefaults.standard.synchronize()
                 updateUserInfo(data)
             default:
                 print("login error!!")
