@@ -385,6 +385,7 @@ class InfoWriteViewController: BaseViewController {
                 DispatchQueue.main.async {
                     if let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController {
                         self.navigationController?.popToViewController(talkVC, animated: true)
+                        NotificationCenter.default.post(name: NSNotification.Name("InfoTalkDataChanged"), object: nil)
                         talkVC.switchToInfoTalk()
                     } else {
                         let talkVC = TalkViewController()
@@ -392,6 +393,7 @@ class InfoWriteViewController: BaseViewController {
                         self.navigationController?.pushViewController(talkVC, animated: true)
                         talkVC.switchToInfoTalk()
                     }
+                    
                 }
                 print("데이터 서버 연동 성공")
             default:
