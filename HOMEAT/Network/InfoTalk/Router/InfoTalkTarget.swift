@@ -18,6 +18,11 @@ enum InfoTalkTarget {
     case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
     case postLove(_ bodyDTO: InfoLoveRequestBodyDTO) //공감
     case postLoveDelete(_ bodyDTO: InfoDeleteLoveRequestBodyDTO) //공감 취소
+    case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
+    case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고 
+    case deletePost(_ bodyDTO: DeletePostRequestBodyDTO) //게시글 삭제
+    case deleteComment(_ bodyDTO: DeleteCommentRequestBodyDTO) // 댓글 삭제
+    case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
 }
 extension InfoTalkTarget: TargetType {
     var authorization: Authorization {
@@ -41,6 +46,16 @@ extension InfoTalkTarget: TargetType {
             return .authorization
         case .postLoveDelete:
             return .authorization
+        case .complainPost:
+            return .authorization
+        case .complainComment:
+            return .authorization
+        case .deletePost:
+            return .authorization
+        case .deleteComment:
+            return .authorization
+        case .replyComment:
+            return .authorization
         }
     }
     var headerType: HTTPHeaderType {
@@ -62,6 +77,16 @@ extension InfoTalkTarget: TargetType {
         case .postLove:
             return .hasToken
         case .postLoveDelete:
+            return .hasToken
+        case .complainPost:
+            return .hasToken
+        case .complainComment:
+            return .hasToken
+        case .deletePost:
+            return .hasToken
+        case .deleteComment:
+            return .hasToken
+        case .replyComment:
             return .hasToken
         }
     }
@@ -85,6 +110,16 @@ extension InfoTalkTarget: TargetType {
             return .post
         case .postLoveDelete:
             return .delete
+        case .complainPost:
+            return .post
+        case .complainComment:
+            return .post
+        case .deletePost:
+            return .delete
+        case .deleteComment:
+            return .delete
+        case .replyComment:
+            return .post
         }
     }
     var path: String {
@@ -99,7 +134,6 @@ extension InfoTalkTarget: TargetType {
             return "/v1/infoTalk/posts/latest"
         case .oldestInfo:
             return "/v1/infoTalk/posts/oldest"
-            
         case .postReport(let queryDTO):
             return "/v1/infoTalk/\(queryDTO.id)"
         case .commentReport(let bodyDTO):
@@ -108,6 +142,16 @@ extension InfoTalkTarget: TargetType {
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .postLoveDelete(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
+        case .complainPost(let bodyDTO):
+            return "/v1/infoTalk/report/\(bodyDTO.postId)"
+        case .complainComment(let bodyDTO):
+            return "/v1/infoTalk/report/\(bodyDTO.commentId)"
+        case .deletePost(let bodyDTO):
+            return "/v1/infoTalk/\(bodyDTO.id)"
+        case .deleteComment(let bodyDTO):
+            return "/v1/infoTalk/comment/\(bodyDTO.commentId)"
+        case .replyComment(let bodyDTO):
+            return "/v1/infoTalk/reply/\(bodyDTO.id)"
         }
     }
     var parameters: RequestParams {
@@ -129,6 +173,16 @@ extension InfoTalkTarget: TargetType {
         case let .postLove(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .postLoveDelete(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .complainPost(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .complainComment(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .deletePost(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .deleteComment(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .replyComment(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }
