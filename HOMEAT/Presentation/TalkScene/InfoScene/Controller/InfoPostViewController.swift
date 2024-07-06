@@ -12,11 +12,25 @@ import Kingfisher
 import Alamofire
 
 class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextFieldDelegate {
+    
+    func deletePostButtonTapped() {
+        let alert = UIAlertController(title: "게시글 삭제", message: "게시글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { (_) in
+            self.confirmDeletePost()
+        }))
+        alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
     func declareViewButtonTapped() {
-        
+        guard let infoTalkId = self.postId else {return}
+        let nextVC = InfoDeclareViewController(infoTalkId: infoTalkId)
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     //MARK: - Property
     var postId: Int?
+    var userName: String?
+    var postUserName: String? //게시글 작성자
     var currentReplyContext: (isComment: Bool, id: Int)?
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = InfoPostContentView()
@@ -26,7 +40,6 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     private let heartButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var comments : [InfoTalkComments] = []
-    var recomments : [InfoTalkReplies] = []
     //MARK: - Initializer
     init(infoTalkId: Int) {
         self.postId = infoTalkId
@@ -89,6 +102,24 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
             self.heartButton.setImage(UIImage(named: imageName), for: .normal)
         }
     }
+    
+    private func confirmDeletePost() {
+        //게시글 삭제
+        let bodyDTO = InfoDeletePostRequestBodyDTO(id: postId ?? 0)
+        NetworkService.shared.infoTalkService.deletePost(bodyDTO: bodyDTO) { response in
+            DispatchQueue.main.async {
+                switch response {
+                case .success(_):
+                    print("게시글 삭제 성공")
+                    self.tableView.reloadData()
+                    
+                default:
+                    print("게시글 삭제 실패")
+                }
+            }
+        }
+    }
+    
     //MARK: - SetUI
     override func setConfigure() {
         view.do {
@@ -198,6 +229,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                 case .success(let data):
                     print("서버연동 성공")
                     let userName = data.data?.postNickName ?? ""
+                    self.postUserName = userName
                     let titleLabel = data.data?.title ?? ""
                     let content = data.data?.content ?? ""
                     // 날짜 형식 변환
@@ -231,7 +263,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     if let headerView = self.tableView.tableHeaderView as? InfoPostContentView {
                                             headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
                                         }
-                                        self.tableView.reloadData()
+                    self.tableView.reloadData()
                 default:
                     print("서버연동 실패")
                 }

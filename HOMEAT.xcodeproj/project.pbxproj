@@ -211,6 +211,8 @@
 		58EEF5B32C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B22C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift */; };
 		58EEF5B52C385DDD00C12C1E /* InfoDeleteCommentRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B42C385DDD00C12C1E /* InfoDeleteCommentRequestBodyDTO.swift */; };
 		58EEF5B72C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B62C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift */; };
+		58EEF5B92C39447F00C12C1E /* InfoDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */; };
+		58EEF5BB2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -426,6 +428,8 @@
 		58EEF5B22C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeletePostRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5B42C385DDD00C12C1E /* InfoDeleteCommentRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeleteCommentRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5B62C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoReplyRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareViewController.swift; sourceTree = "<group>"; };
+		58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareWriteViewController.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -1250,6 +1254,8 @@
 		58E88E732BF8FA4B00775F06 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */,
+				58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */,
 				58E88E832BF92CEF00775F06 /* TagPlusViewController.swift */,
 				58E88E7F2BF9270E00775F06 /* InfoPostViewController.swift */,
 				58E88E7D2BF9255500775F06 /* InfoWriteViewController.swift */,
@@ -1492,6 +1498,7 @@
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				58DF7C112C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift in Sources */,
+				58EEF5BB2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
@@ -1528,6 +1535,7 @@
 				0309DD4C2BEF5ECD00D6133A /* RecipeViewController.swift in Sources */,
 				58EEF5912C328F4700C12C1E /* InfoReplyTableViewCell.swift in Sources */,
 				01D5313B2BDFCCBB008C368E /* UserInfoResponseDTO.swift in Sources */,
+				58EEF5B92C39447F00C12C1E /* InfoDeclareViewController.swift in Sources */,
 				0309DDEF2C1DCD6D00D6133A /* DeletePostRequestBodyDTO.swift in Sources */,
 				589145192BBDA9CC00CF9A05 /* WeekView.swift in Sources */,
 				0309DD452BE89DAD00D6133A /* FoodTalkReplyCell.swift in Sources */,
@@ -1737,7 +1745,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TSGF3YP7J3;
+				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
@@ -1766,7 +1774,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TSGF3YP7J3;
+				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";

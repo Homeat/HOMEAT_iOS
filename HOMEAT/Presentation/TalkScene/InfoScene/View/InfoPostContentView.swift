@@ -12,6 +12,7 @@ import Then
 import Kingfisher
 protocol InfoHeaderViewDelegate: AnyObject {
     func declareViewButtonTapped()
+    func deletePostButtonTapped()
 }
 
 class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
@@ -31,6 +32,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     private let heartCount = UIButton()
     private let replyCount = UIButton()
     private let underLine = UIView()
+    var currentItsMe : String?
     var selectedTags : [String] = []
     var images = [UIImage]()
     var imageViews = [UIImageView]()
@@ -55,6 +57,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         scrollView.delegate = self
         setPageControl()
         setAddTarget()
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
     }
     
     required init?(coder: NSCoder) {
@@ -85,7 +88,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.do {
-            $0.setTitle("신고하기", for: .normal)
+            $0.setImage(UIImage(named: "dots"), for: .normal)
             $0.setTitleColor(UIColor(named: "warmgray8"), for: .normal)
             $0.titleLabel?.font = .captionMedium10
         }
@@ -154,7 +157,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.top)
+            $0.top.equalTo(userName.snp.top)
             $0.bottom.equalTo(dateLabel.snp.bottom)
             $0.trailing.equalTo(self.snp.trailing).inset(20)
         }
@@ -310,8 +313,32 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     }
     
     //MARK: - @objc
-    @objc func declareButtonTapped() {
-        delegate?.declareViewButtonTapped()
+    @objc private func declareButtonTapped() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        if currentItsMe == userName.text {
+            // 게시글 수정
+            actionSheet.addAction(UIAlertAction(title: "게시글 수정", style: .default, handler: { (_) in
+                // self.delegate?.editPostButtonTapped()
+            }))
+            
+            // 게시글 삭제
+            actionSheet.addAction(UIAlertAction(title: "게시글 삭제", style: .destructive, handler: { (_) in
+                self.delegate?.deletePostButtonTapped()
+            }))
+        } else {
+            // 게시글 신고
+            actionSheet.addAction(UIAlertAction(title: "게시글 신고", style: .default, handler: { (_) in
+                self.delegate?.declareViewButtonTapped()
+            }))
+        }
+        
+        // 취소
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        if let viewController = delegate as? UIViewController {
+            viewController.present(actionSheet, animated: true, completion: nil)
+        }
     }
     
 }
