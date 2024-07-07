@@ -19,14 +19,17 @@ struct DataClass: Codable {
     let createdAt: String
     let updatedAt: String
     let id: Int
+    let profileImgUrl: String
     let postNickName: String
     let name: String
     let memo: String
+    let ingredient: String
     let tag: String
     let love: Int
     let view: Int
     let commentNumber: Int
     let setLove: Bool
+    let status: String
     let foodPictureImages: [String]
     let foodTalkRecipes: [FoodTalkRecipe]
     let foodTalkComments: [FoodTalkComment]
@@ -49,7 +52,7 @@ struct FoodTalkComment: Codable {
     let commentNickName: String
     let content: String
     let status: String
-    let foodTalkReplies: [FoodTalkReply]
+    let foodTalkReplies: [FoodTalkReply]?
 }
 
 // MARK: - FoodTalkReply

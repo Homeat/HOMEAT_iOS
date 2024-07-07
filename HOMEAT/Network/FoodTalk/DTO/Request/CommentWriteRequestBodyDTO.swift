@@ -8,6 +8,6 @@
 import Foundation
 
 struct CommentWriteRequestBodyDTO: Codable {
-    let id: Int
+    let postId: Int
     let content: String
 }

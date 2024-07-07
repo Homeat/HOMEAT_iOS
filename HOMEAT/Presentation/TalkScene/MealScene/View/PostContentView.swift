@@ -14,11 +14,12 @@ import Kingfisher
 protocol HeaderViewDelegate: AnyObject {
     func recipeViewButtonTapped()
     func declareViewButtonTapped()
+    func deletePostButtonTapped()
 }
 
 class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     weak var delegate: HeaderViewDelegate?
-    var name: String?
+    var currentItsMe : String?
     //MARK: - Property
     var profileIcon = UIImageView()
     var userName = UILabel()
@@ -42,6 +43,8 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         setConstraint()
         setPageControl()
         setAddTarget()
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
+        print(currentItsMe)
     }
     
     required init?(coder: NSCoder) {
@@ -72,9 +75,10 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.do {
-            $0.setTitle("신고하기", for: .normal)
+            $0.setImage(UIImage(named: "dots"), for: .normal)
             $0.setTitleColor(UIColor(named: "warmgray8"), for: .normal)
             $0.titleLabel?.font = .captionMedium10
+            $0.contentMode = .scaleAspectFit
         }
         
         hashtagButton.do {
@@ -140,7 +144,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         }
         
         declareButton.snp.makeConstraints {
-            $0.top.equalTo(dateLabel.snp.top)
+            $0.top.equalTo(userName.snp.top)
             $0.bottom.equalTo(dateLabel.snp.bottom)
             $0.trailing.equalTo(self.snp.trailing).inset(20)
         }
@@ -225,8 +229,21 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         setPageControlSelectedPage(currentPage: Int(round(value)))
     }
     
-    func updateContent(userName: String, date: String, title: String, memo: String, tag: String, love: String, comment: String, foodPictureImages: [String], foodTalkRecipes: [FoodTalkRecipe]) {
+    func updateContent(userName: String, date: String, title: String, memo: String, tag: String, love: String, comment: String, foodPictureImages: [String], foodTalkRecipes: [FoodTalkRecipe], profileImg: String) {
+        DispatchQueue.main.async {
+            if let url = URL(string: profileImg) {
+                self.profileIcon.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { result in
+                    switch result {
+                    case .success(let value):
+                        print("Image successfully loaded: \(value.source.url?.absoluteString ?? "")")
+                    case .failure(let error):
+                        print("Error loading image: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
         self.userName.text = userName
+        print(userName)
         self.titleLabel.text = title
         self.dateLabel.text = date
         self.hashtagButton.setTitle("#" + tag, for: .normal)
@@ -244,28 +261,29 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         self.setNeedsLayout()
         self.layoutIfNeeded()
     }
+    
 
     private func loadImagesWithKingfisher(from urls: [String]) {
-            for urlString in urls {
-                guard let url = URL(string: urlString) else { continue }
-                
-                // Kingfisher를 사용하여 비동기로 이미지 다운로드
-                let imageView = UIImageView()
-                imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.transition(.fade(0.2)), .cacheOriginalImage]) { result in
-                    switch result {
-                    case .success(let value):
-                        DispatchQueue.main.async {
-                            self.images.append(value.image)
-                            self.addImageToScrollView(value.image)
-                            self.pageControl.numberOfPages = self.images.count
-                            self.updateScrollViewContentSize()
-                        }
-                    case .failure(let error):
-                        print("Error: \(error)")
+        for urlString in urls {
+            guard let url = URL(string: urlString) else { continue }
+            
+            // Kingfisher를 사용하여 비동기로 이미지 다운로드
+            let imageView = UIImageView()
+            imageView.kf.setImage(with: url, placeholder: UIImage(named: "placeholder"), options: [.transition(.fade(0.2)), .cacheOriginalImage]) { result in
+                switch result {
+                case .success(let value):
+                    DispatchQueue.main.async {
+                        self.images.append(value.image)
+                        self.addImageToScrollView(value.image)
+                        self.pageControl.numberOfPages = self.images.count
+                        self.updateScrollViewContentSize()
                     }
+                case .failure(let error):
+                    print("Error: \(error)")
                 }
             }
         }
+    }
 
     private func addImageToScrollView(_ image: UIImage) {
         let imageView = UIImageView()
@@ -282,10 +300,24 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     }
 
     //MARK: - @objc
-    @objc func declareButtonTapped() {
-        delegate?.declareViewButtonTapped()
+    @objc private func declareButtonTapped() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+       
+        if currentItsMe == userName.text {
+            actionSheet.addAction(UIAlertAction(title: "게시글 삭제", style: .destructive, handler: { (_) in
+                self.delegate?.deletePostButtonTapped()
+            }))
+        } else {
+            actionSheet.addAction(UIAlertAction(title: "게시글 신고", style: .default, handler: { (_) in
+                self.delegate?.declareViewButtonTapped()
+            }))
+        }
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        if let viewController = delegate as? UIViewController {
+            viewController.present(actionSheet, animated: true, completion: nil)
+        }
     }
-    
     @objc func recipeButtonTapped() {
         delegate?.recipeViewButtonTapped()
     }
