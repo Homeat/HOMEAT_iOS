@@ -220,6 +220,12 @@
 		58EEF5BD2C3989C700C12C1E /* WeekBadgeResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */; };
 		58EEF5BF2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BE2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift */; };
 		58EEF5C12C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5C02C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift */; };
+		58EEF5C32C3AD02B00C12C1E /* AnalysisInfoResponseBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5C22C3AD02B00C12C1E /* AnalysisInfoResponseBodyDTO.swift */; };
+		58EEF5CA2C3ADF7B00C12C1E /* HomeatIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 58EEF5C52C3ADF7A00C12C1E /* HomeatIcon.pdf */; };
+		58EEF5CB2C3ADF7B00C12C1E /* HomeatLogo.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 58EEF5C62C3ADF7A00C12C1E /* HomeatLogo.pdf */; };
+		58EEF5CC2C3ADF7B00C12C1E /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEF5C72C3ADF7A00C12C1E /* LaunchScreen.png */; };
+		58EEF5D32C3AE18100C12C1E /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5D22C3AE18100C12C1E /* MyPageService.swift */; };
+		58EEF5D82C3AE1AA00C12C1E /* MyPageTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5D72C3AE1AA00C12C1E /* MyPageTarget.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -445,6 +451,12 @@
 		58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekBadgeResponseDTO.swift; sourceTree = "<group>"; };
 		58EEF5BE2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCommentDeclareWriteViewController.swift; sourceTree = "<group>"; };
 		58EEF5C02C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCommentDeclareViewController.swift; sourceTree = "<group>"; };
+		58EEF5C22C3AD02B00C12C1E /* AnalysisInfoResponseBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisInfoResponseBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5C52C3ADF7A00C12C1E /* HomeatIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HomeatIcon.pdf; sourceTree = "<group>"; };
+		58EEF5C62C3ADF7A00C12C1E /* HomeatLogo.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = HomeatLogo.pdf; sourceTree = "<group>"; };
+		58EEF5C72C3ADF7A00C12C1E /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
+		58EEF5D22C3AE18100C12C1E /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
+		58EEF5D72C3AE1AA00C12C1E /* MyPageTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTarget.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -509,6 +521,7 @@
 		012382E32BB3F96D0048CC2D /* HOMEAT */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5C82C3ADF7A00C12C1E /* LaunchScreenImage */,
 				012383372BB7E88D0048CC2D /* Application */,
 				012383402BB7F8E90048CC2D /* Global */,
 				012383412BB7F8FF0048CC2D /* Network */,
@@ -663,6 +676,7 @@
 		012383412BB7F8FF0048CC2D /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5CD2C3AE14700C12C1E /* MyPage */,
 				58DF7B782C29574700603763 /* Home */,
 				58DF7B672C25DD7100603763 /* InfoTalk */,
 				0309DD8E2C01E53600D6133A /* FoodTalk */,
@@ -1050,6 +1064,7 @@
 				589CDD532BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift */,
 				589CDD552BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift */,
 				58EEF5A02C35B3CD00C12C1E /* AnalysisDetailResponseDTO.swift */,
+				58EEF5C22C3AD02B00C12C1E /* AnalysisInfoResponseBodyDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1319,6 +1334,65 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		58EEF5C82C3ADF7A00C12C1E /* LaunchScreenImage */ = {
+			isa = PBXGroup;
+			children = (
+				58EEF5C52C3ADF7A00C12C1E /* HomeatIcon.pdf */,
+				58EEF5C62C3ADF7A00C12C1E /* HomeatLogo.pdf */,
+				58EEF5C72C3ADF7A00C12C1E /* LaunchScreen.png */,
+			);
+			path = LaunchScreenImage;
+			sourceTree = "<group>";
+		};
+		58EEF5CD2C3AE14700C12C1E /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				58EEF5D12C3AE16900C12C1E /* DTO */,
+				58EEF5D02C3AE16100C12C1E /* Router */,
+				58EEF5CE2C3AE15100C12C1E /* Service */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		58EEF5CE2C3AE15100C12C1E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				58EEF5D22C3AE18100C12C1E /* MyPageService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		58EEF5D02C3AE16100C12C1E /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				58EEF5D72C3AE1AA00C12C1E /* MyPageTarget.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		58EEF5D12C3AE16900C12C1E /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				58EEF5D52C3AE19200C12C1E /* Request */,
+				58EEF5D42C3AE18B00C12C1E /* Response */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		58EEF5D42C3AE18B00C12C1E /* Response */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		58EEF5D52C3AE19200C12C1E /* Request */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
 		58FE4CD82BC801700059D174 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1429,6 +1503,8 @@
 				012383552BB8077A0048CC2D /* NotoSansKR-Medium.ttf in Resources */,
 				012382F12BB3F96E0048CC2D /* LaunchScreen.storyboard in Resources */,
 				012383542BB8077A0048CC2D /* NotoSansKR-SemiBold.ttf in Resources */,
+				58EEF5CB2C3ADF7B00C12C1E /* HomeatLogo.pdf in Resources */,
+				58EEF5CC2C3ADF7B00C12C1E /* LaunchScreen.png in Resources */,
 				012383562BB8077A0048CC2D /* NotoSansKR-Regular.ttf in Resources */,
 				012383572BB8077A0048CC2D /* NotoSansKR-ExtraLight.ttf in Resources */,
 				012383512BB8077A0048CC2D /* NotoSansKR-Light.ttf in Resources */,
@@ -1436,6 +1512,7 @@
 				012382EE2BB3F96E0048CC2D /* Assets.xcassets in Resources */,
 				012383522BB8077A0048CC2D /* NotoSansKR-Bold.ttf in Resources */,
 				012383532BB8077A0048CC2D /* NotoSansKR-Thin.ttf in Resources */,
+				58EEF5CA2C3ADF7B00C12C1E /* HomeatIcon.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,6 +1546,7 @@
 				0309DDF12C1DCD9400D6133A /* DeleteCommentRequestBodyDTO.swift in Sources */,
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				58DF7B842C2957CD00603763 /* HomeInfoResponseDTO.swift in Sources */,
+				58EEF5D82C3AE1AA00C12C1E /* MyPageTarget.swift in Sources */,
 				58EEF5B72C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift in Sources */,
 				58EEF5AD2C38158C00C12C1E /* CustomPieChartRenderer.swift in Sources */,
 				58DF7B642C24871B00603763 /* TagItem.swift in Sources */,
@@ -1518,6 +1596,7 @@
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
 				0309DDED2C1DCD3400D6133A /* DeleteReplyRequestBodyDTO.swift in Sources */,
 				01C361C92C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift in Sources */,
+				58EEF5C32C3AD02B00C12C1E /* AnalysisInfoResponseBodyDTO.swift in Sources */,
 				0309DDA72C020FE000D6133A /* FoodTalkSaveRequestBodyDTO.swift in Sources */,
 				58DF7B862C2957DB00603763 /* OcrResponseDTO.swift in Sources */,
 				0309DDDA2C08C7F000D6133A /* CheckOneRequestBodyDTO.swift in Sources */,
@@ -1601,6 +1680,7 @@
 				012383432BB7F93F0048CC2D /* CALayer+.swift in Sources */,
 				58EEF5872C327C2E00C12C1E /* PostInfoRequestBodyDTO.swift in Sources */,
 				0309DDAF2C02437E00D6133A /* RecipeSaveRequestBodyDTO.swift in Sources */,
+				58EEF5D32C3AE18100C12C1E /* MyPageService.swift in Sources */,
 				58EEF5832C325B2E00C12C1E /* OldestInfoResponseDTO.swift in Sources */,
 				58DF7C152C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift in Sources */,
 				58DF7C172C2E761900603763 /* CalendarDailyResponseDTO.swift in Sources */,
