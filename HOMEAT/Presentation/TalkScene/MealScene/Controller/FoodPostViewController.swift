@@ -196,9 +196,15 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     
     //MARK: - Method
     func recipeViewButtonTapped() {
-        let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
-        nextVC.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(nextVC, animated: true)
+        if foodTalkRecipes.isEmpty {
+                let alert = UIAlertController(title: "알림", message: "레시피가 없습니다.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
+                nextVC.hidesBottomBarWhenPushed = true
+                navigationController?.pushViewController(nextVC, animated: true)
+            }
     }
     
     func declareViewButtonTapped() {
