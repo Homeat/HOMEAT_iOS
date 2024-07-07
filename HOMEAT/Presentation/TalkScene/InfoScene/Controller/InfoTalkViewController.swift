@@ -113,7 +113,7 @@ class InfoTalkViewController: BaseViewController {
         }
         
         floatingButton.do {
-            $0.setImage(UIImage(named: "talkWriteButton"), for: .normal)
+            $0.setImage(UIImage(named: "TalkWriteButton"), for: .normal)
             $0.isHidden = false
         }
     }
