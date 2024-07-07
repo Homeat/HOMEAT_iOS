@@ -375,6 +375,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
         tableView.register(RecipeWriteViewCell.self, forCellReuseIdentifier: RecipeWriteViewCell.identifier)
         tableView.backgroundColor = UIColor(named: "homeBackgroundColor")
         tableView.layer.cornerRadius = 10
+        tableView.isUserInteractionEnabled = true
+        tableView.allowsSelection = true
     }
     
     func saveData() {
@@ -825,7 +827,7 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 100
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -839,9 +841,7 @@ extension RecipeWriteViewController: UITableViewDelegate, UITableViewDataSource 
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // 데이터 소스에서 항목 제거
             foodRecipes.remove(at: indexPath.row)
-            // 테이블 뷰에서 셀 제거
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
