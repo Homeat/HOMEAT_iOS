@@ -267,6 +267,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                 case .success(let data):
                     print("성공: 데이터가 반환되었습니다")
                     let userName = data.data.postNickName
+                    let url = data.data.profileImgUrl
                     self.postUserName = userName
                     self.titleLabel = data.data.name
                     let dateString = data.data.createdAt
@@ -290,7 +291,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     self.comments = data.data.foodTalkComments
                     self.foodTalkRecipes = data.data.foodTalkRecipes
                     if let headerView = self.tableView.tableHeaderView as? PostContentView {
-                        headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
+                        headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes, profileImg: url)
                     }
                     self.tableView.reloadData()
                     self.updateHeartButtonState(setLove: data.data.setLove)

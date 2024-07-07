@@ -229,7 +229,19 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         setPageControlSelectedPage(currentPage: Int(round(value)))
     }
     
-    func updateContent(userName: String, date: String, title: String, memo: String, tag: String, love: String, comment: String, foodPictureImages: [String], foodTalkRecipes: [FoodTalkRecipe]) {
+    func updateContent(userName: String, date: String, title: String, memo: String, tag: String, love: String, comment: String, foodPictureImages: [String], foodTalkRecipes: [FoodTalkRecipe], profileImg: String) {
+        DispatchQueue.main.async {
+            if let url = URL(string: profileImg) {
+                self.profileIcon.kf.setImage(with: url, placeholder: nil, options: nil, progressBlock: nil) { result in
+                    switch result {
+                    case .success(let value):
+                        print("Image successfully loaded: \(value.source.url?.absoluteString ?? "")")
+                    case .failure(let error):
+                        print("Error loading image: \(error.localizedDescription)")
+                    }
+                }
+            }
+        }
         self.userName.text = userName
         print(userName)
         self.titleLabel.text = title
