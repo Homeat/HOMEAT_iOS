@@ -136,16 +136,17 @@ extension InfoTalkTarget: TargetType {
             return "/v1/infoTalk/posts/oldest"
         case .postReport(let queryDTO):
             return "/v1/infoTalk/\(queryDTO.id)"
+        //댓글작성
         case .commentReport(let bodyDTO):
-            return "/v1/infoTalk/comment/\(bodyDTO.id)"
+            return "/v1/infoTalk/comment/\(bodyDTO.id))"
         case .postLove(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .postLoveDelete(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .complainPost(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.postId)"
+            return "/v1/infoTalk/report/\(bodyDTO.postId))"
         case .complainComment(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.commentId)"
+            return "/v1/infoTalk/report/\(bodyDTO.commentId))"
         case .deletePost(let bodyDTO):
             return "/v1/infoTalk/\(bodyDTO.id)"
         case .deleteComment(let bodyDTO):

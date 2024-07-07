@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-enum SortOrder {
+enum InfoSortOrder {
     case latest
     case oldest
     case view
@@ -41,7 +41,7 @@ class InfoTalkViewController: BaseViewController {
             tableView.reloadData()
         }
     }
-    var currentSortOrder: SortOrder = .none
+    var currentSortOrder: InfoSortOrder = .none
     var lastInfoTalkId = Int.max
     var oldestInfoTalkId = Int.max
     var viewCount = Int.max
