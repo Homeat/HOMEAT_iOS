@@ -13,11 +13,13 @@ protocol InfoTalkReplyCellDelgate: AnyObject {
     func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell)
     func replyButtonTapped(_ cell: InfoReplyTableViewCell)
 }
+
 class InfoReplyTableViewCell: UITableViewCell {
     weak var delegate: InfoTalkReplyCellDelgate?
     
     static let identifier = "InfoReplyTableViewCell"
-    //MARK: - Property
+    
+    //MARK: - Properties
     private let replyProfile = UIImageView()
     private let replyNickname = UILabel()
     private let replyContent = UILabel()
@@ -27,10 +29,10 @@ class InfoReplyTableViewCell: UITableViewCell {
     private let replyAddProfile = UIImageView()
     private let line = UIView()
     
-    //MARK: -- Init
+    //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setConfigure()
+        configureViews()
         setConstraints()
     }
     
@@ -38,8 +40,7 @@ class InfoReplyTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    private func setConfigure() {
+    private func configureViews() {
         replyProfile.do {
             $0.image = UIImage(named: "profileIcon")
             $0.backgroundColor = UIColor.turquoiseDarkGray
@@ -51,8 +52,8 @@ class InfoReplyTableViewCell: UITableViewCell {
         replyAddProfile.do {
             $0.image = UIImage(named: "replyCharacter")
             $0.backgroundColor = UIColor.turquoiseDarkGray
-            $0.layer.cornerRadius = 20
-            $0.layer.borderWidth = 5
+            $0.layer.cornerRadius = 10
+            $0.layer.borderWidth = 1.3
             $0.layer.borderColor = UIColor.white.cgColor
             $0.contentMode = .scaleAspectFit
         }
@@ -61,22 +62,18 @@ class InfoReplyTableViewCell: UITableViewCell {
             $0.font = .captionMedium13
             $0.textColor = UIColor.turquoiseGreen
         }
-        
         replyContent.do {
             $0.text = "댓글 내용이 들어갈 자리입니다."
             $0.font = .captionMedium13
             $0.textColor = .white
+            $0.numberOfLines = 0
         }
-        
         replyDeclare.do {
             $0.setImage(UIImage(named: "dots"), for: .normal)
-            //$0.setTitle("신고하기", for: .normal)
             $0.setTitleColor(UIColor.warmgray8, for: .normal)
             $0.titleLabel?.font = .captionMedium10
             $0.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
-
         }
-        
         replyDate.do {
             $0.text = "mm월 dd일 12:00시"
             $0.font = .captionMedium10
@@ -90,89 +87,90 @@ class InfoReplyTableViewCell: UITableViewCell {
             $0.backgroundColor = UIColor.turquoiseDarkGray
         }
     }
+    
     private func setConstraints() {
         contentView.addSubview(replyProfile)
-        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate,replyButton, line)
+        contentView.addSubview(replyAddProfile)
+        contentView.addSubviews(replyNickname, replyContent, replyDeclare, replyDate, replyButton, line)
+        
+        replyProfile.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(20)
+            $0.height.width.equalTo(37.8)
+        }
+        
+        replyAddProfile.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().inset(70)
+            $0.height.width.equalTo(20)
+        }
+        
         replyNickname.snp.makeConstraints {
             $0.top.equalTo(replyProfile.snp.top)
-            $0.leading.equalTo(replyProfile.snp.trailing).offset(11.2)
+            $0.leading.equalTo(replyAddProfile.snp.trailing).offset(11.2)
         }
-        replyProfile.snp.remakeConstraints {
-            $0.top.equalTo(contentView.snp.top).inset(16)
-            $0.leading.equalTo(contentView.snp.leading).inset(20)
-            $0.height.equalTo(37.8)
-            $0.width.equalTo(37.8)
-        }
+        
         replyContent.snp.makeConstraints {
-            $0.top.equalTo(replyNickname.snp.bottom)
+            $0.top.equalTo(replyNickname.snp.bottom).offset(4)
             $0.leading.equalTo(replyNickname.snp.leading)
+            $0.trailing.equalToSuperview().inset(22)
         }
         
         replyDeclare.snp.makeConstraints {
-            $0.top.equalTo(replyProfile.snp.top)
+            $0.top.equalTo(replyAddProfile.snp.top)
             $0.trailing.equalToSuperview().inset(22)
         }
         
         replyDate.snp.makeConstraints {
             $0.top.equalTo(replyContent.snp.bottom).offset(8)
             $0.leading.equalTo(replyNickname.snp.leading)
+            $0.bottom.equalToSuperview().inset(16)
         }
         
         replyButton.snp.makeConstraints {
-            $0.top.equalTo(replyContent.snp.bottom).offset(5)
+            $0.centerY.equalTo(replyDate.snp.centerY)
             $0.leading.equalTo(replyDate.snp.trailing).offset(8)
-            $0.width.equalTo(13)
+            $0.width.height.equalTo(13)
         }
+        
         line.snp.makeConstraints {
-            $0.bottom.equalTo(contentView.snp.bottom)
+            $0.bottom.equalToSuperview()
             $0.height.equalTo(1)
-            $0.leading.equalTo(contentView.snp.leading)
-            $0.trailing.equalTo(contentView.snp.trailing)
+            $0.leading.trailing.equalToSuperview()
         }
     }
     
     func updateContent(comment: InfoTalkComments) {
+        replyProfile.isHidden = false
+        replyAddProfile.isHidden = true
+        
         replyNickname.text = comment.commentNickName
         replyContent.text = comment.content
-        // 날짜 형식 변환
-        let dateString = comment.createdAt
-        print("Original Date String: \(dateString)")
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
-        var displayDate = ""
-        if let date = dateFormatter.date(from: dateString) {
-            let displayFormatter = DateFormatter()
-            displayFormatter.dateFormat = "MM월 dd일 HH:mm"
-            displayDate = displayFormatter.string(from: date)
-            print("Converted Date: \(displayDate)")
-        } else {
-            print("날짜 형식 변환 실패")
-            // 기본 형식으로 설정
-            displayDate = dateString
-        }
-        replyDate.text = displayDate
-        
+        setDateLabel(from: comment.createdAt)
     }
     
     func updateContent(reply: InfoTalkReplies) {
+        replyProfile.isHidden = true
+        replyAddProfile.isHidden = false
+        replyButton.isHidden = true
         replyNickname.text = reply.replyNickName
         replyContent.text = reply.content
-        print(reply)
-        // 날짜 형식 변환
-        let dateString = reply.createdAt
+        
+        setDateLabel(from: reply.createdAt)
+    }
+    
+    private func setDateLabel(from dateString: String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
-        var displayDate = ""
         if let date = dateFormatter.date(from: dateString) {
             let displayFormatter = DateFormatter()
             displayFormatter.dateFormat = "MM월 dd일 HH:mm"
-            displayDate = displayFormatter.string(from: date)
+            replyDate.text = displayFormatter.string(from: date)
         } else {
-            displayDate = dateString
+            replyDate.text = dateString
         }
-        replyDate.text = displayDate
     }
     
     //MARK: - @objc
@@ -183,5 +181,4 @@ class InfoReplyTableViewCell: UITableViewCell {
     @objc func replyButtonTapped() {
         delegate?.replyButtonTapped(self)
     }
-    
 }

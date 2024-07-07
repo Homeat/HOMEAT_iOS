@@ -92,7 +92,6 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.showsVerticalScrollIndicator = false
         tableView.register(InfoReplyTableViewCell.self, forCellReuseIdentifier: "InfoReplyTableViewCell")
         tableView.separatorStyle = .none
-        
         let headerView = InfoPostContentView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 520))
         headerView.delegate = self
         tableView.tableHeaderView = headerView
@@ -127,7 +126,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         }
     }
     private func confirmDeleteComment(at indexPath: IndexPath) {
-        let bodyDTO = DeleteCommentRequestBodyDTO(commentId: commentId ?? 0)
+        let bodyDTO = InfoDeleteCommentRequestBodyDTO(commentId: commentId ?? 0)
         NetworkService.shared.infoTalkService.deleteComment(bodyDTO: bodyDTO) { response in
             DispatchQueue.main.async {
                 switch response {
