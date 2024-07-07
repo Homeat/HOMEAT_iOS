@@ -213,6 +213,8 @@
 		58EEF5B92C39447F00C12C1E /* InfoDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */; };
 		58EEF5BB2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */; };
 		58EEF5BD2C3989C700C12C1E /* WeekBadgeResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */; };
+		58EEF5BF2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5BE2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift */; };
+		58EEF5C12C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5C02C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -430,6 +432,8 @@
 		58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareViewController.swift; sourceTree = "<group>"; };
 		58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoDeclareWriteViewController.swift; sourceTree = "<group>"; };
 		58EEF5BC2C3989C700C12C1E /* WeekBadgeResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekBadgeResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5BE2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCommentDeclareWriteViewController.swift; sourceTree = "<group>"; };
+		58EEF5C02C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCommentDeclareViewController.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -1254,6 +1258,8 @@
 		58E88E732BF8FA4B00775F06 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5C02C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift */,
+				58EEF5BE2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift */,
 				58EEF5BA2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift */,
 				58EEF5B82C39447F00C12C1E /* InfoDeclareViewController.swift */,
 				58E88E832BF92CEF00775F06 /* TagPlusViewController.swift */,
@@ -1435,6 +1441,7 @@
 				0309DDB12C02D63C00D6133A /* CommentWriteRequestBodyDTO.swift in Sources */,
 				58DF7B8C2C29580D00603763 /* HomeSceneService.swift in Sources */,
 				0309DDE92C1DCBAD00D6133A /* ViewOrderRequestBodyDTO.swift in Sources */,
+				58EEF5C12C3A43AA00C12C1E /* InfoCommentDeclareViewController.swift in Sources */,
 				2DA59CE62BEC824800A86CF9 /* SetBirthViewController.swift in Sources */,
 				58EEF5AF2C38586900C12C1E /* ComplainCommentRequestBodyDTO.swift in Sources */,
 				589CDCEA2BE4A5A700BA332F /* AnalysisTarget.swift in Sources */,
@@ -1562,6 +1569,7 @@
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				58EEF5AB2C37A73000C12C1E /* Formatter+.swift in Sources */,
 				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
+				58EEF5BF2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift in Sources */,
 				58EEF5A92C3796DC00C12C1E /* PayDetailsResponseDTO.swift in Sources */,
 				58EEF57F2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift in Sources */,
 				01D531312BDFC5E1008C368E /* KakaoLoginRequestBodyDTO.swift in Sources */,

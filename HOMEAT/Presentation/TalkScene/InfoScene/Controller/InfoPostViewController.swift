@@ -31,6 +31,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     var postId: Int?
     var userName: String?
     var postUserName: String? //게시글 작성자
+    var commentNickname: String?
+    var commentId: Int?
     var currentReplyContext: (isComment: Bool, id: Int)?
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = InfoPostContentView()
@@ -40,6 +42,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     private let heartButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var comments : [InfoTalkComments] = []
+    var currentItsMe : String?
     //MARK: - Initializer
     init(infoTalkId: Int) {
         self.postId = infoTalkId
@@ -55,6 +58,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         setupKeyboardEvent()
         setHeartButton()
         updatePost()
+        
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -115,6 +120,23 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController
                     self.navigationController?.popToViewController(talkVC ?? TalkViewController(), animated: true)
                     talkVC?.switchToInfoTalk()
+                default:
+                    print("게시글 삭제 실패")
+                }
+            }
+        }
+    }
+    private func confirmDeleteComment(at indexPath: IndexPath) {
+        let bodyDTO = DeleteCommentRequestBodyDTO(commentId: commentId ?? 0)
+        NetworkService.shared.infoTalkService.deleteComment(bodyDTO: bodyDTO) { response in
+            DispatchQueue.main.async {
+                switch response {
+                case .success(_):
+                    print("댓글 삭제 성공")
+                    self.comments.remove(at: indexPath.section)
+                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+                    NotificationCenter.default.post(name: NSNotification.Name("InfoCommentDeleteChanged"), object: nil)
+                    self.updatePost()
                 default:
                     print("게시글 삭제 실패")
                 }
@@ -249,6 +271,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     let cleanedTags = tagsString.flatMap { tag in
                         tag.trimmingCharacters(in: CharacterSet(charactersIn: "[]\"")).components(separatedBy: "\", \"")
                     }
+                    
                     if let date = dateFormatter.date(from: dateString) {
                         let displayFormatter = DateFormatter()
                         displayFormatter.dateFormat = "MM월 dd일 HH:mm"
@@ -356,16 +379,15 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         }
     }
     private func scrollToBottom() {
-        let lastRowIndex = self.comments.count - 1
-        if lastRowIndex > 0 {
-            let indexPath = IndexPath(row: lastRowIndex, section: 0)
+        let sectionIndex = self.comments.count - 1
+        if sectionIndex >= 0 {
+            let indexPath = IndexPath(row: 0, section: sectionIndex)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        currentReplyContext = nil
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -460,26 +482,63 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
     }
     
     func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
+        print("댓글 삭제창 누름")
         guard let indexPath = tableView.indexPath(for: cell) else { return }
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
         
-        var currentIndex = indexPath.row
-        for comment in comments {
-            if currentIndex == 0 {
-                let nextVC = CommentDeclareViewController()
-                nextVC.commentId = comment.commentId
-                navigationController?.pushViewController(nextVC, animated: true)
-                return
-            }
-            currentIndex -= 1
-            if let replies = comment.infoTalkReplies {
-                if currentIndex < replies.count {
-                    let nextVC = CommentDeclareViewController()
-                    nextVC.commentId = replies[currentIndex].replyId
-                    navigationController?.pushViewController(nextVC, animated: true)
-                    return
-                }
-                currentIndex -= replies.count
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            print("Current Comment Nickname: \(comment.commentNickName)")
+            commentNickname = comment.commentNickName
+            commentId = comment.commentId
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.infoTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                commentNickname = replies[currentRow].replyNickName
+                commentId = replyId
+                currentReplyContext = (isComment: false, id: replyId)
             }
         }
+        
+        // 댓글 작성자와 현재 사용자가 같은 지 비교
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        print("댓글작성자 \(commentNickname) 현재유저 \(String(describing: currentItsMe))")
+        
+        if commentNickname == currentItsMe {
+            actionSheet.addAction(UIAlertAction(title: "댓글 삭제", style: .destructive, handler: { (_) in
+                // 삭제 로직
+                print("댓글 삭제 선택")
+                let alert = UIAlertController(title: "댓글 삭제", message: "댓글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { (_) in
+                    self.confirmDeleteComment(at: indexPath)
+                }))
+                alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+            }))
+        } else {
+          
+               actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                   // 신고 로직
+           guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+           let comment = self.comments[indexPath.section]
+           let nextVC = InfoCommentDeclareViewController()
+                   nextVC.commentId = comment.commentId
+           self.navigationController?.pushViewController(nextVC, animated: true)
+           }))
+        }
+        
+        // 취소
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        // 액션 시트를 표시
+        DispatchQueue.main.async {
+            self.present(actionSheet, animated: true, completion: nil)
+        }
     }
+
 }

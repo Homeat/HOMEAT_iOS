@@ -69,9 +69,12 @@ class InfoReplyTableViewCell: UITableViewCell {
         }
         
         replyDeclare.do {
-            $0.setTitle("신고하기", for: .normal)
+            $0.setImage(UIImage(named: "dots"), for: .normal)
+            //$0.setTitle("신고하기", for: .normal)
             $0.setTitleColor(UIColor.warmgray8, for: .normal)
             $0.titleLabel?.font = .captionMedium10
+            $0.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
+
         }
         
         replyDate.do {

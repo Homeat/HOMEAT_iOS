@@ -42,9 +42,8 @@ class InfoTalkViewController: BaseViewController {
         }
     }
     var currentSortOrder: SortOrder = .none
-    var lastFoodTalkId = Int.max
-    var oldestFoodTalkId = Int.max
     var lastInfoTalkId = Int.max
+    var oldestInfoTalkId = Int.max
     var viewCount = Int.max
     var loveCount = Int.max
     var search : String?
@@ -155,7 +154,7 @@ class InfoTalkViewController: BaseViewController {
     
     private func resetData() {
         lastInfoTalkId = Int.max
-        oldestFoodTalkId = 0
+        oldestInfoTalkId = 0
         isLoading = false
         lastest.removeAll()
         oldest.removeAll()
@@ -222,11 +221,11 @@ class InfoTalkViewController: BaseViewController {
         print("present click")
     }
     
-    @objc private func dataChanged() {
-        lastInfoTalkId = Int.max
-        lastest.removeAll()
-        updateTableView()
-    }
+//    @objc private func dataChanged() {
+//        lastInfoTalkId = Int.max
+//        lastest.removeAll()
+//        updateTableView()
+//    }
     
 }
 //MARK: - Extension
