@@ -8,10 +8,6 @@
 import Foundation
 
 struct AnalysisWeekResponseDTO: Codable {
-    let age_range: String
-    let income: String
-    let gender: String
-    let nickname: String
     let jipbap_save: Int?
     let out_save: Int?
     let jipbap_average: Int?
