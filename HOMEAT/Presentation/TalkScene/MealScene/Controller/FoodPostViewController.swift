@@ -13,13 +13,15 @@ import Kingfisher
 class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFieldDelegate {
     var commentViewBottomConstraint: NSLayoutConstraint?
     var foodTalkId: Int?
+    var commentId: Int?
     var postUserName: String?
+    var commentNickname: String?
     var titleLabel = ""
     var foodTalkRecipes: [FoodTalkRecipe] = []
     var comments: [FoodTalkComment] = []
     var recomments : [InfoTalkReplies] = []
     var currentReplyContext: (isComment: Bool, id: Int)?
-    
+    var currentItsMe : String?
     //MARK: - Property
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     var postContent = PostContentView()
@@ -49,6 +51,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         setupKeyboardEvent()
         PostRequest()
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,14 +200,14 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     //MARK: - Method
     func recipeViewButtonTapped() {
         if foodTalkRecipes.isEmpty {
-                let alert = UIAlertController(title: "알림", message: "레시피가 없습니다.", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
-                nextVC.hidesBottomBarWhenPushed = true
-                navigationController?.pushViewController(nextVC, animated: true)
-            }
+            let alert = UIAlertController(title: "알림", message: "레시피가 없습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let nextVC = RecipeViewController(postName: titleLabel, foodTalkRecipes: foodTalkRecipes)
+            nextVC.hidesBottomBarWhenPushed = true
+            navigationController?.pushViewController(nextVC, animated: true)
+        }
     }
     
     func declareViewButtonTapped() {
@@ -235,6 +238,24 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     self.navigationController?.popToViewController(talkVC ?? TalkViewController(), animated: true)
                 default:
                     print("게시글 삭제 실패")
+                }
+            }
+        }
+    }
+    
+    private func confirmDeleteComment(at indexPath: IndexPath) {
+        let bodyDTO = DeleteCommentRequestBodyDTO(commentId: commentId ?? 0)
+        NetworkService.shared.foodTalkService.deleteComment(bodyDTO: bodyDTO) { response in
+            DispatchQueue.main.async {
+                switch response {
+                case .success(_):
+                    print("댓글 삭제 성공")
+                    self.comments.remove(at: indexPath.section)
+                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+                    NotificationCenter.default.post(name: NSNotification.Name("FoodCommentDeleteChanged"), object: nil)
+                    self.PostRequest()
+                default:
+                    print("대글 삭제 실패")
                 }
             }
         }
@@ -454,14 +475,6 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         return 95
     }
     
-    func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        let comment = comments[indexPath.row]
-        let nextVC = CommentDeclareViewController()
-        nextVC.commentId = comment.commentId
-        navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
     func replyButtonTapped(_ cell: FoodTalkReplyCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
@@ -481,6 +494,65 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         }
         
         replyTextField.becomeFirstResponder()
-        }
+    }
     
+    func replyDeclareButtonTapped(_ cell: FoodTalkReplyCell) {
+        print("댓글 삭제창 누름")
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
+        
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            print("Current Comment Nickname: \(comment.commentNickName)")
+            commentNickname = comment.commentNickName
+            commentId = comment.commentId
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.foodTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                commentNickname = replies[currentRow].replyNickName
+                commentId = replyId
+                currentReplyContext = (isComment: false, id: replyId)
+            }
+        }
+        
+        // 댓글 작성자와 현재 사용자가 같은 지 비교
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        print("댓글작성자 \(commentNickname) 현재유저 \(String(describing: currentItsMe))")
+        
+        if commentNickname == currentItsMe {
+            actionSheet.addAction(UIAlertAction(title: "댓글 삭제", style: .destructive, handler: { (_) in
+                // 삭제 로직
+                print("댓글 삭제 선택")
+                let alert = UIAlertController(title: "댓글 삭제", message: "댓글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { (_) in
+                    self.confirmDeleteComment(at: indexPath)
+                }))
+                alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+            }))
+        } else {
+            
+            actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                // 신고 로직
+                guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+                let comment = self.comments[indexPath.section]
+                let nextVC = CommentDeclareViewController()
+                nextVC.commentId = comment.commentId
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            }))
+        }
+        
+        // 취소
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        // 액션 시트를 표시
+        DispatchQueue.main.async {
+            self.present(actionSheet, animated: true, completion: nil)
+        }
+    }
 }
