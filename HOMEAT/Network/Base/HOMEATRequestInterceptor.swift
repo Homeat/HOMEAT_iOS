@@ -11,13 +11,14 @@ import Alamofire
 
 final class HOMEATRequestInterceptor: RequestInterceptor {
     
+    
     private var isRefreshingToken = false
     private var requestsToRetry: [(RetryResult) -> Void] = []
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("✋interceptor adapt 작동")
         /// request 될 때마다 실행됨
-        let accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJjYXRlZ29yeSI6ImFjY2VzcyIsInVzZXJJZCI6OTAsImlhdCI6MTcyMDMzMjU2MiwiZXhwIjoxNzIwMzM5NzYyfQ.54-NP5j_yZ8zKzz-gPd-hH8Xcx7u6ymAyJaLKUsSxE4"
+        let accessToken = KeychainHandler.shared.accessToken
         var urlRequest = urlRequest
         urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(urlRequest))

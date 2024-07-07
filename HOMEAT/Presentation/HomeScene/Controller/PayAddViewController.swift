@@ -137,7 +137,7 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
         saveAlert.do {
             let confirm = UIAlertAction(title: "네 맞습니다.", style: .default) { _ in
             }
-            let right = UIAlertAction(title: "금액 추가하기", style: .destructive) { _ in
+            let right = UIAlertAction(title: "금액 직접입력", style: .destructive) { _ in
                 self.showPriceTextField()
             }
             $0.addAction(confirm)
