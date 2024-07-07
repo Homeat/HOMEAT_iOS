@@ -165,6 +165,7 @@ class FoodTalkViewController: BaseViewController {
         
         weekButton.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
             $0.setTitle("#주간_BEST", for: .normal)
             $0.setTitleColor(UIColor(r: 204, g: 204, b: 204), for: .normal)
             $0.titleLabel?.font = .captionMedium13
@@ -319,46 +320,70 @@ class FoodTalkViewController: BaseViewController {
         
         actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in
             self.listButton.setTitle("최신순", for: .normal)
-            self.resetData()
-            self.currentSortOrder = .latest
-            self.isLoading = false
-            self.hasNextPage = true
             self.lastFoodTalkId = Int.max
+            self.oldestFoodTalkId = 0
+            self.viewCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .latest
+            self.hasNextPage = true
+            self.isLoading = false
             self.selectMainButton()
             self.foodCollectionView.setContentOffset(.zero, animated: false)
+            self.foodCollectionView.reloadData()
             self.request()
         }))
         actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in
             self.listButton.setTitle("공감순", for: .normal)
-            self.resetData()
+            self.lastFoodTalkId = Int.max
+            self.oldestFoodTalkId = 0
+            self.viewCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
             self.currentSortOrder = .love
-            self.isLoading = false
             self.hasNextPage = true
+            self.isLoading = false
             self.selectMainButton()
             self.foodCollectionView.setContentOffset(.zero, animated: false)
+            self.foodCollectionView.reloadData()
             self.requestLoveOrder()
         }))
         actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in
             self.listButton.setTitle("조회순", for: .normal)
-            self.resetData()
-            self.currentSortOrder = .view
-            self.isLoading = false
-            self.hasNextPage = true
-            self.lastFoodTalkId = Int.max
-            self.selectMainButton()
-            self.foodCollectionView.setContentOffset(.zero, animated: false)
-            self.requestViewOrder()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "오래된순", style: .default, handler: {(ACTION:UIAlertAction) in
-            self.listButton.setTitle("오래된순", for: .normal)
-            self.resetData()
-            self.currentSortOrder = .oldest
-            self.selectMainButton()
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
-            self.isLoading = false
+            self.viewCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .view
             self.hasNextPage = true
+            self.isLoading = false
+            self.selectMainButton()
             self.foodCollectionView.setContentOffset(.zero, animated: false)
+            self.foodCollectionView.reloadData()
+            self.requestViewOrder()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in
+            self.listButton.setTitle("오래된 순", for: .normal)
+            self.lastFoodTalkId = Int.max
+            self.oldestFoodTalkId = 0
+            self.viewCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .oldest
+            self.hasNextPage = true
+            self.isLoading = false
+            self.selectMainButton()
+            self.foodCollectionView.setContentOffset(.zero, animated: false)
+            self.foodCollectionView.reloadData()
             self.requestOldestOrder()
         }))
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
@@ -388,16 +413,12 @@ class FoodTalkViewController: BaseViewController {
         resetData()
         switch currentSortOrder {
         case .latest:
-            resetData()
             request()
         case .oldest:
-            resetData()
             requestOldestOrder()
         case .view:
-            resetData()
             requestViewOrder()
         case .love:
-            resetData()
             requestLoveOrder()
         case .none:
             break
@@ -411,7 +432,7 @@ class FoodTalkViewController: BaseViewController {
     }
     
     func request() {
-        guard !isLoading else { return }
+        guard !isLoading && hasNextPage else { return }
         isLoading = true
         
         let bodyDTO = LatestOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", lastFoodTalkId: lastFoodTalkId)
@@ -423,9 +444,6 @@ class FoodTalkViewController: BaseViewController {
                     print("성공: 데이터가 반환되었습니다")
                     self.lastest.append(contentsOf: data.data)
                     self.lastFoodTalkId = self.lastest.last?.foodTalkId ?? Int.max
-                    if let maxViewTalk = data.data.max(by: { $0.view < $1.view }) {
-                        self.viewCount = maxViewTalk.view
-                    }
                     if let maxViewTalk = data.data.max(by: { $0.love < $1.love }) {
                         self.loveCount = maxViewTalk.love
                     }
@@ -461,9 +479,12 @@ class FoodTalkViewController: BaseViewController {
                         print("오래된 순 데이터가 없습니다.")
                         self.hasNextPage = false
                     } else {
-                        self.oldest.append(contentsOf: data.data)
+                        let newData = data.data.filter { newItem in
+                            !self.oldest.contains(where: { $0.foodTalkId == newItem.foodTalkId })
+                        }
+                        self.oldest.append(contentsOf: newData)
                         if let lastFoodTalk = data.data.last {
-                            self.oldestFoodTalkId = lastFoodTalk.foodTalkId
+                            self.oldestFoodTalkId = lastFoodTalk.foodTalkId - 1
                         }
                         self.hasNextPage = data.hasNext
                         if self.selectedTag == "" {
@@ -487,7 +508,6 @@ class FoodTalkViewController: BaseViewController {
     func requestViewOrder() {
         guard !isLoading && hasNextPage else { return }
         isLoading = true
-        lastFoodTalkId = Int.max
         print("조회순 데이터 요청 시작: lastFoodTalkId: \(lastFoodTalkId), viewCount: \(viewCount)")
         
         let bodyDTO = ViewOrderRequestBodyDTO(search: search ?? "", tag: selectedTag ?? "", id: lastFoodTalkId, view: viewCount)
@@ -508,17 +528,15 @@ class FoodTalkViewController: BaseViewController {
                         print("Filtered new data: \(newData.count) items")
                         self.viewOrder.append(contentsOf: newData)
                         
-                        if let maxViewTalk = data.data.max(by: { $0.view < $1.view }) {
-                            self.viewCount = maxViewTalk.view
-                        }
-                        
+                        // viewCount와 lastFoodTalkId 업데이트
                         if let lastFoodTalk = data.data.last {
                             self.lastFoodTalkId = lastFoodTalk.foodTalkId 
+                            self.viewCount = lastFoodTalk.view
                         }
                         self.hasNextPage = data.hasNext
                         
                         if self.selectedTag == "" {
-                            self.oldest.sort { $0.love > $1.love }
+                            self.viewOrder.sort { $0.love > $1.love }
                         }
                     }
                     self.isLoading = false
@@ -534,7 +552,6 @@ class FoodTalkViewController: BaseViewController {
             }
         }
     }
-
     func requestLoveOrder() {
         guard !isLoading && hasNextPage else { return }
         isLoading = true
@@ -623,9 +640,24 @@ extension FoodTalkViewController: UISearchBarDelegate {
         oldestFoodTalkId = 0
         lastest.removeAll()
         oldest.removeAll()
+        viewOrder.removeAll()
+        loveOrder.removeAll()
         foodCollectionView.reloadData()
-        request()
+        
+        switch currentSortOrder {
+        case .latest:
+            request()
+        case .oldest:
+            requestOldestOrder()
+        case .view:
+            requestViewOrder()
+        case .love:
+            requestLoveOrder()
+        case .none:
+            break
+        }
     }
+
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
@@ -634,8 +666,22 @@ extension FoodTalkViewController: UISearchBarDelegate {
             oldestFoodTalkId = 0
             lastest.removeAll()
             oldest.removeAll()
+            viewOrder.removeAll()
+            loveOrder.removeAll()
             foodCollectionView.reloadData()
-            request()
+            
+            switch currentSortOrder {
+            case .latest:
+                request()
+            case .oldest:
+                requestOldestOrder()
+            case .view:
+                requestViewOrder()
+            case .love:
+                requestLoveOrder()
+            case .none:
+                break
+            }
         }
     }
 }
