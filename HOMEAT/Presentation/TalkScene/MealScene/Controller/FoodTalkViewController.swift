@@ -106,6 +106,8 @@ class FoodTalkViewController: BaseViewController {
     private func resetData() {
         lastFoodTalkId = Int.max
         oldestFoodTalkId = 0
+        self.viewCount = 1000000
+        self.loveCount = 1000000
         hasNextPage = true
         isLoading = false
         lastest.removeAll()
@@ -323,6 +325,7 @@ class FoodTalkViewController: BaseViewController {
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
             self.viewCount = 1000000
+            self.loveCount = 1000000
             self.lastest.removeAll()
             self.oldest.removeAll()
             self.viewOrder.removeAll()
@@ -340,6 +343,7 @@ class FoodTalkViewController: BaseViewController {
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
             self.viewCount = 1000000
+            self.loveCount = 1000000
             self.lastest.removeAll()
             self.oldest.removeAll()
             self.viewOrder.removeAll()
@@ -357,6 +361,7 @@ class FoodTalkViewController: BaseViewController {
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
             self.viewCount = 1000000
+            self.loveCount = 1000000
             self.lastest.removeAll()
             self.oldest.removeAll()
             self.viewOrder.removeAll()
@@ -374,6 +379,7 @@ class FoodTalkViewController: BaseViewController {
             self.lastFoodTalkId = Int.max
             self.oldestFoodTalkId = 0
             self.viewCount = 1000000
+            self.loveCount = 1000000
             self.lastest.removeAll()
             self.oldest.removeAll()
             self.viewOrder.removeAll()
@@ -530,7 +536,7 @@ class FoodTalkViewController: BaseViewController {
                         
                         // viewCount와 lastFoodTalkId 업데이트
                         if let lastFoodTalk = data.data.last {
-                            self.lastFoodTalkId = lastFoodTalk.foodTalkId 
+                            self.lastFoodTalkId = lastFoodTalk.foodTalkId
                             self.viewCount = lastFoodTalk.view
                         }
                         self.hasNextPage = data.hasNext
@@ -569,17 +575,26 @@ class FoodTalkViewController: BaseViewController {
                         print("공감순 데이터가 없습니다.")
                         self.hasNextPage = false
                     } else {
-                        self.loveOrder.append(contentsOf: data.data)
+                        let newData = data.data.filter { newItem in
+                            !self.loveOrder.contains(where: { $0.foodTalkId == newItem.foodTalkId })
+                        }
+                        print("Filtered new data: \(newData.count) items")
+                        self.viewOrder.append(contentsOf: newData)
                         if let lastFoodTalk = data.data.last {
-                            self.lastFoodTalkId = lastFoodTalk.foodTalkId - 1
+                            self.lastFoodTalkId = lastFoodTalk.foodTalkId
+                            self.loveCount = lastFoodTalk.love
                         }
                         self.hasNextPage = data.hasNext
                         if self.selectedTag == "" {
                             self.loveOrder.sort { $0.love > $1.love }
                         }
                     }
+                    self.isLoading = false
                     self.foodCollectionView.reloadData()
-                    self.foodCollectionView.layoutIfNeeded()
+                    self.foodCollectionView.performBatchUpdates(nil, completion: { _ in
+                        self.foodCollectionView.setNeedsLayout()
+                        self.foodCollectionView.layoutIfNeeded()
+                    })
                 default:
                     print("공감순 데이터 요청 실패")
                     self.hasNextPage = false
@@ -636,22 +651,18 @@ extension FoodTalkViewController: UISearchBarDelegate {
     }
     
     func performSearch(with searchText: String) {
-        lastFoodTalkId = Int.max
-        oldestFoodTalkId = 0
-        lastest.removeAll()
-        oldest.removeAll()
-        viewOrder.removeAll()
-        loveOrder.removeAll()
-        foodCollectionView.reloadData()
-        
         switch currentSortOrder {
         case .latest:
+            resetData()
             request()
         case .oldest:
+            resetData()
             requestOldestOrder()
         case .view:
+            resetData()
             requestViewOrder()
         case .love:
+            resetData()
             requestLoveOrder()
         case .none:
             break
@@ -662,13 +673,7 @@ extension FoodTalkViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             search = nil
-            lastFoodTalkId = Int.max
-            oldestFoodTalkId = 0
-            lastest.removeAll()
-            oldest.removeAll()
-            viewOrder.removeAll()
-            loveOrder.removeAll()
-            foodCollectionView.reloadData()
+            resetData()
             
             switch currentSortOrder {
             case .latest:
