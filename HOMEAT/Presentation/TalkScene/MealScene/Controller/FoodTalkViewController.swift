@@ -579,7 +579,7 @@ class FoodTalkViewController: BaseViewController {
                             !self.loveOrder.contains(where: { $0.foodTalkId == newItem.foodTalkId })
                         }
                         print("Filtered new data: \(newData.count) items")
-                        self.viewOrder.append(contentsOf: newData)
+                        self.loveOrder.append(contentsOf: newData)
                         if let lastFoodTalk = data.data.last {
                             self.lastFoodTalkId = lastFoodTalk.foodTalkId
                             self.loveCount = lastFoodTalk.love
