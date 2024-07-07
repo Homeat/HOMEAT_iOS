@@ -21,7 +21,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     func declareViewButtonTapped() {
         guard let infoTalkId = self.postId else {return}
         let nextVC = InfoDeclareViewController(infoTalkId: infoTalkId)
@@ -31,6 +31,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     var postId: Int?
     var userName: String?
     var postUserName: String? //게시글 작성자
+    var commentNickname: String?
+    var commentId: Int?
     var currentReplyContext: (isComment: Bool, id: Int)?
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = InfoPostContentView()
@@ -40,6 +42,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     private let heartButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
     var comments : [InfoTalkComments] = []
+    var currentItsMe : String?
     //MARK: - Initializer
     init(infoTalkId: Int) {
         self.postId = infoTalkId
@@ -55,6 +58,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         setupKeyboardEvent()
         setHeartButton()
         updatePost()
+        
+        self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,7 +92,6 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.showsVerticalScrollIndicator = false
         tableView.register(InfoReplyTableViewCell.self, forCellReuseIdentifier: "InfoReplyTableViewCell")
         tableView.separatorStyle = .none
-
         let headerView = InfoPostContentView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 520))
         headerView.delegate = self
         tableView.tableHeaderView = headerView
@@ -95,7 +99,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.layoutIfNeeded()
     }
     private func setHeartButton() {
-        if let foodTalkId = self.postId {
+        if let infoTalkId = self.postId {
             let isSelected = loadHeartButtonState()
             self.heartButton.isSelected = isSelected
             let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
@@ -111,8 +115,27 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                 switch response {
                 case .success(_):
                     print("게시글 삭제 성공")
-                    self.tableView.reloadData()
-                    
+                    NotificationCenter.default.post(name: NSNotification.Name("InfoTalkDeleteChanged"), object: nil)
+                    let talkVC = self.navigationController?.viewControllers.first(where: { $0 is TalkViewController }) as? TalkViewController
+                    self.navigationController?.popToViewController(talkVC ?? TalkViewController(), animated: true)
+                    talkVC?.switchToInfoTalk()
+                default:
+                    print("게시글 삭제 실패")
+                }
+            }
+        }
+    }
+    private func confirmDeleteComment(at indexPath: IndexPath) {
+        let bodyDTO = InfoDeleteCommentRequestBodyDTO(commentId: commentId ?? 0)
+        NetworkService.shared.infoTalkService.deleteComment(bodyDTO: bodyDTO) { response in
+            DispatchQueue.main.async {
+                switch response {
+                case .success(_):
+                    print("댓글 삭제 성공")
+                    self.comments.remove(at: indexPath.section)
+                    self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+                    NotificationCenter.default.post(name: NSNotification.Name("InfoCommentDeleteChanged"), object: nil)
+                    self.updatePost()
                 default:
                     print("게시글 삭제 실패")
                 }
@@ -230,6 +253,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     print("서버연동 성공")
                     let userName = data.data?.postNickName ?? ""
                     self.postUserName = userName
+                    let url = data.data?.profileImgUrl
                     let titleLabel = data.data?.title ?? ""
                     let content = data.data?.content ?? ""
                     // 날짜 형식 변환
@@ -240,17 +264,13 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     let comment = String(data.data?.commentNumber ?? 0)
                     self.comments = data.data?.infoTalkComments ?? []
                     print("댓글\(self.comments)")
-//                    for comment in self.comments {
-//                        print("댓글\(comment)")
-//                       // print("Comment ID: \(comment.commentId), Replies: \(String(describing: comment.infoTalkReplise))")
-//                        print(comment.infoTalkReplise ?? [])
-//                    }
                     let infoImage = data.data?.infoPictureImages ?? []
                     var displayDate = ""
                     let tagsString = data.data?.tags ?? []
                     let cleanedTags = tagsString.flatMap { tag in
                         tag.trimmingCharacters(in: CharacterSet(charactersIn: "[]\"")).components(separatedBy: "\", \"")
                     }
+                    
                     if let date = dateFormatter.date(from: dateString) {
                         let displayFormatter = DateFormatter()
                         displayFormatter.dateFormat = "MM월 dd일 HH:mm"
@@ -260,9 +280,10 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                         print("날짜 형식 변환 실패")
                     }
                     print("이미지\(infoImage)")
+                    print("프로필 url:\(url)")
                     if let headerView = self.tableView.tableHeaderView as? InfoPostContentView {
-                                            headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags)
-                                        }
+                        headerView.updateContent(userName: userName, date: displayDate, title: titleLabel, content: content, love: love, comment: comment, InfoPictureImages: infoImage, tags: cleanedTags,profileImg: url ?? "")
+                    }
                     self.tableView.reloadData()
                 default:
                     print("서버연동 실패")
@@ -357,16 +378,15 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         }
     }
     private func scrollToBottom() {
-        let lastRowIndex = self.comments.count - 1
-        if lastRowIndex > 0 {
-            let indexPath = IndexPath(row: lastRowIndex, section: 0)
+        let sectionIndex = self.comments.count - 1
+        if sectionIndex >= 0 {
+            let indexPath = IndexPath(row: 0, section: sectionIndex)
             self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
         }
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        currentReplyContext = nil
     }
     @objc func keyboardUp(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -407,20 +427,20 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
     func numberOfSections(in tableView: UITableView) -> Int {
         return comments.count
     }
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let comment = comments[section]
         print("Comment ID: \(comment.commentId), Replies Count: \(comment.infoTalkReplies?.count ?? 0)")
         return 1 + (comment.infoTalkReplies?.count ?? 0) // 댓글 하나와 대댓글 수
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "InfoReplyTableViewCell", for: indexPath) as! InfoReplyTableViewCell
         cell.backgroundColor = UIColor(named: "homeBackgroundColor")
         cell.delegate = self
-
+        
         let comment = comments[indexPath.section]
-
+        
         if indexPath.row == 0 {
             cell.updateContent(comment: comment)
         } else {
@@ -434,52 +454,90 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
         }
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 95
     }
-
+    
     func replyButtonTapped(_ cell: InfoReplyTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        var currentIndex = indexPath.row
-        for comment in comments {
-            if currentIndex == 0 {
-                currentReplyContext = (isComment: true, id: comment.commentId)
-                replyTextField.becomeFirstResponder()
-                return
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
+        
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.infoTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                currentReplyContext = (isComment: false, id: replyId)
             }
-            currentIndex -= 1
-            if currentIndex < comment.infoTalkReplies?.count ?? 0 {
-                currentReplyContext = (isComment: false, id: comment.infoTalkReplies?[currentIndex].replyId ?? 0)
-                replyTextField.becomeFirstResponder()
-                return
+        }
+        
+        replyTextField.becomeFirstResponder()
+    }
+    
+    func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
+        print("댓글 삭제창 누름")
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        var currentRow = indexPath.row
+        let comment = comments[indexPath.section]
+        
+        if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            print("Current Comment Nickname: \(comment.commentNickName)")
+            commentNickname = comment.commentNickName
+            commentId = comment.commentId
+            currentReplyContext = (isComment: true, id: comment.commentId)
+        } else {
+            currentRow -= 1
+            if let replies = comment.infoTalkReplies, currentRow < replies.count {
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                commentNickname = replies[currentRow].replyNickName
+                commentId = replyId
+                currentReplyContext = (isComment: false, id: replyId)
             }
-            currentIndex -= comment.infoTalkReplies?.count ?? 0
+        }
+        
+        // 댓글 작성자와 현재 사용자가 같은 지 비교
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        print("댓글작성자 \(commentNickname) 현재유저 \(String(describing: currentItsMe))")
+        
+        if commentNickname == currentItsMe {
+            actionSheet.addAction(UIAlertAction(title: "댓글 삭제", style: .destructive, handler: { (_) in
+                // 삭제 로직
+                print("댓글 삭제 선택")
+                let alert = UIAlertController(title: "댓글 삭제", message: "댓글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "예", style: .destructive, handler: { (_) in
+                    self.confirmDeleteComment(at: indexPath)
+                }))
+                alert.addAction(UIAlertAction(title: "아니오", style: .cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                
+            }))
+        } else {
+          
+               actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                   // 신고 로직
+           guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+           let comment = self.comments[indexPath.section]
+           let nextVC = InfoCommentDeclareViewController()
+                   nextVC.commentId = comment.commentId
+           self.navigationController?.pushViewController(nextVC, animated: true)
+           }))
+        }
+        
+        // 취소
+        actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+        
+        // 액션 시트를 표시
+        DispatchQueue.main.async {
+            self.present(actionSheet, animated: true, completion: nil)
         }
     }
 
-    func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-        
-        var currentIndex = indexPath.row
-        for comment in comments {
-            if currentIndex == 0 {
-                let nextVC = CommentDeclareViewController()
-                nextVC.commentId = comment.commentId
-                navigationController?.pushViewController(nextVC, animated: true)
-                return
-            }
-            currentIndex -= 1
-            if let replies = comment.infoTalkReplies {
-                if currentIndex < replies.count {
-                    let nextVC = CommentDeclareViewController()
-                    nextVC.commentId = replies[currentIndex].replyId
-                    navigationController?.pushViewController(nextVC, animated: true)
-                    return
-                }
-                currentIndex -= replies.count
-            }
-        }
-    }
 }

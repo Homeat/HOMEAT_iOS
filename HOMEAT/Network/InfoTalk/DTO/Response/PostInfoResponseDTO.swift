@@ -21,6 +21,7 @@ struct PostInfoResponseDTO: Codable {
     let setLove: Bool
     let status: String
     let infoPictureImages: [String]
+    let profileImgUrl : String
     let infoTalkComments: [InfoTalkComments]
 }
 
