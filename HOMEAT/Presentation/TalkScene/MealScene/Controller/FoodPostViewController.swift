@@ -169,13 +169,9 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     private func setHeartButton() {
-        if let foodTalkId = self.foodTalkId {
-            let isSelected = loadHeartButtonState()
-            self.heartButton.isSelected = isSelected
-            let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"
-            self.heartButton.setImage(UIImage(named: imageName), for: .normal)
-        }
-    }
+           heartButton.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
+       }
+
     
     private func setNavigationBar() {
         self.navigationItem.title = "집밥토크"
@@ -261,7 +257,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
         }
     }
     
-    func PostRequest() {
+  func PostRequest() {
         guard let foodTalkId = foodTalkId else { return }
         let bodyDTO = CheckOneRequestBodyDTO(id: foodTalkId)
         NetworkService.shared.foodTalkService.checkOne(bodyDTO: bodyDTO) { [weak self] response in
@@ -297,13 +293,22 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                         headerView.updateContent(userName: userName, date: displayDate, title: self.titleLabel, memo: memo, tag: tag, love: love, comment: comment, foodPictureImages: foodPictureImages, foodTalkRecipes: self.foodTalkRecipes)
                     }
                     self.tableView.reloadData()
+                    self.updateHeartButtonState(setLove: data.data.setLove)
                 default:
                     print("데이터 저장 실패")
                 }
             }
-            
         }
     }
+    
+    private func updateHeartButtonState(setLove: Bool) {
+          if let foodTalkId = self.foodTalkId, let currentItsMe = self.currentItsMe {
+              self.heartButton.isSelected = setLove
+              let imageName = setLove ? "isHeartSelected" : "isHeartUnselected"
+              self.heartButton.setImage(UIImage(named: imageName), for: .normal)
+              self.saveHeartButtonState(isSelected: setLove, for: currentItsMe, postId: foodTalkId)
+          }
+      }
 
     // MARK: -- objc
     @objc func sendButtonTapped() {
@@ -354,7 +359,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     }
     
     @objc func heartButtonTapped() {
-        guard let foodTalkId = self.foodTalkId else { return }
+        guard let foodTalkId = self.foodTalkId, let currentItsMe = self.currentItsMe else { return }
         
         if heartButton.isSelected {
             self.heartButton.setImage(UIImage(named: "isHeartUnselected"), for: .normal)
@@ -367,7 +372,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                         print("좋아요 취소 성공")
                         self.PostRequest()
                         self.heartButton.isSelected = false
-                        self.saveHeartButtonState(isSelected: false)
+                        self.saveHeartButtonState(isSelected: false, for: currentItsMe, postId: foodTalkId)
                     default:
                         print("좋아요 취소 실패")
                     }
@@ -384,13 +389,27 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                         print("좋아요 성공")
                         self.PostRequest()
                         self.heartButton.isSelected = true
-                        self.saveHeartButtonState(isSelected: true)
+                        self.saveHeartButtonState(isSelected: true, for: currentItsMe, postId: foodTalkId)
                     default:
                         print("좋아요 실패")
                     }
                 }
             }
         }
+    }
+    
+    private func saveHeartButtonState(isSelected: Bool, for user: String, postId: Int) {
+        var heartState = UserDefaults.standard.dictionary(forKey: "heartState") as? [String: [String: Bool]] ?? [String: [String: Bool]]()
+        var userHeartState = heartState[user] ?? [String: Bool]()
+        userHeartState["\(foodTalkId)"] = isSelected
+        heartState[user] = userHeartState
+        UserDefaults.standard.set(heartState, forKey: "heartState")
+    }
+
+    private func loadHeartButtonState(for user: String, postId: Int) -> Bool {
+        let heartState = UserDefaults.standard.dictionary(forKey: "heartState") as? [String: [String: Bool]] ?? [String: [String: Bool]]()
+        let userHeartState = heartState[user] ?? [String: Bool]()
+        return userHeartState["\(foodTalkId)"] ?? false
     }
     
     private func scrollToBottom() {
@@ -424,20 +443,6 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
             self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 91, right: 0)
         }
     }
-    
-    //MARK: - UserDefault
-       func saveHeartButtonState(isSelected: Bool) {
-           if let foodTalkId = self.foodTalkId {
-               UserDefaults.standard.set(isSelected, forKey: "heartButtonState_\(foodTalkId)")
-           }
-       }
-
-       func loadHeartButtonState() -> Bool {
-           if let foodTalkId = self.foodTalkId {
-               return UserDefaults.standard.bool(forKey: "heartButtonState_\(foodTalkId)")
-           }
-           return false
-       }
 }
 
 //MARK: - Extension
