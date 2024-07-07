@@ -99,7 +99,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.layoutIfNeeded()
     }
     private func setHeartButton() {
-        if let foodTalkId = self.postId {
+        if let infoTalkId = self.postId {
             let isSelected = loadHeartButtonState()
             self.heartButton.isSelected = isSelected
             let imageName = isSelected ? "isHeartSelected" : "isHeartUnselected"

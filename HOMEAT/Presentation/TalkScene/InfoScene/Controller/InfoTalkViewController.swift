@@ -48,6 +48,7 @@ class InfoTalkViewController: BaseViewController {
     var loveCount = Int.max
     var search : String?
     var isLoading =  false
+    var hasNextPage = true
     let pageSize = 6 // 한 번에 가져올 아이템 수
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -65,17 +66,17 @@ class InfoTalkViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isTranslucent = false
         switch currentSortOrder {
-                case .latest:
-                    updateTableView()
-        case .oldest: break
-                 //   requestOldestOrder()
-        case .view: break
-                //    requestViewOrder()
-        case .love: break
-                 //   requestLoveOrder()
+        case .latest:
+            updateTableView()
+        case .oldest:
+            requestOldestOrder()
+        case .view:
+            requestViewOrder()
+        case .love:
+            requestLoveOrder()
         case .none:
             break
-                }
+        }
     }
     //MARK: - SetUI
     override func setConfigure() {
@@ -187,21 +188,183 @@ class InfoTalkViewController: BaseViewController {
         }
         
     }
-    // 조회 순
-    //    private func update
+    func requestOldestOrder() {
+        guard !isLoading && hasNextPage else { return }
+        isLoading = true
+        let bodyDTO = OldestInfoRequestBodyDTO(search: search ?? "", oldestInfoTalkId: oldestInfoTalkId)
+        NetworkService.shared.infoTalkService.oldestOrder(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                switch response {
+                case .success(let data):
+                    print("성공 데이터가 반환되었습니다.")
+                    if data.data.isEmpty {
+                        print("오래된 순 데이터가 없습니다.")
+                        self.hasNextPage = false
+                    } else {
+                        let newData = data.data.filter { newItem in
+                            !self.oldest.contains(where: { $0.infoTalkId == newItem.infoTalkId })
+                        }
+                        self.oldest.append(contentsOf: newData)
+                        if let lastInfoTalk = data.data.last {
+                            self.oldestInfoTalkId = lastInfoTalk.infoTalkId - 1
+                        }
+                    }
+                        self.hasNextPage = data.hasNext
+                        self.tableView.reloadData()
+                        self.tableView.performBatchUpdates(nil, completion: { _ in
+                            self.tableView.setNeedsLayout()
+                            self.tableView.layoutIfNeeded()
+                        })
+                        self.isLoading = false
+                                                
+                    
+                default:
+                    print("데이터 저장 실패")
+                    self.isLoading = false
+                    self.hasNextPage = false
+                }
+            }
+        }
+    }
+    
+    func requestViewOrder() {
+        guard !isLoading && hasNextPage else { return }
+                isLoading = true
+        let bodyDTO = ViewInfoRequestBodyDTO(search: search ?? "", id: lastInfoTalkId, view: viewCount)
+        NetworkService.shared.infoTalkService.viewOrder(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                self.isLoading = false
+                switch response {
+                case .success(let data):
+                    if data.data.isEmpty {
+                        print("조회순 데이터 요청")
+                        self.hasNextPage = false
+                    } else {
+                        let newData = data.data.filter { newItem in
+                            !self.viewOrder.contains(where: { $0.infoTalkId == newItem.infoTalkId })
+                                                }
+                        print("Filtered new data: \(newData.count) items")
+                        self.viewOrder.append(contentsOf: newData)
+                        // viewCount와 lastFoodTalkId 업데이트
+                        if let lastInfoTalk = data.data.last {
+                            self.lastInfoTalkId = lastInfoTalk.infoTalkId
+                            self.viewCount = lastInfoTalk.view ?? 0
+                        }
+                        self.hasNextPage = data.hasNext
+                        
+                    }
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                    self.tableView.performBatchUpdates(nil, completion: { _ in
+                        self.tableView.setNeedsLayout()
+                        self.tableView.layoutIfNeeded()
+                    })
+                    
+                default:
+                    print("뷰 실패")
+                    self.hasNextPage = false
+                }
+            }
+            
+        }
+    }
+    func requestLoveOrder() {
+        guard !isLoading && hasNextPage else { return }
+                isLoading = true
+                print("공감순 데이터 요청 시작")
+//        let bodyDTO =
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
+            switch currentSortOrder {
+            case .latest:
+                if hasNextPage && !isLoading { updateTableView() }
+            case .oldest:
+                if hasNextPage && !isLoading { requestOldestOrder() }
+            case .view:
+                if hasNextPage && !isLoading { requestViewOrder() }
+            case .love:
+                if hasNextPage && !isLoading { requestLoveOrder() }
+            case .none:
+                break
+            }
+        }
+    }
+    
     //MARK: - @objc func
     @objc private func dataChanged() {
         resetData()
         updateTableView()
     }
     @objc func isListButtonTapped(_ sender: Any) {
-        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("최신순", for: .normal)}))
-        actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("공감순", for: .normal)}))
-        actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("조회순", for: .normal)}))
-        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in self.listButton.setTitle("오래된 순", for: .normal)}))
+        actionSheet.addAction(UIAlertAction(title: "최신순", style: .default, handler: {(ACTION:UIAlertAction) in
+            self.listButton.setTitle("최신순", for: .normal)
+            self.lastInfoTalkId = Int.max
+            self.oldestInfoTalkId = 0
+            self.viewCount = 1000000
+            self.loveCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .latest
+            self.hasNextPage = true
+            self.isLoading = false
+            self.tableView.reloadData()
+            self.updateTableView()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "공감순", style: .default, handler: {(ACTION:UIAlertAction) in
+            self.listButton.setTitle("공감순", for: .normal)
+            self.lastInfoTalkId = Int.max
+            self.oldestInfoTalkId = 0
+            self.viewCount = 1000000
+            self.loveCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .love
+            self.hasNextPage = true
+            self.isLoading = false
+            self.tableView.reloadData()
+            self.updateTableView()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "조회순", style: .default, handler: {(ACTION:UIAlertAction) in
+            self.listButton.setTitle("조회순", for: .normal)
+            self.lastInfoTalkId = Int.max
+            self.oldestInfoTalkId = 0
+            self.viewCount = 1000000
+            self.loveCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .view
+            self.hasNextPage = true
+            self.isLoading = false
+            self.tableView.reloadData()
+            self.updateTableView()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "오래된 순", style: .default, handler: {(ACTION:UIAlertAction) in
+            self.listButton.setTitle("오래된 순", for: .normal)
+            self.lastInfoTalkId = Int.max
+            self.oldestInfoTalkId = 0
+            self.viewCount = 1000000
+            self.loveCount = 1000000
+            self.lastest.removeAll()
+            self.oldest.removeAll()
+            self.viewOrder.removeAll()
+            self.loveOrder.removeAll()
+            self.currentSortOrder = .oldest
+            self.hasNextPage = true
+            self.isLoading = false
+            self.tableView.reloadData()
+            self.requestViewOrder()
+        }))
         actionSheet.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true, completion: nil)
@@ -220,12 +383,6 @@ class InfoTalkViewController: BaseViewController {
         navigationController?.pushViewController(postVC, animated: true)
         print("present click")
     }
-    
-//    @objc private func dataChanged() {
-//        lastInfoTalkId = Int.max
-//        lastest.removeAll()
-//        updateTableView()
-//    }
     
 }
 //MARK: - Extension
@@ -251,35 +408,83 @@ extension InfoTalkViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
     func performSearch(with searchText: String) {
-        lastInfoTalkId = Int.max
-        lastest.removeAll()
-        tableView.reloadData()
-        updateTableView()
+        switch currentSortOrder {
+            case .latest:
+                resetData()
+                updateTableView()
+            case .oldest:
+                resetData()
+                requestOldestOrder()
+            case .view:
+                resetData()
+                requestViewOrder()
+            case .love:
+                resetData()
+                requestLoveOrder()
+            case .none:
+                break
+        }
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
-            search = nil
-            lastInfoTalkId = Int.max
-            lastest.removeAll()
-            tableView.reloadData()
-            updateTableView()
-        }
+                    search = nil
+                    updateTableView()
+                    
+                    switch currentSortOrder {
+                    case .latest:
+                        updateTableView()
+                    case .oldest:
+                        requestOldestOrder()
+                    case .view:
+                        requestViewOrder()
+                    case .love:
+                        requestLoveOrder()
+                    case .none:
+                        break
+                    }
+                }
     }
     
 }
 
 extension InfoTalkViewController: UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        lastest.count
+        switch currentSortOrder {
+        case .latest:
+            return lastest.count
+        case .oldest:
+            return oldest.count
+        case .view:
+            return viewOrder.count
+        case .love:
+            return loveOrder.count
+        case .none:
+            return 0
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InfoTalkTableViewCell.identifier, for: indexPath) as? InfoTalkTableViewCell else {
             return UITableViewCell()
         }
-        let post = lastest[indexPath.row]
+        let infoTalk: InfoTalk
+        switch currentSortOrder {
+        case .latest:
+            infoTalk = lastest[indexPath.row]
+        case .oldest:
+            infoTalk = oldest[indexPath.row]
+        case .view:
+            infoTalk = viewOrder[indexPath.row]
+        case .love:
+            infoTalk = loveOrder[indexPath.row]
+        case .none:
+            return UITableViewCell()
+        }
+        
         cell.selectionStyle = .none
-        cell.configure(with: post)
+        cell.configure(with: infoTalk)
         return cell
     }
 }
@@ -290,10 +495,21 @@ extension InfoTalkViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("cell click")
-        let selectedPost = lastest[indexPath.row]
+        let infoTalk: InfoTalk
+        switch currentSortOrder {
+        case .latest:
+            infoTalk = lastest[indexPath.row]
+        case .oldest:
+            infoTalk = oldest[indexPath.row]
+        case .view:
+            infoTalk = viewOrder[indexPath.row]
+        case .love:
+            infoTalk = loveOrder[indexPath.row]
+        case .none:
+            return
+        }
         tableView.deselectRow(at: indexPath, animated: true)
-        navigateToPostViewController(with: selectedPost.infoTalkId)
-        print(selectedPost.infoTalkId)
+        navigateToPostViewController(with: infoTalk.infoTalkId)
         
     }
 }
