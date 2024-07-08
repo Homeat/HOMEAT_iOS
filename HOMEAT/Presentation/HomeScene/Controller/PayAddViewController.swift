@@ -494,7 +494,7 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
 
 //MARK: - Extension
 extension PayAddViewController : UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    //이미지 선택된 후 ocr 요청처리 메서드
+    // 이미지 선택된 후 ocr 요청처리 메서드
     func imagePickerController(
         _ picker: UIImagePickerController,
         didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
@@ -506,23 +506,39 @@ extension PayAddViewController : UINavigationControllerDelegate, UIImagePickerCo
         handleSelectedImage(image)
         picker.dismiss(animated: true)
     }
+    
     private func handleSelectedImage(_ image: UIImage) {
         selectedImage = image
         imageView.image = image
         imageView.isHidden = false
         customButton.isHidden = true
         
+        // Show loading indicator
+        let loadingIndicator = UIActivityIndicatorView(style: .large)
+        loadingIndicator.center = view.center
+        view.addSubview(loadingIndicator)
+        loadingIndicator.startAnimating()
+        view.isUserInteractionEnabled = false // Disable user interaction while loading
+
         if let imageData = image.jpegData(compressionQuality: 0.8) {
-            uploadImage(imageData: imageData)
+            uploadImage(imageData: imageData, loadingIndicator: loadingIndicator)
         }
     }
-    private func uploadImage(imageData: Data) {
+    
+    private func uploadImage(imageData: Data, loadingIndicator: UIActivityIndicatorView) {
         let image = OcrRequestBodyDTO(file: imageData)
         NetworkService.shared.homeSceneService.ocr(bodyDTO: image) { [weak self] response in
             guard let self = self else { return }
+            // Hide the loading indicator
+            DispatchQueue.main.async {
+                loadingIndicator.stopAnimating()
+                loadingIndicator.removeFromSuperview()
+                self.view.isUserInteractionEnabled = true // Re-enable user interaction
+            }
+
             switch response {
             case .success(let data):
-                guard (data.data?.imageUrl) != nil else {
+                guard let imageUrl = data.data?.imageUrl else {
                     return
                 }
                 print(data.data?.totalPrice ?? "")
@@ -554,7 +570,7 @@ extension PayAddViewController : UINavigationControllerDelegate, UIImagePickerCo
                     self.present(self.saveAlert, animated: true, completion: nil)
                 }
                 UserDefaults.standard.setValue(data.data?.totalPrice, forKey: "ocrPrice")
-                selectedImageURL = data.data?.imageUrl
+                self.selectedImageURL = imageUrl
                 print("ocr 서버 연동 성공")
             default:
                 print("데이터 서버 연동 실패")
@@ -562,6 +578,7 @@ extension PayAddViewController : UINavigationControllerDelegate, UIImagePickerCo
         }
     }
 }
+
 extension PayAddViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true, completion: nil)
@@ -577,6 +594,7 @@ extension PayAddViewController: PHPickerViewControllerDelegate {
         }
     }
 }
+
 extension UIImage {
     func resizeImage(toFit button: UIButton) -> UIImage {
         let renderer = UIGraphicsImageRenderer(size: button.frame.size)
@@ -586,6 +604,7 @@ extension UIImage {
         return resizedImage
     }
 }
+
 extension String {
     func formattedWithSeparator() -> String {
         guard let number = Int(self) else { return self }
