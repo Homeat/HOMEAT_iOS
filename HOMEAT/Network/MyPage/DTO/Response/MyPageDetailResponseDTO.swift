@@ -14,5 +14,5 @@ struct MyPageDetailResponseDTO: Codable {
     let gender : String
     let birth: String
     let income: Int
-    let address : [AddressResponseDTO]
+    let address : AddressResponseDTO
 }
