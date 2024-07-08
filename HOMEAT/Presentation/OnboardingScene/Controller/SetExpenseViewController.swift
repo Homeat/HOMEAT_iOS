@@ -21,6 +21,9 @@ class SetExpenseViewController: ProgressViewController {
         setTitleLabel(title: "한 주 목표 식비는\n얼마인가요?")
         setSubTitleLabel(subtitle: "외식, 배달비 모두 포함이에요!")
         setDetailLabel(detail: "한 주 목표 식비")
+        // 탭 제스처 인식기 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func setConfigure() {
@@ -75,6 +78,10 @@ class SetExpenseViewController: ProgressViewController {
         }
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
+    }
+    // 키보드를 숨기는 함수
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 

@@ -21,6 +21,9 @@ class SetNicknameViewController: ProgressViewController {
         setDetailLabel(detail: "닉네임")
         setNextVC(nextVC: SetBirthViewController())
         setNavigationBar()
+        // 탭 제스처 인식기 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func setConfigure() {
@@ -47,5 +50,13 @@ class SetNicknameViewController: ProgressViewController {
             $0.height.equalTo(57)
             $0.trailing.equalToSuperview().offset(-20)
         }
+    }
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
