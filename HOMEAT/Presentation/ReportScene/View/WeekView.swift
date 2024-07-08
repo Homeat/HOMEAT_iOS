@@ -28,7 +28,8 @@ final class WeekView: BaseView {
     let jipbapWeekBarChartView = BarChartView()
     let deliveryWeekBarChartView = BarChartView()
     let errorMessageLabel = UILabel()
-
+    var availableDates: [Date] = []
+    var name: String?
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -157,29 +158,33 @@ final class WeekView: BaseView {
     }
     
     func updateGipbapContentsLabel(jibapSave: Int) {
-        let jibapText = jibapSave < 0 ? "집밥은 \(abs(jibapSave))원을 더 쓰고," : "집밥은 \(jibapSave)원을 덜 쓰고,"
+        let jibapText = jibapSave < 0 ? "집밥은 \(abs(jibapSave).formattedWithSeparator)원을 더 쓰고," : "집밥은 \(jibapSave.formattedWithSeparator)원을 덜 쓰고,"
         let highlightTextWithColors = [
             ("집밥", UIColor(named: "turquoiseGreen") ?? .green),
-            ("\(abs(jibapSave))원을 더", UIColor(named: "turquoiseGreen") ?? .green),
-            ("\(jibapSave)원을 덜", UIColor(named: "turquoiseGreen") ?? .green)
+            ("\(abs(jibapSave).formattedWithSeparator)원을 더", UIColor(named: "turquoiseGreen") ?? .green),
+            ("\(jibapSave.formattedWithSeparator)원을 덜", UIColor(named: "turquoiseGreen") ?? .green)
         ]
         updateAttributedString(label: jipbapContentsLabel, text: jibapText, highlightTextWithColors: highlightTextWithColors)
     }
 
     func updateDeliveryContentsLabel(outSave: Int) {
-        let outText = outSave < 0 ? "외식과 배달은 \(abs(outSave))원을 더 썼어요" : "외식과 배달은 \(outSave)원을 덜 썼어요"
+        let outText = outSave < 0 ? "외식과 배달은 \(abs(outSave).formattedWithSeparator)원을 더 썼어요" : "외식과 배달은 \(outSave.formattedWithSeparator)원을 덜 썼어요"
         let highlightTextWithColors = [
             ("외식과 배달", UIColor(named: "turquoisePurple") ?? .purple),
-            ("\(abs(outSave))원을 더", UIColor(named: "turquoisePurple") ?? .purple),
-            ("\(outSave)원을 덜", UIColor(named: "turquoisePurple") ?? .purple)
+            ("\(abs(outSave).formattedWithSeparator)원을 더", UIColor(named: "turquoisePurple") ?? .purple),
+            ("\(outSave.formattedWithSeparator)원을 덜", UIColor(named: "turquoisePurple") ?? .purple)
         ]
         updateAttributedString(label: deliveryContentsLabel, text: outText, highlightTextWithColors: highlightTextWithColors)
     }
     
     func updateWeekMonthLabel(for date: Date) {
-        let (year, month, weekOfMonth) = getCurrentYearMonthWeek(for: date)
-        var weekLabel : String
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let startOfMonth = calendar.date(from: DateComponents(year: year, month: month, day: 1))!
+        let weekOfMonth = calendar.component(.weekOfMonth, from: date)
         
+        let weekLabel: String
         switch weekOfMonth {
         case 1:
             weekLabel = "첫째 주"
@@ -194,17 +199,58 @@ final class WeekView: BaseView {
         default:
             weekLabel = ""
         }
+        
         weakMonthLabel.text = "\(year)년 \(month)월 \(weekLabel)"
-        print(weakMonthLabel)
     }
-    
+    func getPreviousWeek(for date: Date) -> Date? {
+        return Calendar.current.date(byAdding: .weekOfYear, value: -1, to: date)
+    }
+
+    func getNextWeek(for date: Date) -> Date? {
+        return Calendar.current.date(byAdding: .weekOfYear, value: 1, to: date)
+    }
+
     func getCurrentYearMonthWeek(for date: Date) -> (year: Int, month: Int, weekOfMonth: Int) {
-        let calendar = Calendar.current
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1 // Ensure the first weekday is Sunday
+
+        // Extract the components
         let year = calendar.component(.year, from: date)
         let month = calendar.component(.month, from: date)
-        let weekOfMonth = calendar.component(.weekOfMonth, from: date)
+        let day = calendar.component(.day, from: date)
+
+        // Get the first day of the month
+        let startOfMonth = calendar.date(from: calendar.dateComponents([.year, .month], from: date))!
+        let weekdayOfStart = calendar.component(.weekday, from: startOfMonth) // Day of the week for the 1st of the month
+
+        // Calculate the week of the month based on the day
+        let weekOfMonth = ((day + weekdayOfStart - 2) / 7) + 1
+
         return (year, month, weekOfMonth)
     }
+
+    func checkIfWeekHasData(date: Date, availableDates: [Date]) -> Bool {
+        var calendar = Calendar.current
+        calendar.firstWeekday = 1 // Ensure the first weekday is Sunday
+        
+        // Get the start and end of the week for the given date
+        guard let weekRange = calendar.range(of: .weekOfMonth, in: .month, for: date) else { return false }
+        
+        // Get the first day of the week
+        let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date))!
+        let endOfWeek = calendar.date(byAdding: .day, value: 6, to: startOfWeek)!
+        
+        // Check if any available date falls within this week range
+        for availableDate in availableDates {
+            if calendar.isDate(availableDate, inSameDayAs: startOfWeek) || (availableDate > startOfWeek && availableDate <= endOfWeek) {
+                return true
+            }
+        }
+        return false
+    }
+
+
+
     
     func setupMealWeekBarChart(jipbapAverage: Int,weekJipbapPrice: Int, name: String) {
         let nameWithSuffix = "\(name) 님" // 닉네임 뒤에 "님"을 붙임
@@ -254,8 +300,8 @@ final class WeekView: BaseView {
             
             let names = ["외식/배달 평균", nameWithSuffix]
             var barEntries = [BarChartDataEntry]()
-            barEntries.append(BarChartDataEntry(x: 0, y: Double(35)))
-            barEntries.append(BarChartDataEntry(x: 1, y: Double(75)))
+            barEntries.append(BarChartDataEntry(x: 0, y: Double(outAverage)))
+            barEntries.append(BarChartDataEntry(x: 1, y: Double(weekOutPrice)))
             barEntries.append(BarChartDataEntry(x: 1, y: 0))
             let barDataSet = BarChartDataSet(entries: barEntries)
             if let customGreenColor = UIColor(named: "warmgray"),
@@ -295,27 +341,37 @@ final class WeekView: BaseView {
     }
     //MARK: - Action
     @objc func weekBackTapped() {
-        currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
-        updateWeekMonthLabel(for: currentDate)
         delegate?.weekBackButtonTapped()
         
+        guard let previousWeek = getPreviousWeek(for: currentDate) else { return }
+        currentDate = previousWeek
+        
+        updateWeekMonthLabel(for: previousWeek)
     }
-    
+
     @objc func weekNextTapped() {
-        currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
-        updateWeekMonthLabel(for: currentDate)
         delegate?.weekNextButtonTapped()
+        
+        guard let nextWeek = getNextWeek(for: currentDate) else { return }
+        currentDate = nextWeek
+        
+        updateWeekMonthLabel(for: nextWeek)
     }
     func handleWeekAnalysisData(_ data: AnalysisWeekResponseDTO) {
         errorMessageLabel.isHidden = true
         genderLabel.isHidden = false
         jipbapContentsLabel.isHidden = false
         deliveryContentsLabel.isHidden = false
-        updateGenderLabel(gender: data.gender)
+        
         updateGipbapContentsLabel(jibapSave: data.jipbap_save ?? 0)
         updateDeliveryContentsLabel(outSave: data.out_save ?? 0)
-        setupMealWeekBarChart(jipbapAverage: data.jipbap_average ?? 0, weekJipbapPrice: data.week_jipbap_price ?? 0, name: data.nickname)
-        setupDeliveryWeekBarChart(outAverage: data.out_average ?? 0, weekOutPrice: data.week_out_price ?? 0 , name: data.nickname)
+        setupMealWeekBarChart(jipbapAverage: data.jipbap_average ?? 0, weekJipbapPrice: data.week_jipbap_price ?? 0, name: name ?? "")
+        setupDeliveryWeekBarChart(outAverage: data.out_average ?? 0, weekOutPrice: data.week_out_price ?? 0 , name: name ?? "")
+        print(data.out_average)
+    }
+    func handleWeekAnalysisInfoData(_ data: AnalysisInfoResponseBodyDTO) {
+        updateGenderLabel(gender: data.gender)
+        name = data.nickname
     }
 }
 extension WeekView {
