@@ -215,7 +215,6 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     
     @objc func isPayCheckButtonTapped(_ sender: Any) {
         let nextVC = PayCheckViewController()
-        nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     
