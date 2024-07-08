@@ -11,30 +11,32 @@ import Then
 import SnapKit
 
 class UserInfoViewController: BaseViewController {
-    
-    // MARK: DummyData
-    private let userDummyData = ["예진", "yejin_woo","yejin_woo@naver.com", "100,000원" ]
-    
     // MARK: Property
-    private let profileImageView = UIView()
+    private let profileImageView = UIImageView()
     private let userInfoTableView = UITableView()
-    
+    var nickName: String?
+    var emailAdress: String?
+    var incom: Int = 0
+    // MARK: - 탭바제거
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setNavigation()
-        setTapBarHidden()
+        self.tabBarController?.tabBar.isTranslucent = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setTapBarHidden()
         setupTableView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        updateMyInfo()
+        setNavigation()
     }
     
     override func setConfigure() {
@@ -43,8 +45,10 @@ class UserInfoViewController: BaseViewController {
         }
         
         profileImageView.do {
-            $0.backgroundColor = .blue
-            $0.layer.cornerRadius = 40
+            $0.backgroundColor = .turquoiseGreen
+            $0.layer.borderColor = UIColor.white.cgColor
+            $0.layer.borderWidth = 3
+            $0.layer.cornerRadius = 30
             $0.layer.masksToBounds = true
         }
     }
@@ -58,7 +62,7 @@ class UserInfoViewController: BaseViewController {
         profileImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
-            $0.width.height.equalTo(86)
+            $0.width.height.equalTo(140)
         }
         
         userInfoTableView.snp.makeConstraints {
@@ -82,6 +86,7 @@ class UserInfoViewController: BaseViewController {
     }
     
     private func setTapBarHidden() {
+        
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -94,7 +99,31 @@ class UserInfoViewController: BaseViewController {
         userInfoTableView.separatorColor = UIColor.white
         userInfoTableView.separatorInset = .zero
     }
-    
+    private func updateMyInfo() {
+        NetworkService.shared.myPageService.mypageDetail() { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                guard let data = data.data else { return }
+                let url = data.profileImgUrl
+                DispatchQueue.main.async {
+                    guard let url = URL(string: data.profileImgUrl) else {return}
+                    self.profileImageView.kf.setImage(with: url)
+                    
+                }
+                self.nickName = data.nickname
+                self.emailAdress = data.email
+                self.incom = data.income
+                DispatchQueue.main.async {
+                    self.userInfoTableView.reloadData()
+                }
+                print(data)
+            default:
+                print("서버연동 실패")
+                
+            }
+        }
+    }
     @objc private func editButtonTapped() {
         
     }
@@ -111,20 +140,20 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
         switch indexPath.row {
         case 0:
             cell.titleLabel.text = "닉네임"
-            cell.descriptionLabel.text = userDummyData[0]
+            cell.descriptionLabel.text = nickName
             cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
             
         case 1:
             cell.titleLabel.text = "아이디"
             cell.arrowButton.isHidden = true
-            cell.descriptionLabel.text = userDummyData[1]
+            cell.descriptionLabel.text = ""
         case 2:
             cell.titleLabel.text = "이메일 주소"
             cell.arrowButton.isHidden = true
-            cell.descriptionLabel.text = userDummyData[2]
+            cell.descriptionLabel.text = emailAdress
         case 3:
             cell.titleLabel.text = "한 달 수입"
-            cell.descriptionLabel.text = userDummyData[3]
+            cell.descriptionLabel.text = String(incom)
             cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
         default:
             break
