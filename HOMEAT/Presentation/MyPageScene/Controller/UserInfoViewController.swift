@@ -12,10 +12,12 @@ import SnapKit
 
 class UserInfoViewController: BaseViewController {
     // MARK: Property
+    private let profileview = UIView()
     private let profileImageView = UIImageView()
     private let userInfoTableView = UITableView()
     var nickName: String?
     var emailAdress: String?
+    var birth: String?
     var incom: Int = 0
     // MARK: - 탭바제거
     override func viewWillAppear(_ animated: Bool) {
@@ -43,12 +45,15 @@ class UserInfoViewController: BaseViewController {
         view.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
         }
-        
-        profileImageView.do {
+        profileview.do {
             $0.backgroundColor = .turquoiseGreen
+            $0.layer.cornerRadius = 50
             $0.layer.borderColor = UIColor.white.cgColor
             $0.layer.borderWidth = 3
-            $0.layer.cornerRadius = 30
+            $0.layer.masksToBounds = true
+        }
+        profileImageView.do {
+            $0.backgroundColor = .turquoiseGreen
             $0.layer.masksToBounds = true
         }
     }
@@ -57,12 +62,16 @@ class UserInfoViewController: BaseViewController {
         
         userInfoTableView.isScrollEnabled = false
         
-        view.addSubviews(profileImageView, userInfoTableView)
+        view.addSubviews(profileview, userInfoTableView)
+        profileview.addSubview(profileImageView)
         
-        profileImageView.snp.makeConstraints {
+        profileview.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
-            $0.width.height.equalTo(140)
+            $0.width.height.equalTo(120)
+        }
+        profileImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(20)
         }
         
         userInfoTableView.snp.makeConstraints {
@@ -114,6 +123,7 @@ class UserInfoViewController: BaseViewController {
                 self.nickName = data.nickname
                 self.emailAdress = data.email
                 self.incom = data.income
+                self.birth = data.birth
                 DispatchQueue.main.async {
                     self.userInfoTableView.reloadData()
                 }
@@ -144,9 +154,9 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
             cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
             
         case 1:
-            cell.titleLabel.text = "아이디"
+            cell.titleLabel.text = "생일"
             cell.arrowButton.isHidden = true
-            cell.descriptionLabel.text = ""
+            cell.descriptionLabel.text = birth
         case 2:
             cell.titleLabel.text = "이메일 주소"
             cell.arrowButton.isHidden = true
@@ -170,4 +180,7 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
         let userInfoModifyViewController = UserInfoModifyViewController()
         self.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
     }
+    
+
 }
+

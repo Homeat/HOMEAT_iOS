@@ -23,6 +23,8 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
     private let ageButton = UIButton()
     private let incomeMoneyButton = UIButton()
     private let weekView = WeekView()
+    var availableDates: [Date] = [] //날짜
+    var name: String?
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +35,22 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         monthView.delegate = self
         weekView.delegate = self
         weekChart(year: year, month: month, day: day)
+        weekInfo()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
+    }
+    
+    private func refreshData() {
+        let currentDate = Date()
+        let (year, month, day) = getCurrentYearMonthDay(for: currentDate)
+        monthChart(year: year, month: month)
+        weekChart(year: year, month: month, day: day)
+        weekInfo()
+    }
+
     func getCurrentYearMonth(for date: Date) -> (year: Int, month: Int) {
         let calendar = Calendar.current
         let year = calendar.component(.year, from: date)
@@ -48,6 +64,7 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         let day = calendar.component(.day, from: date)
         return (year, month, day)
     }
+    
     override func setConfigure() {
         view.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
@@ -233,64 +250,64 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
             switch response {
             case .success(let data):
                 print("Response Data: \(data)")
-                print("Response Code: \(data.code)")
-                self?.ageButton.setTitle(data.data?.age_range, for: .normal)
-                self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
-                
-                // Handle different response codes
                 switch data.code {
                 case "COMMON_200":
                     guard let analysisData = data.data else { return }
                     self?.weekView.handleWeekAnalysisData(analysisData)
                     self?.weekView.jipbapWeekBarChartView.isHidden = false
                     self?.weekView.deliveryWeekBarChartView.isHidden = false
-                case "REPORT_4041":
+                    if analysisData.jipbap_save == 0 &&
+                                       analysisData.week_jipbap_price == 0 &&
+                                       analysisData.out_average == 0 &&
+                                       analysisData.week_out_price == 0 &&
+                                       analysisData.out_save == 0 &&
+                                       analysisData.jipbap_average == 0 {
+                        self?.weekView.setupMealWeekBarChart(jipbapAverage: 50, weekJipbapPrice: 50, name: self?.name ?? "")
+                        self?.weekView.setupDeliveryWeekBarChart(outAverage: 50, weekOutPrice: 50, name: self?.name ?? "")
+                    } else if analysisData.week_jipbap_price == 0 &&
+                                analysisData.jipbap_average == 0  {
+                        self?.weekView.setupMealWeekBarChart(jipbapAverage: 50, weekJipbapPrice: 50, name: self?.name ?? "")
+                    } else if analysisData.out_average == 0 &&
+                                analysisData.week_out_price == 0 {
+                        self?.weekView.setupDeliveryWeekBarChart(outAverage: 50, weekOutPrice: 50, name: self?.name ?? "")
+                    }
+                    
+                case "REPORT_4040":
                     self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
                 case "REPORT_4042":
                     self?.weekView.jipbapWeekBarChartView.isHidden = true
                     self?.weekView.deliveryWeekBarChartView.isHidden = true
-                case "COMMON_500":
-                    if let errorDataString = data.data as? String,
-                       let errorData = self?.parseErrorData(errorDataString) {
-                        print("Error Data: AgeRange=\(errorData.ageRange), Income=\(errorData.income)")
-                        self?.ageButton.setTitle(errorData.ageRange, for: .normal)
-                        self?.incomeMoneyButton.setTitle(errorData.income, for: .normal)
-                    } else {
-                        // Handle unknown error scenario
-                    }
                 default:
                     print("Unknown response code: \(data.code)")
                 }
                 
             case .serverErr:
                 print("서버 에러")
+            default:
+                print("데이터 존재 안함")
                 self?.weekView.updateErrorMessage("이달 주간 분석을 찾을 수 없습니다.")
                 self?.weekView.jipbapWeekBarChartView.isHidden = true
                 self?.weekView.deliveryWeekBarChartView.isHidden = true
-                
+            }
+        }
+    }
+
+    private func weekInfo() {
+        NetworkService.shared.analysisService.analysisWeekInfo() { [weak self] response in
+            switch response {
+            case .success(let data):
+                guard let analysisInfoData = data.data else { return }
+                self?.weekView.handleWeekAnalysisInfoData(analysisInfoData)
+                self?.ageButton.setTitle(data.data?.ageRange, for: .normal)
+                self?.incomeMoneyButton.setTitle(data.data?.income, for: .normal)
+                self?.name = data.data?.nickname ?? ""
             default:
                 print("데이터 존재 안함")
             }
         }
     }
-    private func parseErrorData(_ errorDataString: String) -> ErrorData? {
-        let components = errorDataString.components(separatedBy: ", ")
-        var ageRange = ""
-        var income = ""
-        
-        for component in components {
-            if component.hasPrefix("AgeRange") {
-                ageRange = component.replacingOccurrences(of: "AgeRange: ", with: "")
-            } else if component.hasPrefix("Income") {
-                income = component.replacingOccurrences(of: "Income: ", with: "")
-            }
-        }
-        
-        return ErrorData(ageRange: ageRange, income: income)
-    }
-    
     func updateMonthContentLabel(text: String) {
         monthView.updateMonthContentLabel(text: text)
     }
@@ -309,24 +326,22 @@ class AnalysisViewController: BaseViewController,MonthViewDelegate,WeekViewDeleg
         monthChart(year: year, month: month)
     }
 
-    //전 달 버튼 tapp
+
     func weekBackButtonTapped() {
-        currentDate = Calendar.current.date(byAdding: .day, value: -7, to: currentDate) ?? Date()
+        guard let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: -1, to: currentDate) else { return }
+        currentDate = newDate
         let (year, month, date) = getCurrentYearMonthDay(for: currentDate)
         print(year,month,date)
         weekChart(year: year, month: month, day: date)
     }
     
     func weekNextButtonTapped() {
-        currentDate = Calendar.current.date(byAdding: .day, value: +7, to: currentDate) ?? Date()
+        guard let newDate = Calendar.current.date(byAdding: .weekOfMonth, value: 1, to: currentDate) else { return }
+        currentDate = newDate
         let (year, month, date) = getCurrentYearMonthDay(for: currentDate)
         print(year,month,date)
         weekChart(year: year, month: month, day: date)
         
-    }
-    private func updateUserInfo(_ data: AnalysisWeekResponseDTO) {
-        ageButton.titleLabel?.text = data.age_range
-        incomeMoneyButton.titleLabel?.text = data.income
     }
     
     private func handleAnalysisData(_ data: AnalysisMonthResponseDTO) {

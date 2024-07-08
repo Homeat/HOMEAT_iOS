@@ -107,7 +107,7 @@ class MyPageViewController: BaseViewController {
             $0.width.height.equalTo(90)
         }
         profileImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(20)
+            $0.edges.equalToSuperview().inset(10)
         }
         nicknameDummyLabel.snp.makeConstraints {
             $0.top.equalTo(horizonView.snp.bottom).offset(38)
@@ -155,6 +155,22 @@ class MyPageViewController: BaseViewController {
     @objc private func infoModifyButtonTapped() {
         let userInfoViewController = UserInfoViewController()
         self.navigationController?.pushViewController(userInfoViewController, animated: true)
+    }
+    @objc func logoutClicked() {
+        let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "예", style: .destructive) { _ in
+            self.performLogout()
+        }
+        let noAction = UIAlertAction(title: "아니오", style: .cancel, handler: nil)
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func performLogout() {
+        print("User logged out")
     }
     private func updateUser() {
         NetworkService.shared.myPageService.mypage() { [weak self] response in
@@ -204,5 +220,19 @@ extension MyPageViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            let changeViewController = ChangePasswordViewController()
+            self.navigationController?.pushViewController(changeViewController, animated: true)
+        case 1:
+            self.logoutClicked()
+        case 2:
+            let leaveViewController = LeaveViewController()
+            self.navigationController?.pushViewController(leaveViewController, animated: true)
+        default:
+            break
+        }
     }
 }
