@@ -226,6 +226,13 @@
 		58EEF5CC2C3ADF7B00C12C1E /* LaunchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 58EEF5C72C3ADF7A00C12C1E /* LaunchScreen.png */; };
 		58EEF5D32C3AE18100C12C1E /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5D22C3AE18100C12C1E /* MyPageService.swift */; };
 		58EEF5D82C3AE1AA00C12C1E /* MyPageTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5D72C3AE1AA00C12C1E /* MyPageTarget.swift */; };
+		58EEF5DA2C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5D92C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift */; };
+		58EEF5DD2C3AE66100C12C1E /* AddressDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5DC2C3AE66100C12C1E /* AddressDTO.swift */; };
+		58EEF5DF2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5DE2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift */; };
+		58EEF5E12C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E02C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift */; };
+		58EEF5E32C3AEB8700C12C1E /* MyPageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E22C3AEB8700C12C1E /* MyPageResponseDTO.swift */; };
+		58EEF5E52C3C18E400C12C1E /* LeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */; };
+		58EEF5E72C3C1A4800C12C1E /* FinalLeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -457,6 +464,13 @@
 		58EEF5C72C3ADF7A00C12C1E /* LaunchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchScreen.png; sourceTree = "<group>"; };
 		58EEF5D22C3AE18100C12C1E /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		58EEF5D72C3AE1AA00C12C1E /* MyPageTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTarget.swift; sourceTree = "<group>"; };
+		58EEF5D92C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDetailResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5DC2C3AE66100C12C1E /* AddressDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressDTO.swift; sourceTree = "<group>"; };
+		58EEF5DE2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5E02C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5E22C3AEB8700C12C1E /* MyPageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveViewController.swift; sourceTree = "<group>"; };
+		58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalLeaveViewController.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -761,6 +775,8 @@
 				012383892BBA96ED0048CC2D /* MyPageViewController.swift */,
 				012383B12BBD32100048CC2D /* UserInfoViewController.swift */,
 				01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */,
+				58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */,
+				58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1382,6 +1398,9 @@
 		58EEF5D42C3AE18B00C12C1E /* Response */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5D92C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift */,
+				58EEF5DC2C3AE66100C12C1E /* AddressDTO.swift */,
+				58EEF5E22C3AEB8700C12C1E /* MyPageResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1389,6 +1408,8 @@
 		58EEF5D52C3AE19200C12C1E /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5DE2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift */,
+				58EEF5E02C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1547,6 +1568,8 @@
 				012383B42BBD75D30048CC2D /* UserInfoTableViewCell.swift in Sources */,
 				58DF7B842C2957CD00603763 /* HomeInfoResponseDTO.swift in Sources */,
 				58EEF5D82C3AE1AA00C12C1E /* MyPageTarget.swift in Sources */,
+				58EEF5E12C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift in Sources */,
+				58EEF5DD2C3AE66100C12C1E /* AddressDTO.swift in Sources */,
 				58EEF5B72C386FA500C12C1E /* InfoReplyRequestBodyDTO.swift in Sources */,
 				58EEF5AD2C38158C00C12C1E /* CustomPieChartRenderer.swift in Sources */,
 				58DF7B642C24871B00603763 /* TagItem.swift in Sources */,
@@ -1562,6 +1585,7 @@
 				0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */,
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
 				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
+				58EEF5E72C3C1A4800C12C1E /* FinalLeaveViewController.swift in Sources */,
 				58DF7B822C2957A800603763 /* PayAddRequestBodyDTO.swift in Sources */,
 				58EEF5BD2C3989C700C12C1E /* WeekBadgeResponseDTO.swift in Sources */,
 				58D138292BEF5BFC0048C228 /* WeekLookTarget.swift in Sources */,
@@ -1614,12 +1638,15 @@
 				58D1382B2BEF5C0C0048C228 /* WeekLookService.swift in Sources */,
 				58DF7B8A2C29580000603763 /* HomeSceneTarget.swift in Sources */,
 				58EEF59D2C3540D800C12C1E /* ErrorData.swift in Sources */,
+				58EEF5DA2C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
 				0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */,
+				58EEF5E52C3C18E400C12C1E /* LeaveViewController.swift in Sources */,
 				58EEF5B32C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift in Sources */,
 				58E88E882BF931F200775F06 /* Mode.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
+				58EEF5E32C3AEB8700C12C1E /* MyPageResponseDTO.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,
 				58E88E842BF92CEF00775F06 /* TagPlusViewController.swift in Sources */,
 				2DB408AB2BBC23AE001CB6F9 /* PayAddViewController.swift in Sources */,
@@ -1690,6 +1717,7 @@
 				2DA59CEA2BF3AFC500A86CF9 /* SetIncomeViewController.swift in Sources */,
 				01D530F42BC7E956008C368E /* HTTPHeaderField.swift in Sources */,
 				589145172BBDA99800CF9A05 /* MonthView.swift in Sources */,
+				58EEF5DF2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift in Sources */,
 				589CDD542BE7A71B00BA332F /* AnalysisMonthResponseDTO.swift in Sources */,
 				58EEF57D2C32592500C12C1E /* LoveInfoRequestBodyDTO.swift in Sources */,
 				0309DD872C01E3D200D6133A /* IngredientView.swift in Sources */,
