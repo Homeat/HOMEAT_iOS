@@ -59,14 +59,12 @@ class WeekCollectionViewCell: UICollectionViewCell {
         successMoney.snp.makeConstraints {
             $0.top.equalTo(cellView.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
-            //$0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(20)
         }
         
         failMoney.snp.makeConstraints {
             $0.top.equalTo(successMoney.snp.bottom)
             $0.centerX.equalToSuperview()
-            //$0.trailing.equalTo(successMoney.snp.trailing)
             $0.height.equalTo(20)
         }
     }
@@ -91,7 +89,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
         case "FAIL":
             cellView.backgroundColor = UIColor(named: "turquoiseRed")
         case "UNDO":
-            configureAsLock()
+            cellView.backgroundColor = UIColor(named: "turquoiseGreen")
         default:
             cellView.backgroundColor = UIColor(named: "turquoiseGray")
         }
@@ -102,10 +100,11 @@ class WeekCollectionViewCell: UICollectionViewCell {
         failMoney.text = nil
         cellView.imageView.image = UIImage(named: "lockReport")
         cellView.backgroundColor = UIColor(named: "turquoiseGray")
-        cellView.weekLabel.isHidden = true
+        cellView.weekLabel.text = ""
     }
     func updateWeekLabel(withWeekIndex index: Int) {
         cellView.updateWeekLabel(withWeekIndex: index)
+        
     }
     
 }

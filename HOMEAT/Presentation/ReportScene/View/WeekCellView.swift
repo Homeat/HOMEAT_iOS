@@ -14,32 +14,29 @@ class WeekCellView: BaseView {
     var weekLabel = UILabel()
     var imageView = UIImageView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
     override func setConfigure() {
         weekLabel.do {
             $0.textColor = .black
             $0.text = "1W"
             $0.font = .bodyBold15
+            $0.isHidden = false
         }
         imageView.do {
             $0.contentMode = .scaleAspectFit
-            $0.image = UIImage(named: "born_meat")
         }
     }
     
     override func setConstraints() {
-        addSubviews(weekLabel,imageView)
+        addSubviews(weekLabel, imageView)
         
         weekLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(10)
             $0.centerX.equalToSuperview()
+            
         }
         
         imageView.snp.makeConstraints {
-            $0.top.equalTo(weekLabel.snp.bottom)
+            $0.centerY.equalToSuperview().offset(5)
             $0.centerX.equalToSuperview()
         }
     }
@@ -50,10 +47,12 @@ class WeekCellView: BaseView {
     
     func configure(with badgeUrl: String) {
         guard let url = URL(string: badgeUrl) else {
-            
             return
         }
         imageView.kf.setImage(with: url)
     }
     
+    func setWeekLabelHidden(_ hidden: Bool) {
+        weekLabel.isHidden = hidden
+    }
 }
