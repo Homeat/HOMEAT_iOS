@@ -360,7 +360,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
     private func addDayLabel(to cell: CalendarCollectionViewCell) {
         if cell.dayLabel.superview == nil {
             cell.addSubview(cell.dayLabel)
-            cell.dayLabel.textColor = UIColor.black
+            cell.dayLabel.textColor = UIColor.white
             cell.dayLabel.font = .bodyBold18
             cell.dayLabel.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
