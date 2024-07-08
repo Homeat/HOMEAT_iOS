@@ -32,7 +32,6 @@ class RecipeStepCell: UITableViewCell {
     //MARK: - SetUI
     private func setConfigure() {
         
-        self.selectionStyle = .none
         
         line.do {
             $0.backgroundColor = .warmgray10

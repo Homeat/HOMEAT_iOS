@@ -19,7 +19,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
     var titleLabel = ""
     var foodTalkRecipes: [FoodTalkRecipe] = []
     var comments: [FoodTalkComment] = []
-    var recomments : [InfoTalkReplies] = []
+    var recomments : [FoodTalkReply] = []
     var currentReplyContext: (isComment: Bool, id: Int)?
     var currentItsMe : String?
     //MARK: - Property
@@ -495,7 +495,7 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
             if let replies = comment.foodTalkReplies, currentRow < replies.count {
                 let replyId = replies[currentRow].replyId
                 print("Current Reply ID: \(replyId)")
-                currentReplyContext = (isComment: false, id: replyId)
+                currentReplyContext = (isComment: false, id: replies[currentRow].replyId)
             }
         }
         
@@ -509,19 +509,11 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         let comment = comments[indexPath.section]
         
         if currentRow == 0 {
-            print("Current Comment ID: \(comment.commentId)")
-            print("Current Comment Nickname: \(comment.commentNickName)")
-            commentNickname = comment.commentNickName
-            commentId = comment.commentId
             currentReplyContext = (isComment: true, id: comment.commentId)
         } else {
             currentRow -= 1
             if let replies = comment.foodTalkReplies, currentRow < replies.count {
-                let replyId = replies[currentRow].replyId
-                print("Current Reply ID: \(replyId)")
-                commentNickname = replies[currentRow].replyNickName
-                commentId = replyId
-                currentReplyContext = (isComment: false, id: replyId)
+                currentReplyContext = (isComment: false, id: replies[currentRow].replyId)
             }
         }
         
@@ -542,15 +534,22 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
                 
             }))
         } else {
-            
-            actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
-                // 신고 로직
-                guard let indexPath = self.tableView.indexPath(for: cell) else { return }
-                let comment = self.comments[indexPath.section]
-                let nextVC = CommentDeclareViewController()
-                nextVC.commentId = comment.commentId
-                self.navigationController?.pushViewController(nextVC, animated: true)
-            }))
+            if currentReplyContext!.isComment {
+                    actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+                        let comment = self.comments[indexPath.section]
+                        let nextVC = CommentDeclareViewController()
+                        nextVC.commentId = comment.commentId
+                        self.navigationController?.pushViewController(nextVC, animated: true)
+                    }))
+                } else {
+                    actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                        let replyId = self.comments[indexPath.section].foodTalkReplies?[currentRow].replyId
+                        let nextVC = CommentDeclareViewController()
+                        nextVC.replyId = replyId
+                        self.navigationController?.pushViewController(nextVC, animated: true)
+                    }))
+                }
         }
         
         // 취소

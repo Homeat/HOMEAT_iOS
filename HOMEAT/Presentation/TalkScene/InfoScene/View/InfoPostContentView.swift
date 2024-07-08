@@ -103,6 +103,11 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
             $0.textColor = .white
         }
         
+        scrollView.do {
+            $0.delegate = self
+            $0.isPagingEnabled = true
+        }
+        
         underLine.do {
             $0.backgroundColor = UIColor(named: "turquoiseDarkGray")
         }

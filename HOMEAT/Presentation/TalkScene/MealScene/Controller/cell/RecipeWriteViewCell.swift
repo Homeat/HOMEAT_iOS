@@ -27,7 +27,14 @@ class RecipeWriteViewCell: UITableViewCell {
            // 테이블 뷰 셀 사이의 간격
            super.layoutSubviews()
 
-           contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 12, right: 0))
+        let spacing: CGFloat = 12  // 상하 간격을 설정
+            contentView.frame = CGRect(x: contentView.frame.origin.x,
+                                       y: contentView.frame.origin.y,
+                                       width: contentView.frame.size.width,
+                                       height: self.frame.height - spacing)
+
+            // contentView의 위치도 조정
+            contentView.center = CGPoint(x: contentView.center.x, y: self.frame.size.height / 2)
        }
     
     required init?(coder: NSCoder) {
@@ -36,8 +43,10 @@ class RecipeWriteViewCell: UITableViewCell {
     
     //MARK: - SetUI
     private func setConfigure() {
+        selectionStyle = .none
         contentView.do {
             $0.backgroundColor = UIColor(named: "coolGray4")
+            $0.isUserInteractionEnabled = true
         }
         
         stepImage.do {
@@ -60,7 +69,6 @@ class RecipeWriteViewCell: UITableViewCell {
         contentView.layer.shadowColor = UIColor.black.cgColor
         contentView.layer.shadowOpacity = 0.5
         contentView.layer.shadowRadius = 4
-        contentView.backgroundColor = .turquoiseGray
         
         stepImage.snp.makeConstraints {
             $0.leading.equalTo(contentView.snp.leading).offset(8)

@@ -10,19 +10,21 @@ import Alamofire
 
 enum InfoTalkTarget {
     case infoTalkSave(_ bodyDTO: InfoTalkSaveRequestBodyDTO)
-    case viewInfo(_ bodyDTO: ViewInfoRequestBodyDTO)
-    case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
-    case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
-    case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
-    case postReport(_ bodyDTO: PostInfoRequestBodyDTO)
-    case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
+    case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
+    case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고
+    case complainReply(_ bodyDTO: ComplainReplyRequestBodyDTO)
+    case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
     case postLove(_ bodyDTO: InfoLoveRequestBodyDTO) //공감
     case postLoveDelete(_ bodyDTO: InfoDeleteLoveRequestBodyDTO) //공감 취소
-    case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
-    case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고 
+    case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
+    case postReport(_ bodyDTO: PostInfoRequestBodyDTO)
     case deletePost(_ bodyDTO: InfoDeletePostRequestBodyDTO) //게시글 삭제
+    case viewInfo(_ bodyDTO: ViewInfoRequestBodyDTO)
+    case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
+    case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
+    case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
     case deleteComment(_ bodyDTO: InfoDeleteCommentRequestBodyDTO) // 댓글 삭제
-    case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
+    
 }
 extension InfoTalkTarget: TargetType {
     var authorization: Authorization {
@@ -56,6 +58,8 @@ extension InfoTalkTarget: TargetType {
             return .authorization
         case .replyComment:
             return .authorization
+        case .complainReply(_):
+            return .authorization
         }
     }
     var headerType: HTTPHeaderType {
@@ -87,6 +91,8 @@ extension InfoTalkTarget: TargetType {
         case .deleteComment:
             return .hasToken
         case .replyComment:
+            return .hasToken
+        case .complainReply(_):
             return .hasToken
         }
     }
@@ -120,6 +126,8 @@ extension InfoTalkTarget: TargetType {
             return .delete
         case .replyComment:
             return .post
+        case .complainReply(_):
+            return .post
         }
     }
     var path: String {
@@ -136,22 +144,25 @@ extension InfoTalkTarget: TargetType {
             return "/v1/infoTalk/posts/oldest"
         case .postReport(let queryDTO):
             return "/v1/infoTalk/\(queryDTO.id)"
+        //댓글작성
         case .commentReport(let bodyDTO):
-            return "/v1/infoTalk/comment/\(bodyDTO.id)"
+            return "/v1/infoTalk/comment/\(bodyDTO.id))"
         case .postLove(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .postLoveDelete(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .complainPost(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.postId)"
+            return "/v1/infoTalk/report/\(bodyDTO.postId))"
         case .complainComment(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.commentId)"
+            return "/v1/infoTalk/report/\(bodyDTO.commentId))"
         case .deletePost(let bodyDTO):
             return "/v1/infoTalk/\(bodyDTO.id)"
         case .deleteComment(let bodyDTO):
             return "/v1/infoTalk/comment/\(bodyDTO.commentId)"
         case .replyComment(let bodyDTO):
             return "/v1/infoTalk/reply/\(bodyDTO.id)"
+        case .complainReply(let bodyDTO):
+            return "/v1/infoTalk/report/reply/\(bodyDTO.replyId))"
         }
     }
     var parameters: RequestParams {
@@ -160,12 +171,12 @@ extension InfoTalkTarget: TargetType {
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
         case let .latestInfo(queryDTO):
             return .requestQuery(queryDTO)
-        case let .loveInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
-        case let .viewInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
-        case let .oldestInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
+        case let .loveInfo(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .viewInfo(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .oldestInfo(queryDTO):
+            return .requestQuery(queryDTO)
         case let .postReport(queryDTO):
             return .requestQuery(queryDTO)
         case let .commentReport(bodyDTO):
@@ -183,6 +194,8 @@ extension InfoTalkTarget: TargetType {
         case let .deleteComment(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .replyComment(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .complainReply(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }
