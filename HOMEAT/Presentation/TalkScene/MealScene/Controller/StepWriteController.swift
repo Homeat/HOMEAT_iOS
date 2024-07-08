@@ -248,6 +248,13 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         return newImage
     }
     
+    func presentAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
     //MARK: - @objc
     @objc func keyboardWillShow(_ notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
@@ -275,6 +282,10 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
         }
         let recipePicture = photoButton.image(for: .normal)
         let recipePictureData = recipePicture?.jpegData(compressionQuality: 0.8)
+        guard let imageData = recipePictureData else {
+            presentAlert(title: "알림", message: "사진을 입력하세요")
+            return
+        }
         let updatedRecipe = foodRecipeDTOS(recipe: recipe, recipePicture: recipePictureData)
         if let recipeIndex = recipeIndex {
             delegate?.didUpdateCell(at: recipeIndex, with: updatedRecipe)
