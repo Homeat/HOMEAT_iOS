@@ -220,18 +220,18 @@ class FoodTalkViewController: BaseViewController {
         
         searchBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(164)
+            $0.top.equalToSuperview().inset(150)
             $0.width.equalTo(351)
             $0.height.equalTo(35)
         }
         
         listButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(16)
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.leading.equalTo(searchBar.snp.leading)
         }
         
         scrollView.snp.makeConstraints {
-            $0.top.equalTo(listButton.snp.bottom).offset(11)
+            $0.top.equalTo(listButton.snp.bottom).offset(8)
             $0.leading.equalToSuperview().inset(20)
             $0.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(31)
@@ -273,7 +273,7 @@ class FoodTalkViewController: BaseViewController {
         }
         
         foodCollectionView.snp.makeConstraints {
-            $0.top.equalTo(scrollView.snp.bottom).offset(22)
+            $0.top.equalTo(scrollView.snp.bottom).offset(10)
             $0.leading.trailing.equalToSuperview().inset(25)
             $0.bottom.equalToSuperview()
         }

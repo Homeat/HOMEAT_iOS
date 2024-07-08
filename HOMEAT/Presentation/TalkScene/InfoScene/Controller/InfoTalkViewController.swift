@@ -98,7 +98,7 @@ class InfoTalkViewController: BaseViewController {
             $0.delegate = self
             $0.allowsSelection = true
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
-            $0.showsVerticalScrollIndicator = true
+            $0.showsVerticalScrollIndicator = false
             $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             $0.register(InfoTalkTableViewCell.self, forCellReuseIdentifier: InfoTalkTableViewCell.identifier)
         }
@@ -111,7 +111,7 @@ class InfoTalkViewController: BaseViewController {
             $0.setImage(UIImage(named: "dropdown"), for: .normal)
             $0.semanticContentAttribute = .forceRightToLeft
         }
-        
+         
         floatingButton.do {
             $0.setImage(UIImage(named: "TalkWriteButton"), for: .normal)
             $0.isHidden = false
@@ -124,13 +124,13 @@ class InfoTalkViewController: BaseViewController {
         
         searchBar.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(164)
+            $0.top.equalToSuperview().inset(150)
             $0.width.equalTo(351)
             $0.height.equalTo(35)
         }
         
         listButton.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom).offset(16)
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.leading.equalTo(searchBar.snp.leading)
         }
         

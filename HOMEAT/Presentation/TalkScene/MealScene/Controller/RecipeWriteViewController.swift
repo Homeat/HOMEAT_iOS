@@ -106,7 +106,6 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
             }
         }
         deinit {
-            // 뷰 컨트롤러가 할당 해제될 때 옵저버를 제거
             memoTextView.removeObserver(self, forKeyPath: "contentSize")
         }
     override func viewDidLayoutSubviews() {
