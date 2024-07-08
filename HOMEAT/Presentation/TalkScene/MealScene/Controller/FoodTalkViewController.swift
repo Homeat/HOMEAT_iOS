@@ -9,7 +9,7 @@ import Then
 import SnapKit
 
 enum SortOrder {
-    case latest 
+    case latest
     case oldest
     case view
     case love
@@ -52,7 +52,7 @@ class FoodTalkViewController: BaseViewController {
     var oldestFoodTalkId = Int.max
     var viewCount = Int.max
     var loveCount = Int.max
-    let pageSize = 6 
+    let pageSize = 6
     //MARK: - Property
     private let searchBar = UISearchBar()
     private let listButton = UIButton()
@@ -84,7 +84,7 @@ class FoodTalkViewController: BaseViewController {
         currentSortOrder = .latest
         request()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isTranslucent = false
@@ -301,6 +301,8 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.delegate = self
         foodCollectionView.prefetchDataSource = self
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        foodCollectionView.addGestureRecognizer(tapGesture)
     }
     
     private func selectMainButton() {
@@ -396,7 +398,7 @@ class FoodTalkViewController: BaseViewController {
         
         self.present(actionSheet, animated: true, completion: nil)
     }
-
+    
     @objc func isHashTagButtonTapped(_ sender: UIButton) {
         if let selectedButton = selectedButton {
             selectedButton.isSelected = false
@@ -407,7 +409,7 @@ class FoodTalkViewController: BaseViewController {
         sender.layer.borderColor = UIColor(named: "turquoiseGreen")?.cgColor
         sender.setTitleColor(.turquoiseGreen, for: .normal)
         selectedButton = sender
-
+        
         if sender == mainButton {
             selectedTag = nil
         } else if sender == weekButton {
@@ -469,7 +471,7 @@ class FoodTalkViewController: BaseViewController {
             }
         }
     }
-
+    
     func requestOldestOrder() {
         guard !isLoading && hasNextPage else { return }
         isLoading = true
@@ -602,7 +604,7 @@ class FoodTalkViewController: BaseViewController {
             }
         }
     }
-
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.y + scrollView.frame.size.height > scrollView.contentSize.height - 100 {
@@ -622,6 +624,10 @@ class FoodTalkViewController: BaseViewController {
     }
     
     @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         view.endEditing(true)
     }
 }
@@ -668,7 +674,7 @@ extension FoodTalkViewController: UISearchBarDelegate {
             break
         }
     }
-
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
@@ -751,7 +757,7 @@ extension FoodTalkViewController: UICollectionViewDataSource, UICollectionViewDe
         let nextVC = FoodPostViewController(foodTalkId: foodTalk.foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         guard let maxRow = indexPaths.map({ $0.row }).max() else {
             return
@@ -783,7 +789,7 @@ extension FoodTalkViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let spacing: CGFloat = 20
         let width = (collectionView.bounds.width - 8 - 8 - spacing) / 2 // 총 가로길이 - leading - trailing - 간격

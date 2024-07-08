@@ -101,6 +101,8 @@ class InfoTalkViewController: BaseViewController {
             $0.showsVerticalScrollIndicator = false
             $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             $0.register(InfoTalkTableViewCell.self, forCellReuseIdentifier: InfoTalkTableViewCell.identifier)
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+            tableView.addGestureRecognizer(tapGesture)
         }
         
         //asset이 없어서 기본 이미지로 구현.
@@ -417,6 +419,7 @@ class InfoTalkViewController: BaseViewController {
         nextVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(nextVC, animated: true)
     }
+    
     @objc func navigateToPostViewController(with postId: Int) {
         
         let postVC = InfoPostViewController(infoTalkId: postId)
@@ -424,6 +427,14 @@ class InfoTalkViewController: BaseViewController {
         tabBarController?.tabBar.isHidden = true
         navigationController?.pushViewController(postVC, animated: true)
         print("present click")
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        view.endEditing(true)
     }
     
 }
