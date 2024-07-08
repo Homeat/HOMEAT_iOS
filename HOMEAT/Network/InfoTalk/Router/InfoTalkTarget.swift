@@ -171,12 +171,12 @@ extension InfoTalkTarget: TargetType {
             return .requestWithMultipart(bodyDTO.toMultipartFormData())
         case let .latestInfo(queryDTO):
             return .requestQuery(queryDTO)
-        case let .loveInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
-        case let .viewInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
-        case let .oldestInfo(bodyDTO):
-            return .requestWithBody(bodyDTO)
+        case let .loveInfo(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .viewInfo(queryDTO):
+            return .requestQuery(queryDTO)
+        case let .oldestInfo(queryDTO):
+            return .requestQuery(queryDTO)
         case let .postReport(queryDTO):
             return .requestQuery(queryDTO)
         case let .commentReport(bodyDTO):

@@ -9,7 +9,7 @@ import Then
 import SnapKit
 
 enum SortOrder {
-    case latest
+    case latest 
     case oldest
     case view
     case love
