@@ -48,27 +48,27 @@ class OnBoardingViewController : BaseViewController {
             $0.clipsToBounds = true
         }
         
-        continueKakaoButton.do {
-            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
-            $0.titleLabel?.font = .bodyMedium18
-            $0.setTitle("카카오로 계속하기", for: .normal)
-            $0.setTitleColor(.turquoiseGreen, for: .normal)
-            $0.layer.cornerRadius = 10
-            $0.clipsToBounds = true
-            $0.layer.borderColor = UIColor.turquoiseGreen.cgColor
-            $0.layer.borderWidth = 1
-        }
-        
-        continueAppleButton.do {
-            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
-            $0.titleLabel?.font = .bodyMedium18
-            $0.setTitle("Apple로 계속하기", for: .normal)
-            $0.setTitleColor(.turquoiseGreen, for: .normal)
-            $0.layer.cornerRadius = 10
-            $0.clipsToBounds = true
-            $0.layer.borderColor = UIColor.turquoiseGreen.cgColor
-            $0.layer.borderWidth = 1
-        }
+//        continueKakaoButton.do {
+//            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+//            $0.titleLabel?.font = .bodyMedium18
+//            $0.setTitle("카카오로 계속하기", for: .normal)
+//            $0.setTitleColor(.turquoiseGreen, for: .normal)
+//            $0.layer.cornerRadius = 10
+//            $0.clipsToBounds = true
+//            $0.layer.borderColor = UIColor.turquoiseGreen.cgColor
+//            $0.layer.borderWidth = 1
+//        }
+//        
+//        continueAppleButton.do {
+//            $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)
+//            $0.titleLabel?.font = .bodyMedium18
+//            $0.setTitle("Apple로 계속하기", for: .normal)
+//            $0.setTitleColor(.turquoiseGreen, for: .normal)
+//            $0.layer.cornerRadius = 10
+//            $0.clipsToBounds = true
+//            $0.layer.borderColor = UIColor.turquoiseGreen.cgColor
+//            $0.layer.borderWidth = 1
+//        }
     }
     
     override func setConstraints() {
@@ -88,65 +88,69 @@ class OnBoardingViewController : BaseViewController {
         continueEmailButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(continueKakaoButton.snp.top).offset(-25)
+            $0.bottom.equalToSuperview().inset(96)
             $0.height.equalTo(57)
         }
         
-        continueKakaoButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalTo(continueAppleButton.snp.top).offset(-25)
-            $0.height.equalTo(57)
-        }
-        
-        continueAppleButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-76)
-            $0.height.equalTo(57)
-        }
+//        continueKakaoButton.snp.makeConstraints {
+//            $0.leading.equalToSuperview().offset(20)
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.bottom.equalTo(continueAppleButton.snp.top).offset(-25)
+//            $0.height.equalTo(57)
+//        }
+//        
+//        continueAppleButton.snp.makeConstraints {
+//            $0.leading.equalToSuperview().offset(20)
+//            $0.trailing.equalToSuperview().offset(-20)
+//            $0.bottom.equalToSuperview().offset(-76)
+//            $0.height.equalTo(57)
+//        }
     }
     
     private func setTarget() {
         continueEmailButton.addTarget(self, action: #selector(emailButtonTapped), for: .touchUpInside)
-        continueKakaoButton.addTarget(self, action: #selector(kakaoButtonTapped), for: .touchUpInside)
-        continueAppleButton.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
+//        continueKakaoButton.addTarget(self, action: #selector(kakaoButtonTapped), for: .touchUpInside)
+//        continueAppleButton.addTarget(self, action: #selector(appleButtonTapped), for: .touchUpInside)
     }
     
     //MARK: - @objc Func
     @objc private func emailButtonTapped(_ sender: Any) {
-        let nextVC = LoginViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
-    }
-    
-    @objc private func kakaoButtonTapped(_ sender: Any) {
-        print("loginKakao() called.")
-        // ✅ 카카오톡 설치 여부 확인
-        if (UserApi.isKakaoTalkLoginAvailable()) {
-            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
-                if let error = error {
-                    print(error)
-                }
-                else {
-                    print("loginWithKakaoTalk() success.")
-                    
-                    // ✅ 회원가입 성공 시 oauthToken 저장가능하다
-                    // _ = oauthToken
-                    print("-------------------------------------")
-                    print(oauthToken!)
-                    print("-------------------------------------")
-                }
-            }
-        }
-        else {
-            print("카카오톡 미설치")
-        }
-    }
-    
-    @objc private func appleButtonTapped() {
+//        let nextVC = LoginViewController()
+//        self.navigationController?.pushViewController(nextVC, animated: true)
         let tabBarVC = HOMEATTabBarController()
-        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-            sceneDelegate.changeRootViewController(to: tabBarVC)
-        }
+                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                    sceneDelegate.changeRootViewController(to: tabBarVC)
+                }
     }
+    
+//    @objc private func kakaoButtonTapped(_ sender: Any) {
+//        print("loginKakao() called.")
+//        // ✅ 카카오톡 설치 여부 확인
+//        if (UserApi.isKakaoTalkLoginAvailable()) {
+//            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+//                if let error = error {
+//                    print(error)
+//                }
+//                else {
+//                    print("loginWithKakaoTalk() success.")
+//                    
+//                    // ✅ 회원가입 성공 시 oauthToken 저장가능하다
+//                    // _ = oauthToken
+//                    print("-------------------------------------")
+//                    print(oauthToken!)
+//                    print("-------------------------------------")
+//                }
+//            }
+//        }
+//        else {
+//            print("카카오톡 미설치")
+//        }
+//    }
+//    
+//    @objc private func appleButtonTapped() {
+//        let tabBarVC = HOMEATTabBarController()
+//        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//            sceneDelegate.changeRootViewController(to: tabBarVC)
+//        }
+//    }
 }
