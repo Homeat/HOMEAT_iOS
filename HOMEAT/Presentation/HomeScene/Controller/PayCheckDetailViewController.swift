@@ -51,6 +51,8 @@ class PayCheckDetailViewController: BaseViewController {
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = true
         }
+        self.tabBarController?.tabBar.isTranslucent = true
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,6 +60,8 @@ class PayCheckDetailViewController: BaseViewController {
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
+        self.tabBarController?.tabBar.isTranslucent = false
+
     }
     
     override func setConfigure() {
