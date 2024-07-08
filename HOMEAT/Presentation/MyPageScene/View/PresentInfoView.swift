@@ -14,7 +14,7 @@ final class PresentInfoView: BaseView {
     
     private let infoLabel = UILabel()
     private let backgroundView = UIView()
-    
+    let userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -33,7 +33,7 @@ final class PresentInfoView: BaseView {
     }
     
     override func setConstraints() {
-        
+        infoLabel.text = userName
         addSubviews(backgroundView, infoLabel)
         
         backgroundView.snp.makeConstraints {

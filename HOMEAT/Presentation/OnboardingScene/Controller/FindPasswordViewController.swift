@@ -23,6 +23,19 @@ class FindPasswordViewController: BaseViewController {
 
         setTarget()
     }
+    // MARK: - 탭바제거
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+    }
     
     override func setConfigure() {
         

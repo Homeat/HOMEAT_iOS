@@ -19,7 +19,6 @@ class MyPageViewController: BaseViewController {
     private let horizonView = UIView()
     private let profileImageView = UIImageView()
     private let sirLabel = UILabel()
-//    private let instaAccountView = InstagramAccountView()
     private let infoModifyButton = UIButton()
     private let mypageTableView = UITableView()
     
@@ -170,6 +169,8 @@ class MyPageViewController: BaseViewController {
     }
     
     private func performLogout() {
+        let loginViewController = LoginViewController()
+        self.navigationController?.pushViewController(loginViewController, animated: true)
         print("User logged out")
     }
     private func updateUser() {

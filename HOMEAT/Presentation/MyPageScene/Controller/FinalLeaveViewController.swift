@@ -16,7 +16,7 @@ class FinalLeaveViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-
+        updateServer()
         view.backgroundColor = UIColor(r: 30, g: 32, b: 33)
 
     }
@@ -70,7 +70,7 @@ class FinalLeaveViewController: BaseViewController {
             $0.center.equalToSuperview()
         }
         button.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(30)
+            $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(60)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
@@ -82,6 +82,18 @@ class FinalLeaveViewController: BaseViewController {
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(checkLabel.snp.bottom).offset(20)
             $0.leading.equalTo(checkLabel.snp.leading)
+        }
+    }
+    private func updateServer() {
+        NetworkService.shared.myPageService.myPageWithDraw() { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                print("탈퇴 하기")
+            default:
+                print("탈퇴 실패")
+                
+            }
         }
     }
     private func setNavigationBar() {

@@ -13,10 +13,10 @@ protocol OnboardingServiceProtocol {
     func postRefreshToken(completion: @escaping (NetworkResult<BaseResponse<TokenRefreshResponseDTO>>) -> Void)
     func emailLogin(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>) -> Void)
     func emailLoginWithHeader(bodyDTO: EmailLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailLoginResponseDTO>>, [AnyHashable: Any]) -> Void)
+    
 }
 
 final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingServiceProtocol {
-    
     func kakaoLogin(bodyDTO: KakaoLoginRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<KakaoLoginResponseDTO>>) -> Void) {
         fetchData(target: .kakaoLogin(bodyDTO),
                   responseData: BaseResponse<KakaoLoginResponseDTO>.self, completion: completion)

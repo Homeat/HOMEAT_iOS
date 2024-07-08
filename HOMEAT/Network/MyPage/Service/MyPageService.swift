@@ -13,9 +13,20 @@ protocol MyPageServiceProtocol {
     func mypageProfile(bodyDTO: ProfileEditRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func mypageDetail(completion: @escaping (NetworkResult<BaseResponse<MyPageDetailResponseDTO>>) -> Void)
     func myProfileDelete(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myPageWithDraw(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myPageReactivate(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func changePassword(bodyDTO: MyPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myNicknameExist(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class MyPageService: APIRequestLoader<MyPageTarget>, MyPageServiceProtocol {
+    func myNicknameExist(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .myNicknameExist(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func changePassword(bodyDTO: MyPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .myPassword(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
     func myProfileDelete(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .myProfileDelete, responseData: BaseResponse<Data>.self, completion: completion)
     }
@@ -35,5 +46,13 @@ final class MyPageService: APIRequestLoader<MyPageTarget>, MyPageServiceProtocol
     
     func mypageProfile(bodyDTO: ProfileEditRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .mypageProfile(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func myPageWithDraw(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .myPageWithDraw, responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func myPageReactivate(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .myPageReactivate, responseData: BaseResponse<Data>.self, completion: completion)
     }
 }

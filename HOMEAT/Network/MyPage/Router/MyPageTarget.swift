@@ -15,6 +15,9 @@ enum MyPageTarget {
     case mypageDetail
     case myProfileDelete
     case myPageWithDraw
+    case myPageReactivate
+    case myPassword(_ bodyDTO: MyPasswordRequestBodyDTO)
+    case myNicknameExist(_ bodyDTO: NicknameRequestBodyDTO)
 }
 
 extension MyPageTarget: TargetType {
@@ -33,6 +36,12 @@ extension MyPageTarget: TargetType {
             return .authorization
         case .myPageWithDraw:
             return .authorization
+        case .myPageReactivate:
+            return .authorization
+        case .myPassword:
+            return .authorization
+        case .myNicknameExist:
+            return .authorization
         }
     }
     
@@ -49,6 +58,12 @@ extension MyPageTarget: TargetType {
         case .myProfileDelete:
             return .hasToken
         case .myPageWithDraw:
+            return .hasToken
+        case .myPageReactivate:
+            return .hasToken
+        case .myPassword:
+            return .hasToken
+        case .myNicknameExist:
             return .hasToken
         }
     }
@@ -68,6 +83,12 @@ extension MyPageTarget: TargetType {
             
         case .myPageWithDraw:
             return .patch
+        case .myPageReactivate:
+            return .patch
+        case .myPassword:
+            return .patch
+        case .myNicknameExist:
+            return .post
         }
     }
     
@@ -85,6 +106,12 @@ extension MyPageTarget: TargetType {
             return "/v1/mypage/profile"
         case .myPageWithDraw:
             return "/v1/mypage/withdraw"
+        case .myPageReactivate:
+            return "/v1/mypage/reactivate"
+        case .myPassword:
+            return "/v1/mypage/change-password"
+        case .myNicknameExist:
+            return "/v1/mypage/exist-nickname"
         }
     }
     
@@ -102,6 +129,12 @@ extension MyPageTarget: TargetType {
             return .requestPlain
         case .myPageWithDraw:
             return .requestPlain
+        case .myPageReactivate:
+            return .requestPlain
+        case let .myPassword(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .myNicknameExist(bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }
@@ -112,7 +145,7 @@ extension ProfileEditRequestBodyDTO {
             print("multipartformdata 출력")
             if let imageData = self.profileImg {
                 print("Image data is not nil. Size: \(imageData.count)")
-                formData.append(imageData, withName: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+                formData.append(imageData, withName: "profileImg", fileName: "image.jpg", mimeType: "image/jpeg")
             } else {
                 print("Image data is nil or empty")
             }

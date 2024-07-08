@@ -234,6 +234,9 @@
 		58EEF5E32C3AEB8700C12C1E /* MyPageResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E22C3AEB8700C12C1E /* MyPageResponseDTO.swift */; };
 		58EEF5E52C3C18E400C12C1E /* LeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */; };
 		58EEF5E72C3C1A4800C12C1E /* FinalLeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */; };
+		58EEF5EB2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EA2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift */; };
+		58EEF5ED2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */; };
+		58EEF5F02C3C768000C12C1E /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EF2C3C768000C12C1E /* CircularImageView.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -473,6 +476,9 @@
 		58EEF5E22C3AEB8700C12C1E /* MyPageResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageResponseDTO.swift; sourceTree = "<group>"; };
 		58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveViewController.swift; sourceTree = "<group>"; };
 		58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalLeaveViewController.swift; sourceTree = "<group>"; };
+		58EEF5EA2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPasswordRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5EF2C3C768000C12C1E /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -622,6 +628,7 @@
 		0123830D2BB43FCC0048CC2D /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5EF2C3C768000C12C1E /* CircularImageView.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -715,6 +722,7 @@
 		0123837D2BBA955F0048CC2D /* MyPageScene */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5EE2C3C767500C12C1E /* Component */,
 				012383982BBC55910048CC2D /* Cell */,
 				012383882BBA96100048CC2D /* Model */,
 				012383872BBA960C0048CC2D /* View */,
@@ -774,6 +782,7 @@
 		012383862BBA96050048CC2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				58DF7B592C23181800603763 /* ChangePasswordViewController.swift */,
 				012383892BBA96ED0048CC2D /* MyPageViewController.swift */,
 				012383B12BBD32100048CC2D /* UserInfoViewController.swift */,
 				01D530DC2BBFE344008C368E /* UserInfoModifyViewController.swift */,
@@ -827,7 +836,6 @@
 		01D530F92BCFB79F008C368E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				58DF7B592C23181800603763 /* ChangePasswordViewController.swift */,
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
 				01D531012BD14D89008C368E /* LoginViewController.swift */,
 				016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */,
@@ -1411,10 +1419,19 @@
 		58EEF5D52C3AE19200C12C1E /* Request */ = {
 			isa = PBXGroup;
 			children = (
+				58EEF5EA2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift */,
 				58EEF5DE2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift */,
 				58EEF5E02C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift */,
+				58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		58EEF5EE2C3C767500C12C1E /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 		58FE4CD82BC801700059D174 /* Cell */ = {
@@ -1644,6 +1661,7 @@
 				58EEF5DA2C3AE5A100C12C1E /* MyPageDetailResponseDTO.swift in Sources */,
 				58E88E802BF9270E00775F06 /* InfoPostViewController.swift in Sources */,
 				0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */,
+				58EEF5ED2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift in Sources */,
 				58EEF5E52C3C18E400C12C1E /* LeaveViewController.swift in Sources */,
 				58EEF5B32C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift in Sources */,
 				58E88E882BF931F200775F06 /* Mode.swift in Sources */,
@@ -1661,6 +1679,7 @@
 				0309DDDF2C0AF5AB00D6133A /* CommentDeclareViewController.swift in Sources */,
 				0123839A2BBC55A40048CC2D /* MyPageTableViewCell.swift in Sources */,
 				0309DDBF2C03256700D6133A /* LoveOrderResponseDTO.swift in Sources */,
+				58EEF5F02C3C768000C12C1E /* CircularImageView.swift in Sources */,
 				582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */,
 				58EEF5A32C3655D700C12C1E /* PayDetailTableViewCell.swift in Sources */,
 				0309DDE52C1DCA1B00D6133A /* PostReportRequestBodyDTO.swift in Sources */,
@@ -1714,6 +1733,7 @@
 				58EEF5D32C3AE18100C12C1E /* MyPageService.swift in Sources */,
 				58EEF5832C325B2E00C12C1E /* OldestInfoResponseDTO.swift in Sources */,
 				58DF7C152C2D2AED00603763 /* CalendarDailyRequestBodyDTO.swift in Sources */,
+				58EEF5EB2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift in Sources */,
 				58DF7C172C2E761900603763 /* CalendarDailyResponseDTO.swift in Sources */,
 				0123833D2BB7EBD00048CC2D /* UIColor+.swift in Sources */,
 				2DB92DCD2C0218DE00629CED /* ContinueButton.swift in Sources */,

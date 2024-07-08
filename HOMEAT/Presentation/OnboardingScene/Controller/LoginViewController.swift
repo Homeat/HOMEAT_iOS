@@ -32,6 +32,13 @@ final class LoginViewController : BaseViewController {
         setTarget()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+        tabBarController?.tabBar.isTranslucent = true
+    }
     // MARK: UI
     override func setConfigure() {
         view.do {

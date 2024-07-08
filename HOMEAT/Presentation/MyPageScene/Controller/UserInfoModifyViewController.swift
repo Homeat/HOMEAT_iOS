@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-class UserInfoModifyViewController : BaseViewController {
+class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     
     // MARK: Property
     private let presentNickNameLabel = UILabel()
@@ -18,7 +18,7 @@ class UserInfoModifyViewController : BaseViewController {
     private let duplicationCheckButton = UIButton()
     private let confirmButton = UIButton()
     private let NickNameField = UITextField()
-    
+    private var userName: String = ""
     // MARK: Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,6 +35,9 @@ class UserInfoModifyViewController : BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
+        NickNameField.delegate = self
+        userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
+
     }
     
     // MARK: UI
@@ -77,7 +80,7 @@ class UserInfoModifyViewController : BaseViewController {
             $0.layer.masksToBounds = true
             $0.backgroundColor = .white
             $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.addTarget(self, action: #selector(duplicationCheckButtonTapped), for: .touchUpInside)
         }
         
         confirmButton.do {
@@ -144,7 +147,63 @@ class UserInfoModifyViewController : BaseViewController {
         self.navigationController?.navigationBar.tintColor = .white
     }
     
+//    private func updateServer() {
+//        let bodyDTO = NicknameRequestBodyDTO(nickname: <#T##String#>)
+//        NetworkService.shared.myPageService.myNicknameExist(bodyDTO: <#T##NicknameRequestBodyDTO#>, completion: <#T##(NetworkResult<BaseResponse<Data>>) -> Void#>)
+//    }
+    @objc private func duplicationCheckButtonTapped() {
+        guard let newNickname = NickNameField.text, !newNickname.isEmpty else {
+            showAlert(message: "변경할 닉네임을 입력해주세요.")
+            return
+        }
+        checkNicknameDuplication(nickname: newNickname)
+    }
     private func setTapBarHidden() {
         self.tabBarController?.tabBar.isHidden = true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newLength = text.count + string.count - range.length
+        
+        // Limit to 10 characters
+        if newLength > 10 {
+            return false
+        }
+        
+        // Disallow special characters !@#
+        let allowedCharacters = CharacterSet(charactersIn: "!@#")
+        let characterSet = CharacterSet(charactersIn: string)
+        return !allowedCharacters.isSuperset(of: characterSet)
+    }
+    
+    private func isValidNickname(nickname: String) -> Bool {
+        return nickname.count <= 10 && !nickname.contains("!") && !nickname.contains("@") && !nickname.contains("#")
+    }
+    
+    private func checkNicknameDuplication(nickname: String) {
+        if nickname == self.userName {
+             showAlert(message: "이미 사용 중인 닉네임입니다.")
+         } else {
+             showAlert(message: "사용 가능한 닉네임입니다.")
+         }
+     }
+    private func showAlert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+    private func showSuccessAlert() {
+            let alert = UIAlertController(title: "닉네임 변경 완료", message: "닉네임이 성공적으로 변경되었습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true) // Navigate back to previous screen
+            }))
+            present(alert, animated: true, completion: nil)
+        }
+        
+        private func showFailureAlert() {
+            let alert = UIAlertController(title: "닉네임 변경 실패", message: "닉네임 변경 중 오류가 발생했습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
 }

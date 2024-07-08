@@ -432,9 +432,6 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
         actionSheet.addAction(chooseFromLibraryAction)
         actionSheet.addAction(cancleAction)
         self.present(actionSheet, animated: true, completion: nil)
-        
-        
-        
     }
     
     @objc func cameraButtonTapped() {

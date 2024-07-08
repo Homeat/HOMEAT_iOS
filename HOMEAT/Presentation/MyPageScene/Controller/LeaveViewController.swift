@@ -175,10 +175,10 @@ class LeaveViewController: BaseViewController {
         ]
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(editButtonTapped))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "건너뛰기", style: .plain, target: self, action: #selector(jump))
         self.navigationItem.rightBarButtonItem?.tintColor = .turquoiseGreen
     }
-    @objc func editButtonTapped() {
+    @objc func jump() {
         let leaveViewController = FinalLeaveViewController()
         self.navigationController?.pushViewController(leaveViewController, animated: true)
     }
@@ -187,9 +187,6 @@ class LeaveViewController: BaseViewController {
          self.navigationController?.popViewController(animated: true)
         print("back click")
      }
-    //건너뛰기
-    @objc func jump(_ sender: UIBarButtonItem) {
-        
-    }
+
 }
 

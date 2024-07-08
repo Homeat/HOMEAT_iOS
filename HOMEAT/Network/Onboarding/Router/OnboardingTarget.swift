@@ -29,6 +29,7 @@ extension OnboardingTarget: TargetType {
             return .reAuthorization
         case .emailLogin, .emailCertification, .emailSignUp:
             return .emailAuthorization
+        
         }
     }
     
@@ -42,6 +43,7 @@ extension OnboardingTarget: TargetType {
             return .refreshToken
         case .emailLogin, .emailCertification, .emailSignUp:
             return .plain
+        
         }
     }
     
@@ -51,6 +53,7 @@ extension OnboardingTarget: TargetType {
             return .post
         case .userInfo:
             return .get
+        
         }
     }
     
@@ -68,6 +71,7 @@ extension OnboardingTarget: TargetType {
             return "/v1/members/email-cerification"
         case .emailSignUp:
             return "/v1/members/join/email"
+        
         }
     }
     
@@ -83,6 +87,7 @@ extension OnboardingTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case let .emailSignUp(bodyDTO):
             return .requestWithBody(bodyDTO)
+        
         }
     }
 }
