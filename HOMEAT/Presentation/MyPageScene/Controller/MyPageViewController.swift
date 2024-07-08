@@ -8,28 +8,28 @@
 import Foundation
 import UIKit
 import Then
-
+import Kingfisher
 class MyPageViewController: BaseViewController {
     
     // MARK: DummyData
     private let nicknameDummyLabel = UILabel()
-    
+    private let profileview = UIView()
     // MARK: Property
     private let mypageTitleLabel = UILabel()
     private let horizonView = UIView()
-    private let profileImageView = UIView()
+    private let profileImageView = UIImageView()
     private let sirLabel = UILabel()
-    private let instaAccountView = InstagramAccountView()
+//    private let instaAccountView = InstagramAccountView()
     private let infoModifyButton = UIButton()
     private let mypageTableView = UITableView()
     
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setNavigation()
         setupTableView()
         setTarget()
+        updateUser()
     }
     
     // MARK: UI
@@ -47,11 +47,16 @@ class MyPageViewController: BaseViewController {
         horizonView.do {
             $0.backgroundColor = UIColor(r: 54, g: 56, b: 57)
         }
-        
-        profileImageView.do {
-            $0.backgroundColor = .blue
+        profileview.do {
+            $0.backgroundColor = .turquoiseGreen
             $0.layer.cornerRadius = 40
+            $0.layer.borderColor = UIColor.white.cgColor
+            $0.layer.borderWidth = 3
             $0.layer.masksToBounds = true
+        }
+        profileImageView.do {
+            $0.image = UIImage(named: "Icon")
+            
         }
         
         nicknameDummyLabel.do {
@@ -81,7 +86,8 @@ class MyPageViewController: BaseViewController {
         
         mypageTableView.isScrollEnabled = false
         
-        view.addSubviews(mypageTitleLabel, horizonView, profileImageView, nicknameDummyLabel, sirLabel, instaAccountView, infoModifyButton, mypageTableView)
+        view.addSubviews(mypageTitleLabel, horizonView,profileview, nicknameDummyLabel, sirLabel, infoModifyButton, mypageTableView)
+        profileview.addSubview(profileImageView)
         
         mypageTitleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
@@ -95,31 +101,26 @@ class MyPageViewController: BaseViewController {
             $0.height.equalTo(1)
         }
         
-        profileImageView.snp.makeConstraints {
+        profileview.snp.makeConstraints {
             $0.top.equalTo(horizonView.snp.bottom).offset(32)
             $0.leading.equalToSuperview().offset(22)
-            $0.width.height.equalTo(86)
+            $0.width.height.equalTo(90)
         }
-        
+        profileImageView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(20)
+        }
         nicknameDummyLabel.snp.makeConstraints {
             $0.top.equalTo(horizonView.snp.bottom).offset(38)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(18)
+            $0.leading.equalTo(profileview.snp.trailing).offset(18)
         }
         
         sirLabel.snp.makeConstraints {
             $0.top.equalTo(horizonView.snp.bottom).offset(38)
             $0.leading.equalTo(nicknameDummyLabel.snp.trailing).offset(2)
         }
-        
-        instaAccountView.snp.makeConstraints {
-            $0.top.equalTo(nicknameDummyLabel.snp.bottom).offset(12)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(18)
-            $0.width.equalTo(102)
-            $0.height.equalTo(29)
-        }
-        
+
         infoModifyButton.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(16)
+            $0.top.equalTo(profileview.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(22)
             $0.trailing.equalToSuperview().offset(-22)
             $0.height.equalTo(51)
@@ -154,6 +155,26 @@ class MyPageViewController: BaseViewController {
     @objc private func infoModifyButtonTapped() {
         let userInfoViewController = UserInfoViewController()
         self.navigationController?.pushViewController(userInfoViewController, animated: true)
+    }
+    private func updateUser() {
+        NetworkService.shared.myPageService.mypage() { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                guard let data = data.data else { return }
+                nicknameDummyLabel.text =  data.nickname
+                let url = data.profileImgUrl
+                DispatchQueue.main.async {
+                    guard let url = URL(string: data.profileImgUrl) else {return}
+                    self.profileImageView.kf.setImage(with: url)
+                }
+                
+                print(data)
+            default:
+                print("서버연동 실패")
+                
+            }
+        }
     }
 }
 
