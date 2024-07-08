@@ -10,6 +10,7 @@ import SnapKit
 
 class InfoCommentDeclareViewController: BaseViewController {
     var commentId: Int?
+    var replyId: Int?
     //MARK: - Property
     private let declareLabel = UILabel()
     private let container = UIStackView()
@@ -164,9 +165,13 @@ class InfoCommentDeclareViewController: BaseViewController {
     
     //MARK: - @objc
     @objc func optionActtion(_ sender: UIButton) {
-        guard let commentId = self.commentId else {return}
-        let nextVC = CommentDeclareWriteViewController(commentId: commentId)
+        let nextVC = InfoCommentDeclareWriteViewController()
         nextVC.hidesBottomBarWhenPushed = true
+        if let commentId = self.commentId {
+            nextVC.commentId = commentId
+        } else if let replyId = self.replyId {
+            nextVC.replyId = replyId
+        }
         switch sender {
         case firstButton:
             nextVC.optionLabel = firstButton.titleLabel?.text

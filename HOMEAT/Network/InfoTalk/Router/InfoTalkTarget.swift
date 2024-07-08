@@ -10,19 +10,21 @@ import Alamofire
 
 enum InfoTalkTarget {
     case infoTalkSave(_ bodyDTO: InfoTalkSaveRequestBodyDTO)
-    case viewInfo(_ bodyDTO: ViewInfoRequestBodyDTO)
-    case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
-    case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
-    case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
-    case postReport(_ bodyDTO: PostInfoRequestBodyDTO)
-    case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
+    case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
+    case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고
+    case complainReply(_ bodyDTO: ComplainReplyRequestBodyDTO)
+    case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
     case postLove(_ bodyDTO: InfoLoveRequestBodyDTO) //공감
     case postLoveDelete(_ bodyDTO: InfoDeleteLoveRequestBodyDTO) //공감 취소
-    case complainPost(_ bodyDTO: ComplainPostRequestBodyDTO) //게시물 신고
-    case complainComment(_ bodyDTO: ComplainCommentRequestBodyDTO) // 댓글 신고 
+    case commentReport(_ bodyDTO: InfoCommentRequestBodyDTO)
+    case postReport(_ bodyDTO: PostInfoRequestBodyDTO)
     case deletePost(_ bodyDTO: InfoDeletePostRequestBodyDTO) //게시글 삭제
+    case viewInfo(_ bodyDTO: ViewInfoRequestBodyDTO)
+    case oldestInfo(_ bodyDTO: OldestInfoRequestBodyDTO)
+    case loveInfo(_ bodyDTO: LoveInfoRequestBodyDTO)
+    case latestInfo(_ bodyDTO: LatestInfoRequestBodyDTO)
     case deleteComment(_ bodyDTO: InfoDeleteCommentRequestBodyDTO) // 댓글 삭제
-    case replyComment(_ bodyDTO: InfoReplyRequestBodyDTO) //대댓글
+    
 }
 extension InfoTalkTarget: TargetType {
     var authorization: Authorization {
@@ -56,6 +58,8 @@ extension InfoTalkTarget: TargetType {
             return .authorization
         case .replyComment:
             return .authorization
+        case .complainReply(_):
+            return .authorization
         }
     }
     var headerType: HTTPHeaderType {
@@ -88,6 +92,8 @@ extension InfoTalkTarget: TargetType {
             return .hasToken
         case .replyComment:
             return .hasToken
+        case .complainReply(_):
+            return .hasToken
         }
     }
     var method: HTTPMethod {
@@ -119,6 +125,8 @@ extension InfoTalkTarget: TargetType {
         case .deleteComment:
             return .delete
         case .replyComment:
+            return .post
+        case .complainReply(_):
             return .post
         }
     }
@@ -153,6 +161,8 @@ extension InfoTalkTarget: TargetType {
             return "/v1/infoTalk/comment/\(bodyDTO.commentId)"
         case .replyComment(let bodyDTO):
             return "/v1/infoTalk/reply/\(bodyDTO.id)"
+        case .complainReply(let bodyDTO):
+            return "/v1/infoTalk/report/reply/\(bodyDTO.replyId))"
         }
     }
     var parameters: RequestParams {
@@ -184,6 +194,8 @@ extension InfoTalkTarget: TargetType {
         case let .deleteComment(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .replyComment(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .complainReply(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }

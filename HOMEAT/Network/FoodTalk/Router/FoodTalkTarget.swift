@@ -7,7 +7,7 @@
 
 import Foundation
 import Alamofire
-
+ 
 enum FoodTalkTarget {
     //url별로 case 나눔
     case foodTalkSave(_ bodyDTO: FoodTalkSaveRequestBodyDTO)

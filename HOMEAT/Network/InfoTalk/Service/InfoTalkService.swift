@@ -20,12 +20,17 @@ protocol InfoTalkServiceProtocol {
     func deleteLove(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func complainPost(bodyDTO: ComplainPostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func complainComment(bodyDTO: ComplainCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func complainReply(bodyDTO: ComplainReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func deletePost(bodyDTO: InfoDeletePostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func deleteComment(bodyDTO: InfoDeleteCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func replyComment(bodyDTO: InfoReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class InfoTalkService : APIRequestLoader<InfoTalkTarget>,InfoTalkServiceProtocol {
+    func complainReply(bodyDTO: ComplainReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .complainReply(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
     func replyComment(bodyDTO: InfoReplyRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .replyComment(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }

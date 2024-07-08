@@ -16,20 +16,13 @@ class CommentDeclareWriteViewController: BaseViewController {
     private let textLength = UILabel()
     private let declareSendButton = UIButton()
     let textViewPlaceHolder = "신고 내용을 입력해주세요."
-    var commentId: Int
+    var commentId: Int?
+    var replyId: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
     }
-    
-    init(commentId: Int) {
-        self.commentId = commentId
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+
     //MARK: - SetUI
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -135,24 +128,48 @@ class CommentDeclareWriteViewController: BaseViewController {
             present(alertController, animated: true, completion: nil)
             return
         }
-        let bodyDTO = CommentReportRequestBodyDTO(commentId: commentId)
-        NetworkService.shared.foodTalkService.commentReport(bodyDTO: bodyDTO) { response in
-            switch response {
-            case .success(let data):
-                print("신고하기 성공")
-                let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-                    if let viewControllers = self.navigationController?.viewControllers {
-                        let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
-                        self.navigationController?.popToViewController(targetViewController, animated: true)
+        
+        if let commentId = commentId {
+            let bodyDTO = CommentReportRequestBodyDTO(commentId: commentId)
+            NetworkService.shared.foodTalkService.commentReport(bodyDTO: bodyDTO) { response in
+                switch response {
+                case .success(let data):
+                    print("댓글신고하기 성공")
+                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                        if let viewControllers = self.navigationController?.viewControllers {
+                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
+                            self.navigationController?.popToViewController(targetViewController, animated: true)
+                        }
                     }
+                    alertController.addAction(okAction)
+                    self.present(alertController, animated: true, completion: nil)
+                default:
+                    print("신고하기 실패")
                 }
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-            default:
-                print("신고하기 실패")
+            }
+        } else if let replyId = replyId {
+            let bodyDTO = ReplyReportRequestBodyDTO(replyId: replyId)
+            NetworkService.shared.foodTalkService.replyReport(bodyDTO: bodyDTO) { response in
+                switch response {
+                case .success(let data):
+                    print("대댓글신고하기 성공")
+                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                        if let viewControllers = self.navigationController?.viewControllers {
+                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
+                            self.navigationController?.popToViewController(targetViewController, animated: true)
+                        }
+                    }
+                    alertController.addAction(okAction)
+                    self.present(alertController, animated: true, completion: nil)
+                default:
+                    print("신고하기 실패")
+                }
             }
         }
+        
+        
     }
 }
 
