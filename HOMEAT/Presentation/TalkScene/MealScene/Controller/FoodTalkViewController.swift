@@ -79,8 +79,7 @@ class FoodTalkViewController: BaseViewController {
         setConfigure()
         setConstraints()
         setUpCollectionView()
-        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDeleteChanged"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
+        setNotification()
         currentSortOrder = .latest
         request()
     }
@@ -101,6 +100,11 @@ class FoodTalkViewController: BaseViewController {
         case .none:
             break
         }
+    }
+    
+    func setNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDeleteChanged"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(dataChanged), name: NSNotification.Name("FoodTalkDataChanged"), object: nil)
     }
     
     private func resetData() {
@@ -302,6 +306,7 @@ class FoodTalkViewController: BaseViewController {
         foodCollectionView.prefetchDataSource = self
         foodCollectionView.register(FoodTalkCollectionViewCell.self, forCellWithReuseIdentifier: FoodTalkCollectionViewCell.identifier)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
         foodCollectionView.addGestureRecognizer(tapGesture)
     }
     
@@ -756,6 +761,7 @@ extension FoodTalkViewController: UICollectionViewDataSource, UICollectionViewDe
         }
         let nextVC = FoodPostViewController(foodTalkId: foodTalk.foodTalkId)
         navigationController?.pushViewController(nextVC, animated: true)
+        view.endEditing(true)
     }
     
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
