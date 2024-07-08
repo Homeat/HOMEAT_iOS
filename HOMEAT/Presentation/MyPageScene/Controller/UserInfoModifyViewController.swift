@@ -22,16 +22,19 @@ class UserInfoModifyViewController : BaseViewController {
     // MARK: Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTapBarHidden()
+        self.tabBarController?.tabBar.isTranslucent = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     // MARK: UI
@@ -132,7 +135,6 @@ class UserInfoModifyViewController : BaseViewController {
         }
         
     }
-    
     private func setNavigation() {
         self.navigationItem.title = "닉네임 변경"
         self.navigationController?.navigationBar.titleTextAttributes = [
