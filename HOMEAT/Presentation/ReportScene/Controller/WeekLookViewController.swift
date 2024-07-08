@@ -98,6 +98,7 @@ class WeekLookViewController: BaseViewController {
                }
            }
        }
+    
     private func updateTier() {
         NetworkService.shared.weekLookService.weekLookBadge() { response in
             switch response {
@@ -121,23 +122,26 @@ class WeekLookViewController: BaseViewController {
 // MARK: - Extension
 extension WeekLookViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return isDataEmpty ? 9 : weekData.count
+        return 9
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
-               return UICollectionViewCell()
-           }
-           
-           if isDataEmpty {
-               cell.configureAsLock()
-           } else {
-               let weekItem = weekData[indexPath.item]
-               cell.configure(with: weekItem)
-           }
-
-           return cell
-       }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: WeekCollectionViewCell.id, for: indexPath) as? WeekCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            if indexPath.item < weekData.count {
+                let weekItem = weekData[indexPath.item]
+                cell.configure(with: weekItem)
+                let weekIndex = indexPath.item + 1
+                cell.updateWeekLabel(withWeekIndex: weekIndex)
+            } else {
+                cell.configureAsLock()
+                
+            }
+            
+            return cell
+        }
 }
 
 

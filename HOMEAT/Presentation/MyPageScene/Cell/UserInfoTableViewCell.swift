@@ -56,6 +56,7 @@ class UserInfoTableViewCell: UITableViewCell {
         
         arrowButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-10)
+            make.width.equalTo(20)
             make.centerY.equalToSuperview()
         }
     }

@@ -13,6 +13,7 @@ enum AnalysisTarget {
     case Month(_ bodyDTO: AnalysisMonthRequestBodyDTO)
     case Week(_ bodyDTO: AnalysisWeekRequestBodyDTO)
     case Detail(_ bodyDTO: AnalysisDetailRequestBodyDTO)
+    case WeekInfo
 }
 
 extension AnalysisTarget: TargetType {
@@ -23,6 +24,8 @@ extension AnalysisTarget: TargetType {
         case .Week:
             return .authorization
         case .Detail:
+            return .authorization
+        case .WeekInfo:
             return .authorization
         }
     }
@@ -35,6 +38,8 @@ extension AnalysisTarget: TargetType {
             return .hasToken
         case .Detail:
             return .hasToken
+        case .WeekInfo:
+            return .hasToken
         }
     }
     
@@ -46,6 +51,8 @@ extension AnalysisTarget: TargetType {
             return .get
         case .Detail:
             return .get
+        case .WeekInfo:
+            return .get
         }
     }
     
@@ -54,9 +61,11 @@ extension AnalysisTarget: TargetType {
         case .Month:
             return "/v1/homeatReport/ofMonth"
         case .Week:
-            return "/v1/homeatReport/ofWeek"
+            return "/v1/homeatReport/ofWeekResult"
         case .Detail:
             return "/v1/home/calendar/daily/details"
+        case .WeekInfo:
+            return "/v1/homeatReport/ofWeekInfo"
         }
     }
     
@@ -68,6 +77,8 @@ extension AnalysisTarget: TargetType {
             return .requestQuery(bodyDTO)
         case .Detail(let bodyDTO):
             return .requestQuery(bodyDTO)
+        case .WeekInfo:
+            return .requestPlain
         }
     }
 

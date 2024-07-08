@@ -44,11 +44,6 @@ class PayCheckViewController : BaseViewController{
         setAddTarget()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        setNavigationBar()
-    }
-    
     //MARK: - setConfigure
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")

@@ -18,4 +18,5 @@ final class NetworkService {
     let infoTalkService: InfoTalkServiceProtocol = InfoTalkService(apiLogger: APIEventLogger())
     let weekLookService: WeekLookServiceProtocol = WeekLookService(apiLogger: APIEventLogger())
     let homeSceneService: HomeSceneServiceProtocol = HomeSceneService(apiLogger: APIEventLogger())
+    let myPageService: MyPageServiceProtocol = MyPageService(apiLogger: APIEventLogger())
 }

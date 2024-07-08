@@ -22,6 +22,9 @@ class SetIncomeViewController: ProgressViewController {
         setSubTitleLabel(subtitle: "용돈, 월급 모두 가능해요!")
         setDetailLabel(detail: "한 달 수입")
         setNextVC(nextVC: SetExpenseViewController())
+        // 탭 제스처 인식기 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     override func setConfigure() {
@@ -62,6 +65,10 @@ class SetIncomeViewController: ProgressViewController {
             $0.top.equalToSuperview().offset(18)
             $0.trailing.equalToSuperview().offset(-18.2)
         }
+    }
+    // 키보드를 숨기는 함수
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
