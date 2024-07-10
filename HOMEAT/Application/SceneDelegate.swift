@@ -14,14 +14,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let onBoardingVC = OnBoardingViewController()
-        let navigationController = UINavigationController(rootViewController: onBoardingVC)
-        self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = navigationController
-        self.window?.makeKeyAndVisible()
-    }
+            
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            
+            // Initialize the window
+            self.window = UIWindow(windowScene: windowScene)
+            
+            // Check if the access token exists
+            let rootViewController: UIViewController
+            if KeychainHandler.shared.accessToken.isEmpty {
+                let onBoardingVC = OnBoardingViewController()
+                let navigationController = UINavigationController(rootViewController: onBoardingVC)
+                rootViewController = navigationController
+            } else {
+                // Access token is present, show home
+                rootViewController = HOMEATTabBarController()
+            }
+            
+            // Set the root view controller
+            self.window?.rootViewController = rootViewController
+            self.window?.makeKeyAndVisible()
+        }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
