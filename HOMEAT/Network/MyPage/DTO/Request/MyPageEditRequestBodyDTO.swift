@@ -8,8 +8,8 @@
 import Foundation
 
 struct MyPageEditRequestBodyDTO: Codable {
-    let email: String
-    let nickname: String
-    let addressId: Int
-    let income : Int
+    let email: String?
+    let nickname: String?
+    let addressId: Int?
+    let income : Int?
 }
