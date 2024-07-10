@@ -182,6 +182,7 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(5)
             $0.leading.equalTo(profileIcon.snp.leading)
+            $0.trailing.equalTo(self.snp.trailing).offset(-20)
         }
         
         scrollView.snp.makeConstraints {
