@@ -20,7 +20,8 @@ class SetBirthViewController: ProgressViewController {
     private let dayPickerView = UIPickerView()
     private let currentYear = Calendar.current.component(.year, from: Date())
     
-    
+    private let userDefaultsKey = "userBirthDate"
+
     override func viewDidLoad() {
         super.viewDidLoad()
         updateProgressBar(progress: 2/5)
@@ -176,10 +177,23 @@ extension SetBirthViewController {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
-        if (yearTextField.text?.isEmpty ?? true) || (monthTextField.text?.isEmpty ?? true) || (dayTextField.text?.isEmpty ?? true) {
+        
+        guard let yearFilled = yearTextField.text,
+              let monthFilled = monthTextField.text,
+              let dayFilled = dayTextField.text else {
             continueButton.isEnabled = false
-        }else {
+            return
+        }
+        
+        if yearFilled.isEmpty || monthFilled.isEmpty || dayFilled.isEmpty {
+            continueButton.isEnabled = false
+        } else {
             continueButton.isEnabled = true
+            
+            let birthDateString = "\(yearFilled)-\(monthFilled)-\(dayFilled)"
+            UserDefaults.standard.set(birthDateString, forKey: userDefaultsKey)
+            print("Birthdate saved to UserDefaults: \(birthDateString)")
         }
     }
+
 }

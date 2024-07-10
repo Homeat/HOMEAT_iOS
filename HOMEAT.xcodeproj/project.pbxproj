@@ -237,6 +237,9 @@
 		58EEF5EB2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EA2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift */; };
 		58EEF5ED2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */; };
 		58EEF5F02C3C768000C12C1E /* CircularImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5EF2C3C768000C12C1E /* CircularImageView.swift */; };
+		58EEF5F22C3CE67100C12C1E /* MyOnboardingRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5F12C3CE67100C12C1E /* MyOnboardingRequestBodyDTO.swift */; };
+		58EEF5F42C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5F32C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift */; };
+		58EEF5F62C3D66B300C12C1E /* EmailJoinResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF5F52C3D66B300C12C1E /* EmailJoinResponseDTO.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -479,6 +482,9 @@
 		58EEF5EA2C3C429900C12C1E /* MyPasswordRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPasswordRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameRequestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF5EF2C3C768000C12C1E /* CircularImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularImageView.swift; sourceTree = "<group>"; };
+		58EEF5F12C3CE67100C12C1E /* MyOnboardingRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOnboardingRequestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF5F32C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCodeResponseDTO.swift; sourceTree = "<group>"; };
+		58EEF5F52C3D66B300C12C1E /* EmailJoinResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailJoinResponseDTO.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -902,6 +908,7 @@
 				011DAFE22BEB6C67000556D0 /* EmailLoginRequestBodyDTO.swift */,
 				01C361C62C26B81000D8ED61 /* EmailCertificationRequestBodyDTO.swift */,
 				01C361CA2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift */,
+				58EEF5F12C3CE67100C12C1E /* MyOnboardingRequestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -915,6 +922,8 @@
 				011DAFE02BEB6C3A000556D0 /* EmailLoginResponseDTO.swift */,
 				01C361C82C26B82F00D8ED61 /* EmailCertificationResponseDTO.swift */,
 				01C361CC2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift */,
+				58EEF5F32C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift */,
+				58EEF5F52C3D66B300C12C1E /* EmailJoinResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -1628,6 +1637,7 @@
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
 				01D530F02BC7C4F9008C368E /* NetworkResult.swift in Sources */,
 				2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */,
+				58EEF5F22C3CE67100C12C1E /* MyOnboardingRequestBodyDTO.swift in Sources */,
 				01C361CD2C26BEF800D8ED61 /* EmailSignUpResponseDTO.swift in Sources */,
 				012382E92BB3F96D0048CC2D /* HomeViewController.swift in Sources */,
 				589CDCF22BE4AEDF00BA332F /* AnalysisMonthRequestBodyDTO.swift in Sources */,
@@ -1635,6 +1645,7 @@
 				58EEF5B12C38590400C12C1E /* ComplainPostRequestBodyDTO.swift in Sources */,
 				011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
+				58EEF5F42C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				58DF7B722C25E57100603763 /* InfoTalkService.swift in Sources */,
 				0309DD412BE7729E00D6133A /* DeclareViewController.swift in Sources */,
@@ -1765,6 +1776,7 @@
 				0309DDB72C031E8F00D6133A /* LatestOrderRequestBodyDTO.swift in Sources */,
 				0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */,
 				01D5313D2BDFCD3C008C368E /* APIRequestLoader.swift in Sources */,
+				58EEF5F62C3D66B300C12C1E /* EmailJoinResponseDTO.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1908,7 +1920,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TSGF3YP7J3;
+				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";
@@ -1937,7 +1949,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = TSGF3YP7J3;
+				DEVELOPMENT_TEAM = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 접근권한";

@@ -51,31 +51,46 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
     
     func refreshToken(completion: @escaping (Bool) -> Void) {
         print("토큰 재발급 시작")
-        NetworkService.shared.onboardingService.postRefreshToken() { [weak self] result in
-            guard let self else {return}
-            switch result {
-            case .success(let data):
-                if data.code == "COMMON_200" {
-                    /// 토큰 재발급에 성공하여 다시 저장.
-                    guard let data = data.data else { return }
-                    print("리프레쉬 토큰을 사용하여 토큰을 재발행하여 저장했습니다. ✅")
-                    KeychainHandler.shared.refreshToken = data.refreshToken
-                    KeychainHandler.shared.accessToken = data.accessToken
+        
+        let url = URL(string: "https://dev.homeat.site/v1/members/reissue")!
+        
+        var urlRequest = URLRequest(url: url)
+        urlRequest.method = .post
+        urlRequest.setValue("Bearer \(KeychainHandler.shared.accessToken)", forHTTPHeaderField: "Authorization")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Include refresh token in the Cookie header
+        let refreshToken = KeychainHandler.shared.refreshToken
+        urlRequest.setValue("refreshToken=\(refreshToken)", forHTTPHeaderField: "Cookie")
+        
+        AF.request(urlRequest).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                print("토큰 재발급 성공: \(value)")
+                if let json = value as? [String: Any],
+                   let data = json["data"] as? [String: Any] {
+                    
+                    if let newAccessToken = data["accessToken"] as? String {
+                        KeychainHandler.shared.accessToken = newAccessToken
+                        print("새로운 AccessToken 저장 ✅: \(newAccessToken)")
+                    }
+                    
+                    if let newRefreshToken = data["refreshToken"] as? String {
+                        KeychainHandler.shared.refreshToken = newRefreshToken
+                        print("새로운 RefreshToken 저장 ✅: \(newRefreshToken)")
+                    }
+                    
                     completion(true)
-                    return
-                } else if data.code == "AUTH_4010" {
-                    print("이미 탈퇴한 사용자로 찾을 수 없습니다.❌")
-//                    self.logout()
+                } else {
+                    completion(false)
                 }
-            case .failure:
-//                self.logout()
-                break
-            default:
+            case .failure(let error):
+                print("토큰 재발급 실패: \(error)")
                 completion(false)
-//                self.logout()
             }
         }
     }
+
     
 //    func logout() {
 //        /// 토큰 초기화 이후 로그인 화면 이동
