@@ -17,9 +17,14 @@ protocol MyPageServiceProtocol {
     func myPageReactivate(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func changePassword(bodyDTO: MyPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func myNicknameExist(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myPageLogout(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class MyPageService: APIRequestLoader<MyPageTarget>, MyPageServiceProtocol {
+    func myPageLogout(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .mypageLogout, responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
     func myNicknameExist(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .myNicknameExist(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
