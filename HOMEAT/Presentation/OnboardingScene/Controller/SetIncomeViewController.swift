@@ -14,10 +14,11 @@ class SetIncomeViewController: ProgressViewController {
     
     private let incomeTextField = UITextField()
     private let unitLabel = UILabel()
-    
+    private let incomeUserDefaultsKey = "userIncome"
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 4/5)
+        updateProgressBar(progress: 3/4)
         setTitleLabel(title: "한 달 수입은\n얼마인가요?")
         setSubTitleLabel(subtitle: "용돈, 월급 모두 가능해요!")
         setDetailLabel(detail: "한 달 수입")
@@ -25,6 +26,12 @@ class SetIncomeViewController: ProgressViewController {
         // 탭 제스처 인식기 추가
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        if let income = UserDefaults.standard.integer(forKey: incomeUserDefaultsKey) as Int? {
+            print("Retrieved income from UserDefaults: \(income)")
+        } else {
+            print("Income not found in UserDefaults")
+        }
     }
     
     override func setConfigure() {
@@ -73,6 +80,13 @@ class SetIncomeViewController: ProgressViewController {
 }
 
 extension SetIncomeViewController {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, let income = Int(text) {
+            UserDefaults.standard.set(income, forKey: incomeUserDefaultsKey)
+            UserDefaults.standard.synchronize()
+            print(incomeUserDefaultsKey)
+        }
+    }
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
         if let char = string.cString(using: String.Encoding.utf8) {

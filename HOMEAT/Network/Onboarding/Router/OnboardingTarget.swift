@@ -16,6 +16,7 @@ enum OnboardingTarget {
     case emailSignUp(_ bodyDTO: EmailSignUpRequestBodyDTO)
     case userInfo
     case postRefreshToken
+    case myOnboarding(_ bodyDTO : MyOnboardingRequestBodyDTO)
 }
 
 extension OnboardingTarget: TargetType {
@@ -30,6 +31,9 @@ extension OnboardingTarget: TargetType {
         case .emailLogin, .emailCertification, .emailSignUp:
             return .emailAuthorization
         
+        case .myOnboarding:
+            return .authorization
+
         }
     }
     
@@ -44,6 +48,8 @@ extension OnboardingTarget: TargetType {
         case .emailLogin, .emailCertification, .emailSignUp:
             return .plain
         
+        case .myOnboarding:
+            return .hasToken
         }
     }
     
@@ -54,6 +60,8 @@ extension OnboardingTarget: TargetType {
         case .userInfo:
             return .get
         
+        case .myOnboarding:
+            return .post
         }
     }
     
@@ -71,7 +79,8 @@ extension OnboardingTarget: TargetType {
             return "/v1/members/email-cerification"
         case .emailSignUp:
             return "/v1/members/join/email"
-        
+        case .myOnboarding:
+            return "/v1/mypage"
         }
     }
     
@@ -87,7 +96,8 @@ extension OnboardingTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case let .emailSignUp(bodyDTO):
             return .requestWithBody(bodyDTO)
-        
+        case let .myOnboarding(bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }

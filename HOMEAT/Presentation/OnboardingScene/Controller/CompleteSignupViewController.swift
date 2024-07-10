@@ -75,7 +75,7 @@ class CompleteSignupViewController: BaseViewController {
     }
     
     @objc func addMoreButtonClicked() {
-        let vc = SetNicknameViewController()
+        let vc = SetBirthViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
 }

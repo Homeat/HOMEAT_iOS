@@ -14,10 +14,11 @@ class SetExpenseViewController: ProgressViewController {
     
     private let expenseTextField = UITextField()
     private let unitLabel = UILabel()
-    
+    private let goalUserDefaultsKey = "userGoalPrice"
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 5/5)
+        updateProgressBar(progress: 4/4)
         setTitleLabel(title: "한 주 목표 식비는\n얼마인가요?")
         setSubTitleLabel(subtitle: "외식, 배달비 모두 포함이에요!")
         setDetailLabel(detail: "한 주 목표 식비")
@@ -49,7 +50,6 @@ class SetExpenseViewController: ProgressViewController {
         }
 
     }
-    
     override func setConstraints() {
         super.setConstraints()
         view.addSubviews(expenseTextField)
@@ -69,15 +69,38 @@ class SetExpenseViewController: ProgressViewController {
     }
     
     @objc override func isContinueButtonTapped(_ sender: UIButton) {
-        let alertController = UIAlertController(title: nil, message: "추가정보입력이 완료되었습니다", preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-            let loginVC = LoginViewController() // 원하는 새로운 뷰 컨트롤러로 변경
-            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                sceneDelegate.changeRootViewController(to: loginVC)
+        guard let nickname = UserDefaults.standard.string(forKey: "userNickname"),
+              let gender = UserDefaults.standard.string(forKey: "Gender"),
+              let birth = UserDefaults.standard.string(forKey: "userBirthDate"),
+              let income = UserDefaults.standard.object(forKey: "userIncome") as? Int,
+              let goalPrice = UserDefaults.standard.object(forKey: "userGoalPrice") as? Int else {
+            
+            print("Error: One or more required UserDefaults values are nil")
+            return
+        }
+    
+        let bodyDTO = MyOnboardingRequestBodyDTO(nickname: nickname, gender: gender, birth: birth, adderessId: 1, income: income, goalPrice: goalPrice)
+        print("Request Body DTO: \(bodyDTO)")
+        NetworkService.shared.onboardingService.myOnboarding(bodyDTO: bodyDTO) { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                print("연결 성공 ")
+                let alertController = UIAlertController(title: nil, message: "추가정보입력이 완료되었습니다", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                    let loginVC = HOMEATTabBarController() // 원하는 새로운 뷰 컨트롤러로 변경
+                    if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                        sceneDelegate.changeRootViewController(to: loginVC)
+                    }
+                }
+                alertController.addAction(okAction)
+                present(alertController, animated: true, completion: nil)
+            default:
+                print("연결 실패 ")
+                
             }
         }
-        alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        
     }
     // 키보드를 숨기는 함수
     @objc private func dismissKeyboard() {
@@ -86,6 +109,13 @@ class SetExpenseViewController: ProgressViewController {
 }
 
 extension SetExpenseViewController {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, let income = Int(text) {
+            UserDefaults.standard.set(income, forKey: goalUserDefaultsKey)
+            UserDefaults.standard.synchronize()
+            print(goalUserDefaultsKey)
+        }
+    }
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
         if let char = string.cString(using: String.Encoding.utf8) {

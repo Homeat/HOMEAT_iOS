@@ -18,7 +18,7 @@ class SetGenderViewController: ProgressViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateProgressBar(progress: 3/5)
+        updateProgressBar(progress: 2/4)
         setTitleLabel(title: "성별을\n선택해주세요.")
         setNextVC(nextVC: SetIncomeViewController())
         setAddTaget()
@@ -107,7 +107,11 @@ class SetGenderViewController: ProgressViewController {
         sender.isSelected.toggle()
         if sender == maleButton {
             femaleButton.isSelected = false
+            UserDefaults.standard.set("MALE", forKey: "Gender")
+
         }else{
+            UserDefaults.standard.set("FEMALE", forKey: "Gender")
+
             maleButton.isSelected = false
         }
         setContinueButtonState()

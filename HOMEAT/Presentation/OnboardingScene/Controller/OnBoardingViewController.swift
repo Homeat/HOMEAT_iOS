@@ -115,12 +115,12 @@ class OnBoardingViewController : BaseViewController {
     
     //MARK: - @objc Func
     @objc private func emailButtonTapped(_ sender: Any) {
-//        let nextVC = LoginViewController()
-//        self.navigationController?.pushViewController(nextVC, animated: true)
-        let tabBarVC = HOMEATTabBarController()
-                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                    sceneDelegate.changeRootViewController(to: tabBarVC)
-                }
+        let nextVC = LoginViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
+//        let tabBarVC = HOMEATTabBarController()
+//                if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+//                    sceneDelegate.changeRootViewController(to: tabBarVC)
+//                }
     }
     
 //    @objc private func kakaoButtonTapped(_ sender: Any) {

@@ -90,6 +90,7 @@ final class LoginViewController : BaseViewController {
             let leftPaddingView = UIView(frame: CGRect(x: 0, y: 0, width: 18, height: $0.frame.height))
             $0.leftView = leftPaddingView
             $0.leftViewMode = .always
+            $0.isSecureTextEntry = true
             $0.attributedPlaceholder = NSAttributedString(string: "비밀번호 입력", attributes: [NSAttributedString.Key.foregroundColor: UIColor(r: 216, g: 216, b: 216)])
         }
         

@@ -50,7 +50,8 @@ extension TargetType {
 extension TargetType {
     func asURLRequest() throws -> URLRequest {
         let url = try baseURL.asURL()
-        let accessToken = KeychainHandler.shared.accessToken
+        print("Current AccessToken: \(KeychainHandler.shared.accessToken)")
+
         var urlRequest = try URLRequest(
             url: url.appendingPathComponent(path),
             method: method
