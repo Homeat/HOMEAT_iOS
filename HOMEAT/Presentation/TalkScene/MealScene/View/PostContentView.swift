@@ -100,6 +100,7 @@ class PostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
             $0.text = "메모내용이 들어갈 자리입니다."
             $0.font = .bodyMedium15
             $0.textColor = .white
+            $0.numberOfLines = 0
         }
         
         scrollView.do {
