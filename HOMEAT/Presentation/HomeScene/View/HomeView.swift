@@ -77,7 +77,7 @@ class HomeView: BaseView {
     override func setConstraints() {
         super.setConstraints()
         self.addSubviews(leftHole, rightHole, character, goalLabel, leftMoneyLabel, pieChart, editButton)
-        
+        let circleSize: CGFloat = 16
         leftHole.snp.makeConstraints {
             $0.top.equalTo(self).offset(15)
             $0.width.equalTo(15.1)
@@ -93,7 +93,7 @@ class HomeView: BaseView {
         }
         
         goalLabel.snp.makeConstraints {
-            $0.top.equalTo(self).offset(42)
+            $0.top.equalTo(self).offset(35)
             $0.centerX.equalToSuperview()
         }
         
@@ -110,8 +110,8 @@ class HomeView: BaseView {
         pieChart.snp.makeConstraints {
             $0.top.equalTo(leftMoneyLabel.snp.bottom).offset(8)
             $0.centerX.equalTo(leftMoneyLabel)
-            $0.width.equalTo(206)
-            $0.height.equalTo(206)
+            $0.width.equalToSuperview().multipliedBy(0.45)
+            $0.height.equalTo(pieChart.snp.width)
         }
         
         character.snp.makeConstraints {

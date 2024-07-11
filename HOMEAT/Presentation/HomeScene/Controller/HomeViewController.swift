@@ -43,13 +43,13 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         
         welcomeLabel.do {
             $0.text = StringLiterals.Home.main.welcome
-            $0.font = .headBold24
+            $0.font = dynamicFont(for: .headline)
             $0.textColor = .white
         }
         
         savingLabel.do {
             $0.text = StringLiterals.Home.main.saving
-            $0.font = .bodyBold18
+            $0.font = dynamicFont(for: .body)
             $0.textColor = .white
         }
         
@@ -101,12 +101,14 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - setConstraints
     override func setConstraints() {
         view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
-        let buttonHeight: CGFloat = UIScreen.main.bounds.height * 0.07
+        let buttonSpacing: CGFloat = 10.0
+        let buttonHeight: CGFloat = UIScreen.main.bounds.height * 0.065
         let viewHeight: CGFloat = UIScreen.main.bounds.height * 0.4
         HomeatLogo.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(72)
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.equalToSuperview().offset(20)
-            
+            $0.height.equalTo(25)
+            $0.width.equalTo(100)
         }
         
         welcomeLabel.snp.makeConstraints {
@@ -134,10 +136,11 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         }
         
         payCheckButton.snp.makeConstraints {
+            $0.top.equalTo(payAddButton.snp.bottom).offset(buttonSpacing)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(buttonHeight)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-40)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-35)
         }
     }
     
@@ -221,5 +224,9 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     
     func editButtonTapped() {
         present(editAlert, animated: true)
+    }
+    private func dynamicFont(for textStyle: UIFont.TextStyle) -> UIFont {
+        let userFont = UIFont.preferredFont(forTextStyle: textStyle)
+        return UIFontMetrics(forTextStyle: textStyle).scaledFont(for: userFont)
     }
 }

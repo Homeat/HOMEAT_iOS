@@ -39,7 +39,12 @@ class TermsViewController: BaseViewController {
         setAddTarget()
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
-    
+    // MARK: Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tabBarController?.tabBar.isTranslucent = true
+        self.tabBarController?.tabBar.isHidden = true
+    }
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "turquoiseGray2")
         

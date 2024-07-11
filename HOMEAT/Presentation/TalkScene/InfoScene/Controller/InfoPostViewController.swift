@@ -300,7 +300,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         }
         
         if let context = currentReplyContext {
-            let request = InfoReplyRequestBodyDTO(id: context.id, content: content)
+            let request = InfoReplyRequestBodyDTO(commentId: context.id, content: content)
             NetworkService.shared.infoTalkService.replyComment(bodyDTO: request) { [weak self] response in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -318,7 +318,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
             }
         } else {
             guard let infoTalkId = self.postId else { return }
-            let bodyDTO = InfoCommentRequestBodyDTO(id: infoTalkId, content: content)
+            let bodyDTO = InfoCommentRequestBodyDTO(postId: infoTalkId, content: content)
             NetworkService.shared.infoTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -487,11 +487,19 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
         let comment = comments[indexPath.section]
         
         if currentRow == 0 {
+            print("Current Comment ID: \(comment.commentId)")
+            print("Current Comment Nickname: \(comment.commentNickName)")
+            commentNickname = comment.commentNickName
+            commentId = comment.commentId
             currentReplyContext = (isComment: true, id: comment.commentId)
         } else {
             currentRow -= 1
             if let replies = comment.infoTalkReplies, currentRow < replies.count {
-                currentReplyContext = (isComment: false, id: replies[currentRow].replyId)
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                commentNickname = replies[currentRow].replyNickName
+                commentId = replyId
+                currentReplyContext = (isComment: false, id: replyId)
             }
         }
         
@@ -512,22 +520,15 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
                 
             }))
         } else {
-            if currentReplyContext!.isComment {
-                actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
-                    guard let indexPath = self.tableView.indexPath(for: cell) else { return }
-                    let comment = self.comments[indexPath.section]
-                    let nextVC = CommentDeclareViewController()
-                    nextVC.commentId = comment.commentId
-                    self.navigationController?.pushViewController(nextVC, animated: true)
-                }))
-            } else {
-                actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
-                    let replyId = self.comments[indexPath.section].infoTalkReplies?[currentRow].replyId
-                    let nextVC = InfoCommentDeclareViewController()
-                    nextVC.replyId = replyId
-                    self.navigationController?.pushViewController(nextVC, animated: true)
-                }))
-            }
+          
+               actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+                   // 신고 로직
+           guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+           let comment = self.comments[indexPath.section]
+           let nextVC = InfoCommentDeclareViewController()
+                   nextVC.commentId = comment.commentId
+           self.navigationController?.pushViewController(nextVC, animated: true)
+           }))
         }
         
         // 취소
@@ -538,6 +539,5 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
             self.present(actionSheet, animated: true, completion: nil)
         }
     }
-    
-}
 
+}
