@@ -169,9 +169,21 @@ class MyPageViewController: BaseViewController {
     }
     
     private func performLogout() {
-        let loginViewController = LoginViewController()
-        self.navigationController?.pushViewController(loginViewController, animated: true)
-        print("User logged out")
+
+        NetworkService.shared.myPageService.myPageLogout() { [weak self] response in
+            guard let self = self else { return }
+            switch response {
+            case .success(let data):
+                print("연결성공")
+                KeychainHandler.shared.accessToken = ""
+                let loginViewController = LoginViewController()
+                self.navigationController?.pushViewController(loginViewController, animated: true)
+            default:
+                print("연결실패")
+                
+            }
+            print("User logged out")
+        }
     }
     private func updateUser() {
         NetworkService.shared.myPageService.mypage() { [weak self] response in

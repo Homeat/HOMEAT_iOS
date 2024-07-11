@@ -9,6 +9,7 @@ import UIKit
 import Then
 
 class LeaveViewController: BaseViewController {
+    private var selectedOptionButton: UIButton?
     private let WhyLabel = UILabel().then {
         $0.text = "탈퇴하는 이유가 무엇인가요?"
         $0.textColor = UIColor.white
@@ -27,7 +28,7 @@ class LeaveViewController: BaseViewController {
         button.layer.borderColor = UIColor(r: 187, g: 187, b: 187).cgColor
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        //button.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
+        button.addTarget(self, action: #selector(option1Acttion), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -42,7 +43,7 @@ class LeaveViewController: BaseViewController {
         button.layer.borderColor = UIColor(r: 187, g: 187, b: 187).cgColor
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        //button.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
+        button.addTarget(self, action: #selector(option2Acttion), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -57,7 +58,7 @@ class LeaveViewController: BaseViewController {
         button.layer.borderColor = UIColor(r: 187, g: 187, b: 187).cgColor
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        //button.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
+        button.addTarget(self, action: #selector(option3Acttion), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -72,7 +73,7 @@ class LeaveViewController: BaseViewController {
         button.layer.borderColor = UIColor(r: 187, g: 187, b: 187).cgColor
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        //button.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
+        button.addTarget(self, action: #selector(option4Acttion), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -87,7 +88,7 @@ class LeaveViewController: BaseViewController {
         button.layer.borderColor = UIColor(r: 187, g: 187, b: 187).cgColor
         button.contentHorizontalAlignment = .left
         button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
-        //button.addTarget(self, action: #selector(optionActtion), for: .touchUpInside)
+        button.addTarget(self, action: #selector(option5Acttion), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -126,6 +127,7 @@ class LeaveViewController: BaseViewController {
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
+        tabBarController?.tabBar.isTranslucent = false
     }
     func addSubviws() {
         view.addSubview(WhyLabel)
@@ -181,6 +183,32 @@ class LeaveViewController: BaseViewController {
     @objc func jump() {
         let leaveViewController = FinalLeaveViewController()
         self.navigationController?.pushViewController(leaveViewController, animated: true)
+    }
+    @objc func option1Acttion() {
+        handleButtonSelection(optionButton: optionButton1)
+    }
+    @objc func option2Acttion() {
+        handleButtonSelection(optionButton: optionButton2)
+    }
+    @objc func option3Acttion() {
+        handleButtonSelection(optionButton: optionButton3)
+    }
+    @objc func option4Acttion() {
+        handleButtonSelection(optionButton: optionButton4)
+    }
+    @objc func option5Acttion() {
+        handleButtonSelection(optionButton: optionButton5)
+    }
+    
+    func handleButtonSelection(optionButton: UIButton) {
+        if selectedOptionButton == nil {
+            selectedOptionButton = optionButton
+            optionButton.backgroundColor = .gray
+        } else {
+            selectedOptionButton?.backgroundColor = nil
+            selectedOptionButton = optionButton
+            optionButton.backgroundColor = .gray
+        }
     }
     //뒤로가기
     @objc func back(_ sender: Any) {

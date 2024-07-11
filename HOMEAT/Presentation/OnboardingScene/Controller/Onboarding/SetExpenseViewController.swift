@@ -110,12 +110,17 @@ class SetExpenseViewController: ProgressViewController {
 
 extension SetExpenseViewController {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, let income = Int(text) {
-            UserDefaults.standard.set(income, forKey: goalUserDefaultsKey)
-            UserDefaults.standard.synchronize()
-            print(goalUserDefaultsKey)
-        }
+        handleExpenseTextFieldEditing(textField.text)
     }
+    private func handleExpenseTextFieldEditing(_ text: String?) {
+        guard let text = text, let income = Int(text) else { return }
+        let formattedText = income.formattedWithSeparator
+        expenseTextField.text = formattedText
+        UserDefaults.standard.set(income, forKey: goalUserDefaultsKey)
+        UserDefaults.standard.synchronize()
+        print(goalUserDefaultsKey)
+        }
+
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)
         if let char = string.cString(using: String.Encoding.utf8) {

@@ -259,6 +259,7 @@ final class LoginViewController : BaseViewController {
     }
     
     func setNavigation() {
+        self.navigationItem.hidesBackButton = true
         self.navigationItem.title = "로그인"
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
     }

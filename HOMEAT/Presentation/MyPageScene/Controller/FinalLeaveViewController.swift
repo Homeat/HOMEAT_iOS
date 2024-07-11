@@ -16,7 +16,6 @@ class FinalLeaveViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigationBar()
-        updateServer()
         view.backgroundColor = UIColor(r: 30, g: 32, b: 33)
 
     }
@@ -44,6 +43,7 @@ class FinalLeaveViewController: BaseViewController {
                 $0.backgroundColor = UIColor.turquoiseGreen
                 $0.layer.cornerRadius = 10
                 $0.layer.masksToBounds = true
+                $0.addTarget(self, action: #selector(tappedLeave), for: .touchUpInside)
             }
             
             checkLabel.do {
@@ -83,6 +83,11 @@ class FinalLeaveViewController: BaseViewController {
             $0.top.equalTo(checkLabel.snp.bottom).offset(20)
             $0.leading.equalTo(checkLabel.snp.leading)
         }
+    }
+    @objc private func tappedLeave() {
+        updateServer()
+        let nextVC = LoginViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
     }
     private func updateServer() {
         NetworkService.shared.myPageService.myPageWithDraw() { [weak self] response in

@@ -101,7 +101,8 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - setConstraints
     override func setConstraints() {
         view.addSubviews(HomeatLogo, welcomeLabel, savingLabel, payAddButton, payCheckButton, mainView)
-        
+        let buttonHeight: CGFloat = UIScreen.main.bounds.height * 0.07
+        let viewHeight: CGFloat = UIScreen.main.bounds.height * 0.4
         HomeatLogo.snp.makeConstraints {
             $0.top.equalToSuperview().offset(72)
             $0.leading.equalToSuperview().offset(20)
@@ -122,21 +123,21 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
             $0.top.equalTo(savingLabel.snp.bottom).offset(20)
             $0.leading.equalTo(HomeatLogo)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(353)
+            $0.height.equalTo(viewHeight)
         }
         
         payAddButton.snp.makeConstraints {
             $0.top.equalTo(mainView.snp.bottom).offset(37)
             $0.leading.equalTo(HomeatLogo)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(49)
+            $0.height.equalTo(buttonHeight)
         }
         
         payCheckButton.snp.makeConstraints {
-            $0.top.equalTo(payAddButton.snp.bottom).offset(18)
-            $0.leading.equalTo(HomeatLogo)
+            $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
-            $0.height.equalTo(49)
+            $0.height.equalTo(buttonHeight)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-40)
         }
     }
     

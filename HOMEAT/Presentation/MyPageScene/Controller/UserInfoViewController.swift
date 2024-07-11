@@ -89,25 +89,25 @@ class UserInfoViewController: BaseViewController {
         profileview.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
-            $0.width.height.equalTo(120)
+            $0.width.height.equalTo(110)
         }
         profileImageView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(20)
         }
         newProfileImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
             $0.width.height.equalTo(130)
         }
         userInfoTableView.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
+            $0.top.equalTo(newProfileImageView.snp.bottom).offset(45)
             $0.leading.equalToSuperview().offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(240)
         }
         profileEditIcon.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(130)
-            $0.bottom.equalTo(userInfoTableView.snp.top).offset(10)
+            $0.bottom.equalTo(userInfoTableView.snp.top).offset(-35)
             $0.width.height.equalTo(40)
         }
     }
@@ -152,7 +152,9 @@ class UserInfoViewController: BaseViewController {
                 }
                 self.nickName = data.nickname
                 self.emailAdress = data.email
+                UserDefaults.standard.set(data.email, forKey: "userEmail")
                 self.incom = data.income
+                UserDefaults.standard.set(data.income, forKey: "userIncome")
                 self.birth = data.birth
                 DispatchQueue.main.async {
                     self.userInfoTableView.reloadData()
@@ -384,8 +386,6 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
         case 0:
             cell.titleLabel.text = "닉네임"
             cell.descriptionLabel.text = nickName
-            cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
-            
         case 1:
             cell.titleLabel.text = "생일"
             cell.arrowButton.isHidden = true
@@ -396,22 +396,28 @@ extension UserInfoViewController: UITableViewDataSource, UITableViewDelegate {
             cell.descriptionLabel.text = emailAdress
         case 3:
             cell.titleLabel.text = "한 달 수입"
-            cell.descriptionLabel.text = String(incom)
-            cell.arrowButton.addTarget(self, action: #selector(buttonClicked), for: .touchUpInside)
+            cell.descriptionLabel.text = "\(incom.formattedWithSeparator) 원"
         default:
             break
         }
         cell.bringSubviewToFront(cell.arrowButton)
         return cell
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            switch indexPath.row {
+            case 0:
+                let userInfoModifyViewController = UserInfoModifyViewController()
+                self.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
+            case 3:
+                let userIncomeEditViewController = EditIncomeViewController()
+                self.navigationController?.pushViewController(userIncomeEditViewController, animated: true)
+                
+            default:
+                break
+            }
+        }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
-    }
-    
-    @objc func buttonClicked(sender: UIButton) {
-        let userInfoModifyViewController = UserInfoModifyViewController()
-        self.navigationController?.pushViewController(userInfoModifyViewController, animated: true)
     }
     
 

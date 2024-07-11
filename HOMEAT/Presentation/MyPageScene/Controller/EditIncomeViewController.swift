@@ -132,7 +132,7 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
                     showAlert(message: "유효한 수입을 입력해주세요.")
                     return
                 }
-        let bodyDTO = MyPageEditRequestBodyDTO(email: nil, nickname: nil, addressId: 1, income: Int(income))
+        let bodyDTO = MyPageEditRequestBodyDTO(email: nil, nickname: nil,addressId: 1, income: Int(income))
         NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
             guard let self = self else { return }
             switch response {
