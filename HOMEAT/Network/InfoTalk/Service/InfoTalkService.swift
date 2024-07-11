@@ -14,8 +14,7 @@ protocol InfoTalkServiceProtocol {
     func oldestOrder(bodyDTO: OldestInfoRequestBodyDTO, completion: @escaping (NetworkResult<OldestInfoResponseDTO>) -> Void)
     func loveOrder(bodyDTO: LoveInfoRequestBodyDTO, completion: @escaping (NetworkResult<LoveInfoResponseDTO>) -> Void)
     func postReport(queryDTO: PostInfoRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<PostInfoResponseDTO>>) -> Void) //게시글 서버연동
-    func commentWrite(bodyDTO: InfoCommentRequestBodyDTO, completion:
-    @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func commentWrite(bodyDTO: InfoCommentRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func lovePost(bodyDTO: InfoLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func deleteLove(bodyDTO: InfoDeleteLoveRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func complainPost(bodyDTO: ComplainPostRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)

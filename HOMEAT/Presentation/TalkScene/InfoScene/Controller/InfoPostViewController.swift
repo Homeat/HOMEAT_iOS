@@ -60,6 +60,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         updatePost()
         
         self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
+        print("유저닉네임:\(self.currentItsMe)")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -300,7 +301,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         }
         
         if let context = currentReplyContext {
-            let request = InfoReplyRequestBodyDTO(id: context.id, content: content)
+            let request = InfoReplyRequestBodyDTO(commentId: context.id, content: content)
             NetworkService.shared.infoTalkService.replyComment(bodyDTO: request) { [weak self] response in
                 guard let self = self else { return }
                 DispatchQueue.main.async {
@@ -318,7 +319,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
             }
         } else {
             guard let infoTalkId = self.postId else { return }
-            let bodyDTO = InfoCommentRequestBodyDTO(id: infoTalkId, content: content)
+            let bodyDTO = InfoCommentRequestBodyDTO(postId: infoTalkId, content: content)
             NetworkService.shared.infoTalkService.commentWrite(bodyDTO: bodyDTO) { [weak self] response in
                 guard let self = self else { return }
                 DispatchQueue.main.async {

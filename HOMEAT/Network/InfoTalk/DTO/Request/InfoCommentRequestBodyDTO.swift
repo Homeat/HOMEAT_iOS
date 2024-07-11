@@ -8,7 +8,7 @@
 import Foundation
 
 struct InfoCommentRequestBodyDTO: Codable {
-    let id: Int
+    let postId: Int
     let content: String
 }
 
