@@ -131,6 +131,11 @@
 		0309DDF32C1DCE7A00D6133A /* ViewOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF22C1DCE7A00D6133A /* ViewOrderResponseDTO.swift */; };
 		0309DDF52C1DCEAE00D6133A /* OldestOrderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */; };
 		0309DDF92C3BB2C300D6133A /* ComplainReplyRequestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDF82C3BB2C300D6133A /* ComplainReplyRequestBodyDTO.swift */; };
+		0309DDFB2C3E53A700D6133A /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDFA2C3E53A700D6133A /* TermsViewController.swift */; };
+		0309DDFF2C3F679D00D6133A /* FirstPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DDFE2C3F679D00D6133A /* FirstPolicyViewController.swift */; };
+		0309DE012C3F67AC00D6133A /* SecondPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DE002C3F67AC00D6133A /* SecondPolicyViewController.swift */; };
+		0309DE032C3F67C100D6133A /* ThirdPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DE022C3F67C100D6133A /* ThirdPolicyViewController.swift */; };
+		0309DE052C3F67D000D6133A /* ForthPolicyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0309DE042C3F67D000D6133A /* ForthPolicyViewController.swift */; };
 		2D834D7B2BFAEBA700A93860 /* SetDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7A2BFAEBA700A93860 /* SetDistrictViewController.swift */; };
 		2D834D7D2BFAF22C00A93860 /* SearchDistrictViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */; };
 		2DA59CDF2BEBA23700A86CF9 /* ProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA59CDE2BEBA23700A86CF9 /* ProgressViewController.swift */; };
@@ -377,6 +382,11 @@
 		0309DDF42C1DCEAE00D6133A /* OldestOrderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldestOrderResponseDTO.swift; sourceTree = "<group>"; };
 		0309DDF62C259C2000D6133A /* PhotoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManager.swift; sourceTree = "<group>"; };
 		0309DDF82C3BB2C300D6133A /* ComplainReplyRequestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplainReplyRequestBodyDTO.swift; sourceTree = "<group>"; };
+		0309DDFA2C3E53A700D6133A /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
+		0309DDFE2C3F679D00D6133A /* FirstPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstPolicyViewController.swift; sourceTree = "<group>"; };
+		0309DE002C3F67AC00D6133A /* SecondPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondPolicyViewController.swift; sourceTree = "<group>"; };
+		0309DE022C3F67C100D6133A /* ThirdPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdPolicyViewController.swift; sourceTree = "<group>"; };
+		0309DE042C3F67D000D6133A /* ForthPolicyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForthPolicyViewController.swift; sourceTree = "<group>"; };
 		2D1C01C32BBF088800235836 /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		2D4755DB2C021EB700E014A9 /* DeclareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeclareView.swift; sourceTree = "<group>"; };
 		2D4755DC2C021EB700E014A9 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
@@ -859,11 +869,19 @@
 				58EEF6032C3EE9C600C12C1E /* Onboarding */,
 				01D530FA2BCFB7BB008C368E /* OnBoardingViewController.swift */,
 				01D531012BD14D89008C368E /* LoginViewController.swift */,
+				0309DDFA2C3E53A700D6133A /* TermsViewController.swift */,
 				016B9B2F2C0AFCA3009D2996 /* SignUpViewController.swift */,
 				01C361CE2C26EC5000D8ED61 /* CompleteSignupViewController.swift */,
 				016B9B312C0B26EE009D2996 /* FindPasswordViewController.swift */,
 				2D834D7C2BFAF22C00A93860 /* SearchDistrictViewController.swift */,
 				58EEF6012C3EE9C100C12C1E /* FinishPasswordViewController.swift */,
+				2DA59CE92BF3AFC500A86CF9 /* SetIncomeViewController.swift */,
+				2DA59CEB2BF3B68D00A86CF9 /* SetExpenseViewController.swift */,
+				0309DDFE2C3F679D00D6133A /* FirstPolicyViewController.swift */,
+				0309DE002C3F67AC00D6133A /* SecondPolicyViewController.swift */,
+				0309DE022C3F67C100D6133A /* ThirdPolicyViewController.swift */,
+				0309DE042C3F67D000D6133A /* ForthPolicyViewController.swift */,
+
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1639,6 +1657,7 @@
 				012383902BBAA2C70048CC2D /* Fonts.swift in Sources */,
 				58EEF6002C3EB82000C12C1E /* PresentIncomeView.swift in Sources */,
 				01D531392BDFCC27008C368E /* OnboardingService.swift in Sources */,
+				0309DE052C3F67D000D6133A /* ForthPolicyViewController.swift in Sources */,
 				0309DDEB2C1DCC8400D6133A /* OldestOrderRequestBodyDTO.swift in Sources */,
 				589CDD502BE75A1200BA332F /* AnalysisWeekRequestBodyDTO.swift in Sources */,
 				0309DD522BF7263200D6133A /* RecipeStepCell.swift in Sources */,
@@ -1661,6 +1680,8 @@
 				011DAFD62BE3ABA8000556D0 /* PayCheckView.swift in Sources */,
 				0309DDA22C02046A00D6133A /* FoodTalkTarget.swift in Sources */,
 				0309DDE12C0AF66C00D6133A /* CommentDeclareWriteViewController.swift in Sources */,
+				0309DDFB2C3E53A700D6133A /* TermsViewController.swift in Sources */,
+				0309DE012C3F67AC00D6133A /* SecondPolicyViewController.swift in Sources */,
 				589CDD562BE7A73D00BA332F /* AnalysisWeekResponseDTO.swift in Sources */,
 				58E88E822BF92B2100775F06 /* InfoPostContentView.swift in Sources */,
 				01D5310B2BDF78C4008C368E /* BaseResponse.swift in Sources */,
@@ -1688,8 +1709,10 @@
 				0123833F2BB7ECCD0048CC2D /* StringLiterals.swift in Sources */,
 				01D530F22BC7E8F1008C368E /* TargetType.swift in Sources */,
 				58DF7C112C2D2A3100603763 /* CalendarCheckRequestBodyDTO.swift in Sources */,
+				0309DE032C3F67C100D6133A /* ThirdPolicyViewController.swift in Sources */,
 				58EEF5BB2C3945ED00C12C1E /* InfoDeclareWriteViewController.swift in Sources */,
 				58E88E792BF9091500775F06 /* InfoTalkViewController.swift in Sources */,
+				0309DDFF2C3F679D00D6133A /* FirstPolicyViewController.swift in Sources */,
 				012382E52BB3F96D0048CC2D /* AppDelegate.swift in Sources */,
 				0309DDAB2C021AAA00D6133A /* FoodTalkService.swift in Sources */,
 				01C361CB2C26BEE700D8ED61 /* EmailSignUpRequestBodyDTO.swift in Sources */,
