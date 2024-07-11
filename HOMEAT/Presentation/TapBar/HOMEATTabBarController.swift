@@ -23,10 +23,10 @@ class HOMEATTabBarController: UITabBarController {
         let talkVC = TalkViewController()
         let mypageVC = MyPageViewController()
         
-        homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: nil)
-        reportVC.tabBarItem = UITabBarItem(title: "홈잇리포트", image: UIImage(systemName: "star"), selectedImage: nil)
-        talkVC.tabBarItem = UITabBarItem(title: "홈잇토크", image: UIImage(systemName: "plus"), selectedImage: nil)
-        mypageVC.tabBarItem = UITabBarItem(title: "마이페이지", image: UIImage(systemName: "gear"), selectedImage: nil)
+        homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(named: "hometab"), selectedImage: UIImage(named: "hometab2"))
+        reportVC.tabBarItem = UITabBarItem(title: "홈잇리포트", image: UIImage(named: "homeatreport"), selectedImage: UIImage(named: "homeatreport1"))
+        talkVC.tabBarItem = UITabBarItem(title: "홈잇토크", image: UIImage(named: "talktab"), selectedImage: UIImage(named: "talktab2"))
+        mypageVC.tabBarItem = UITabBarItem(title: "마이페이지", image: UIImage(named: "profiletab"), selectedImage: UIImage(named: "profiletab2"))
         
         let controllers = [homeVC, reportVC, talkVC, mypageVC]
         self.viewControllers = controllers.map { UINavigationController(rootViewController: $0) }
@@ -34,6 +34,7 @@ class HOMEATTabBarController: UITabBarController {
     }
     
     private func setupTabBarAppearance() {
+        tabBar.isTranslucent = false
         setTabBarColors(
             backgroundColor: UIColor(r: 54, g: 56, b: 57),
             tintColor: UIColor(r: 7, g: 231, b: 149),

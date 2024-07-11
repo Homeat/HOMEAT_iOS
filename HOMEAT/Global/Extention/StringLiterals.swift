@@ -52,30 +52,29 @@ enum StringLiterals {
     }
     
     enum Home {
-        enum Detail {
-            static let participantsTitle = "참여현황"
-            static let slash = "/"
-            static let complete = "모집완료"
-            static let dateTimeTitle = "일시"
-            static let locationTitle = "장소"
-            static let talkButton = "대화하기"
-            static let participationButton = "참여하기"
-            static let backButton = "돌아가기"
+        enum main {
+            static let welcome = "예진 님 훌륭해요!"
+            static let saving = "저번주 보다 8% 절약하고 있어요"
+            enum mainButton {
+                static let add = "지출 추가"
+                static let check = "지출 확인"
+            }
+            enum HomeView {
+                static let goal = "목표 70,000원"
+                static let left = "43,800원"
+            }
+            enum Alert {
+                static let title = "목표를 변경하시겠어요?"
+                static let message = "변경하신 목표는 다음주부터 적용됩니다."
+                static let yes = "예"
+                static let no = "아니오"
+                static let textField = "목표를 입력해주세요"
+            }
         }
-        
-        enum Participants {
-            static let participationTitle = "참여현황"
-            static let meetingOwner = "개최자"
-        }
-        
-        enum List {
-            static let sortRecent = "최신등록순"
-            static let sortImminent = "날짜임박순"
-        }
-        
-        enum Search {
-            static let searchMapPlaceHolder = "장소 이름 검색"
-            static let searchEmptyLabel = "검색 결과가 없어요"
+        enum editDone {
+            static let title = "목표 변경 완료"
+            static let message = "다음주 목표가 변경되었습니다."
+            static let button = "돌아가기"
         }
     }
     
@@ -146,4 +145,5 @@ enum StringLiterals {
         static let notFoundMeeting = "존재하지 않는 번개입니다"
         static let notFoundMember = "존재하지 않는 유저미팅입니다."
     }
+    
 }

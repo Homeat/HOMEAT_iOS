@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -13,15 +14,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        
-        let window = UIWindow(windowScene: windowScene)
-        window.rootViewController = HOMEATTabBarController()
-        self.window = window
-        window.makeKeyAndVisible()
+            
+            guard let windowScene = (scene as? UIWindowScene) else { return }
+            
+            // Initialize the window
+            self.window = UIWindow(windowScene: windowScene)
+            
+            // Check if the access token exists
+            let rootViewController: UIViewController
+            if KeychainHandler.shared.accessToken.isEmpty {
+                let onBoardingVC = OnBoardingViewController()
+                let navigationController = UINavigationController(rootViewController: onBoardingVC)
+                rootViewController = navigationController
+            } else {
+                // Access token is present, show home
+                rootViewController = HOMEATTabBarController()
+            }
+            
+            // Set the root view controller
+            self.window?.rootViewController = rootViewController
+            self.window?.makeKeyAndVisible()
+        }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
+    }
+    
+    func changeRootViewController(to viewController: UIViewController, animated: Bool = true) {
+        guard let window = self.window else { return }
+        window.rootViewController = viewController
+        if animated {
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil, completion: nil)
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -54,4 +82,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     
 }
-
