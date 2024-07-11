@@ -357,28 +357,36 @@ class InfoWriteViewController: BaseViewController {
     
     @objc func saveButtonTapped() {
         guard let title = nameTextField.text, !title.isEmpty, !memoTextView.text.isEmpty else {
-            let alert = UIAlertController(title: "입력 필요", message: "제목과 내용을 모두 입력해 주세요.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "입력 필요", message: "제목과 내용을 모두 입력해 주세요.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             return
         }
-        if title.count >= 15 {
-            let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+        if title.count >= 10 {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             return
         }
         
-        if memoTextView.text.count >= 130 {
-            let alert = UIAlertController(title: "내용 길이 초과", message: "내용이 너무 길어요", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+        if memoTextView.text.count >= 100 {
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "내용 길이 초과", message: "내용이 너무 길어요", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
             return
         }
-        let imageDataArray = selectedImages.compactMap {$0.jpegData(compressionQuality:0.8)}
-        let infotalkRequest = InfoTalkSaveRequestBodyDTO (
+        
+        let imageDataArray = selectedImages.compactMap { $0.jpegData(compressionQuality: 0.8) }
+        let infotalkRequest = InfoTalkSaveRequestBodyDTO(
             title: title, content: memoTextView.text, tags: selectedTags, imgUrl: imageDataArray)
         print(infotalkRequest)
+        
         NetworkService.shared.infoTalkService.infoTalkSave(bodyDTO: infotalkRequest) { response in
             switch response {
             case .success(_):
@@ -393,15 +401,19 @@ class InfoWriteViewController: BaseViewController {
                         self.navigationController?.pushViewController(talkVC, animated: true)
                         talkVC.switchToInfoTalk()
                     }
-                    
                 }
                 print("데이터 서버 연동 성공")
             default:
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "오류", message: "서버 연동 실패", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
                 print("데이터 서버 연동 실패")
             }
         }
     }
-    
+
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let keyboardHeight = keyboardSize.height

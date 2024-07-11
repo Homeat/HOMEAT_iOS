@@ -136,8 +136,9 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     self.tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
                     NotificationCenter.default.post(name: NSNotification.Name("InfoCommentDeleteChanged"), object: nil)
                     self.updatePost()
+                    
                 default:
-                    print("게시글 삭제 실패")
+                    print("댓글 삭제 실패")
                 }
             }
         }
@@ -326,9 +327,9 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     case .success:
                         print("성공 댓글 저장 완료")
                         self.replyTextField.text = ""
+                        self.updatePost()
                         self.dismissKeyboard()
                         self.scrollToBottom()
-                        self.updatePost()
                     default:
                         print("댓글 저장 실패")
                     }
@@ -521,7 +522,7 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
             }))
         } else {
           
-               actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: "댓글 신고", style: .default, handler: { (_) in
                    // 신고 로직
            guard let indexPath = self.tableView.indexPath(for: cell) else { return }
            let comment = self.comments[indexPath.section]

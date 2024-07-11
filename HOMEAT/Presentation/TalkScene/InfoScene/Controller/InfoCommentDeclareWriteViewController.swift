@@ -53,6 +53,7 @@ class InfoCommentDeclareWriteViewController: BaseViewController {
             $0.textColor = UIColor(r: 216, g: 216, b: 216)
             $0.font = .systemFont(ofSize: 16, weight: .medium)
             $0.textContainerInset = UIEdgeInsets(top: 15.0, left: 15.0, bottom: 0, right: 0)
+            $0.delegate = self
             $0.layer.cornerRadius = 10
         }
         
@@ -110,7 +111,7 @@ class InfoCommentDeclareWriteViewController: BaseViewController {
     }
     
     private func setNavigation() {
-        self.navigationItem.title = "게시글 신고하기"
+        self.navigationItem.title = "댓글 신고하기"
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
@@ -147,23 +148,23 @@ class InfoCommentDeclareWriteViewController: BaseViewController {
             }
         } else if let replyId = replyId {
             let bodyDTO = ComplainReplyRequestBodyDTO(replyId: replyId)
-//            NetworkService.shared.infoTalkService.complainReply(bodyDTO: bodyDTO) { response in
-//                switch response {
-//                case .success(let data):
-//                    print("대댓글신고하기 성공")
-//                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
-//                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-//                        if let viewControllers = self.navigationController?.viewControllers {
-//                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
-//                            self.navigationController?.popToViewController(targetViewController, animated: true)
-//                        }
-//                    }
-//                    alertController.addAction(okAction)
-//                    self.present(alertController, animated: true, completion: nil)
-//                default:
-//                    print("신고하기 실패")
-//                }
-//            }
+            NetworkService.shared.infoTalkService.complainReply(bodyDTO: bodyDTO) { response in
+                switch response {
+                case .success(let data):
+                    print("대댓글신고하기 성공")
+                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+                        if let viewControllers = self.navigationController?.viewControllers {
+                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
+                            self.navigationController?.popToViewController(targetViewController, animated: true)
+                        }
+                    }
+                    alertController.addAction(okAction)
+                    self.present(alertController, animated: true, completion: nil)
+                default:
+                    print("신고하기 실패")
+                }
+            }
         }
     }
 }
@@ -209,10 +210,9 @@ extension InfoCommentDeclareWriteViewController: UITextFieldDelegate, UITextView
         }
     }
     
-    func textViewShhouldReturn(_ textView: UITextView) -> Bool{
+    private func textViewShouldReturn(_ textView: UITextView) -> Bool{
         // 키보드 내리면서 동작
         textView.resignFirstResponder()
         return true
     }
 }
-

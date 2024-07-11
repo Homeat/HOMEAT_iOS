@@ -200,7 +200,7 @@ extension InfoDeclareWriteViewController: UITextFieldDelegate, UITextViewDelegat
         }
     }
     
-    func textViewShhouldReturn(_ textView: UITextView) -> Bool{
+    private func textViewShouldReturn(_ textView: UITextView) -> Bool{
         // 키보드 내리면서 동작
         textView.resignFirstResponder()
         return true

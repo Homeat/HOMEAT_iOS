@@ -151,9 +151,9 @@ extension InfoTalkTarget: TargetType {
         case .postLoveDelete(let bodyDTO):
             return "/v1/infoTalk/love/\(bodyDTO.id)"
         case .complainPost(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.postId)"
+            return "/v1/infoTalk/report/\(bodyDTO.postId))"
         case .complainComment(let bodyDTO):
-            return "/v1/infoTalk/report/\(bodyDTO.commentId)"
+            return "/v1/infoTalk/report/comment/\(bodyDTO.commentId))"
         case .deletePost(let bodyDTO):
             return "/v1/infoTalk/\(bodyDTO.id)"
         case .deleteComment(let bodyDTO):
@@ -161,7 +161,7 @@ extension InfoTalkTarget: TargetType {
         case .replyComment(let bodyDTO):
             return "/v1/infoTalk/reply/\(bodyDTO.commentId)"
         case .complainReply(let bodyDTO):
-            return "/v1/infoTalk/report/reply/\(bodyDTO.replyId)"
+            return "/v1/infoTalk/report/reply/\(bodyDTO.replyId))"
         }
     }
     var parameters: RequestParams {

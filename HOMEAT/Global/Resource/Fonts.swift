@@ -23,7 +23,9 @@ extension UIFont {
     class var headMedium28: UIFont {
         return UIFont(name: "NotoSansKR-Medium", size: 28.0)!
     }
-    
+    class var headBold20: UIFont {
+        return UIFont(name: "NotoSansKR-Bold", size: 20.0)!
+    }
     class var headBold24: UIFont {
         return UIFont(name: "NotoSansKR-Bold", size: 24.0)!
     }

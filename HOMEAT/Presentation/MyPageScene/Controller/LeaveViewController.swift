@@ -19,6 +19,7 @@ class LeaveViewController: BaseViewController {
         $0.alpha = 0.5
         $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.addTarget(self, action: #selector(confirmAction), for: .touchUpInside)
     }
     private let WhyLabel = UILabel().then {
         $0.text = "탈퇴하는 이유가 무엇인가요?"
@@ -183,7 +184,7 @@ class LeaveViewController: BaseViewController {
         self.confirmButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(50)
-            $0.bottom.equalToSuperview().inset(30)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(50)
         }
         
     }
@@ -222,6 +223,9 @@ class LeaveViewController: BaseViewController {
         if selectedOptionButton == nil {
             selectedOptionButton = optionButton
             optionButton.backgroundColor = .gray
+            confirmButton.isEnabled = true
+            confirmButton.alpha = 1
+            confirmButton.backgroundColor = .turquoiseGreen
         } else {
             selectedOptionButton?.backgroundColor = nil
             selectedOptionButton = optionButton
@@ -233,6 +237,10 @@ class LeaveViewController: BaseViewController {
          self.navigationController?.popViewController(animated: true)
         print("back click")
      }
+    @objc func confirmAction() {
+        let leaveViewController = FinalLeaveViewController()
+        self.navigationController?.pushViewController(leaveViewController, animated: true)
+    }
 
 }
 

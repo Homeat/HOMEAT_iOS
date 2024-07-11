@@ -46,7 +46,7 @@ class InfoCommentDeclareViewController: BaseViewController {
         
         declareLabel.do {
             $0.text = "신고하는 이유가 무엇인가요?"
-            $0.font = .headBold24
+            $0.font = .headBold20
             $0.textColor = .white
         }
         
@@ -136,8 +136,7 @@ class InfoCommentDeclareViewController: BaseViewController {
         
         declareLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(139)
-            $0.leading.equalToSuperview().inset(52)
-            $0.trailing.equalToSuperview().inset(52)
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(28)
         }
         

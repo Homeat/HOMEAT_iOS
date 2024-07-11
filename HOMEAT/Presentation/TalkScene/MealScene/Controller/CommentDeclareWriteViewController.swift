@@ -113,7 +113,7 @@ class CommentDeclareWriteViewController: BaseViewController {
     }
     
     private func setNavigation() { 
-        self.navigationItem.title = "게시글 신고하기"
+        self.navigationItem.title = "댓글 신고하기"
         let backbutton = UIBarButtonItem()
         backbutton.tintColor = .white
         navigationController?.navigationBar.topItem?.backBarButtonItem = backbutton
