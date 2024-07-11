@@ -220,6 +220,23 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     override func layoutSubviews() {
         super.layoutSubviews()
         profileIcon.layer.cornerRadius = profileIcon.frame.width / 2
+
+        // 높이 계산
+        let contentWidth = self.bounds.width - 40 // 좌우 패딩
+        let titleLabelSize = titleLabel.sizeThatFits(CGSize(width: contentWidth, height: CGFloat.greatestFiniteMagnitude))
+        let contentLabelSize = contentLabel.sizeThatFits(CGSize(width: contentWidth, height: CGFloat.greatestFiniteMagnitude))
+
+        var totalHeight = 0.0
+        totalHeight += 20.0 + Double(titleLabelSize.height) // 프로필 아이콘 높이 + 마진
+        totalHeight += 20 + titleLabelSize.height // 해시태그 버튼 높이 + 마진
+        totalHeight += 8 + titleLabelSize.height // 제목 라벨 위의 마진 + 높이
+        totalHeight += 5 + contentLabelSize.height // 컨텐츠 라벨 위의 마진 + 높이
+        totalHeight += 19 + 257 // 이미지 뷰 위의 마진 + 고정 높이
+        totalHeight += 12 + 20 + 19 // 페이지 컨트롤러와 반응 뷰 위의 마진들
+        totalHeight += Double(underLine.frame.height + 20) // 언더라인 높이 + 마진
+
+        // 헤더뷰의 높이 조정
+        self.frame.size.height = totalHeight
     }
     
     //MARK: - Method

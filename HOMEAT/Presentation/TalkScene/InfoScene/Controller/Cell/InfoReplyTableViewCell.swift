@@ -153,7 +153,6 @@ class InfoReplyTableViewCell: UITableViewCell {
     func updateContent(reply: InfoTalkReplies) {
         replyProfile.isHidden = true
         replyAddProfile.isHidden = false
-        replyButton.isHidden = true
         replyNickname.text = reply.replyNickName
         replyContent.text = reply.content
         
