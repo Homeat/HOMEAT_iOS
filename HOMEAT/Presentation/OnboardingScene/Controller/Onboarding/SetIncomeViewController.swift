@@ -81,11 +81,15 @@ class SetIncomeViewController: ProgressViewController {
 
 extension SetIncomeViewController {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let text = textField.text, let income = Int(text) {
-            UserDefaults.standard.set(income, forKey: incomeUserDefaultsKey)
-            UserDefaults.standard.synchronize()
-            print(incomeUserDefaultsKey)
-        }
+        handleIncomeTextFieldEditing(textField.text)
+    }
+    private func handleIncomeTextFieldEditing(_ text: String?) {
+        guard let text = text, let income = Int(text) else { return }
+        let formattedText = income.formattedWithSeparator
+        incomeTextField.text = formattedText
+        UserDefaults.standard.set(income, forKey: incomeUserDefaultsKey)
+        UserDefaults.standard.synchronize()
+        print(incomeUserDefaultsKey)
     }
     override func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         super.textField(textField, shouldChangeCharactersIn: range, replacementString: string)

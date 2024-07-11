@@ -18,6 +18,7 @@ enum MyPageTarget {
     case myPageReactivate
     case myPassword(_ bodyDTO: MyPasswordRequestBodyDTO)
     case myNicknameExist(_ bodyDTO: NicknameRequestBodyDTO)
+    case mypageLogout
 }
 
 extension MyPageTarget: TargetType {
@@ -42,6 +43,8 @@ extension MyPageTarget: TargetType {
             return .authorization
         case .myNicknameExist:
             return .authorization
+        case .mypageLogout:
+            return .reAuthorization
         }
     }
     
@@ -65,6 +68,8 @@ extension MyPageTarget: TargetType {
             return .hasToken
         case .myNicknameExist:
             return .hasToken
+        case .mypageLogout:
+            return .refreshToken
         }
     }
     
@@ -89,6 +94,8 @@ extension MyPageTarget: TargetType {
             return .patch
         case .myNicknameExist:
             return .post
+        case .mypageLogout:
+            return .post
         }
     }
     
@@ -112,6 +119,8 @@ extension MyPageTarget: TargetType {
             return "/v1/mypage/change-password"
         case .myNicknameExist:
             return "/v1/mypage/exist-nickname"
+        case .mypageLogout:
+            return "/v1/members/logout"
         }
     }
     
@@ -135,6 +144,8 @@ extension MyPageTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case let .myNicknameExist(bodyDTO):
             return .requestWithBody(bodyDTO)
+        case .mypageLogout:
+            return .requestPlain
         }
     }
 }

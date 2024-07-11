@@ -17,8 +17,10 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     private let checkNickNameLabel = UILabel()
     private let duplicationCheckButton = UIButton()
     private let confirmButton = UIButton()
-    private let NickNameField = UITextField()
+    private let nickNameField = UITextField()
     private var userName: String = ""
+    var isNicknameValid: Bool = false
+    private var newName: String = ""
     // MARK: Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -35,7 +37,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
-        NickNameField.delegate = self
+        nickNameField.delegate = self
         userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
 
     }
@@ -58,7 +60,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             $0.textColor = .turquoiseGreen
         }
         
-        NickNameField.do {
+        nickNameField.do {
             let attributes: [NSAttributedString.Key: Any] = [
                 .foregroundColor: UIColor.gray
             ]
@@ -78,7 +80,8 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             $0.setTitleColor(UIColor.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.layer.masksToBounds = true
-            $0.backgroundColor = .white
+            $0.backgroundColor = UIColor(named: "warmgray3")
+            $0.alpha = 0.5
             $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             $0.addTarget(self, action: #selector(duplicationCheckButtonTapped), for: .touchUpInside)
         }
@@ -88,7 +91,8 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             $0.setTitleColor(UIColor.black, for: .normal)
             $0.layer.cornerRadius = 10
             $0.layer.masksToBounds = true
-            $0.backgroundColor = .white
+            $0.backgroundColor = UIColor(named: "warmgray3")
+            $0.alpha = 0.5
             $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -97,7 +101,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     
     override func setConstraints() {
         
-        view.addSubviews(presentNickNameLabel, presentInfoView, checkNickNameLabel, NickNameField,duplicationCheckButton, confirmButton)
+        view.addSubviews(presentNickNameLabel, presentInfoView, checkNickNameLabel, nickNameField,duplicationCheckButton, confirmButton)
         
         presentNickNameLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
@@ -116,7 +120,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             $0.leading.equalToSuperview().offset(20)
         }
         
-        NickNameField.snp.makeConstraints {
+        nickNameField.snp.makeConstraints {
             $0.top.equalTo(checkNickNameLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().offset(20)
             $0.height.equalTo(57)
@@ -125,7 +129,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         
         duplicationCheckButton.snp.makeConstraints {
             $0.top.equalTo(checkNickNameLabel.snp.bottom).offset(12)
-            $0.leading.equalTo(NickNameField.snp.trailing).offset(20)
+            $0.leading.equalTo(nickNameField.snp.trailing).offset(20)
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(57)
         }
@@ -147,16 +151,27 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.tintColor = .white
     }
     
-//    private func updateServer() {
-//        let bodyDTO = NicknameRequestBodyDTO(nickname: <#T##String#>)
-//        NetworkService.shared.myPageService.myNicknameExist(bodyDTO: <#T##NicknameRequestBodyDTO#>, completion: <#T##(NetworkResult<BaseResponse<Data>>) -> Void#>)
-//    }
+    private func updateServer() {
+        let bodyDTO = MyPageEditRequestBodyDTO(email: "", nickname: newName, addressId: 1, income: 0)
+        NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
+            NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let data):
+                    print("닉네임 수정 완료")
+                default:
+                    print("닉네임 수정 실패")
+                    
+                }
+            }
+        }
+    }
     @objc private func duplicationCheckButtonTapped() {
-        guard let newNickname = NickNameField.text, !newNickname.isEmpty else {
+        guard let newName = nickNameField.text, !newName.isEmpty else {
             showAlert(message: "변경할 닉네임을 입력해주세요.")
             return
         }
-        checkNicknameDuplication(nickname: newNickname)
+        checkNicknameDuplication(nickname: newName)
     }
     private func setTapBarHidden() {
         self.tabBarController?.tabBar.isHidden = true
@@ -165,13 +180,9 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count - range.length
-        
-        // Limit to 10 characters
         if newLength > 10 {
             return false
         }
-        
-        // Disallow special characters !@#
         let allowedCharacters = CharacterSet(charactersIn: "!@#")
         let characterSet = CharacterSet(charactersIn: string)
         return !allowedCharacters.isSuperset(of: characterSet)
@@ -182,11 +193,31 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     }
     
     private func checkNicknameDuplication(nickname: String) {
-        if nickname == self.userName {
-             showAlert(message: "이미 사용 중인 닉네임입니다.")
-         } else {
-             showAlert(message: "사용 가능한 닉네임입니다.")
-         }
+            let nickname = nickNameField.text ?? ""
+            let bodyDTO = NicknameRequestBodyDTO(nickname: nickname)
+            NetworkService.shared.myPageService.myNicknameExist(bodyDTO: bodyDTO) { [weak self] response in
+                guard let self = self else { return }
+                switch response {
+                case .success(let data):
+                    if data.code == "COMMON_200" {
+                        isNicknameValid = true
+                        showAlert(message: "사용 가능한 닉네임입니다.")
+                        UserDefaults.standard.set(nickname, forKey: "userNickname")
+                        
+                    } else if data.code == "MEMBER_4091" {
+                        showAlert(message: "이미 사용 중인 닉네임입니다.")
+                        isNicknameValid = false
+                    } else if data.code == "COMMON_400" {
+                        showAlert(message: "공백일 수 없습니다.")
+                        isNicknameValid = false
+                    }
+                default:
+                    print("닉네임 존재안됨 ")
+                    isNicknameValid = false
+
+                }
+                
+            }
      }
     private func showAlert(message: String) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)

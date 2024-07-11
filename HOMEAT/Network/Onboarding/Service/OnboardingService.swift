@@ -16,9 +16,19 @@ protocol OnboardingServiceProtocol {
     func emailCertificate(bodyDTO: EmailCertificationRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<AuthCodeResponseDTO>>) -> Void)
     func myOnboarding(bodyDTO: MyOnboardingRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>)-> Void)
     func emailJoin(bodyDTO: EmailSignUpRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailJoinResponseDTO>>)-> Void)
+    func emailVerification(bodyDTO: EmailVerificationRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailResponseDTO>>) -> Void)
+    func findPassword(bodyDTO: FindPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class OnboardingService: APIRequestLoader<OnboardingTarget>, OnboardingServiceProtocol {
+    func findPassword(bodyDTO: FindPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .findPassword(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func emailVerification(bodyDTO: EmailVerificationRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<EmailResponseDTO>>) -> Void) {
+        fetchData(target: .emailVerification(bodyDTO), responseData: BaseResponse<EmailResponseDTO>.self, completion: completion)
+    }
+    
     func emailCertificate(bodyDTO: EmailCertificationRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<AuthCodeResponseDTO>>) -> Void) {
         fetchData(target: .emailCertification(bodyDTO), responseData: BaseResponse<AuthCodeResponseDTO>.self, completion: completion)
     }

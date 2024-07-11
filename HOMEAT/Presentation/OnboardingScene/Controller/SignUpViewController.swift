@@ -25,6 +25,10 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
     private let nicknameTextField = UITextField()
     private let signupButton = UIButton()
     private var authCode: String? // 인증 코드를 저장할 변수
+    var isAuthCodeValid: Bool = false
+    var isPasswordValid: Bool = false
+    var isPasswordMatched: Bool = false
+    var isNicknameValid: Bool = false
     private let nicknameApproveStatusLabel = UILabel()
     private var activeTextField: UITextField?
     private let activityIndicator: UIActivityIndicatorView = {
@@ -212,8 +216,8 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
         
         let padding: CGFloat = 20
         let verticalSpacing: CGFloat = 7
-        let buttonHeight: CGFloat = UIScreen.main.bounds.height * 0.07 // Proportional button height
-        let textFieldHeight: CGFloat = UIScreen.main.bounds.height * 0.07 // Proportional text field height
+        let buttonHeight: CGFloat = UIScreen.main.bounds.height * 0.07
+        let textFieldHeight: CGFloat = UIScreen.main.bounds.height * 0.07
         emailLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(padding)
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(padding)
@@ -347,16 +351,22 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
     @objc private func textFieldDidChange(_ textField: UITextField) {
         updateSignUpButtonState()
     }
-    //
-    //    private func updateApproveButtonState() {
-    //
-    //    }
     private func updateSignUpButtonState() {
+        guard let nickname = nicknameTextField.text, !nickname.isEmpty else {
+            signupButton.isEnabled = false
+            signupButton.alpha = 0.5
+            signupButton.backgroundColor = UIColor(named: "warmgray3")
+            return
+        }
         let isAllFieldsFilled = !(emailTextField.text?.isEmpty ?? true) &&
         !(emailApproveTextField.text?.isEmpty ?? true) &&
         !(passwordTextField.text?.isEmpty ?? true) &&
         !(passwordCheckTextField.text?.isEmpty ?? true) &&
-        !(nicknameTextField.text?.isEmpty ?? true)
+        isAuthCodeValid &&
+        isPasswordValid &&
+        isPasswordMatched &&
+        isNicknameValid && !(nicknameTextField.text?.isEmpty ?? true)
+        
         signupButton.isEnabled = isAllFieldsFilled
         signupButton.alpha = isAllFieldsFilled ? 1.0 : 0.5
         signupButton.backgroundColor = isAllFieldsFilled ? UIColor(named: "turquoiseGreen") : UIColor(named: "warmgray3")
@@ -403,21 +413,26 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
         if inputCode == authCode {
             emailApproveStatusLabel.text = "인증번호가 맞습니다"
             emailApproveStatusLabel.textColor = UIColor(named: "turquoiseGreen")
+            isAuthCodeValid = true
         } else {
             emailApproveStatusLabel.text = "인증번호가 틀립니다"
             emailApproveStatusLabel.textColor = UIColor.turquoiseRed
+            isAuthCodeValid = false
         }
     }
     @objc func verifyApprovePassword() {
         if isValidPw(passwordTextField.text ?? "") {
             passwordApproveStatusLabel.textColor = UIColor(named: "turquoiseGreen")
             passwordApproveStatusLabel.text = "비밀번호 사용 가능합니다."
+            isPasswordValid = true
         } else if passwordTextField.text == "" {
             passwordApproveStatusLabel.textColor = UIColor(r: 30, g: 32, b: 33)
+            isPasswordValid = false
             
         } else {
             passwordApproveStatusLabel.text = "영어,숫자,특수문자 포함 8자리 이상입니다."
             passwordApproveStatusLabel.textColor = UIColor.turquoiseRed
+            isPasswordValid = false
         }
     }
     
@@ -425,16 +440,20 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
         if passwordCheckTextField.text == passwordTextField.text {
             if passwordCheckTextField.text == "" && passwordTextField.text == "" {
                 passwordCheckApproveStatusLabel.textColor = UIColor(r: 30, g: 32, b: 33)
+                isPasswordMatched = false
             } else {
                 passwordCheckApproveStatusLabel.textColor = UIColor(named: "turquoiseGreen")
                 passwordCheckApproveStatusLabel.text = "비밀번호가 일치합니다."
+                isPasswordMatched = true
             }
         } else if passwordCheckTextField.text ==  "" {
             passwordCheckApproveStatusLabel.textColor = UIColor(r: 30, g: 32, b: 33)
+            isPasswordMatched = false
             
         } else {
             passwordCheckApproveStatusLabel.text = "다시 입력해주세요."
             passwordCheckApproveStatusLabel.textColor = UIColor.turquoiseRed
+            isPasswordMatched = false
         }
     }
     
@@ -446,6 +465,7 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
             switch response {
             case .success(let data):
                 if data.code == "COMMON_200" {
+                    isNicknameValid = true
                     nicknameApproveStatusLabel.text = "멋진 닉네임이에요!"
                     nicknameApproveStatusLabel.textColor = UIColor(named: "turquoiseGreen")
                     UserDefaults.standard.set(nickname, forKey: "userNickname")
@@ -453,15 +473,21 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
                 } else if data.code == "MEMBER_4091" {
                     nicknameApproveStatusLabel.text = "이미 존재하는 닉네임 입니다."
                     nicknameApproveStatusLabel.textColor = UIColor.turquoiseRed
-                    
+                    isNicknameValid = false
                 } else if data.code == "COMMON_400" {
                     nicknameApproveStatusLabel.text = "공백일 수 없습니다."
                     nicknameApproveStatusLabel.textColor = UIColor.turquoiseRed
+                    isNicknameValid = false
                 }
+                self.updateSignUpButtonState()
             default:
                 print("닉네임 존재안됨 ")
                 nicknameApproveStatusLabel.textColor = UIColor(r: 30, g: 32, b: 33)
+                isNicknameValid = false
+                self.updateSignUpButtonState()
+
             }
+            
         }
     }
     
@@ -475,25 +501,9 @@ class SignUpViewController: BaseViewController, UITextFieldDelegate {
             self.showAlert(title: "모든 필드를 입력해주세요.", message: "")
             return
         }
-        
-        //let emailSignUpRequest = EmailSignUpRequestBodyDTO(email: email, password: password)
+        //회원가입 api
         join(email: email, password: password)
-        //        NetworkService.shared.onboardingService.emailJoin(bodyDTO: emailSignUpRequest) { [weak self] response in
-        //            guard let self = self else { return }
-        //            switch response {
-        //            case .success(let data):
-        //                
-        //                  if let refreshToken = data.data?.refreshToken {
-        //                    KeychainHandler.shared.refreshToken = refreshToken
-        //                    print("회원가입이 완료되었습니다. ✅")
-        //                    self.showAlert(title: "회원가입이 완료되었습니다.", message: "", isSignUpSuccess: true)
-        //                } else {
-        //                    self.showAlert(title: "토큰을 저장하는데 실패했습니다.", message: "")
-        //                }
-        //            default:
-        //                self.showAlert(title: "회원가입에 실패하였습니다.", message: "")
-        //            }
-        //        }
+
     }
     private func join(email: String, password: String) {
         let parameters: [String: Any] = [

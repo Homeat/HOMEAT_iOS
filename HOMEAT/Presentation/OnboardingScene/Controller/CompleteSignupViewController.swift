@@ -20,7 +20,13 @@ class CompleteSignupViewController: BaseViewController {
         
         setAddTarget()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+        tabBarController?.tabBar.isTranslucent = true
+    }
     override func setConfigure() {
         view.do {
             $0.backgroundColor = UIColor(r: 30, g: 32, b: 33)

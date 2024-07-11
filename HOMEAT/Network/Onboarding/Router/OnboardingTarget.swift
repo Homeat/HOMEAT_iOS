@@ -17,6 +17,8 @@ enum OnboardingTarget {
     case userInfo
     case postRefreshToken
     case myOnboarding(_ bodyDTO : MyOnboardingRequestBodyDTO)
+    case emailVerification(_ bodyDTO: EmailVerificationRequestBodyDTO)
+    case findPassword(_ bodyDTO: FindPasswordRequestBodyDTO)
 }
 
 extension OnboardingTarget: TargetType {
@@ -34,6 +36,10 @@ extension OnboardingTarget: TargetType {
         case .myOnboarding:
             return .authorization
 
+        case .emailVerification:
+            return .unauthorization
+        case .findPassword:
+            return .emailAuthorization
         }
     }
     
@@ -50,6 +56,10 @@ extension OnboardingTarget: TargetType {
         
         case .myOnboarding:
             return .hasToken
+        case .emailVerification:
+            return .plain
+        case .findPassword:
+            return .plain
         }
     }
     
@@ -62,6 +72,10 @@ extension OnboardingTarget: TargetType {
         
         case .myOnboarding:
             return .post
+        case .emailVerification:
+            return .post
+        case .findPassword:
+            return .patch
         }
     }
     
@@ -81,6 +95,10 @@ extension OnboardingTarget: TargetType {
             return "/v1/members/join/email"
         case .myOnboarding:
             return "/v1/mypage"
+        case .emailVerification:
+            return "/v1/members/email-verification"
+        case .findPassword:
+            return "/v1/members/find-password"
         }
     }
     
@@ -97,6 +115,10 @@ extension OnboardingTarget: TargetType {
         case let .emailSignUp(bodyDTO):
             return .requestWithBody(bodyDTO)
         case let .myOnboarding(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .emailVerification(bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case let .findPassword(bodyDTO):
             return .requestWithBody(bodyDTO)
         }
     }
