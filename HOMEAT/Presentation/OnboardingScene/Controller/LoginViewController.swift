@@ -243,8 +243,13 @@ final class LoginViewController : BaseViewController {
     }
     
     @objc private func signupButtonTapped(_ sender: Any) {
-        let nextVC = SignUpViewController()
+        // 이용약관
+        let nextVC = TermsViewController()
         self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+
+    @objc private func closeButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc private func findPasswordButtonTapped(_ sender: Any) {
