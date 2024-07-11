@@ -40,6 +40,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         nickNameField.delegate = self
         nickNameField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
+        confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
 
     }
     
@@ -93,7 +94,6 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             $0.layer.cornerRadius = 10
             $0.layer.masksToBounds = true
             $0.backgroundColor = UIColor(named: "warmgray3")
-            $0.alpha = 0.5
             $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -159,6 +159,9 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
                 switch response {
                 case .success(let data):
                     print("닉네임 수정 완료")
+                    let nextVC = FinishNicknameViewController()
+                    nextVC.hidesBottomBarWhenPushed = true
+                    navigationController?.pushViewController(nextVC, animated: true)
                 default:
                     print("닉네임 수정 실패")
                     
@@ -178,17 +181,17 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isHidden = true
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return true }
-        let newLength = text.count + string.count - range.length
-        if newLength > 10 {
-            return false
-        }
-        let allowedCharacters = CharacterSet(charactersIn: "!@#")
-        let characterSet = CharacterSet(charactersIn: string)
-        return !allowedCharacters.isSuperset(of: characterSet)
-    }
-    
+//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+//        guard let text = textField.text else { return true }
+//        let newLength = text.count + string.count - range.length
+//        if newLength > 10 {
+//            return false
+//        }
+//        let allowedCharacters = CharacterSet(charactersIn: "!@#")
+//        let characterSet = CharacterSet(charactersIn: string)
+//        return !allowedCharacters.isSuperset(of: characterSet)
+//    }
+//    
     private func isValidNickname(nickname: String) -> Bool {
         return nickname.count <= 10 && !nickname.contains("!") && !nickname.contains("@") && !nickname.contains("#")
     }
@@ -204,7 +207,8 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
                         isNicknameValid = true
                         showAlert(message: "사용 가능한 닉네임입니다.")
                         UserDefaults.standard.set(nickname, forKey: "userNickname")
-                        confirmButton.backgroundColor = .turquoiseGreen
+                        self.confirmButton.backgroundColor = .turquoiseGreen
+                        self.confirmButton.isEnabled = true
                         
                     } else if data.code == "MEMBER_4091" {
                         showAlert(message: "이미 사용 중인 닉네임입니다.")
@@ -247,5 +251,13 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             duplicationCheckButton.backgroundColor = UIColor(named: "warmgray3")
             duplicationCheckButton.alpha = 0.5
         }
+    }
+    @objc private func confirmButtonTapped() {
+        guard isNicknameValid, let newName = nickNameField.text, !newName.isEmpty else {
+            showAlert(message: "유효한 닉네임을 입력해주세요.")
+            return
+        }
+        self.newName = newName
+        updateServer()
     }
 }

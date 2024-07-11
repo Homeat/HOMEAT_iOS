@@ -245,6 +245,7 @@ final class LoginViewController : BaseViewController {
     @objc private func signupButtonTapped(_ sender: Any) {
         // 이용약관
         let nextVC = TermsViewController()
+        
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 

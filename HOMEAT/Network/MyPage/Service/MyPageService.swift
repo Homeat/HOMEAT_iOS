@@ -28,7 +28,7 @@ final class MyPageService: APIRequestLoader<MyPageTarget>, MyPageServiceProtocol
     }
     
     func myPageNickNameEdit(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
-        fetchData(target: .myNicknameExist(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+        fetchData(target: .nicknameEdit(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
     }
     
     func myPageLogout(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {

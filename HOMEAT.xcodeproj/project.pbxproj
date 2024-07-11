@@ -253,6 +253,7 @@
 		58EEF6072C3FBBA900C12C1E /* SetExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6062C3FBBA900C12C1E /* SetExpenseViewController.swift */; };
 		58EEF6092C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6082C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift */; };
 		58EEF60B2C3FF03100C12C1E /* FinishIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */; };
+		58EEF60D2C3FF99600C12C1E /* FinishNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF60C2C3FF99600C12C1E /* FinishNicknameViewController.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -511,6 +512,7 @@
 		58EEF6062C3FBBA900C12C1E /* SetExpenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetExpenseViewController.swift; sourceTree = "<group>"; };
 		58EEF6082C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeReuqestBodyDTO.swift; sourceTree = "<group>"; };
 		58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishIncomeViewController.swift; sourceTree = "<group>"; };
+		58EEF60C2C3FF99600C12C1E /* FinishNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishNicknameViewController.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 				58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */,
 				58EEF5FD2C3EB6B700C12C1E /* EditIncomeViewController.swift */,
 				58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */,
+				58EEF60C2C3FF99600C12C1E /* FinishNicknameViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1733,6 +1736,7 @@
 				58EEF5B32C385D7100C12C1E /* InfoDeletePostRequestBodyDTO.swift in Sources */,
 				58E88E882BF931F200775F06 /* Mode.swift in Sources */,
 				58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */,
+				58EEF60D2C3FF99600C12C1E /* FinishNicknameViewController.swift in Sources */,
 				0309DD3F2BE7432500D6133A /* FoodPostViewController.swift in Sources */,
 				58EEF5E32C3AEB8700C12C1E /* MyPageResponseDTO.swift in Sources */,
 				0123830C2BB40F070048CC2D /* BaseView.swift in Sources */,

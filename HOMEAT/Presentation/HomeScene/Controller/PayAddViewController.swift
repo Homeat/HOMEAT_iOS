@@ -54,12 +54,14 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = true
         }
+        self.tabBarController?.tabBar.isTranslucent = true
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
+        self.tabBarController?.tabBar.isTranslucent = false
     }
     
     // MARK: - setConfigure
@@ -336,7 +338,7 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
                 guard let self = self else { return }
                 switch response {
                 case .success(_):
-                    tabBarController?.tabBar.isHidden = true
+//                    tabBarController?.tabBar.isHidden = true
                     homeVC.navigationItem.hidesBackButton = true
                     self.navigationController?.pushViewController(homeVC, animated: true)
                     print("데이터 서버 연동 성공")
@@ -357,7 +359,7 @@ class PayAddViewController: BaseViewController,UITextFieldDelegate {
                 guard let self = self else { return }
                 switch response {
                 case .success(_):
-                    tabBarController?.tabBar.isHidden = true
+//                    tabBarController?.tabBar.isHidden = true
                     homeVC.navigationItem.hidesBackButton = true
                     self.navigationController?.pushViewController(homeVC, animated: true)
                     print("데이터 서버 연동 성공")

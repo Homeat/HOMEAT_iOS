@@ -21,16 +21,22 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     private let payCheckButton = UIButton()
     private let mainView = HomeView()
     private let editAlert = UIAlertController(title: "", message: "", preferredStyle: .alert)
-    
+    let userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
     //MARK: - Function
     override func viewDidLoad() {
         super.viewDidLoad()
         setAddTarget()
         //delegate 설정
         mainView.delegate = self
+        
         homeInfo()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+    }
     // MARK: - setConfigure
     override func setConfigure() {
         view.do {
@@ -213,7 +219,6 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
     //MARK: - @objc Func
     @objc func isPayAddButtonTapped(_ sender: Any) {
         let nextVC = PayAddViewController()
-        nextVC.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
     

@@ -325,6 +325,8 @@ extension UserInfoViewController: UINavigationControllerDelegate, UIImagePickerC
     private func handleSelectedImage(_ image: UIImage) {
         profileview.isHidden = true
         newProfileImageView.isHidden = false
+        newProfileImageView.image = image 
+
         if let imageData = image.jpegData(compressionQuality: 0.8) {
             uploadImage(imageData: imageData)
         }
