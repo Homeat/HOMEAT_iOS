@@ -120,7 +120,7 @@ class UserInfoViewController: BaseViewController {
         ]
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.tintColor = .white
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(editButtonTapped))
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "수정", style: .plain, target: self, action: #selector(editButtonTapped))
         self.navigationItem.rightBarButtonItem?.tintColor = .turquoiseGreen
     }
     
@@ -183,9 +183,9 @@ class UserInfoViewController: BaseViewController {
             self.present(picker, animated: true, completion: nil)
         }
     }
-    @objc private func editButtonTapped() {
-        
-    }
+//    @objc private func editButtonTapped() {
+//        
+//    }
     //MARK: - 사진과 앨범 파트
     // 버튼 액션 함수
     @objc func touchUpImageAddButton(button: UIButton) {

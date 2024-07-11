@@ -406,9 +406,13 @@ class FindPasswordViewController: BaseViewController, UITextFieldDelegate {
         let keyboardHeight = keyboardFrame.height
         let activeTextField = getActiveTextField()
 
-        if activeTextField == passwordCheckTextField {
+        if activeTextField == passwordTextField {
             UIView.animate(withDuration: 0.3) {
                 self.view.frame.origin.y = -100
+            }
+        } else if activeTextField == passwordCheckTextField {
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = -120
             }
         }
         else {

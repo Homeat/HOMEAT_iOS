@@ -19,6 +19,8 @@ enum MyPageTarget {
     case myPassword(_ bodyDTO: MyPasswordRequestBodyDTO)
     case myNicknameExist(_ bodyDTO: NicknameRequestBodyDTO)
     case mypageLogout
+    case incomeEdit(_ bodyDTO: IncomeReuqestBodyDTO)
+    case nicknameEdit(_ bodyDTO: NicknameRequestBodyDTO)
 }
 
 extension MyPageTarget: TargetType {
@@ -45,6 +47,10 @@ extension MyPageTarget: TargetType {
             return .authorization
         case .mypageLogout:
             return .reAuthorization
+        case .incomeEdit:
+            return .authorization
+        case .nicknameEdit:
+            return .authorization
         }
     }
     
@@ -70,6 +76,10 @@ extension MyPageTarget: TargetType {
             return .hasToken
         case .mypageLogout:
             return .refreshToken
+        case .incomeEdit:
+            return .hasToken
+        case .nicknameEdit:
+            return .hasToken
         }
     }
     
@@ -96,6 +106,10 @@ extension MyPageTarget: TargetType {
             return .post
         case .mypageLogout:
             return .post
+        case .incomeEdit:
+            return .patch
+        case .nicknameEdit:
+            return .patch
         }
     }
     
@@ -121,6 +135,10 @@ extension MyPageTarget: TargetType {
             return "/v1/mypage/exist-nickname"
         case .mypageLogout:
             return "/v1/members/logout"
+        case .incomeEdit:
+            return "/v1/mypage/income"
+        case .nicknameEdit:
+            return "/v1/mypage/nickname"
         }
     }
     
@@ -146,6 +164,10 @@ extension MyPageTarget: TargetType {
             return .requestWithBody(bodyDTO)
         case .mypageLogout:
             return .requestPlain
+        case .incomeEdit(let bodyDTO):
+            return .requestWithBody(bodyDTO)
+        case .nicknameEdit(let bodyDTO):
+            return .requestWithBody(bodyDTO)
         }
     }
 }

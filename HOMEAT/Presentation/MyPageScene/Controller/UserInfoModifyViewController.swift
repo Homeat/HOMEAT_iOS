@@ -38,6 +38,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         super.viewDidLoad()
         setNavigation()
         nickNameField.delegate = self
+        nickNameField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
 
     }
@@ -152,9 +153,8 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
     }
     
     private func updateServer() {
-        let bodyDTO = MyPageEditRequestBodyDTO(email: "", nickname: newName, addressId: 1, income: 0)
-        NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
-            NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
+        let bodyDTO = NicknameRequestBodyDTO(nickname: newName)
+        NetworkService.shared.myPageService.myPageNickNameEdit(bodyDTO: bodyDTO) { [weak self] response in
                 guard let self = self else { return }
                 switch response {
                 case .success(let data):
@@ -165,7 +165,8 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
                 }
             }
         }
-    }
+    
+
     @objc private func duplicationCheckButtonTapped() {
         guard let newName = nickNameField.text, !newName.isEmpty else {
             showAlert(message: "변경할 닉네임을 입력해주세요.")
@@ -203,6 +204,7 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
                         isNicknameValid = true
                         showAlert(message: "사용 가능한 닉네임입니다.")
                         UserDefaults.standard.set(nickname, forKey: "userNickname")
+                        confirmButton.backgroundColor = .turquoiseGreen
                         
                     } else if data.code == "MEMBER_4091" {
                         showAlert(message: "이미 사용 중인 닉네임입니다.")
@@ -237,4 +239,13 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
             present(alert, animated: true, completion: nil)
         }
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text, !text.isEmpty {
+            duplicationCheckButton.backgroundColor = .turquoiseGreen
+            duplicationCheckButton.alpha = 1.0
+        } else {
+            duplicationCheckButton.backgroundColor = UIColor(named: "warmgray3")
+            duplicationCheckButton.alpha = 0.5
+        }
+    }
 }

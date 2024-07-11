@@ -10,6 +10,16 @@ import Then
 
 class LeaveViewController: BaseViewController {
     private var selectedOptionButton: UIButton?
+    private let confirmButton = UIButton().then {
+        $0.setTitle("선택하기", for: .normal)
+        $0.setTitleColor(UIColor.black, for: .normal)
+        $0.layer.cornerRadius = 10
+        $0.layer.masksToBounds = true
+        $0.backgroundColor = UIColor.turquoiseGreen
+        $0.alpha = 0.5
+        $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+        $0.translatesAutoresizingMaskIntoConstraints = false
+    }
     private let WhyLabel = UILabel().then {
         $0.text = "탈퇴하는 이유가 무엇인가요?"
         $0.textColor = UIColor.white
@@ -137,6 +147,7 @@ class LeaveViewController: BaseViewController {
         container.addArrangedSubview(optionButton3)
         container.addArrangedSubview(optionButton4)
         container.addArrangedSubview(optionButton5)
+        view.addSubviews(confirmButton)
 
     }
     func configUI() {
@@ -166,7 +177,14 @@ class LeaveViewController: BaseViewController {
             self.optionButton5.leadingAnchor.constraint(equalTo: self.container.leadingAnchor),
             self.optionButton5.trailingAnchor.constraint(equalTo: self.container.trailingAnchor),
             self.optionButton5.bottomAnchor.constraint(equalTo: self.container.bottomAnchor),
+            
+            
         ])
+        self.confirmButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(50)
+            $0.bottom.equalToSuperview().inset(30)
+        }
         
     }
     private func setNavigation() {

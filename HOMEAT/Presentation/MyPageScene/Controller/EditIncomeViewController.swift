@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
+class EditIncomeViewController: BaseViewController, UITextFieldDelegate {
     
     // MARK: Property
     private let presentIncomeLabel = UILabel()
@@ -20,19 +20,24 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
     private var newName: String = ""
     let userName = UserDefaults.standard.string(forKey: "userNickname") ?? "사용자"
     let income = UserDefaults.standard.double(forKey: "userIncome")
-    let email = UserDefaults.standard.string(forKey: "userEmail") ?? ""
+    
     // MARK: Life Cycle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isTranslucent = true
         self.tabBarController?.tabBar.isHidden = true
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.tabBarController?.tabBar.isTranslucent = false
+        self.tabBarController?.tabBar.isHidden = false
+    }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setNavigation()
         incomeTextField.delegate = self
+        incomeTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
@@ -85,7 +90,7 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
     
     override func setConstraints() {
         
-        view.addSubviews(presentIncomeLabel, presentIncomeView, checkIncomeLabel, incomeTextField,confirmButton)
+        view.addSubviews(presentIncomeLabel, presentIncomeView, checkIncomeLabel, incomeTextField, confirmButton)
         
         presentIncomeLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(35)
@@ -110,6 +115,7 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
             $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(57)
         }
+        
         confirmButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-32)
             $0.leading.equalToSuperview().offset(20)
@@ -118,6 +124,7 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
         }
         
     }
+    
     private func setNavigation() {
         self.navigationItem.title = "한 달 수입 변경"
         self.navigationController?.navigationBar.titleTextAttributes = [
@@ -127,22 +134,21 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.tintColor = .white
     }
     
-    private func updateServer(with income: Double) {
-        guard let incomeText = incomeTextField.text, !incomeText.isEmpty, let newIncome = Double(incomeText) else {
-                    showAlert(message: "유효한 수입을 입력해주세요.")
-                    return
-                }
-        let bodyDTO = MyPageEditRequestBodyDTO(email: nil, nickname: nil,addressId: 1, income: Int(income))
-        NetworkService.shared.myPageService.mypageEdit(bodyDTO: bodyDTO) { [weak self] response in
+    private func updateServer(with income: Int) {
+//        guard let incomeText = incomeTextField.text, !incomeText.isEmpty, let newIncome = Int(incomeText) else {
+//            showAlert(message: "유효한 수입을 입력해주세요.")
+//            return
+//        }
+        let bodyDTO = IncomeReuqestBodyDTO(income: Int(income))
+        NetworkService.shared.myPageService.myPageIncomeEdit(bodyDTO: bodyDTO) { [weak self] response in
             guard let self = self else { return }
             switch response {
             case .success(let data):
                 print("한달 수입 수정 완료")
-                self.showAlert(message: "수입이 성공적으로 변경되었습니다.")
-                let nextVC = MyPageViewController()
+                let nextVC = FinishIncomeViewController()
                 nextVC.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(nextVC, animated: true)       
-                default:
+                self.navigationController?.pushViewController(nextVC, animated: true)
+            default:
                 print("소득 수정 실패")
                 self.showAlert(message: "수입 변경에 실패했습니다.")
                 
@@ -159,16 +165,33 @@ class EditIncomeViewController : BaseViewController, UITextFieldDelegate {
         alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+    
     @objc private func confirmButtonTapped() {
-        guard let incomeText = incomeTextField.text, !incomeText.isEmpty, let newIncome = Double(incomeText) else {
+        guard let incomeText = incomeTextField.text, !incomeText.isEmpty, let newIncome = Int(incomeText.replacingOccurrences(of: ",", with: "")) else {
             showAlert(message: "유효한 수입을 입력해주세요.")
             return
         }
-
+        
         UserDefaults.standard.set(newIncome, forKey: "userIncome")
         updateServer(with: newIncome)
     }
 
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        if let text = textField.text, !text.isEmpty {
+            confirmButton.backgroundColor = .turquoiseGreen
+            confirmButton.alpha = 1.0
+            formatTextField(textField)
+        } else {
+            confirmButton.backgroundColor = UIColor(named: "warmgray3")
+            confirmButton.alpha = 0.5
+        }
+    }
+
+    private func formatTextField(_ textField: UITextField) {
+        if let text = textField.text?.replacingOccurrences(of: ",", with: ""),
+           let number = Double(text) {
+            textField.text = Formatter.withSeparator.string(from: NSNumber(value: number))
+        }
+    }
+
 }
-
-

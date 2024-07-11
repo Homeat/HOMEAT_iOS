@@ -18,9 +18,19 @@ protocol MyPageServiceProtocol {
     func changePassword(bodyDTO: MyPasswordRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func myNicknameExist(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
     func myPageLogout(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myPageIncomeEdit(bodyDTO: IncomeReuqestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
+    func myPageNickNameEdit(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void)
 }
 
 final class MyPageService: APIRequestLoader<MyPageTarget>, MyPageServiceProtocol {
+    func myPageIncomeEdit(bodyDTO: IncomeReuqestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .incomeEdit(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
+    func myPageNickNameEdit(bodyDTO: NicknameRequestBodyDTO, completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
+        fetchData(target: .myNicknameExist(bodyDTO), responseData: BaseResponse<Data>.self, completion: completion)
+    }
+    
     func myPageLogout(completion: @escaping (NetworkResult<BaseResponse<Data>>) -> Void) {
         fetchData(target: .mypageLogout, responseData: BaseResponse<Data>.self, completion: completion)
     }

@@ -251,6 +251,8 @@
 		58EEF6022C3EE9C100C12C1E /* FinishPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6012C3EE9C100C12C1E /* FinishPasswordViewController.swift */; };
 		58EEF6052C3FBBA300C12C1E /* SetIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6042C3FBBA300C12C1E /* SetIncomeViewController.swift */; };
 		58EEF6072C3FBBA900C12C1E /* SetExpenseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6062C3FBBA900C12C1E /* SetExpenseViewController.swift */; };
+		58EEF6092C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF6082C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift */; };
+		58EEF60B2C3FF03100C12C1E /* FinishIncomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */; };
 		58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */; };
 		58FE4CDD2BC802460059D174 /* WeekCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CDC2BC802460059D174 /* WeekCellView.swift */; };
 		58FE4CE12BC84B560059D174 /* WeekCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58FE4CE02BC84B560059D174 /* WeekCellModel.swift */; };
@@ -507,6 +509,8 @@
 		58EEF6012C3EE9C100C12C1E /* FinishPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishPasswordViewController.swift; sourceTree = "<group>"; };
 		58EEF6042C3FBBA300C12C1E /* SetIncomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetIncomeViewController.swift; sourceTree = "<group>"; };
 		58EEF6062C3FBBA900C12C1E /* SetExpenseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetExpenseViewController.swift; sourceTree = "<group>"; };
+		58EEF6082C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomeReuqestBodyDTO.swift; sourceTree = "<group>"; };
+		58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishIncomeViewController.swift; sourceTree = "<group>"; };
 		58FE4CD92BC801BA0059D174 /* WeekCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCollectionViewCell.swift; sourceTree = "<group>"; };
 		58FE4CDC2BC802460059D174 /* WeekCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellView.swift; sourceTree = "<group>"; };
 		58FE4CE02BC84B560059D174 /* WeekCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCellModel.swift; sourceTree = "<group>"; };
@@ -817,6 +821,7 @@
 				58EEF5E42C3C18E400C12C1E /* LeaveViewController.swift */,
 				58EEF5E62C3C1A4800C12C1E /* FinalLeaveViewController.swift */,
 				58EEF5FD2C3EB6B700C12C1E /* EditIncomeViewController.swift */,
+				58EEF60A2C3FF03100C12C1E /* FinishIncomeViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1460,6 +1465,7 @@
 				58EEF5DE2C3AE88000C12C1E /* ProfileEditRequestBodyDTO.swift */,
 				58EEF5E02C3AEAF400C12C1E /* MyPageEditRequestBodyDTO.swift */,
 				58EEF5EC2C3C57D200C12C1E /* NicknameRequestBodyDTO.swift */,
+				58EEF6082C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1783,6 +1789,7 @@
 				012382F92BB401730048CC2D /* HomeView.swift in Sources */,
 				58EEF5AB2C37A73000C12C1E /* Formatter+.swift in Sources */,
 				0309DDB52C02DFAB00D6133A /* LoveRequestBodyDTO.swift in Sources */,
+				58EEF60B2C3FF03100C12C1E /* FinishIncomeViewController.swift in Sources */,
 				58EEF5BF2C3A434400C12C1E /* InfoCommentDeclareWriteViewController.swift in Sources */,
 				58EEF5A92C3796DC00C12C1E /* PayDetailsResponseDTO.swift in Sources */,
 				58EEF57F2C3259DB00C12C1E /* ViewInfoRequestBodyDTO.swift in Sources */,
@@ -1820,6 +1827,7 @@
 				58EEF58D2C32822C00C12C1E /* InfoLoveRequestBodyDTO.swift in Sources */,
 				589CDCF02BE4A67000BA332F /* AnalysisService.swift in Sources */,
 				01D531412BDFCDFE008C368E /* NetworkService.swift in Sources */,
+				58EEF6092C3FE98700C12C1E /* IncomeReuqestBodyDTO.swift in Sources */,
 				0309DDBB2C031FA500D6133A /* LatestOrderResponseDTO.swift in Sources */,
 				016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */,
 				016B9B322C0B26EE009D2996 /* FindPasswordViewController.swift in Sources */,
