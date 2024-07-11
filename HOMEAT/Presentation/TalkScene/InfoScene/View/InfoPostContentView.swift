@@ -68,10 +68,12 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     private func setConfigure() {
         profileIcon.do {
             $0.backgroundColor = UIColor(named: "turquoiseGreen")
-            $0.layer.cornerRadius = 20
+            $0.image = UIImage(named: "profileIcon")
+            $0.layer.cornerRadius = $0.frame.width / 2 // 원형으로 만들기 위해 반지름을 설정
             $0.layer.borderWidth = 1.3
             $0.layer.borderColor = UIColor.white.cgColor
-            $0.contentMode = .scaleAspectFit
+            $0.contentMode = .scaleAspectFill
+            $0.clipsToBounds = true // 원형 모양을 유지하기 위해 필요
         }
         
         userName.do {
@@ -213,6 +215,11 @@ class InfoPostContentView: UITableViewHeaderFooterView, UIScrollViewDelegate {
     
     private func setAddTarget() {
         declareButton.addTarget(self, action: #selector(declareButtonTapped), for: .touchUpInside)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        profileIcon.layer.cornerRadius = profileIcon.frame.width / 2
     }
     
     //MARK: - Method
