@@ -1,9 +1,3 @@
-//
-//  HOMEATRequestInterceptor.swift
-//  HOMEAT
-//
-//  Created by 강석호 on 4/29/24.
-//
 
 import Foundation
 import UIKit
@@ -42,9 +36,6 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
     }
     
     func refreshToken(completion: @escaping (Bool) -> Void) {
-        let parameters: [String: Any] = [
-            "refreshToken": KeychainHandler.shared.refreshToken
-        ]
         print("토큰 재발급 시작")
         
         // 현재 액세스 토큰과 리프레시 토큰을 출력
@@ -55,25 +46,22 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.method = .post
-        urlRequest.setValue("Bearer \(KeychainHandler.shared.accessToken)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         
-//        // Include refresh token in the Cookie header
-//        let refreshToken = KeychainHandler.shared.refreshToken
-//        urlRequest.setValue("refreshToken =\(refreshToken)", forHTTPHeaderField: "Cookie")
-        
-        // URLRequest 디버깅 출력
-        print("URLRequest: \(urlRequest)")
-        
-        AF.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).responseJSON { response in
-            switch response.result {
-            case .success(let value):
+        let refreshToken = KeychainHandler.shared.refreshToken
+            urlRequest.setValue("refresh=\(refreshToken)", forHTTPHeaderField: "Cookie")
+            
+            // URLRequest 디버깅 출력
+            print("URLRequest: \(urlRequest)")
+            
+        AF.request(urlRequest).responseJSON { response in
+               switch response.result {
+               case .success(let value):
                 print("토큰 재발급 성공: \(value)")
                 if let json = value as? [String: Any],
                    let code = json["code"] as? String {
                     
                     switch code {
-                    case "COMMON_500":
+                    case "COMMON_200":
                         if let headers = response.response?.allHeaderFields as? [String: String],
                            let newAccessToken = headers["Authorization"]?.replacingOccurrences(of: "Bearer ", with: "") {
                             // AccessToken 저장
@@ -107,14 +95,3 @@ final class HOMEATRequestInterceptor: RequestInterceptor {
         }
     }
 }
-
-    
-//    func logout() {
-//        /// 토큰 초기화 이후 로그인 화면 이동
-//        KeychainHandler.shared.logout()
-//        DispatchQueue.main.async {
-//            guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else { return }
-//            sceneDelegate.window?.rootViewController = UINavigationController(rootViewController: LoginViewController())
-//        }
-//    }
-

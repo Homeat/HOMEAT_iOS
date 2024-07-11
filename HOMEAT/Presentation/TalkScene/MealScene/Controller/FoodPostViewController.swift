@@ -509,11 +509,17 @@ extension FoodPostViewController: UITableViewDelegate, UITableViewDataSource, Fo
         let comment = comments[indexPath.section]
         
         if currentRow == 0 {
+            commentNickname = comment.commentNickName
+            commentId = comment.commentId
             currentReplyContext = (isComment: true, id: comment.commentId)
         } else {
             currentRow -= 1
             if let replies = comment.foodTalkReplies, currentRow < replies.count {
-                currentReplyContext = (isComment: false, id: replies[currentRow].replyId)
+                let replyId = replies[currentRow].replyId
+                print("Current Reply ID: \(replyId)")
+                commentNickname = replies[currentRow].replyNickName
+                commentId = replyId
+                currentReplyContext = (isComment: false, id: replyId)
             }
         }
         

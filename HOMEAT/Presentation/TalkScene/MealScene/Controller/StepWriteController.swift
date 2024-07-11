@@ -180,7 +180,8 @@ class StepWriteController: BaseViewController, UITextViewDelegate {
             $0.leading.equalTo(recipTextView.snp.leading)
             $0.trailing.equalTo(recipTextView.snp.trailing)
             $0.top.equalTo(recipTextView.snp.bottom).offset(20)
-            $0.height.equalTo(57)
+            $0.height.equalTo(50)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).offset(-10)
         }
     }
     

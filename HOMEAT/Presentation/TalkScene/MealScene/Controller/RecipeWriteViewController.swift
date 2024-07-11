@@ -103,10 +103,8 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
                 let newHeight = max(newSize.height, 50) // 최소 높이 제약 조건 설정
                 memoTextView.constraints.filter { $0.firstAttribute == .height }.first?.constant = newHeight
                 view.layoutIfNeeded()
+                updateContentViewHeight() // Update the content view height when memoTextView changes
             }
-        }
-        deinit {
-            memoTextView.removeObserver(self, forKeyPath: "contentSize")
         }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -384,12 +382,16 @@ class RecipeWriteViewController: BaseViewController, UICollectionViewDelegateFlo
     }
     
     private func updateContentViewHeight() {
-        let contentHeight = tableView.contentSize.height + 600 // 기본 높이 + 테이블 뷰의 높이
-        contentView.snp.updateConstraints { make in
-            make.height.equalTo(contentHeight)
+            let memoTextViewHeight = memoTextView.frame.height
+            let tableViewContentHeight = tableView.contentSize.height
+            let additionalHeight: CGFloat = 600 // 기본 높이 설정
+
+            let contentHeight = memoTextViewHeight + tableViewContentHeight + additionalHeight
+            contentView.snp.updateConstraints { make in
+                make.height.equalTo(contentHeight)
+            }
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
         }
-        scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 100, right: 0)
-    }
     //MARK: - @objc
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
