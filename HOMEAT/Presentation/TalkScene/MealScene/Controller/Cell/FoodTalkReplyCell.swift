@@ -141,7 +141,6 @@ class FoodTalkReplyCell: UITableViewCell {
     func updateContent(comment: FoodTalkComment) {
             replyProfile.isHidden = false
             replyAddProfile.isHidden = true
-            
             replyNickname.text = comment.commentNickName
             replyContent.text = comment.content
             
@@ -151,7 +150,6 @@ class FoodTalkReplyCell: UITableViewCell {
         func updateContent(reply: FoodTalkReply) {
             replyProfile.isHidden = true
             replyAddProfile.isHidden = false
-            replyButton.isHidden = true
             replyNickname.text = reply.replyNickName
             replyContent.text = reply.content
             
