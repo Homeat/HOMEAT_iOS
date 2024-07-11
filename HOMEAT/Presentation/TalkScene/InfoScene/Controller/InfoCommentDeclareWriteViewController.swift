@@ -147,23 +147,23 @@ class InfoCommentDeclareWriteViewController: BaseViewController {
             }
         } else if let replyId = replyId {
             let bodyDTO = ComplainReplyRequestBodyDTO(replyId: replyId)
-            NetworkService.shared.infoTalkService.complainReply(bodyDTO: bodyDTO) { response in
-                switch response {
-                case .success(let data):
-                    print("대댓글신고하기 성공")
-                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
-                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-                        if let viewControllers = self.navigationController?.viewControllers {
-                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
-                            self.navigationController?.popToViewController(targetViewController, animated: true)
-                        }
-                    }
-                    alertController.addAction(okAction)
-                    self.present(alertController, animated: true, completion: nil)
-                default:
-                    print("신고하기 실패")
-                }
-            }
+//            NetworkService.shared.infoTalkService.complainReply(bodyDTO: bodyDTO) { response in
+//                switch response {
+//                case .success(let data):
+//                    print("대댓글신고하기 성공")
+//                    let alertController = UIAlertController(title: "댓글신고 접수", message: "신고가 접수되었습니다", preferredStyle: .alert)
+//                    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+//                        if let viewControllers = self.navigationController?.viewControllers {
+//                            let targetViewController = viewControllers[max(0, viewControllers.count - 3)]
+//                            self.navigationController?.popToViewController(targetViewController, animated: true)
+//                        }
+//                    }
+//                    alertController.addAction(okAction)
+//                    self.present(alertController, animated: true, completion: nil)
+//                default:
+//                    print("신고하기 실패")
+//                }
+//            }
         }
     }
 }
