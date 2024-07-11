@@ -1990,8 +1990,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근할려고 합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앱이 앨범에 접근할려고 합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app would like to access your camera. This permission allows you to take photos to set as your profile picture or to directly upload photos to your posts within the app.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The app would like to access your photo library. This permission allows you to select photos to set as your profile picture or to upload photos to your posts within the app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2027,8 +2027,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = G62DUX396A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HOMEAT/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "앱이 카메라에 접근할려고 합니다.";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "앱이 앨범에 접근할려고 합니다.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app would like to access your camera. This permission allows you to take photos to set as your profile picture or to directly upload photos to your posts within the app.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "The app would like to access your photo library. This permission allows you to select photos to set as your profile picture or to upload photos to your posts within the app.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;

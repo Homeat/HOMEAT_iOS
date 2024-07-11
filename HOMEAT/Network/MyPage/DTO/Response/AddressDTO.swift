@@ -9,7 +9,7 @@ import Foundation
 
 struct AddressResponseDTO: Codable {
     let addressId: Int
-    let code: Int
-    let fullNm: String
-    let emdNm: String
+    let code: Int?
+    let fullNm: String?
+    let emdNm: String?
 }
