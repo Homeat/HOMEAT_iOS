@@ -27,7 +27,6 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
         self.tabBarController?.tabBar.isTranslucent = true
         self.tabBarController?.tabBar.isHidden = true
     }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isTranslucent = false
@@ -160,7 +159,6 @@ class UserInfoModifyViewController : BaseViewController, UITextFieldDelegate {
                 case .success(let data):
                     print("닉네임 수정 완료")
                     let nextVC = FinishNicknameViewController()
-                    nextVC.hidesBottomBarWhenPushed = true
                     navigationController?.pushViewController(nextVC, animated: true)
                 default:
                     print("닉네임 수정 실패")

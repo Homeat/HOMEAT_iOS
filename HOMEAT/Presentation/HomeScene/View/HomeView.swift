@@ -52,9 +52,9 @@ class HomeView: BaseView {
             $0.clipsToBounds = true
         }
         
-        character.do {
-            $0.image = UIImage(named: "baseCharacter")
-        }
+//        character.do {
+//            $0.image = UIImage(named: "baseCharacter")
+//        }
         
         goalLabel.do {
             $0.text = StringLiterals.Home.main.HomeView.goal
@@ -103,7 +103,7 @@ class HomeView: BaseView {
         }
         
         editButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(44)
+            $0.top.equalTo(goalLabel.snp.top)
             $0.leading.equalTo(goalLabel.snp.trailing).offset(6)
         }
         

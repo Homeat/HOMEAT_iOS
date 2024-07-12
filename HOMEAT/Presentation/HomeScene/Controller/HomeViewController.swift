@@ -36,6 +36,7 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         if let tabBarController = self.tabBarController as? HOMEATTabBarController {
             tabBarController.tabBar.isHidden = false
         }
+        homeInfo()
     }
     // MARK: - setConfigure
     override func setConfigure() {
@@ -48,13 +49,11 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         }
         
         welcomeLabel.do {
-            $0.text = StringLiterals.Home.main.welcome
             $0.font = dynamicFont(for: .headline)
             $0.textColor = .white
         }
         
         savingLabel.do {
-            $0.text = StringLiterals.Home.main.saving
             $0.font = dynamicFont(for: .body)
             $0.textColor = .white
         }

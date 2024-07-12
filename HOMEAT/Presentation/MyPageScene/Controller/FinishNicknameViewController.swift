@@ -25,8 +25,18 @@ class FinishNicknameViewController : BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTapBarHidden()
-        
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+        self.tabBarController?.tabBar.isTranslucent = true
+
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+        self.tabBarController?.tabBar.isTranslucent = false
     }
     
     // MARK: - setConfigure
@@ -102,6 +112,7 @@ class FinishNicknameViewController : BaseViewController {
     //MARK: - @objc Func
     @objc func isBackButtonTapped(_ sender: Any) {
         let myPageVC = MyPageViewController()
+        myPageVC.navigationItem.hidesBackButton = true
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
 }

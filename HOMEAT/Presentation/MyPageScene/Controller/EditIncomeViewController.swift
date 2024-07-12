@@ -146,7 +146,6 @@ class EditIncomeViewController: BaseViewController, UITextFieldDelegate {
             case .success(let data):
                 print("한달 수입 수정 완료")
                 let nextVC = FinishIncomeViewController()
-                nextVC.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(nextVC, animated: true)
             default:
                 print("소득 수정 실패")

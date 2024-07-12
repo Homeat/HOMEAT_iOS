@@ -25,10 +25,19 @@ class FinishIncomeViewController : BaseViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setTapBarHidden()
-        
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+        self.tabBarController?.tabBar.isTranslucent = true
+
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+        self.tabBarController?.tabBar.isTranslucent = false
+    }
     // MARK: - setConfigure
     override func setConfigure() {
         view.backgroundColor = UIColor(named: "homeBackgroundColor")
@@ -89,11 +98,7 @@ class FinishIncomeViewController : BaseViewController {
             $0.height.equalTo(57)
         }
     }
-    
-    private func setTapBarHidden() {
-        self.tabBarController?.tabBar.isHidden = true
-    }
-    
+
     //MARK: - setButtonAction
     private func setAddTarget() {
         backButton.addTarget(self, action: #selector(isBackButtonTapped), for: .touchUpInside)
@@ -102,6 +107,7 @@ class FinishIncomeViewController : BaseViewController {
     //MARK: - @objc Func
     @objc func isBackButtonTapped(_ sender: Any) {
         let myPageVC = MyPageViewController()
+        myPageVC.navigationItem.hidesBackButton = true
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
 }

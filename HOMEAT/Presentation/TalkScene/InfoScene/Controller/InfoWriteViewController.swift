@@ -364,7 +364,7 @@ class InfoWriteViewController: BaseViewController {
             }
             return
         }
-        if title.count >= 10 {
+        if title.count >= 15 {
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "제목 길이 초과", message: "제목이 너무 길어요", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))

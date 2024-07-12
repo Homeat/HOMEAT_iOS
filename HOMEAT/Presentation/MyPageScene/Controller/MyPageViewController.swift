@@ -30,7 +30,7 @@ class MyPageViewController: BaseViewController {
         setTarget()
         updateUser()
     }
-    
+
     // MARK: UI
     override func setConfigure() {
         view.do {
@@ -59,7 +59,6 @@ class MyPageViewController: BaseViewController {
         }
         
         nicknameDummyLabel.do {
-            $0.text = "예진"
             $0.font = .headBold24
             $0.textColor = .white
         }

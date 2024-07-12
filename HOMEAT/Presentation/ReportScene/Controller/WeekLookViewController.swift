@@ -39,12 +39,20 @@ class WeekLookViewController: BaseViewController {
         updateTier()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let tabBarController = self.tabBarController as? HOMEATTabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+        updateTier()
+    }
+
+    
     override func setConfigure() {
         smileImg.do {
             $0.image = UIImage(named: "smileIcon")
         }
         nicknameLable.do {
-            $0.text = "홈잇러버 예진님"
             $0.textColor = .white
             $0.font = .bodyMedium15
         }

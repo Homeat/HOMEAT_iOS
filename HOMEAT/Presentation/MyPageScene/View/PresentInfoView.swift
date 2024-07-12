@@ -26,7 +26,6 @@ final class PresentInfoView: BaseView {
         }
         
         infoLabel.do {
-            $0.text = "예진이다람쥐"
             $0.font = .bodyMedium16
             $0.textColor = .white
         }
