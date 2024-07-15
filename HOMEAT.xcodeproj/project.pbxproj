@@ -148,6 +148,7 @@
 		2DB92DCD2C0218DE00629CED /* ContinueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB92DCB2C0218DE00629CED /* ContinueButton.swift */; };
 		2DD9DED12BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */; };
 		2DD9DED32BCD96D3004664B6 /* FoodTalkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */; };
+		5817D6102C458FFB0081323E /* UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5817D60F2C458FFB0081323E /* UITextView.swift */; };
 		582B685A2BBC62F600839B16 /* AnalysisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B68592BBC62F600839B16 /* AnalysisViewController.swift */; };
 		582B685C2BBC631C00839B16 /* WeekLookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 582B685B2BBC631C00839B16 /* WeekLookViewController.swift */; };
 		589145172BBDA99800CF9A05 /* MonthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 589145162BBDA99800CF9A05 /* MonthView.swift */; };
@@ -408,6 +409,7 @@
 		2DB92DCB2C0218DE00629CED /* ContinueButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinueButton.swift; sourceTree = "<group>"; };
 		2DD9DED02BCD96C3004664B6 /* FoodTalkCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkCollectionViewCell.swift; sourceTree = "<group>"; };
 		2DD9DED22BCD96D3004664B6 /* FoodTalkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTalkViewController.swift; sourceTree = "<group>"; };
+		5817D60F2C458FFB0081323E /* UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		582B68592BBC62F600839B16 /* AnalysisViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalysisViewController.swift; sourceTree = "<group>"; };
 		582B685B2BBC631C00839B16 /* WeekLookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekLookViewController.swift; sourceTree = "<group>"; };
 		589145162BBDA99800CF9A05 /* MonthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MonthView.swift; path = HOMEAT/Presentation/ReportScene/View/MonthView.swift; sourceTree = SOURCE_ROOT; };
@@ -645,6 +647,7 @@
 				0123833E2BB7ECCD0048CC2D /* StringLiterals.swift */,
 				012383942BBBDF160048CC2D /* UIView+.swift */,
 				58EEF5AA2C37A73000C12C1E /* Formatter+.swift */,
+				5817D60F2C458FFB0081323E /* UITextView.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -1702,6 +1705,7 @@
 				58EEF5B12C38590400C12C1E /* ComplainPostRequestBodyDTO.swift in Sources */,
 				011DAFE12BEB6C3A000556D0 /* EmailLoginResponseDTO.swift in Sources */,
 				012383B22BBD32100048CC2D /* UserInfoViewController.swift in Sources */,
+				5817D6102C458FFB0081323E /* UITextView.swift in Sources */,
 				58EEF5F42C3CEFBC00C12C1E /* AuthCodeResponseDTO.swift in Sources */,
 				58FE4CDA2BC801BA0059D174 /* WeekCollectionViewCell.swift in Sources */,
 				58DF7B722C25E57100603763 /* InfoTalkService.swift in Sources */,

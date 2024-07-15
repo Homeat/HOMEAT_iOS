@@ -156,7 +156,8 @@ class InfoReplyTableViewCell: UITableViewCell {
         replyNickname.text = reply.replyNickName
         replyContent.text = reply.content
         
-        setDateLabel(from: reply.createdAt)
+        setDateLabel(from: reply.updatedAt)
+        print(reply.createdAt)
     }
     
     private func setDateLabel(from dateString: String) {
@@ -171,6 +172,7 @@ class InfoReplyTableViewCell: UITableViewCell {
             replyDate.text = dateString
         }
     }
+
     
     //MARK: - @objc
     @objc func declareButtonTapped() {

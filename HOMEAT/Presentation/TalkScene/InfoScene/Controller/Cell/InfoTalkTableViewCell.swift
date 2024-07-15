@@ -162,7 +162,7 @@ class InfoTalkTableViewCell: UITableViewCell {
 extension InfoTalkTableViewCell {
     func formatDateString(_ dateString: String) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSS"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         if let date = formatter.date(from: dateString) {
             formatter.dateFormat = "M월 d일 HH:mm"
             return formatter.string(from: date)

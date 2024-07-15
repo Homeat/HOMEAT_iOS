@@ -344,15 +344,15 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
                         cell.layer.cornerRadius = 10
                         cell.layer.masksToBounds = true
                         
-                        // Re-add day label
-                        self.addDayLabel(to: cell)
                         
+                        self.addDayLabel(to: cell)
                         print("Updated cell background for \(date) with jipbapHeight: \(jipbapHeight), outPriceHeight: \(outPriceHeight)")
                     } else {
                         print("Failed to find cell for date \(date) at index \(index)")
                     }
                     break
                 }
+                
             }
         }
     }
@@ -376,7 +376,7 @@ extension CalendarView: UICollectionViewDataSource, UICollectionViewDelegate, UI
                 print(entry.jipbapPercentage,entry.outPricePercentage)
             }
             self.dayCollectionView.reloadData()
-            
+            self.dayCollectionView.layoutIfNeeded()
         }
     }
 }

@@ -69,11 +69,18 @@ class WeekCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func configure(with weekData: WeekLookResponseDTO ) {
+    func configure(with weekData: WeekLookResponseDTO) {
         let formattedGoalMoney = weekData.goal_price.formattedWithSeparator
         let formattedExceedMoney = weekData.exceed_price.formattedWithSeparator
         successMoney.text = "\(formattedGoalMoney)원"
-        failMoney.text =  "\(formattedExceedMoney)원"
+        
+        if weekData.weekStatus == "UNDO" || weekData.weekStatus == "SUCCESS" {
+            failMoney.isHidden = true
+        } else {
+            failMoney.isHidden = false
+            failMoney.text = "\(formattedExceedMoney)원"
+        }
+        
         if let badgeUrl = URL(string: weekData.badge_url) {
             DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: badgeUrl) {
@@ -83,6 +90,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
                 }
             }
         }
+        
         switch weekData.weekStatus {
         case "SUCCESS":
             cellView.backgroundColor = UIColor(named: "turquoiseGreen")
@@ -94,6 +102,7 @@ class WeekCollectionViewCell: UICollectionViewCell {
             cellView.backgroundColor = UIColor(named: "turquoiseGray")
         }
     }
+
     
     func configureAsLock() {
         successMoney.text = nil

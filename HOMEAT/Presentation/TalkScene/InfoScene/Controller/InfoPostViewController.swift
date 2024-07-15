@@ -11,7 +11,7 @@ import SnapKit
 import Kingfisher
 import Alamofire
 
-class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextFieldDelegate {
+class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate {
     
     func deletePostButtonTapped() {
         let alert = UIAlertController(title: "게시글 삭제", message: "게시글을 정말로 삭제하시겠습니까?", preferredStyle: .alert)
@@ -36,11 +36,13 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     var currentReplyContext: (isComment: Bool, id: Int)?
     private let tableView = UITableView(frame: CGRect.zero, style: .grouped)
     private let postContent = InfoPostContentView()
-    private let replyTextView = UIView()
-    let replyTextField = UITextField()
+    private let replyView = UIView()
+    private let replyTextView = UITextView()
     private let sendButton = UIButton()
     private let heartButton = UIButton()
     var commentViewBottomConstraint: NSLayoutConstraint?
+    private var replyTextViewHeightConstraint: Constraint?
+    private var replyViewHeightConstraint: Constraint?
     var comments : [InfoTalkComments] = []
     var currentItsMe : String?
     //MARK: - Initializer
@@ -60,8 +62,9 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         updatePost()
         
         self.currentItsMe = UserDefaults.standard.string(forKey: "userNickname")
+
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
@@ -74,7 +77,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+       NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
@@ -152,7 +155,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
         tableView.do {
             $0.backgroundColor = UIColor(named: "homeBackgroundColor")
         }
-        replyTextView.do {
+        replyView.do {
             $0.backgroundColor = .turquoiseDarkGray
             $0.layer.cornerRadius = 10
         }
@@ -163,18 +166,17 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
             $0.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         }
         
-        replyTextField.do {
-            $0.placeholder = "댓글을 남겨보세요."
+        replyTextView.do {
             $0.font = .bodyMedium16
-            $0.textColor = .white
+            $0.textColor = UIColor(named: "font5")
             $0.layer.cornerRadius = 20
             $0.backgroundColor = .turquoiseDarkGray
-            $0.attributedPlaceholder = NSAttributedString(string: "댓글을 남겨보세요.", attributes: [NSAttributedString.Key.foregroundColor: UIColor(named: "font5") ?? UIColor.gray])
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: $0.frame.height))
-            $0.leftViewMode = .always
+            $0.textContainerInset = UIEdgeInsets(top: 12, left: 12, bottom: 12, right: 12)
+            $0.textContainer.lineFragmentPadding = 0
             $0.layer.borderColor = UIColor.init(named: "font7")?.cgColor
             $0.layer.borderWidth = 1.0
+            $0.isScrollEnabled = false 
+            $0.delegate = self
         }
         
         sendButton.do {
@@ -185,8 +187,8 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     }
     
     override func setConstraints() {
-        commentViewBottomConstraint = replyTextView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        view.addSubviews(tableView, replyTextView)
+        commentViewBottomConstraint = replyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        view.addSubviews(tableView, replyView)
         tableView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -194,35 +196,37 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
             $0.bottom.equalToSuperview()
         }
         
-        replyTextView.snp.makeConstraints {
+        replyView.snp.makeConstraints {
             $0.bottom.equalTo(view.snp.bottom)
             $0.leading.equalTo(view.snp.leading)
             $0.trailing.equalTo(view.snp.trailing)
-            $0.height.equalTo(91)
+            replyViewHeightConstraint = $0.height.equalTo(91).constraint // 초기 높이 설정 및 제약 조건 저장
         }
-        replyTextView.addSubviews(heartButton, replyTextField, sendButton)
+        replyView.addSubviews(heartButton, replyTextView, sendButton)
         heartButton.snp.makeConstraints {
-            $0.leading.equalTo(replyTextView.snp.leading).offset(20)
-            $0.centerY.equalTo(replyTextField.snp.centerY)
+            $0.leading.equalTo(replyView.snp.leading).offset(20)
+            $0.centerY.equalTo(replyTextView.snp.centerY)
             $0.height.equalTo(22.6)
             $0.width.equalTo(22.6)
         }
         
-        replyTextField.snp.makeConstraints {
+        replyTextView.snp.makeConstraints {
             $0.leading.equalTo(heartButton.snp.trailing).offset(10)
-            $0.top.equalTo(replyTextView.snp.top).offset(24)
-            $0.bottom.equalTo(replyTextView.snp.bottom).inset(24)
-            $0.trailing.equalTo(replyTextView.snp.trailing).inset(20)
+            $0.top.equalTo(replyView.snp.top).offset(24)
+            $0.bottom.equalTo(replyView.snp.bottom).inset(24)
+            $0.trailing.equalTo(sendButton.snp.leading).offset(-10)
+            replyTextViewHeightConstraint = $0.height.equalTo(70).constraint
         }
         
         sendButton.snp.makeConstraints {
-            $0.centerY.equalTo(replyTextField.snp.centerY)
-            $0.trailing.equalTo(replyTextField.snp.trailing).inset(8)
+            $0.centerY.equalTo(replyView.snp.centerY)
+            $0.trailing.equalTo(replyView.snp.trailing).inset(10)
+            $0.height.width.equalTo(25)
         }
         
     }
     func setupKeyboardEvent() {
-        replyTextField.delegate = self
+        replyTextView.delegate = self
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
         
@@ -260,7 +264,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     // 날짜 형식 변환
                     let dateString = data.data?.createdAt ?? ""
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                     let love = String(data.data?.love ?? 0)
                     let comment = String(data.data?.commentNumber ?? 0)
                     self.comments = data.data?.infoTalkComments ?? []
@@ -295,7 +299,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
     //MARK: - objc
     
     @objc func sendButtonTapped() {
-        guard let content = replyTextField.text, !content.isEmpty else {
+        guard let content = replyTextView.text, !content.isEmpty else {
             print("댓글 내용이 없습니다.")
             return
         }
@@ -308,7 +312,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     switch response {
                     case .success:
                         print("성공 대댓글 저장 완료")
-                        self.replyTextField.text = ""
+                        self.replyTextView.text = ""
                         self.dismissKeyboard()
                         self.scrollToBottom()
                         self.updatePost()
@@ -326,7 +330,7 @@ class InfoPostViewController: BaseViewController, InfoHeaderViewDelegate,UITextF
                     switch response {
                     case .success:
                         print("성공 댓글 저장 완료")
-                        self.replyTextField.text = ""
+                        self.replyTextView.text = ""
                         self.updatePost()
                         self.dismissKeyboard()
                         self.scrollToBottom()
@@ -478,7 +482,7 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
             }
         }
         
-        replyTextField.becomeFirstResponder()
+        replyTextView.becomeFirstResponder()
     }
     
     func replyDeclareButtonTapped(_ cell: InfoReplyTableViewCell) {
@@ -541,4 +545,23 @@ extension InfoPostViewController: UITableViewDelegate, UITableViewDataSource, In
         }
     }
 
+}
+extension InfoPostViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let maxHeight: CGFloat = 300 // 최대 높이
+        let currentHeight = 70.7
+        print("Current Height: \(currentHeight)")
+        
+        textView.isScrollEnabled = currentHeight > maxHeight
+        
+        // 기본 높이보다 항상 높을 때만 처리
+        if currentHeight > 70.6 { // 여기서 70.6은 기본 높이로 설정된 값입니다.
+            replyTextViewHeightConstraint?.update(offset: currentHeight)
+            replyViewHeightConstraint?.update(offset: currentHeight + 20) // 패딩을 고려하여 높이 업데이트
+        }
+        
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
 }

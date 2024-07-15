@@ -272,7 +272,7 @@ class FoodPostViewController: BaseViewController, HeaderViewDelegate, UITextFiel
                     self.titleLabel = data.data.name
                     let dateString = data.data.createdAt
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSSSS"
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
                     
                     var displayDate = ""
                     if let date = dateFormatter.date(from: dateString) {

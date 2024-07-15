@@ -11,7 +11,6 @@ import Then
 import SnapKit
 
 class SetBirthViewController: ProgressViewController {
-    
     private let yearTextField = UITextField()
     private let monthTextField = UITextField()
     private let dayTextField = UITextField()

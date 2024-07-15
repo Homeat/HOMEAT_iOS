@@ -17,11 +17,15 @@ class MyPageViewController: BaseViewController {
     // MARK: Property
     private let mypageTitleLabel = UILabel()
     private let horizonView = UIView()
-    private let profileImageView = UIImageView()
+    private let profileImageView = CircularImageView()
     private let sirLabel = UILabel()
     private let infoModifyButton = UIButton()
     private let mypageTableView = UITableView()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUser()
+    }
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +109,7 @@ class MyPageViewController: BaseViewController {
             $0.width.height.equalTo(90)
         }
         profileImageView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(10)
+            $0.edges.equalToSuperview()
         }
         nicknameDummyLabel.snp.makeConstraints {
             $0.top.equalTo(horizonView.snp.bottom).offset(38)

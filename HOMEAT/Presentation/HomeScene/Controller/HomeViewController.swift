@@ -177,11 +177,22 @@ class HomeViewController: BaseViewController, HomeViewDelegate {
         mainView.leftMoneyLabel.text = "\(formattedRemainMoney)원"
         let savingPercent = data.beforeSavingPercent
         if savingPercent > 0 {
-            savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 절약하고 있어요"
+           let fullText = "저번주 보다  \(data.beforeSavingPercent)% 절약하고 있어요"
+           let attributedText = NSMutableAttributedString(string: fullText)
+           let range = (fullText as NSString).range(of: "\(data.beforeSavingPercent)%")
+            attributedText.addAttribute(.foregroundColor, value: UIColor.turquoiseGreen, range: range)
+            //savingLabel.text = "저번주 보다 \(data.beforeSavingPercent)% 절약하고 있어요"
+            savingLabel.attributedText = attributedText
         }else if savingPercent == 0 {
             savingLabel.text = "아직 비교할 과거 데이터가 존재하지 않아요"
         }else {
-            savingLabel.text = "저번주 보다\(data.beforeSavingPercent)% 더 쓰고 있어요"
+            let absSavingPercent = abs(savingPercent)
+           let fullText = "저번주 보다 \(absSavingPercent)% 더 쓰고 있어요"
+           let attributedText = NSMutableAttributedString(string: fullText)
+           let range = (fullText as NSString).range(of: "\(absSavingPercent)%")
+           attributedText.addAttribute(.foregroundColor, value: UIColor.turquoiseRed, range: range)
+           
+           savingLabel.attributedText = attributedText
         }
         let remainingMoney = data.remainingMoney
         if remainingMoney >= 0 {
